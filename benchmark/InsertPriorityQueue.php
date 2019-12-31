@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendBench\Stdlib;
+namespace LaminasBench\Stdlib;
 
 use Athletic\AthleticEvent;
-use Zend\Stdlib\FastPriorityQueue;
-use Zend\Stdlib\PriorityQueue;
-use Zend\Stdlib\SplPriorityQueue;
+use Laminas\Stdlib\FastPriorityQueue;
+use Laminas\Stdlib\PriorityQueue;
+use Laminas\Stdlib\SplPriorityQueue;
 
 class InsertPriorityQueue extends AthleticEvent
 {
