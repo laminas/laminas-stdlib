@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Guard;
+namespace LaminasTest\Stdlib\Guard;
 
+use Laminas\Stdlib\ArrayObject;
+use LaminasTest\Stdlib\TestAsset\GuardedObject;
 use PHPUnit_Framework_TestCase as TestCase;
-use ZendTest\Stdlib\TestAsset\GuardedObject;
-use Zend\Stdlib\ArrayObject;
 
 /**
  * @requires PHP 5.4
- * @covers   Zend\Stdlib\Guard\ArrayOrTraversableGuardTrait
+ * @covers   Laminas\Stdlib\Guard\ArrayOrTraversableGuardTrait
  */
 class ArrayOrTraversableGuardTraitTest extends TestCase
 {
@@ -30,7 +29,7 @@ class ArrayOrTraversableGuardTraitTest extends TestCase
     {
         $object = new GuardedObject;
         $this->setExpectedException(
-            'Zend\Stdlib\Exception\InvalidArgumentException',
+            'Laminas\Stdlib\Exception\InvalidArgumentException',
             'Argument must be an array or Traversable, [string] given'
         );
         $object->setArrayOrTraversable('');
