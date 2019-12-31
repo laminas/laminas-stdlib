@@ -1,15 +1,14 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link           http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright      Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license        http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
-use Zend\Stdlib\Hydrator\Filter\FilterComposite;
+use Laminas\Stdlib\Hydrator\Filter\FilterComposite;
 
 class FilterCompositeTest extends \PHPUnit_Framework_TestCase
 {
@@ -59,9 +58,9 @@ class FilterCompositeTest extends \PHPUnit_Framework_TestCase
 
     public function testComplexValidation()
     {
-        $this->filterComposite->addFilter("has", new \Zend\Stdlib\Hydrator\Filter\HasFilter());
-        $this->filterComposite->addFilter("get", new \Zend\Stdlib\Hydrator\Filter\GetFilter());
-        $this->filterComposite->addFilter("is", new \Zend\Stdlib\Hydrator\Filter\IsFilter());
+        $this->filterComposite->addFilter("has", new \Laminas\Stdlib\Hydrator\Filter\HasFilter());
+        $this->filterComposite->addFilter("get", new \Laminas\Stdlib\Hydrator\Filter\GetFilter());
+        $this->filterComposite->addFilter("is", new \Laminas\Stdlib\Hydrator\Filter\IsFilter());
 
         $this->filterComposite->addFilter(
             'exclude',
@@ -99,8 +98,8 @@ class FilterCompositeTest extends \PHPUnit_Framework_TestCase
             }
         );
         $orCondition = array(
-            'has' => new \Zend\Stdlib\Hydrator\Filter\HasFilter(),
-            'get' => new \Zend\Stdlib\Hydrator\Filter\GetFilter()
+            'has' => new \Laminas\Stdlib\Hydrator\Filter\HasFilter(),
+            'get' => new \Laminas\Stdlib\Hydrator\Filter\GetFilter()
         );
         $filterComposite = new FilterComposite($orCondition, $andCondition);
 
@@ -163,9 +162,9 @@ class FilterCompositeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Stdlib\Exception\InvalidArgumentException
+     * @expectedException Laminas\Stdlib\Exception\InvalidArgumentException
      * @expectedExceptionMessage The value of test should be either a callable
-     * or an instance of Zend\Stdlib\Hydrator\Filter\FilterInterface
+     * or an instance of Laminas\Stdlib\Hydrator\Filter\FilterInterface
      */
     public function testInvalidParameterConstructorInjection()
     {
@@ -176,9 +175,9 @@ class FilterCompositeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Zend\Stdlib\Exception\InvalidArgumentException
+     * @expectedException Laminas\Stdlib\Exception\InvalidArgumentException
      * @expectedExceptionMessage The value of foo should be either a callable
-     * or an instance of Zend\Stdlib\Hydrator\Filter\FilterInterface
+     * or an instance of Laminas\Stdlib\Hydrator\Filter\FilterInterface
      */
     public function testInvalidFilterInjection()
     {
