@@ -1,33 +1,32 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Hydrator\Aggregate;
+namespace LaminasTest\Stdlib\Hydrator\Aggregate;
 
 
 use ArrayObject;
+use Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator;
+use Laminas\Stdlib\Hydrator\Aggregate\ExtractEvent;
+use Laminas\Stdlib\Hydrator\Aggregate\HydrateEvent;
+use Laminas\Stdlib\Hydrator\ArraySerializable;
+use Laminas\Stdlib\Hydrator\ClassMethods;
+use Laminas\Stdlib\Hydrator\HydratorInterface;
+use LaminasTest\Stdlib\TestAsset\AggregateObject;
 use PHPUnit_Framework_TestCase;
-use Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator;
-use Zend\Stdlib\Hydrator\Aggregate\ExtractEvent;
-use Zend\Stdlib\Hydrator\Aggregate\HydrateEvent;
-use Zend\Stdlib\Hydrator\ArraySerializable;
-use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\Stdlib\Hydrator\HydratorInterface;
-use ZendTest\Stdlib\TestAsset\AggregateObject;
 use stdClass;
 
 /**
- * Integration tests {@see \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator}
+ * Integration tests {@see \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator}
  */
 class AggregateHydratorFunctionalTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator
+     * @var \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator
      */
     protected $hydrator;
 

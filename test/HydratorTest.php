@@ -1,41 +1,38 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Stdlib
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
-use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\Stdlib\Hydrator\Reflection;
-use Zend\Stdlib\Hydrator\ObjectProperty;
-use Zend\Stdlib\Hydrator\ArraySerializable;
-use Zend\Stdlib\Hydrator\Filter\FilterComposite;
-use ZendTest\Stdlib\TestAsset\ClassMethodsCamelCase;
-use ZendTest\Stdlib\TestAsset\ClassMethodsTitleCase;
-use ZendTest\Stdlib\TestAsset\ClassMethodsFilterProviderInterface;
-use ZendTest\Stdlib\TestAsset\ClassMethodsMagicMethodSetter;
-use ZendTest\Stdlib\TestAsset\ClassMethodsProtectedSetter;
-use ZendTest\Stdlib\TestAsset\ClassMethodsUnderscore;
-use ZendTest\Stdlib\TestAsset\ClassMethodsCamelCaseMissing;
-use ZendTest\Stdlib\TestAsset\ClassMethodsInvalidParameter;
-use ZendTest\Stdlib\TestAsset\Reflection as ReflectionAsset;
-use ZendTest\Stdlib\TestAsset\ReflectionFilter;
-use ZendTest\Stdlib\TestAsset\ObjectProperty as ObjectPropertyAsset;
-use ZendTest\Stdlib\TestAsset\ArraySerializable as ArraySerializableAsset;
-use Zend\Stdlib\Hydrator\Strategy\DefaultStrategy;
-use Zend\Stdlib\Hydrator\Strategy\SerializableStrategy;
-
+use Laminas\Stdlib\Hydrator\ArraySerializable;
+use Laminas\Stdlib\Hydrator\ClassMethods;
+use Laminas\Stdlib\Hydrator\Filter\FilterComposite;
+use Laminas\Stdlib\Hydrator\ObjectProperty;
+use Laminas\Stdlib\Hydrator\Reflection;
+use Laminas\Stdlib\Hydrator\Strategy\DefaultStrategy;
+use Laminas\Stdlib\Hydrator\Strategy\SerializableStrategy;
+use LaminasTest\Stdlib\TestAsset\ArraySerializable as ArraySerializableAsset;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsCamelCase;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsCamelCaseMissing;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsFilterProviderInterface;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsInvalidParameter;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsMagicMethodSetter;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsProtectedSetter;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsTitleCase;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsUnderscore;
+use LaminasTest\Stdlib\TestAsset\ObjectProperty as ObjectPropertyAsset;
+use LaminasTest\Stdlib\TestAsset\Reflection as ReflectionAsset;
+use LaminasTest\Stdlib\TestAsset\ReflectionFilter;
 
 /**
- * @category   Zend
- * @package    Zend_Stdlib
+ * @category   Laminas
+ * @package    Laminas_Stdlib
  * @subpackage UnitTests
- * @group      Zend_Stdlib
+ * @group      Laminas_Stdlib
  */
 class HydratorTest extends \PHPUnit_Framework_TestCase
 {
@@ -298,9 +295,9 @@ class HydratorTest extends \PHPUnit_Framework_TestCase
         $hydrator->addStrategy('default', new DefaultStrategy());
         $hydrator->addStrategy('*', new SerializableStrategy('phpserialize'));
         $default = $hydrator->getStrategy('default');
-        $this->assertEquals(get_class($default), 'Zend\Stdlib\Hydrator\Strategy\DefaultStrategy');
+        $this->assertEquals(get_class($default), 'Laminas\Stdlib\Hydrator\Strategy\DefaultStrategy');
         $serializable = $hydrator->getStrategy('*');
-        $this->assertEquals(get_class($serializable), 'Zend\Stdlib\Hydrator\Strategy\SerializableStrategy');
+        $this->assertEquals(get_class($serializable), 'Laminas\Stdlib\Hydrator\Strategy\SerializableStrategy');
     }
 
     public function testUseWildStrategyByDefault()
