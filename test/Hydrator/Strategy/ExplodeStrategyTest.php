@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Hydrator\Strategy;
+namespace LaminasTest\Stdlib\Hydrator\Strategy;
 
-use Zend\Stdlib\Hydrator\Strategy\ExplodeStrategy;
+use Laminas\Stdlib\Hydrator\Strategy\ExplodeStrategy;
 
 /**
- * Tests for {@see \Zend\Stdlib\Hydrator\Strategy\ExplodeStrategy}
+ * Tests for {@see \Laminas\Stdlib\Hydrator\Strategy\ExplodeStrategy}
  *
- * @covers \Zend\Stdlib\Hydrator\Strategy\ExplodeStrategy
+ * @covers \Laminas\Stdlib\Hydrator\Strategy\ExplodeStrategy
  */
 class ExplodeStrategyTest extends \PHPUnit_Framework_TestCase
 {
@@ -40,7 +39,7 @@ class ExplodeStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $strategy = new ExplodeStrategy();
 
-        $this->setExpectedException('Zend\Hydrator\Strategy\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Hydrator\Strategy\Exception\InvalidArgumentException');
 
         $strategy->extract('');
     }
@@ -54,14 +53,14 @@ class ExplodeStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testGetExceptionWithEmptyDelimiter()
     {
-        $this->setExpectedException('Zend\Hydrator\Strategy\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Hydrator\Strategy\Exception\InvalidArgumentException');
 
         new ExplodeStrategy('');
     }
 
     public function testGetExceptionWithInvalidDelimiter()
     {
-        $this->setExpectedException('Zend\Hydrator\Strategy\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Hydrator\Strategy\Exception\InvalidArgumentException');
 
         new ExplodeStrategy([]);
     }
@@ -80,8 +79,8 @@ class ExplodeStrategyTest extends \PHPUnit_Framework_TestCase
         $strategy = new ExplodeStrategy();
 
         $this->setExpectedException(
-            'Zend\Hydrator\Strategy\Exception\InvalidArgumentException',
-            'Zend\Hydrator\Strategy\ExplodeStrategy::hydrate expects argument 1 to be string,'
+            'Laminas\Hydrator\Strategy\Exception\InvalidArgumentException',
+            'Laminas\Hydrator\Strategy\ExplodeStrategy::hydrate expects argument 1 to be string,'
             . ' array provided instead'
         );
 
@@ -93,8 +92,8 @@ class ExplodeStrategyTest extends \PHPUnit_Framework_TestCase
         $strategy = new ExplodeStrategy();
 
         $this->setExpectedException(
-            'Zend\Hydrator\Strategy\Exception\InvalidArgumentException',
-            'Zend\Hydrator\Strategy\ExplodeStrategy::hydrate expects argument 1 to be string,'
+            'Laminas\Hydrator\Strategy\Exception\InvalidArgumentException',
+            'Laminas\Hydrator\Strategy\ExplodeStrategy::hydrate expects argument 1 to be string,'
             . ' stdClass provided instead'
         );
 
@@ -106,8 +105,8 @@ class ExplodeStrategyTest extends \PHPUnit_Framework_TestCase
         $strategy = new ExplodeStrategy();
 
         $this->setExpectedException(
-            'Zend\Hydrator\Strategy\Exception\InvalidArgumentException',
-            'Zend\Hydrator\Strategy\ExplodeStrategy::extract expects argument 1 to be array,'
+            'Laminas\Hydrator\Strategy\Exception\InvalidArgumentException',
+            'Laminas\Hydrator\Strategy\ExplodeStrategy::extract expects argument 1 to be array,'
             . ' stdClass provided instead'
         );
 
