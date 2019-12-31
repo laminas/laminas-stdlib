@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Stdlib\Hydrator;
+namespace Laminas\Stdlib\Hydrator;
 
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Stdlib\Exception;
+use Laminas\Stdlib\Hydrator\Filter\FilterComposite;
+use Laminas\Stdlib\Hydrator\Filter\FilterProviderInterface;
+use Laminas\Stdlib\Hydrator\Filter\GetFilter;
+use Laminas\Stdlib\Hydrator\Filter\HasFilter;
+use Laminas\Stdlib\Hydrator\Filter\IsFilter;
+use Laminas\Stdlib\Hydrator\Filter\MethodMatchFilter;
+use Laminas\Stdlib\Hydrator\Filter\OptionalParametersFilter;
 use Traversable;
-use Zend\Stdlib\Exception;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\Hydrator\Filter\FilterComposite;
-use Zend\Stdlib\Hydrator\Filter\FilterProviderInterface;
-use Zend\Stdlib\Hydrator\Filter\GetFilter;
-use Zend\Stdlib\Hydrator\Filter\HasFilter;
-use Zend\Stdlib\Hydrator\Filter\IsFilter;
-use Zend\Stdlib\Hydrator\Filter\MethodMatchFilter;
-use Zend\Stdlib\Hydrator\Filter\OptionalParametersFilter;
 
 class ClassMethods extends AbstractHydrator implements HydratorOptionsInterface
 {
@@ -29,7 +28,7 @@ class ClassMethods extends AbstractHydrator implements HydratorOptionsInterface
     protected $underscoreSeparatedKeys = true;
 
     /**
-     * @var \Zend\Stdlib\Hydrator\Filter\FilterInterface
+     * @var \Laminas\Stdlib\Hydrator\Filter\FilterInterface
      */
     private $callableMethodFilter;
 
