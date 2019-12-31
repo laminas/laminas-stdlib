@@ -1,37 +1,36 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Hydrator\Strategy;
+namespace LaminasTest\Stdlib\Hydrator\Strategy;
 
-use Zend\Stdlib\Hydrator\Strategy\BooleanStrategy;
+use Laminas\Stdlib\Hydrator\Strategy\BooleanStrategy;
 
 /**
- * Tests for {@see \Zend\Stdlib\Hydrator\Strategy\BooleanStrategy}
+ * Tests for {@see \Laminas\Stdlib\Hydrator\Strategy\BooleanStrategy}
  *
- * @covers \Zend\Stdlib\Hydrator\Strategy\BooleanStrategy
+ * @covers \Laminas\Stdlib\Hydrator\Strategy\BooleanStrategy
  */
 class BooleanStrategyTest extends \PHPUnit_Framework_TestCase
 {
     public function testConstructorWithValidInteger()
     {
-        $this->assertInstanceOf('Zend\Stdlib\Hydrator\Strategy\BooleanStrategy', new BooleanStrategy(1, 0));
+        $this->assertInstanceOf('Laminas\Stdlib\Hydrator\Strategy\BooleanStrategy', new BooleanStrategy(1, 0));
     }
 
     public function testConstructorWithValidString()
     {
-        $this->assertInstanceOf('Zend\Stdlib\Hydrator\Strategy\BooleanStrategy', new BooleanStrategy('true', 'false'));
+        $this->assertInstanceOf('Laminas\Stdlib\Hydrator\Strategy\BooleanStrategy', new BooleanStrategy('true', 'false'));
     }
 
     public function testExceptionOnWrongTrueValueInConstructor()
     {
         $this->setExpectedException(
-            'Zend\Stdlib\Exception\InvalidArgumentException',
+            'Laminas\Stdlib\Exception\InvalidArgumentException',
             'Expected int or string as $trueValue.'
         );
 
@@ -41,7 +40,7 @@ class BooleanStrategyTest extends \PHPUnit_Framework_TestCase
     public function testExceptionOnWrongFalseValueInConstructor()
     {
         $this->setExpectedException(
-            'Zend\Stdlib\Exception\InvalidArgumentException',
+            'Laminas\Stdlib\Exception\InvalidArgumentException',
             'Expected int or string as $falseValue.'
         );
 
@@ -67,7 +66,7 @@ class BooleanStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $hydrator = new BooleanStrategy(1, 0);
 
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException', 'Unable to extract');
+        $this->setExpectedException('Laminas\Stdlib\Exception\InvalidArgumentException', 'Unable to extract');
 
         $hydrator->extract(5);
     }
@@ -88,14 +87,14 @@ class BooleanStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testHydrateUnexpectedValueThrowsException()
     {
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException', 'Unexpected value');
+        $this->setExpectedException('Laminas\Stdlib\Exception\InvalidArgumentException', 'Unexpected value');
         $hydrator = new BooleanStrategy(1, 0);
         $hydrator->hydrate(2);
     }
 
     public function testHydrateInvalidArgument()
     {
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException', 'Unable to hydrate');
+        $this->setExpectedException('Laminas\Stdlib\Exception\InvalidArgumentException', 'Unable to hydrate');
         $hydrator = new BooleanStrategy(1, 0);
         $hydrator->hydrate(new \stdClass());
     }
