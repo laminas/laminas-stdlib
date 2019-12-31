@@ -1,18 +1,17 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Stdlib\Hydrator\Aggregate;
+namespace Laminas\Stdlib\Hydrator\Aggregate;
 
-use Zend\EventManager\EventManager;
-use Zend\EventManager\EventManagerAwareInterface;
-use Zend\EventManager\EventManagerInterface;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\EventManagerAwareInterface;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Stdlib\Hydrator\HydratorInterface;
 
 /**
  * Aggregate hydrator that composes multiple hydrators via events
@@ -22,14 +21,14 @@ class AggregateHydrator implements HydratorInterface, EventManagerAwareInterface
     const DEFAULT_PRIORITY = 1;
 
     /**
-     * @var \Zend\EventManager\EventManagerInterface|null
+     * @var \Laminas\EventManager\EventManagerInterface|null
      */
     protected $eventManager;
 
     /**
      * Attaches the provided hydrator to the list of hydrators to be used while hydrating/extracting data
      *
-     * @param \Zend\Stdlib\Hydrator\HydratorInterface $hydrator
+     * @param \Laminas\Stdlib\Hydrator\HydratorInterface $hydrator
      * @param int                                     $priority
      */
     public function add(HydratorInterface $hydrator, $priority = self::DEFAULT_PRIORITY)
