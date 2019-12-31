@@ -1,14 +1,12 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Stdlib
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Stdlib;
+namespace Laminas\Stdlib;
 
 use Countable;
 use IteratorAggregate;
@@ -26,8 +24,8 @@ use Serializable;
  * "inner" iterator in the form of an SplPriorityQueue object for performing
  * the actual iteration.
  *
- * @category   Zend
- * @package    Zend_Stdlib
+ * @category   Laminas
+ * @package    Laminas_Stdlib
  */
 class PriorityQueue implements Countable, IteratorAggregate, Serializable
 {
@@ -39,7 +37,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Inner queue class to use for iteration
      * @var string
      */
-    protected $queueClass = 'Zend\Stdlib\SplPriorityQueue';
+    protected $queueClass = 'Laminas\Stdlib\SplPriorityQueue';
 
     /**
      * Actual items aggregated in the priority queue. Each item is an array
@@ -182,7 +180,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     /**
      * Unserialize a string into a PriorityQueue object
      *
-     * Serialization format is compatible with {@link Zend\Stdlib\SplPriorityQueue}
+     * Serialization format is compatible with {@link Laminas\Stdlib\SplPriorityQueue}
      *
      * @param  string $data
      * @return void
