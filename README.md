@@ -1,6 +1,6 @@
-# zend-stdlib
+# laminas-stdlib
 
-`Zend\Stdlib` is a set of components that implements general purpose utility
+`Laminas\Stdlib` is a set of components that implements general purpose utility
 class for different scopes like:
 
 - array utilities functions;
@@ -11,5 +11,5 @@ class for different scopes like:
 - etc
 
 
-- File issues at https://github.com/zendframework/zend-stdlib/issues
-- Documentation is at http://framework.zend.com/manual/current/en/index.html#zend-stdlib
+- File issues at https://github.com/laminas/laminas-stdlib/issues
+- Documentation is at https://docs.laminas.dev/laminas-stdlib
