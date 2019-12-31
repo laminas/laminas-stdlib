@@ -1,32 +1,31 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Stdlib\Hydrator\Aggregate;
+namespace Laminas\Stdlib\Hydrator\Aggregate;
 
-use Zend\EventManager\AbstractListenerAggregate;
-use Zend\EventManager\EventManagerInterface;
-use Zend\Stdlib\Hydrator\HydratorInterface;
+use Laminas\EventManager\AbstractListenerAggregate;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Stdlib\Hydrator\HydratorInterface;
 
 /**
  * Aggregate listener wrapping around a hydrator. Listens
- * to {@see \Zend\Stdlib\Hydrator\Aggregate::EVENT_HYDRATE} and
- * {@see \Zend\Stdlib\Hydrator\Aggregate::EVENT_EXTRACT}
+ * to {@see \Laminas\Stdlib\Hydrator\Aggregate::EVENT_HYDRATE} and
+ * {@see \Laminas\Stdlib\Hydrator\Aggregate::EVENT_EXTRACT}
  */
 class HydratorListener extends AbstractListenerAggregate
 {
     /**
-     * @var \Zend\Stdlib\Hydrator\HydratorInterface
+     * @var \Laminas\Stdlib\Hydrator\HydratorInterface
      */
     protected $hydrator;
 
     /**
-     * @param \Zend\Stdlib\Hydrator\HydratorInterface $hydrator
+     * @param \Laminas\Stdlib\Hydrator\HydratorInterface $hydrator
      */
     public function __construct(HydratorInterface $hydrator)
     {
@@ -43,9 +42,9 @@ class HydratorListener extends AbstractListenerAggregate
     }
 
     /**
-     * Callback to be used when {@see \Zend\Stdlib\Hydrator\Aggregate\HydrateEvent::EVENT_HYDRATE} is triggered
+     * Callback to be used when {@see \Laminas\Stdlib\Hydrator\Aggregate\HydrateEvent::EVENT_HYDRATE} is triggered
      *
-     * @param \Zend\Stdlib\Hydrator\Aggregate\HydrateEvent $event
+     * @param \Laminas\Stdlib\Hydrator\Aggregate\HydrateEvent $event
      *
      * @return object
      *
@@ -61,9 +60,9 @@ class HydratorListener extends AbstractListenerAggregate
     }
 
     /**
-     * Callback to be used when {@see \Zend\Stdlib\Hydrator\Aggregate\ExtractEvent::EVENT_EXTRACT} is triggered
+     * Callback to be used when {@see \Laminas\Stdlib\Hydrator\Aggregate\ExtractEvent::EVENT_EXTRACT} is triggered
      *
-     * @param \Zend\Stdlib\Hydrator\Aggregate\ExtractEvent $event
+     * @param \Laminas\Stdlib\Hydrator\Aggregate\ExtractEvent $event
      *
      * @return array
      *
