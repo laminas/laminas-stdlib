@@ -1,18 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Stdlib
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
+use Laminas\Stdlib\ErrorHandler;
+use Laminas\Stdlib\StringUtils;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Stdlib\ErrorHandler;
-use Zend\Stdlib\StringUtils;
 
 class StringUtilsTest extends TestCase
 {
@@ -78,21 +76,21 @@ class StringUtilsTest extends TestCase
     {
         $wrapper = StringUtils::getWrapper('ISO-8859-1');
         if (extension_loaded('mbstring')) {
-            $this->assertInstanceOf('Zend\Stdlib\StringWrapper\MbString', $wrapper);
+            $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\MbString', $wrapper);
         } elseif (extension_loaded('iconv')) {
-            $this->assertInstanceOf('Zend\Stdlib\StringWrapper\Iconv', $wrapper);
+            $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\Iconv', $wrapper);
         } else {
-            $this->assertInstanceOf('Zend\Stdlib\StringWrapper\Native', $wrapper);
+            $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\Native', $wrapper);
         }
 
         try {
             $wrapper = StringUtils::getWrapper('UTF-8');
             if (extension_loaded('intl')) {
-                $this->assertInstanceOf('Zend\Stdlib\StringWrapper\Intl', $wrapper);
+                $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\Intl', $wrapper);
             } elseif (extension_loaded('mbstring')) {
-                $this->assertInstanceOf('Zend\Stdlib\StringWrapper\MbString', $wrapper);
+                $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\MbString', $wrapper);
             } elseif (extension_loaded('iconv')) {
-                $this->assertInstanceOf('Zend\Stdlib\StringWrapper\Iconv', $wrapper);
+                $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\Iconv', $wrapper);
             }
         } catch (Exception $e) {
             if (extension_loaded('intl')
@@ -106,9 +104,9 @@ class StringUtilsTest extends TestCase
         try {
             $wrapper = StringUtils::getWrapper('UTF-8', 'ISO-8859-1');
             if (extension_loaded('mbstring')) {
-                $this->assertInstanceOf('Zend\Stdlib\StringWrapper\MbString', $wrapper);
+                $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\MbString', $wrapper);
             } elseif (extension_loaded('iconv')) {
-                $this->assertInstanceOf('Zend\Stdlib\StringWrapper\Iconv', $wrapper);
+                $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\Iconv', $wrapper);
             }
         } catch (Exception $e) {
             if (extension_loaded('mbstring') || extension_loaded('iconv')) {
