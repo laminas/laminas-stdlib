@@ -1,15 +1,14 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Http;
+namespace LaminasTest\Http;
 
-use Zend\Stdlib\Message;
+use Laminas\Stdlib\Message;
 
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,7 +16,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $message = new Message();
         $ret = $message->setContent('I can set content');
-        $this->assertInstanceOf('Zend\Stdlib\Message', $ret);
+        $this->assertInstanceOf('Laminas\Stdlib\Message', $ret);
         $this->assertEquals('I can set content', $message->getContent());
     }
 
@@ -25,7 +24,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $message = new Message();
         $ret = $message->setMetadata('foo', 'bar');
-        $this->assertInstanceOf('Zend\Stdlib\Message', $ret);
+        $this->assertInstanceOf('Laminas\Stdlib\Message', $ret);
         $this->assertEquals('bar', $message->getMetadata('foo'));
         $this->assertEquals(array('foo' => 'bar'), $message->getMetadata());
     }
@@ -34,7 +33,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $message = new Message();
         $ret = $message->setMetadata(array('foo' => 'bar'));
-        $this->assertInstanceOf('Zend\Stdlib\Message', $ret);
+        $this->assertInstanceOf('Laminas\Stdlib\Message', $ret);
         $this->assertEquals('bar', $message->getMetadata('foo'));
     }
 
@@ -48,7 +47,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $message = new Message();
 
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Stdlib\Exception\InvalidArgumentException');
         $message->setMetadata(new \stdClass());
     }
 
@@ -56,7 +55,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
     {
         $message = new Message();
 
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Stdlib\Exception\InvalidArgumentException');
         $message->getMetadata(new \stdClass());
     }
 
