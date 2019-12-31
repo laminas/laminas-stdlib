@@ -1,11 +1,10 @@
 docs_dir: doc/book
 site_dir: doc/html
-pages:
+nav:
     - index.md
     - Reference:
       - "Console Helper": console-helper.md
     - Migration: migration.md
-site_name: zend-stdlib
-site_description: Zend\Stdlib
-repo_url: 'https://github.com/zendframework/zend-stdlib'
-copyright: 'Copyright (c) 2016 <a href="http://www.zend.com/">Zend Technologies USA Inc.</a>'
+site_name: laminas-stdlib
+site_description: Laminas\Stdlib
+repo_url: 'https://github.com/laminas/laminas-stdlib'

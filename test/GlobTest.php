@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
+use Laminas\Stdlib\Glob;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Stdlib\Glob;
 
 class GlobTest extends TestCase
 {
@@ -34,7 +33,7 @@ class GlobTest extends TestCase
 
     public function testThrowExceptionOnError()
     {
-        $this->setExpectedException('Zend\Stdlib\Exception\RuntimeException');
+        $this->setExpectedException('Laminas\Stdlib\Exception\RuntimeException');
 
         // run into a max path lengh error
         $path = '/' . str_repeat('a', 10000);
