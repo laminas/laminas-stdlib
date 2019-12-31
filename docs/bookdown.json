@@ -1,14 +1,14 @@
 {
-    "title": "Zend\\Stdlib",
+    "title": "Laminas\\Stdlib",
     "target": "html/",
     "content": [
-        "book/zend.stdlib.hydrator.md",
-        "book/zend.stdlib.hydrator.filter.md",
-        "book/zend.stdlib.hydrator.strategy.md",
-        "book/zend.stdlib.hydrator.aggregate.md",
-        "book/zend.stdlib.hydrator.namingstrategy.compositenamingstrategy.md",
-        "book/zend.stdlib.hydrator.namingstrategy.identitynamingstrategy.md",
-        "book/zend.stdlib.hydrator.namingstrategy.mapnamingstrategy.md",
-        "book/zend.stdlib.hydrator.namingstrategy.underscorenamingstrategy.md"
+        "book/laminas.stdlib.hydrator.md",
+        "book/laminas.stdlib.hydrator.filter.md",
+        "book/laminas.stdlib.hydrator.strategy.md",
+        "book/laminas.stdlib.hydrator.aggregate.md",
+        "book/laminas.stdlib.hydrator.namingstrategy.compositenamingstrategy.md",
+        "book/laminas.stdlib.hydrator.namingstrategy.identitynamingstrategy.md",
+        "book/laminas.stdlib.hydrator.namingstrategy.mapnamingstrategy.md",
+        "book/laminas.stdlib.hydrator.namingstrategy.underscorenamingstrategy.md"
     ]
 }
