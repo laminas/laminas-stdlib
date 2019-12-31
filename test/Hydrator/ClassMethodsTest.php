@@ -1,22 +1,21 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Hydrator;
+namespace LaminasTest\Stdlib\Hydrator;
 
-use Zend\Stdlib\Hydrator\ClassMethods;
-use ZendTest\Stdlib\TestAsset\ClassMethodsOptionalParameters;
+use Laminas\Stdlib\Hydrator\ClassMethods;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsOptionalParameters;
 
 /**
- * Unit tests for {@see \Zend\Stdlib\Hydrator\ClassMethods}
+ * Unit tests for {@see \Laminas\Stdlib\Hydrator\ClassMethods}
  *
- * @covers \Zend\Stdlib\Hydrator\ClassMethods
- * @group Zend_Stdlib
+ * @covers \Laminas\Stdlib\Hydrator\ClassMethods
+ * @group Laminas_Stdlib
  */
 class ClassMethodsTest extends \PHPUnit_Framework_TestCase
 {
