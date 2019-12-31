@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
 use ArrayObject;
-use Zend\Stdlib\Exception;
-use ZendTest\Stdlib\TestAsset\TestOptions;
-use ZendTest\Stdlib\TestAsset\TestOptionsDerived;
-use ZendTest\Stdlib\TestAsset\TestOptionsNoStrict;
-use ZendTest\Stdlib\TestAsset\TestOptionsWithoutGetter;
+use Laminas\Stdlib\Exception;
+use LaminasTest\Stdlib\TestAsset\TestOptions;
+use LaminasTest\Stdlib\TestAsset\TestOptionsDerived;
+use LaminasTest\Stdlib\TestAsset\TestOptionsNoStrict;
+use LaminasTest\Stdlib\TestAsset\TestOptionsWithoutGetter;
 
 class OptionsTest extends \PHPUnit_Framework_TestCase
 {
@@ -50,14 +49,14 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
     public function testNonStrictOptionsDoesNotThrowException()
     {
         $this->assertInstanceOf(
-            'ZendTest\Stdlib\TestAsset\TestOptionsNoStrict',
+            'LaminasTest\Stdlib\TestAsset\TestOptionsNoStrict',
             new TestOptionsNoStrict(array('foo' => 'bar'))
         );
     }
 
     public function testConstructionWithNull()
     {
-        $this->assertInstanceOf('ZendTest\Stdlib\TestAsset\TestOptions', new TestOptions(null));
+        $this->assertInstanceOf('LaminasTest\Stdlib\TestAsset\TestOptions', new TestOptions(null));
     }
 
     public function testUnsetting()
@@ -120,7 +119,7 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
     public function testParentPrivateProperty()
     {
         $this->setExpectedException(
-            'Zend\Stdlib\Exception\BadMethodCallException',
+            'Laminas\Stdlib\Exception\BadMethodCallException',
             'The option "parent_private" does not have a callable "setParentPrivate" ("setparentprivate")'
             . ' setter method which must be defined'
         );
@@ -145,7 +144,7 @@ class OptionsTest extends \PHPUnit_Framework_TestCase
     public function testDerivedPrivateProperty()
     {
         $this->setExpectedException(
-            'Zend\Stdlib\Exception\BadMethodCallException',
+            'Laminas\Stdlib\Exception\BadMethodCallException',
             'The option "derived_private" does not have a callable "setDerivedPrivate" ("setderivedprivate")'
             .' setter method which must be defined'
         );
