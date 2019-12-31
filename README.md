@@ -1,9 +1,9 @@
-# zend-stdlib
+# laminas-stdlib
 
-[![Build Status](https://secure.travis-ci.org/zendframework/zend-stdlib.svg?branch=master)](https://secure.travis-ci.org/zendframework/zend-stdlib)
-[![Coverage Status](https://coveralls.io/repos/github/zendframework/zend-stdlib/badge.svg?branch=master)](https://coveralls.io/github/zendframework/zend-stdlib?branch=master)
+[![Build Status](https://travis-ci.org/laminas/laminas-stdlib.svg?branch=master)](https://travis-ci.org/laminas/laminas-stdlib)
+[![Coverage Status](https://coveralls.io/repos/github/laminas/laminas-stdlib/badge.svg?branch=master)](https://coveralls.io/github/laminas/laminas-stdlib?branch=master)
 
-`Zend\Stdlib` is a set of components that implements general purpose utility
+`Laminas\Stdlib` is a set of components that implements general purpose utility
 class for different scopes like:
 
 - array utilities functions;
@@ -13,12 +13,12 @@ class for different scopes like:
 
 ---
 
-- File issues at https://github.com/zendframework/zend-stdlib/issues
-- Documentation is at https://docs.zendframework.com/zend-stdlib/
+- File issues at https://github.com/laminas/laminas-stdlib/issues
+- Documentation is at https://docs.laminas.dev/laminas-stdlib/
 
 ## Benchmarks
 
-We provide scripts for benchmarking zend-stdlib using the
+We provide scripts for benchmarking laminas-stdlib using the
 [PHPBench](https://github.com/phpbench/phpbench) framework; these can be
 found in the `benchmark/` directory.
 

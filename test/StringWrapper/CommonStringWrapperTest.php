@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link       http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright  Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\StringWrapper;
+namespace LaminasTest\Stdlib\StringWrapper;
 
+use Laminas\Stdlib\Exception;
+use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 use PHPUnit\Framework\TestCase;
-use Zend\Stdlib\Exception;
-use Zend\Stdlib\StringWrapper\StringWrapperInterface;
 
 abstract class CommonStringWrapperTest extends TestCase
 {
@@ -232,7 +231,7 @@ abstract class CommonStringWrapperTest extends TestCase
             'center-padding_multi-byte' => ['utf-8', 'äää', 6, 'ö', STR_PAD_BOTH, 'öäääöö'],
             'right-padding_multi-byte' => ['utf-8', 'äää', 5, 'ö', STR_PAD_RIGHT, 'äääöö'],
 
-            // ZF-12186
+            // Laminas-12186
             'input-longer-than-pad-length' => ['utf-8', 'äääöö', 2, 'ö', STR_PAD_RIGHT, 'äääöö'],
             'input-same-as-pad-length' => ['utf-8', 'äääöö', 5, 'ö', STR_PAD_RIGHT, 'äääöö'],
             'negative-pad-length' => ['utf-8', 'äääöö', -2, 'ö', STR_PAD_RIGHT, 'äääöö'],
@@ -249,7 +248,7 @@ abstract class CommonStringWrapperTest extends TestCase
      * @param int    $padType
      * @param mixed  $expected
      *
-     * @group ZF-12186
+     * @group Laminas-12186
      */
     public function testStrPad($encoding, $input, $padLength, $padString, $padType, $expected)
     {

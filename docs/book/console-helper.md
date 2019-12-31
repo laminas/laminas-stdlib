@@ -11,7 +11,7 @@ Writing one-off scripts or vendor binaries for a package is often problematic:
         - Detecting whether or not the console supports colors in the first place
         - Providing appropriate escape sequences to produce color
 
-`Zend\Stdlib\ConsoleHelper` helps to address the second major bullet point and
+`Laminas\Stdlib\ConsoleHelper` helps to address the second major bullet point and
 all beneath it in a minimal fashion.
 
 ## Usage
@@ -19,7 +19,7 @@ all beneath it in a minimal fashion.
 Typical usage is to instantiate a `ConsoleHelper`, and call one of its methods:
 
 ```php
-use Zend\Stdlib\ConsoleHelper;
+use Laminas\Stdlib\ConsoleHelper;
 
 $helper = new ConsoleHelper();
 $helper->writeLine('This is output');
@@ -81,7 +81,7 @@ what to emit.
 ```php
 namespace Foo;
 
-use Zend\Stdlib\ConsoleHelper;
+use Laminas\Stdlib\ConsoleHelper;
 
 class HelloWorld
 {
@@ -120,7 +120,7 @@ class HelloWorld
 console tooling is for output considerations.
 
 If you need to parse complex argument strings, we recommend using
-[zend-console](https://docs.zendframework.com/zend-console/)/[zf-console](https://github.com/zfcampus/zf-console)
+[laminas-console](https://docs.laminas.dev/laminas-console/)/[zf-console](https://github.com/zfcampus/zf-console)
 or [symfony/console](http://symfony.com/doc/current/components/console.html),
 as these packages provide those capabilities, as well as far more colorization
 and console feature detection facilities.
