@@ -6,8 +6,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#13](https://github.com/zendframework/zend-stdlib/pull/13) adds
-  `Zend\Stdlib\Hydrator\Iterator`, which provides mechanisms for hydrating
+- [zendframework/zend-stdlib#13](https://github.com/zendframework/zend-stdlib/pull/13) adds
+  `Laminas\Stdlib\Hydrator\Iterator`, which provides mechanisms for hydrating
   objects when iterating a traversable. This allows creating generic collection
   resultsets; the original idea was pulled from
   [PhlyMongo](https://github.com/phly/PhlyMongo), where it was used to hydrate
@@ -41,7 +41,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#9](https://github.com/zendframework/zend-stdlib/pull/9) fixes an issue with
+- [zendframework/zend-stdlib#9](https://github.com/zendframework/zend-stdlib/pull/9) fixes an issue with
   count incrementation during insert in PriorityList, ensuring that incrementation only
   occurs when the item inserted was not previously present in the list.
 
@@ -61,6 +61,6 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#9](https://github.com/zendframework/zend-stdlib/pull/9) fixes an issue with
+- [zendframework/zend-stdlib#9](https://github.com/zendframework/zend-stdlib/pull/9) fixes an issue with
   count incrementation during insert in PriorityList, ensuring that incrementation only
   occurs when the item inserted was not previously present in the list.
