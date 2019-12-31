@@ -3,7 +3,6 @@
 /.gitignore export-ignore
 /.travis.yml export-ignore
 /benchmark/ export-ignore
-/composer.lock export-ignore
 /docs/ export-ignore
 /mkdocs.yml export-ignore
 /phpbench.json export-ignore

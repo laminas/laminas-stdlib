@@ -1,17 +1,16 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
+use Laminas\Stdlib\Exception\InvalidArgumentException;
+use Laminas\Stdlib\Message;
 use PHPUnit\Framework\TestCase;
-use Zend\Stdlib\Exception\InvalidArgumentException;
-use Zend\Stdlib\Message;
 
 class MessageTest extends TestCase
 {
@@ -19,7 +18,7 @@ class MessageTest extends TestCase
     {
         $message = new Message();
         $ret = $message->setContent('I can set content');
-        $this->assertInstanceOf('Zend\Stdlib\Message', $ret);
+        $this->assertInstanceOf('Laminas\Stdlib\Message', $ret);
         $this->assertEquals('I can set content', $message->getContent());
     }
 
@@ -27,7 +26,7 @@ class MessageTest extends TestCase
     {
         $message = new Message();
         $ret = $message->setMetadata('foo', 'bar');
-        $this->assertInstanceOf('Zend\Stdlib\Message', $ret);
+        $this->assertInstanceOf('Laminas\Stdlib\Message', $ret);
         $this->assertEquals('bar', $message->getMetadata('foo'));
         $this->assertEquals(['foo' => 'bar'], $message->getMetadata());
     }
@@ -36,7 +35,7 @@ class MessageTest extends TestCase
     {
         $message = new Message();
         $ret = $message->setMetadata(['foo' => 'bar']);
-        $this->assertInstanceOf('Zend\Stdlib\Message', $ret);
+        $this->assertInstanceOf('Laminas\Stdlib\Message', $ret);
         $this->assertEquals('bar', $message->getMetadata('foo'));
     }
 

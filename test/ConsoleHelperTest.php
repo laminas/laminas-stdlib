@@ -1,15 +1,16 @@
 <?php
+
 /**
- * @link      http://github.com/zendframework/zend-stdlib for the canonical source repository
- * @copyright Copyright (c) 2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
+use Laminas\Stdlib\ConsoleHelper;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
-use Zend\Stdlib\ConsoleHelper;
 
 class ConsoleHelperTest extends TestCase
 {
