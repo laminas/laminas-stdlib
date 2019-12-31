@@ -18,6 +18,6 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#9](https://github.com/zendframework/zend-stdlib/pull/9) fixes an issue with
+- [zendframework/zend-stdlib#9](https://github.com/zendframework/zend-stdlib/pull/9) fixes an issue with
   count incrementation during insert in PriorityList, ensuring that incrementation only
   occurs when the item inserted was not previously present in the list.
