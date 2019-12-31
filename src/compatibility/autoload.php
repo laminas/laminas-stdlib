@@ -1,14 +1,12 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @deprecated
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
 /**
  * Legacy purposes only, to prevent code that references it from breaking.
  */
-trigger_error('Polyfill autoload support (file library/Zend/Stdlib/compatibility/autoload.php) is no longer necessary; please remove your require statement referencing this file', E_USER_DEPRECATED);
+trigger_error('Polyfill autoload support (file library/Laminas/Stdlib/compatibility/autoload.php) is no longer necessary; please remove your require statement referencing this file', E_USER_DEPRECATED);

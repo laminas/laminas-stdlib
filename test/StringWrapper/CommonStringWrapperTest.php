@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link       http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright  Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\StringWrapper;
+namespace LaminasTest\Stdlib\StringWrapper;
 
+use Laminas\Stdlib\Exception;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Stdlib\Exception;
 
 abstract class CommonStringWrapperTest extends TestCase
 {
@@ -235,7 +234,7 @@ abstract class CommonStringWrapperTest extends TestCase
         }
 
         $this->setExpectedException(
-            'Zend\Stdlib\Exception\InvalidArgumentException',
+            'Laminas\Stdlib\Exception\InvalidArgumentException',
             "Cannot force cut when width is zero"
         );
         $wrapper->wordWrap('a', 0, "\n", true);
@@ -260,7 +259,7 @@ abstract class CommonStringWrapperTest extends TestCase
             'right-padding_multi-byte' =>
                 array('utf-8', 'äää', 5, 'ö', STR_PAD_RIGHT, 'äääöö'),
 
-            // ZF-12186
+            // Laminas-12186
             'input-longer-than-pad-length' =>
                 array('utf-8', 'äääöö', 2, 'ö', STR_PAD_RIGHT, 'äääöö'),
             'input-same-as-pad-length' =>
@@ -279,7 +278,7 @@ abstract class CommonStringWrapperTest extends TestCase
      * @param  integer $padType
      * @param mixed   $expected
      *
-     * @group ZF-12186
+     * @group Laminas-12186
      */
     public function testStrPad($encoding, $input, $padLength, $padString, $padType, $expected)
     {

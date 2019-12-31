@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
-use Zend\Stdlib\Hydrator\HydratorInterface;
-use Zend\Stdlib\Hydrator\ClassMethods;
+use Laminas\Stdlib\Hydrator\ClassMethods;
+use Laminas\Stdlib\Hydrator\HydratorInterface;
 
 /**
- * @group      Zend_Stdlib
+ * @group      Laminas_Stdlib
  */
 class HydratorStrategyTest extends \PHPUnit_Framework_TestCase
 {
@@ -107,7 +106,7 @@ class HydratorStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $hydrator = new ClassMethods($underscoreSeparatedKeys);
 
-        $strategy = $this->getMock('Zend\Stdlib\Hydrator\Strategy\StrategyInterface');
+        $strategy = $this->getMock('Laminas\Stdlib\Hydrator\Strategy\StrategyInterface');
 
         $entity = new TestAsset\ClassMethodsUnderscore();
         $value = $entity->getFooBar();
