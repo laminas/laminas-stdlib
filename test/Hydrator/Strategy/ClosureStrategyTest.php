@@ -1,15 +1,14 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Hydrator\Strategy;
+namespace LaminasTest\Stdlib\Hydrator\Strategy;
 
-use Zend\Stdlib\Hydrator\Strategy\ClosureStrategy;
+use Laminas\Stdlib\Hydrator\Strategy\ClosureStrategy;
 
 class ClosureStrategyTest extends \PHPUnit_Framework_TestCase
 {
@@ -67,7 +66,7 @@ class ClosureStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Zend\Stdlib\Hydrator\Strategy\ClosureStrategy::extract()
+     * @covers \Laminas\Stdlib\Hydrator\Strategy\ClosureStrategy::extract()
      * @dataProvider extractDataProvider
      *
      * @param Callable $extractFunc
@@ -87,7 +86,7 @@ class ClosureStrategyTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Zend\Stdlib\Hydrator\Strategy\ClosureStrategy::hydrate()
+     * @covers \Laminas\Stdlib\Hydrator\Strategy\ClosureStrategy::hydrate()
      * @dataProvider hydrateDataProvider
      *
      * @param Callable $hydrateFunc
