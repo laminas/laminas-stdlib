@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Stdlib;
+namespace Laminas\Stdlib;
 
-use Iterator;
 use Countable;
+use Iterator;
 use Serializable;
 use SplPriorityQueue as PhpSplPriorityQueue;
 
@@ -151,7 +150,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
 
                 // If the array is empty we need to destroy the unnecessary priority,
                 // otherwise we would end up with an incorrect value of `$this->count`
-                // {@see \Zend\Stdlib\FastPriorityQueue::nextAndRemove()}.
+                // {@see \Laminas\Stdlib\FastPriorityQueue::nextAndRemove()}.
                 if (empty($this->values[$this->maxPriority])) {
                     unset($this->values[$this->maxPriority]);
                     unset($this->priorities[$this->maxPriority]);

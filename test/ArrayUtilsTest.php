@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
 use ArrayObject;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
+use Laminas\Stdlib\Exception\InvalidArgumentException;
+use Laminas\Stdlib\Parameters;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\ArrayUtils\MergeRemoveKey;
-use Zend\Stdlib\Exception\InvalidArgumentException;
-use Zend\Stdlib\Parameters;
 
 class ArrayUtilsTest extends TestCase
 {
@@ -285,14 +284,14 @@ class ArrayUtilsTest extends TestCase
             ],
         ];
         $b = [
-            'car' => new \Zend\Stdlib\ArrayUtils\MergeReplaceKey([
+            'car' => new \Laminas\Stdlib\ArrayUtils\MergeReplaceKey([
                 'met' => 'bet',
             ]),
-            'new' => new \Zend\Stdlib\ArrayUtils\MergeReplaceKey([
+            'new' => new \Laminas\Stdlib\ArrayUtils\MergeReplaceKey([
                 'foo' => 'get',
             ]),
         ];
-        $this->assertInstanceOf('Zend\Stdlib\ArrayUtils\MergeReplaceKeyInterface', $b['car']);
+        $this->assertInstanceOf('Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface', $b['car']);
         $this->assertEquals($expected, ArrayUtils::merge($a, $b));
     }
 

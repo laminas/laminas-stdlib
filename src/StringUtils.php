@@ -1,15 +1,14 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace Zend\Stdlib;
+namespace Laminas\Stdlib;
 
-use Zend\Stdlib\StringWrapper\StringWrapperInterface;
+use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 /**
  * Utility class for handling strings of different character encodings
@@ -58,18 +57,18 @@ abstract class StringUtils
             static::$wrapperRegistry = [];
 
             if (extension_loaded('intl')) {
-                static::$wrapperRegistry[] = 'Zend\Stdlib\StringWrapper\Intl';
+                static::$wrapperRegistry[] = 'Laminas\Stdlib\StringWrapper\Intl';
             }
 
             if (extension_loaded('mbstring')) {
-                static::$wrapperRegistry[] = 'Zend\Stdlib\StringWrapper\MbString';
+                static::$wrapperRegistry[] = 'Laminas\Stdlib\StringWrapper\MbString';
             }
 
             if (extension_loaded('iconv')) {
-                static::$wrapperRegistry[] = 'Zend\Stdlib\StringWrapper\Iconv';
+                static::$wrapperRegistry[] = 'Laminas\Stdlib\StringWrapper\Iconv';
             }
 
-            static::$wrapperRegistry[] = 'Zend\Stdlib\StringWrapper\Native';
+            static::$wrapperRegistry[] = 'Laminas\Stdlib\StringWrapper\Native';
         }
 
         return static::$wrapperRegistry;

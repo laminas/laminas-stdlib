@@ -1,23 +1,22 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
 use ArrayObject;
 use BadMethodCallException;
 use InvalidArgumentException;
+use Laminas\Stdlib\Exception;
+use LaminasTest\Stdlib\TestAsset\TestOptions;
+use LaminasTest\Stdlib\TestAsset\TestOptionsDerived;
+use LaminasTest\Stdlib\TestAsset\TestOptionsNoStrict;
+use LaminasTest\Stdlib\TestAsset\TestOptionsWithoutGetter;
 use PHPUnit\Framework\TestCase;
-use Zend\Stdlib\Exception;
-use ZendTest\Stdlib\TestAsset\TestOptions;
-use ZendTest\Stdlib\TestAsset\TestOptionsDerived;
-use ZendTest\Stdlib\TestAsset\TestOptionsNoStrict;
-use ZendTest\Stdlib\TestAsset\TestOptionsWithoutGetter;
 
 class OptionsTest extends TestCase
 {
@@ -53,14 +52,14 @@ class OptionsTest extends TestCase
     public function testNonStrictOptionsDoesNotThrowException()
     {
         $this->assertInstanceOf(
-            'ZendTest\Stdlib\TestAsset\TestOptionsNoStrict',
+            'LaminasTest\Stdlib\TestAsset\TestOptionsNoStrict',
             new TestOptionsNoStrict(['foo' => 'bar'])
         );
     }
 
     public function testConstructionWithNull()
     {
-        $this->assertInstanceOf('ZendTest\Stdlib\TestAsset\TestOptions', new TestOptions(null));
+        $this->assertInstanceOf('LaminasTest\Stdlib\TestAsset\TestOptions', new TestOptions(null));
     }
 
     public function testUnsetting()
