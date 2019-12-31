@@ -1,19 +1,18 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zend-stdlib for the canonical source repository
- * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Hydrator;
+namespace LaminasTest\Stdlib\Hydrator;
 
+use Laminas\Hydrator\HydratorPluginManager as BasePluginManager;
+use Laminas\Stdlib\Hydrator\HydratorInterface;
+use Laminas\Stdlib\Hydrator\HydratorPluginManager;
 use PHPUnit_Framework_TestCase as TestCase;
 use ReflectionProperty;
-use Zend\Hydrator\HydratorPluginManager as BasePluginManager;
-use Zend\Stdlib\Hydrator\HydratorInterface;
-use Zend\Stdlib\Hydrator\HydratorPluginManager;
 
 class HydratorPluginManagerTest extends TestCase
 {
@@ -22,7 +21,7 @@ class HydratorPluginManagerTest extends TestCase
         $this->hydrators = new HydratorPluginManager();
     }
 
-    public function testExtendsZendHydratorPluginManager()
+    public function testExtendsLaminasHydratorPluginManager()
     {
         $this->assertInstanceOf(BasePluginManager::class, $this->hydrators);
     }

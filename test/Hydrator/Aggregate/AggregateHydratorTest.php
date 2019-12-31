@@ -1,36 +1,35 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Hydrator\Aggregate;
+namespace LaminasTest\Stdlib\Hydrator\Aggregate;
 
+use Laminas\EventManager\EventManager;
+use Laminas\Hydrator\Aggregate\HydratorListener;
+use Laminas\Hydrator\HydratorInterface;
+use Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator;
+use Laminas\Stdlib\Hydrator\Aggregate\ExtractEvent;
+use Laminas\Stdlib\Hydrator\Aggregate\HydrateEvent;
 use PHPUnit_Framework_TestCase;
 use Prophecy\Argument;
-use Zend\EventManager\EventManager;
-use Zend\Hydrator\Aggregate\HydratorListener;
-use Zend\Hydrator\HydratorInterface;
-use Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator;
-use Zend\Stdlib\Hydrator\Aggregate\ExtractEvent;
-use Zend\Stdlib\Hydrator\Aggregate\HydrateEvent;
 use stdClass;
 
 /**
- * Unit tests for {@see \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator}
+ * Unit tests for {@see \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator}
  */
 class AggregateHydratorTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator
+     * @var \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator
      */
     protected $hydrator;
 
     /**
-     * @var \Zend\EventManager\EventManager|\PHPUnit_Framework_MockObject_MockObject
+     * @var \Laminas\EventManager\EventManager|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $eventManager;
 
@@ -46,7 +45,7 @@ class AggregateHydratorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator::add
+     * @covers \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator::add
      */
     public function testAdd()
     {
@@ -95,7 +94,7 @@ class AggregateHydratorTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator::hydrate
+     * @covers \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator::hydrate
      */
     public function testHydrate()
     {
@@ -105,13 +104,13 @@ class AggregateHydratorTest extends PHPUnit_Framework_TestCase
             ->eventManager
             ->expects($this->once())
             ->method('triggerEvent')
-            ->with($this->isInstanceOf('Zend\Hydrator\Aggregate\HydrateEvent'));
+            ->with($this->isInstanceOf('Laminas\Hydrator\Aggregate\HydrateEvent'));
 
         $this->assertSame($object, $this->hydrator->hydrate(['foo' => 'bar'], $object));
     }
 
     /**
-     * @covers \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator::extract
+     * @covers \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator::extract
      */
     public function testExtract()
     {
@@ -121,14 +120,14 @@ class AggregateHydratorTest extends PHPUnit_Framework_TestCase
             ->eventManager
             ->expects($this->once())
             ->method('triggerEvent')
-            ->with($this->isInstanceOf('Zend\Hydrator\Aggregate\ExtractEvent'));
+            ->with($this->isInstanceOf('Laminas\Hydrator\Aggregate\ExtractEvent'));
 
         $this->assertSame([], $this->hydrator->extract($object));
     }
 
     /**
      * @group 55
-     * @covers \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator::hydrate
+     * @covers \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator::hydrate
      */
     public function testHydrateUsesStdlibHydrateEvent()
     {
@@ -138,14 +137,14 @@ class AggregateHydratorTest extends PHPUnit_Framework_TestCase
             ->eventManager
             ->expects($this->once())
             ->method('triggerEvent')
-            ->with($this->isInstanceOf('Zend\Stdlib\Hydrator\Aggregate\HydrateEvent'));
+            ->with($this->isInstanceOf('Laminas\Stdlib\Hydrator\Aggregate\HydrateEvent'));
 
         $this->assertSame($object, $this->hydrator->hydrate(['foo' => 'bar'], $object));
     }
 
     /**
      * @group 55
-     * @covers \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator::extract
+     * @covers \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator::extract
      */
     public function testExtractUsesStdlibExtractEvent()
     {
@@ -155,29 +154,29 @@ class AggregateHydratorTest extends PHPUnit_Framework_TestCase
             ->eventManager
             ->expects($this->once())
             ->method('triggerEvent')
-            ->with($this->isInstanceOf('Zend\Stdlib\Hydrator\Aggregate\ExtractEvent'));
+            ->with($this->isInstanceOf('Laminas\Stdlib\Hydrator\Aggregate\ExtractEvent'));
 
         $this->assertSame([], $this->hydrator->extract($object));
     }
 
     /**
-     * @covers \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator::getEventManager
-     * @covers \Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator::setEventManager
+     * @covers \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator::getEventManager
+     * @covers \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator::setEventManager
      */
     public function testGetSetManager()
     {
         $hydrator     = new AggregateHydrator();
-        $eventManager = $this->getMock('Zend\EventManager\EventManagerInterface');
+        $eventManager = $this->getMock('Laminas\EventManager\EventManagerInterface');
 
-        $this->assertInstanceOf('Zend\EventManager\EventManagerInterface', $hydrator->getEventManager());
+        $this->assertInstanceOf('Laminas\EventManager\EventManagerInterface', $hydrator->getEventManager());
 
         $eventManager
             ->expects($this->once())
             ->method('setIdentifiers')
             ->with(
                 [
-                     'Zend\Hydrator\Aggregate\AggregateHydrator',
-                     'Zend\Stdlib\Hydrator\Aggregate\AggregateHydrator',
+                     'Laminas\Hydrator\Aggregate\AggregateHydrator',
+                     'Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator',
                 ]
             );
 

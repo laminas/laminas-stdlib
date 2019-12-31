@@ -1,25 +1,26 @@
 <?php
+
 /**
- * @see       http://github.com/zendframework/zend-stdlib for the canonical source repository
- * @copyright Copyright (c) 2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   https://github.com/zendframework/zend-stdlib/blob/master/LICENSE.md New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\TestAsset;
+namespace LaminasTest\Stdlib\TestAsset;
 
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Stdlib\Exception;
+use Laminas\Stdlib\Hydrator\AbstractHydrator;
+use Laminas\Stdlib\Hydrator\Filter\FilterComposite;
+use Laminas\Stdlib\Hydrator\Filter\FilterProviderInterface;
+use Laminas\Stdlib\Hydrator\Filter\GetFilter;
+use Laminas\Stdlib\Hydrator\Filter\HasFilter;
+use Laminas\Stdlib\Hydrator\Filter\IsFilter;
+use Laminas\Stdlib\Hydrator\Filter\MethodMatchFilter;
+use Laminas\Stdlib\Hydrator\Filter\OptionalParametersFilter;
+use Laminas\Stdlib\Hydrator\HydratorOptionsInterface;
+use Laminas\Stdlib\Hydrator\NamingStrategy\UnderscoreNamingStrategy;
 use Traversable;
-use Zend\Stdlib\Exception;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\Hydrator\AbstractHydrator;
-use Zend\Stdlib\Hydrator\HydratorOptionsInterface;
-use Zend\Stdlib\Hydrator\Filter\FilterComposite;
-use Zend\Stdlib\Hydrator\Filter\FilterProviderInterface;
-use Zend\Stdlib\Hydrator\Filter\GetFilter;
-use Zend\Stdlib\Hydrator\Filter\HasFilter;
-use Zend\Stdlib\Hydrator\Filter\IsFilter;
-use Zend\Stdlib\Hydrator\Filter\MethodMatchFilter;
-use Zend\Stdlib\Hydrator\Filter\OptionalParametersFilter;
-use Zend\Stdlib\Hydrator\NamingStrategy\UnderscoreNamingStrategy;
 
 /**
  * Class Methods Extends
@@ -28,7 +29,7 @@ use Zend\Stdlib\Hydrator\NamingStrategy\UnderscoreNamingStrategy;
  * might have extended properties.
  *
  * This test asset exists to see how deprecation works; it is associated with
- * the test ZendTest\Stdlib\HydratorDeprecationTest.
+ * the test LaminasTest\Stdlib\HydratorDeprecationTest.
  */
 class ClassMethodsExtendsHydrator extends AbstractHydrator implements HydratorOptionsInterface
 {
@@ -45,7 +46,7 @@ class ClassMethodsExtendsHydrator extends AbstractHydrator implements HydratorOp
     protected $extractExtendedProperties = false;
 
     /**
-     * @var \Zend\Stdlib\Hydrator\Filter\FilterInterface
+     * @var \Laminas\Stdlib\Hydrator\Filter\FilterInterface
      */
     protected $callableMethodFilter;
 
