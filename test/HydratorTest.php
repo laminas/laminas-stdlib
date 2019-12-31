@@ -1,27 +1,25 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2012 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Stdlib
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
-use Zend\Stdlib\Hydrator\ClassMethods;
-use Zend\Stdlib\Hydrator\Reflection;
-use ZendTest\Stdlib\TestAsset\ClassMethodsCamelCase;
-use ZendTest\Stdlib\TestAsset\ClassMethodsUnderscore;
-use ZendTest\Stdlib\TestAsset\ClassMethodsCamelCaseMissing;
-use ZendTest\Stdlib\TestAsset\Reflection as ReflectionAsset;
+use Laminas\Stdlib\Hydrator\ClassMethods;
+use Laminas\Stdlib\Hydrator\Reflection;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsCamelCase;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsCamelCaseMissing;
+use LaminasTest\Stdlib\TestAsset\ClassMethodsUnderscore;
+use LaminasTest\Stdlib\TestAsset\Reflection as ReflectionAsset;
 
 /**
- * @category   Zend
- * @package    Zend_Stdlib
+ * @category   Laminas
+ * @package    Laminas_Stdlib
  * @subpackage UnitTests
- * @group      Zend_Stdlib
+ * @group      Laminas_Stdlib
  */
 class HydratorTest extends \PHPUnit_Framework_TestCase
 {
