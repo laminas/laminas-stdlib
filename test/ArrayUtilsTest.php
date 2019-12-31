@@ -1,20 +1,19 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib;
+namespace LaminasTest\Stdlib;
 
 use ArrayObject;
+use Laminas\Config\Config;
+use Laminas\Stdlib\ArrayUtils;
+use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
 use PHPUnit_Framework_TestCase as TestCase;
 use stdClass;
-use Zend\Config\Config;
-use Zend\Stdlib\ArrayUtils;
-use Zend\Stdlib\ArrayUtils\MergeRemoveKey;
 
 class ArrayUtilsTest extends TestCase
 {
@@ -284,14 +283,14 @@ class ArrayUtilsTest extends TestCase
             ],
         ];
         $b = [
-            'car' => new \Zend\Stdlib\ArrayUtils\MergeReplaceKey([
+            'car' => new \Laminas\Stdlib\ArrayUtils\MergeReplaceKey([
                 'met' => 'bet',
             ]),
-            'new' => new \Zend\Stdlib\ArrayUtils\MergeReplaceKey([
+            'new' => new \Laminas\Stdlib\ArrayUtils\MergeReplaceKey([
                 'foo' => 'get',
             ]),
         ];
-        $this->assertInstanceOf('Zend\Stdlib\ArrayUtils\MergeReplaceKeyInterface', $b['car']);
+        $this->assertInstanceOf('Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface', $b['car']);
         $this->assertEquals($expected, ArrayUtils::merge($a, $b));
     }
 
@@ -479,7 +478,7 @@ class ArrayUtilsTest extends TestCase
      */
     public function testInvalidIteratorsRaiseInvalidArgumentException($test)
     {
-        $this->setExpectedException('Zend\Stdlib\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\Stdlib\Exception\InvalidArgumentException');
         $this->assertFalse(ArrayUtils::iteratorToArray($test));
     }
 
@@ -536,7 +535,7 @@ class ArrayUtilsTest extends TestCase
     }
 
     /**
-     * @expectedException \Zend\Stdlib\Exception\InvalidArgumentException
+     * @expectedException \Laminas\Stdlib\Exception\InvalidArgumentException
      */
     public function testInvalidCallableRaiseInvalidArgumentException()
     {
