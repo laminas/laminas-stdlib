@@ -1,24 +1,23 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Hydrator;
+namespace LaminasTest\Stdlib\Hydrator;
 
-use Zend\Stdlib\Hydrator\ObjectProperty;
-use Zend\Stdlib\Exception\BadMethodCallException;
-use ZendTest\Stdlib\TestAsset\ClassWithPublicStaticProperties;
-use ZendTest\Stdlib\TestAsset\ObjectProperty as ObjectPropertyTestAsset;
+use Laminas\Stdlib\Exception\BadMethodCallException;
+use Laminas\Stdlib\Hydrator\ObjectProperty;
+use LaminasTest\Stdlib\TestAsset\ClassWithPublicStaticProperties;
+use LaminasTest\Stdlib\TestAsset\ObjectProperty as ObjectPropertyTestAsset;
 
 /**
- * Unit tests for {@see \Zend\Stdlib\Hydrator\ObjectProperty}
+ * Unit tests for {@see \Laminas\Stdlib\Hydrator\ObjectProperty}
  *
- * @covers \Zend\Stdlib\Hydrator\ObjectProperty
- * @group Zend_Stdlib
+ * @covers \Laminas\Stdlib\Hydrator\ObjectProperty
+ * @group Laminas_Stdlib
  */
 class ObjectPropertyTest extends \PHPUnit_Framework_TestCase
 {
