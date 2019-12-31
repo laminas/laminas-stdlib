@@ -1,16 +1,15 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link       http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright  Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license    http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\StringWrapper;
+namespace LaminasTest\Stdlib\StringWrapper;
 
-use Zend\Stdlib\Exception;
-use Zend\Stdlib\StringWrapper\MbString;
+use Laminas\Stdlib\Exception;
+use Laminas\Stdlib\StringWrapper\MbString;
 
 class MbStringTest extends CommonStringWrapperTest
 {
@@ -20,7 +19,7 @@ class MbStringTest extends CommonStringWrapperTest
         if (!extension_loaded('mbstring')) {
             try {
                 new MbString('utf-8');
-                $this->fail('Missing expected Zend\Stdlib\Exception\ExtensionNotLoadedException');
+                $this->fail('Missing expected Laminas\Stdlib\Exception\ExtensionNotLoadedException');
             } catch (Exception\ExtensionNotLoadedException $e) {
                 $this->markTestSkipped('Missing ext/mbstring');
             }

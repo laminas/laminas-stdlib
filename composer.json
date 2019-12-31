@@ -1,34 +1,22 @@
 {
-    "name": "zendframework/zend-stdlib",
+    "name": "laminas/laminas-stdlib",
     "description": " ",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
+        "laminas",
         "stdlib"
     ],
-    "homepage": "https://github.com/zendframework/zend-stdlib",
-    "autoload": {
-        "psr-4": {
-            "Zend\\Stdlib\\": "src/"
-        }
+    "homepage": "https://laminas.dev",
+    "support": {
+        "docs": "https://docs.laminas.dev/laminas-stdlib/",
+        "issues": "https://github.com/laminas/laminas-stdlib/issues",
+        "source": "https://github.com/laminas/laminas-stdlib",
+        "rss": "https://github.com/laminas/laminas-stdlib/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "require": {
-        "php": ">=5.3.23"
-    },
-    "require-dev": {
-        "zendframework/zend-eventmanager": "self.version",
-        "zendframework/zend-serializer": "self.version",
-        "zendframework/zend-servicemanager": "self.version",
-        "zendframework/zend-filter": "self.version",
-        "fabpot/php-cs-fixer": "1.7.*",
-        "satooshi/php-coveralls": "dev-master",
-        "phpunit/PHPUnit": "~4.0"
-    },
-    "suggest": {
-        "zendframework/zend-eventmanager": "To support aggregate hydrator usage",
-        "zendframework/zend-serializer": "Zend\\Serializer component",
-        "zendframework/zend-servicemanager": "To support hydrator plugin manager usage",
-        "zendframework/zend-filter": "To support naming strategy hydrator usage"
+    "config": {
+        "sort-packages": true
     },
     "extra": {
         "branch-alias": {
@@ -36,9 +24,36 @@
             "dev-develop": "2.3-dev"
         }
     },
+    "require": {
+        "php": ">=5.3.23",
+        "laminas/laminas-zendframework-bridge": "^1.0"
+    },
+    "require-dev": {
+        "fabpot/php-cs-fixer": "1.7.*",
+        "laminas/laminas-eventmanager": "self.version",
+        "laminas/laminas-filter": "self.version",
+        "laminas/laminas-serializer": "self.version",
+        "laminas/laminas-servicemanager": "self.version",
+        "phpunit/phpunit": "~4.0",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "suggest": {
+        "laminas/laminas-eventmanager": "To support aggregate hydrator usage",
+        "laminas/laminas-filter": "To support naming strategy hydrator usage",
+        "laminas/laminas-serializer": "Laminas\\Serializer component",
+        "laminas/laminas-servicemanager": "To support hydrator plugin manager usage"
+    },
+    "autoload": {
+        "psr-4": {
+            "Laminas\\Stdlib\\": "src/"
+        }
+    },
     "autoload-dev": {
         "psr-4": {
-            "ZendTest\\Stdlib\\": "test/"
+            "LaminasTest\\Stdlib\\": "test/"
         }
+    },
+    "replace": {
+        "zendframework/zend-stdlib": "self.version"
     }
 }

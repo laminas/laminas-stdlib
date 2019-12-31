@@ -1,27 +1,26 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Guard;
+namespace LaminasTest\Stdlib\Guard;
 
+use Laminas\Stdlib\ArrayObject;
+use Laminas\Stdlib\Guard\GuardUtils;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Stdlib\Guard\GuardUtils;
-use Zend\Stdlib\ArrayObject;
 
 /**
- * @covers   Zend\Stdlib\Guard\GuardUtils
+ * @covers   Laminas\Stdlib\Guard\GuardUtils
  */
 class GuardUtilsTest extends TestCase
 {
     public function testGuardForArrayOrTraversableThrowsException()
     {
         $this->setExpectedException(
-            'Zend\Stdlib\Exception\InvalidArgumentException',
+            'Laminas\Stdlib\Exception\InvalidArgumentException',
             'Argument must be an array or Traversable, [string] given'
         );
         GuardUtils::guardForArrayOrTraversable('');
@@ -41,7 +40,7 @@ class GuardUtilsTest extends TestCase
     public function testGuardAgainstEmptyThrowsException()
     {
         $this->setExpectedException(
-            'Zend\Stdlib\Exception\InvalidArgumentException',
+            'Laminas\Stdlib\Exception\InvalidArgumentException',
             'Argument cannot be empty'
         );
         GuardUtils::guardAgainstEmpty('');
@@ -55,7 +54,7 @@ class GuardUtilsTest extends TestCase
     public function testGuardAgainstNullThrowsException()
     {
         $this->setExpectedException(
-            'Zend\Stdlib\Exception\InvalidArgumentException',
+            'Laminas\Stdlib\Exception\InvalidArgumentException',
             'Argument cannot be null'
         );
         GuardUtils::guardAgainstNull(null);
