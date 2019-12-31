@@ -1,21 +1,20 @@
 <?php
+
 /**
- * Zend Framework (http://framework.zend.com/)
- *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2015 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
+ * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZendTest\Stdlib\Hydrator;
+namespace LaminasTest\Stdlib\Hydrator;
 
-use Zend\Stdlib\Hydrator\DelegatingHydrator;
 use ArrayObject;
+use Laminas\Stdlib\Hydrator\DelegatingHydrator;
 
 /**
- * Unit tests for {@see \Zend\Stdlib\Hydrator\DelegatingHydrator}
+ * Unit tests for {@see \Laminas\Stdlib\Hydrator\DelegatingHydrator}
  *
- * @covers \Zend\Stdlib\Hydrator\DelegatingHydrator
+ * @covers \Laminas\Stdlib\Hydrator\DelegatingHydrator
  */
 class DelegatingHydratorTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,7 +38,7 @@ class DelegatingHydratorTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->hydrators = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface');
+        $this->hydrators = $this->getMock('Laminas\ServiceManager\ServiceLocatorInterface');
         $this->hydrator = new DelegatingHydrator($this->hydrators);
         $this->object = new ArrayObject;
     }
@@ -51,7 +50,7 @@ class DelegatingHydratorTest extends \PHPUnit_Framework_TestCase
             ->with('ArrayObject')
             ->will($this->returnValue(true));
 
-        $hydrator = $this->getMock('Zend\Stdlib\Hydrator\HydratorInterface');
+        $hydrator = $this->getMock('Laminas\Stdlib\Hydrator\HydratorInterface');
 
         $this->hydrators->expects($this->any())
             ->method('get')
@@ -73,7 +72,7 @@ class DelegatingHydratorTest extends \PHPUnit_Framework_TestCase
             ->with('ArrayObject')
             ->will($this->returnValue(true));
 
-        $hydrator = $this->getMock('Zend\Stdlib\Hydrator\HydratorInterface');
+        $hydrator = $this->getMock('Laminas\Stdlib\Hydrator\HydratorInterface');
 
         $this->hydrators->expects($this->any())
             ->method('get')
