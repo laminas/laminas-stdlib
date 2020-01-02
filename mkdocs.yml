@@ -8,3 +8,6 @@ nav:
 site_name: laminas-stdlib
 site_description: Laminas\Stdlib
 repo_url: 'https://github.com/laminas/laminas-stdlib'
+extra:
+    project: Components
+    project_url: 'https://docs.laminas.dev'
