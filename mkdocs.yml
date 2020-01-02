@@ -2,8 +2,9 @@ docs_dir: docs/book
 site_dir: docs/html
 nav:
     - index.md
-    - { Reference: [{ 'Console Helper': console-helper.md }] }
-    - { Migration: migration.md }
+    - Reference:
+      - "Console Helper": console-helper.md
+    - Migration: migration.md
 site_name: laminas-stdlib
 site_description: Laminas\Stdlib
 repo_url: 'https://github.com/laminas/laminas-stdlib'
