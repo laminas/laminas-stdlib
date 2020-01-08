@@ -1,7 +1,7 @@
 docs_dir: docs/book
 site_dir: docs/html
 nav:
-    - index.md
+    - Home: index.md
     - Reference:
       - "Console Helper": console-helper.md
     - Migration: migration.md
