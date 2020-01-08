@@ -20,7 +20,7 @@
     <div class="container">
         
         <a class="logo-link navbar-brand offset-md-2" href="https://getlaminas.org/" data-tooltip data-placement="bottom" title="Go to the Laminas homepage">
-            <img src="../img/laminas-foundation-white.svg" height="28" alt="Lamnias">
+            <img src="../img/laminas-foundation-white.svg" height="28" alt="Laminas">
         </a>
         <a class="navbar-title" href="https://docs.laminas.dev/" data-tooltip data-placement="bottom" title="Go to the Laminas Documentation">
             Documentation
@@ -36,13 +36,17 @@
             
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="https://getlaminas.org/about" class="nav-link">About</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://getlaminas.org/blog" class="nav-link">Blog</a>
-                </li>
-                <li class="nav-item">
-                    <a href="https://docs.laminas.dev" class="nav-link">All Docs</a>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false">
+                            All Docs
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="https://docs.laminas.dev/components">Components</a>
+                            <a class="dropdown-item" href="https://docs.mezzio.dev/">Mezzio</a>
+                            <a class="dropdown-item" href="https://api-tools.getlaminas.org/docs">API Tools</a>
+                            <a class="dropdown-item" href="https://docs.laminas.dev/mvc">MVC</a>
+                        </div>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="https://getlaminas.org/participate" class="nav-link">Community</a>
@@ -61,20 +65,6 @@
         <h5 class="subnavigation__subtitle">Table of Contents</h5>
 
         <ul class="subnavigation__list">
-            
-
-                
-                
-
-                    
-                    
-                        
-                            <li class="subnavigation__list-item ">
-                                <a href=".." class="subnavigation__link">laminas-stdlib</a>
-                            </li>
-                        
-                    
-                
             
 
                 
@@ -256,15 +246,13 @@
 all beneath it in a minimal fashion.</p>
 <h2 id="usage">Usage</h2>
 <p>Typical usage is to instantiate a <code>ConsoleHelper</code>, and call one of its methods:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>use Laminas\Stdlib\ConsoleHelper;</span>
+<pre class=codehilite><code class=language-php>use Laminas\Stdlib\ConsoleHelper;
 
-<span class=x>$helper = new ConsoleHelper();</span>
-<span class=x>$helper-&gt;writeLine(&#39;This is output&#39;);</span>
-</pre></div></p>
+$helper = new ConsoleHelper();
+$helper-&gt;writeLine('This is output');</code></pre>
 <p>You can optionally pass a PHP stream resource to the constructor, which will be
 used to determine whether or not color support is available:</p>
-<p> <div class=codehilite><pre><span></span><span class=x>$helper = new ConsoleHelper($stream);</span>
-</pre></div></p>
+<pre class=codehilite><code class=language-php>$helper = new ConsoleHelper($stream);</code></pre>
 <p>By default, it assumes <code>STDOUT</code>, and tests against that.</p>
 <h2 id="available-methods">Available methods</h2>
 <p><code>ConsoleHelper</code> provides the following methods.</p>
@@ -301,40 +289,39 @@ sequences to them, if color support is detected.</p>
 <h2 id="example">Example</h2>
 <p>Below is an example class that accepts an argument list, and determines how and
 what to emit.</p>
-<p> <div class=codehilite><pre><span></span><span class=x>namespace Foo;</span>
+<pre class=codehilite><code class=language-php>namespace Foo;
 
-<span class=x>use Laminas\Stdlib\ConsoleHelper;</span>
+use Laminas\Stdlib\ConsoleHelper;
 
-<span class=x>class HelloWorld</span>
-<span class=x>{</span>
-<span class=x>    private $helper;</span>
+class HelloWorld
+{
+    private $helper;
 
-<span class=x>    public function __construct(ConsoleHelper $helper = null)</span>
-<span class=x>    {</span>
-<span class=x>        $this-&gt;helper = $helper ?: new ConsoleHelper();</span>
-<span class=x>    }</span>
+    public function __construct(ConsoleHelper $helper = null)
+    {
+        $this-&gt;helper = $helper ?: new ConsoleHelper();
+    }
 
-<span class=x>    public function __invoke(array $args)</span>
-<span class=x>    {</span>
-<span class=x>        if (! count($args)) {</span>
-<span class=x>            $this-&gt;helper-&gt;writeErrorMessage(&#39;Missing arguments!&#39;);</span>
-<span class=x>            return;</span>
-<span class=x>        }</span>
+    public function __invoke(array $args)
+    {
+        if (! count($args)) {
+            $this-&gt;helper-&gt;writeErrorMessage('Missing arguments!');
+            return;
+        }
 
-<span class=x>        if (count($args) &gt; 1) {</span>
-<span class=x>            $this-&gt;helper-&gt;writeErrorMessage(&#39;Too many arguments!&#39;);</span>
-<span class=x>            return;</span>
-<span class=x>        }</span>
+        if (count($args) &gt; 1) {
+            $this-&gt;helper-&gt;writeErrorMessage('Too many arguments!');
+            return;
+        }
 
-<span class=x>        $target = array_shift($args);</span>
+        $target = array_shift($args);
 
-<span class=x>        $this-&gt;helper-&gt;writeLine(sprintf(</span>
-<span class=x>            &#39;&lt;info&gt;Hello&lt;/info&gt; %s&#39;,</span>
-<span class=x>            $target</span>
-<span class=x>        ));</span>
-<span class=x>    }</span>
-<span class=x>}</span>
-</pre></div></p>
+        $this-&gt;helper-&gt;writeLine(sprintf(
+            '&lt;info&gt;Hello&lt;/info&gt; %s',
+            $target
+        ));
+    }
+}</code></pre>
 <h2 id="when-to-upgrade">When to upgrade</h2>
 <p><code>ConsoleHelper</code> is deliberately simple, and assumes that your primary need for
 console tooling is for output considerations.</p>
@@ -411,20 +398,6 @@ and console feature detection facilities.</p>
                     
                     
                         
-                            <li class="subnavigation__list-item ">
-                                <a href=".." class="subnavigation__link">laminas-stdlib</a>
-                            </li>
-                        
-                    
-                
-            
-
-                
-                
-
-                    
-                    
-                        
                             <li class="subnavigation__list-item">
                                 <span class="subnavigation__headline">Reference</span>
                                 <ul class="subnavigation__list">
@@ -478,9 +451,10 @@ and console feature detection facilities.</p>
             <div class="col-md-7 offset-md-2">
                 <h5>Laminas</h5>
                 <ul>
-                    <li>Laminas Project <a href="https://getlaminas.org/">Components and MVC for Enterprise Applications</a></li>
-                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 Middleware in Minutes</a></li>
-                    <li>Laminas API Tools: <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
+                    <li>Laminas Project <a href="https://getlaminas.org/">The new foundation for the community-supported, open source continuation of Zend Framework</a></li>
+                    <li>Laminas Components and MVC <a href="https://docs.laminas.dev/">Components and MVC for enterprise applications</a></li>
+                    <li>Mezzio <a href="https://docs.mezzio.dev/">PSR-15 middleware in minutes</a></li>
+                    <li>Laminas API Tools <a href="https://api-tools.getlaminas.org/">Build RESTful APIs in minutes</a></li>
                 </ul>
             </div>
         </div>
@@ -517,7 +491,7 @@ and console feature detection facilities.</p>
                 <h4 class="footer__headline">License</h4>
                 <p>
                     Code licensed under <a
-                        href="https://github.com/laminas/laminas-stdlib//blob/master/LICENSE.md">BSD 3-Clause</a>.
+                        href="https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md">BSD 3-Clause</a>.
                 </p>
             </div>
 
@@ -526,8 +500,8 @@ and console feature detection facilities.</p>
                 <h4 class="footer__headline">Copyright</h4>
                 <p>
                     <!--Built with love by the Laminas team with the help of our
-                    <a href="https://github.com/laminas/laminas-stdlib//graphs/contributors">contributors</a>.<br>-->
-                    &copy; 2019-2019 by <a href="https://getlaminas.org/">The Laminas Project</a>.
+                    <a href="https://github.com/laminas/laminas-stdlib/graphs/contributors">contributors</a>.<br>-->
+                    &copy; 2019-2020 by <a href="https://getlaminas.org/">The Laminas Project</a>.
                 </p>
             </div>
         </div>
