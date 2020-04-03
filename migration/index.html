@@ -284,17 +284,18 @@ seamless:</p>
 <ul>
 <li>Remove your laminas-stdlib dependency:</li>
 </ul>
-<p><code>bash
-  $ composer remove laminas/laminas-stdlib</code></p>
+<pre class="highlight"><code class="language-bash">$ composer remove laminas/laminas-stdlib</code></pre>
+
 <ul>
 <li>Update to use laminas-hydrator:</li>
 </ul>
-<p><code>bash
-  $ composer require laminas/laminas-hydrator</code></p>
+<pre class="highlight"><code class="language-bash">$ composer require laminas/laminas-hydrator</code></pre>
+
 <p>When laminas-hydrator updates to newer versions of laminas-stdlib and
 laminas-servicemanager, you will either automatically get those versions, or you
 can tell composer to use those specific versions:</p>
-<pre class=codehilite><code class=language-bash>$ composer require &quot;laminas/laminas-stdlib:^3.0&quot;</code></pre>
+<pre class="highlight"><code class="language-bash">$ composer require "laminas/laminas-stdlib:^3.0"</code></pre>
+
 <h3>CallbackHandler</h3>
 <p><code>Laminas\Stdlib\CallbackHandler</code> primarily existed for legacy purposes; it was
 created before the <code>callable</code> typehint existed, so that we could typehint PHP

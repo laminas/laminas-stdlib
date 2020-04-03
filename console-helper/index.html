@@ -305,13 +305,15 @@
 all beneath it in a minimal fashion.</p>
 <h2 id="usage">Usage</h2>
 <p>Typical usage is to instantiate a <code>ConsoleHelper</code>, and call one of its methods:</p>
-<pre class=codehilite><code class=language-php>use Laminas\Stdlib\ConsoleHelper;
+<pre class="highlight"><code class="language-php">use Laminas\Stdlib\ConsoleHelper;
 
 $helper = new ConsoleHelper();
 $helper-&gt;writeLine('This is output');</code></pre>
+
 <p>You can optionally pass a PHP stream resource to the constructor, which will be
 used to determine whether or not color support is available:</p>
-<pre class=codehilite><code class=language-php>$helper = new ConsoleHelper($stream);</code></pre>
+<pre class="highlight"><code class="language-php">$helper = new ConsoleHelper($stream);</code></pre>
+
 <p>By default, it assumes <code>STDOUT</code>, and tests against that.</p>
 <h2 id="available-methods">Available methods</h2>
 <p><code>ConsoleHelper</code> provides the following methods.</p>
@@ -348,7 +350,7 @@ sequences to them, if color support is detected.</p>
 <h2 id="example">Example</h2>
 <p>Below is an example class that accepts an argument list, and determines how and
 what to emit.</p>
-<pre class=codehilite><code class=language-php>namespace Foo;
+<pre class="highlight"><code class="language-php">namespace Foo;
 
 use Laminas\Stdlib\ConsoleHelper;
 
@@ -381,6 +383,7 @@ class HelloWorld
         ));
     }
 }</code></pre>
+
 <h2 id="when-to-upgrade">When to upgrade</h2>
 <p><code>ConsoleHelper</code> is deliberately simple, and assumes that your primary need for
 console tooling is for output considerations.</p>
