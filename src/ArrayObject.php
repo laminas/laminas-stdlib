@@ -17,6 +17,12 @@ use Serializable;
  * Custom framework ArrayObject implementation
  *
  * Extends version-specific "abstract" implementation.
+ *
+ * @phpstan-template TKey
+ * @phpstan-template TValue
+ *
+ * @phpstan-implements IteratorAggregate<int|TKey, TValue>
+ * @phpstan-implements ArrayAccess<int|TKey, TValue>
  */
 class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Countable
 {
@@ -33,6 +39,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * @var array
+     * @phpstan-var array<int|TKey, TValue>
      */
     protected $storage;
 
@@ -47,7 +54,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     protected $iteratorClass;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $protectedProperties;
 
@@ -57,6 +64,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param array  $input
      * @param int    $flags
      * @param string $iteratorClass
+     *
+     * @phpstan-param array<TKey, TValue> $input
+     * @phpstan-param class-string<\Iterator<TKey, TValue>> $iteratorClass
      */
     public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = 'ArrayIterator')
     {
@@ -176,8 +186,11 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Exchange the array for another one.
      *
-     * @param  array|ArrayObject $data
+     * @param  array|\ArrayObject $data
      * @return array
+     *
+     * @phpstan-param array<TKey, TValue>|\ArrayObject<TKey, TValue> $data
+     * @phpstan-return array<int|TKey, TValue>
      */
     public function exchangeArray($data)
     {
@@ -205,6 +218,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Creates a copy of the ArrayObject.
      *
      * @return array
+     * @phpstan-return array<int|TKey, TValue>
      */
     public function getArrayCopy()
     {
@@ -225,6 +239,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Create a new iterator from an ArrayObject instance
      *
      * @return \Iterator
+     * @phpstan-return \Iterator<int|TKey, TValue>
      */
     public function getIterator()
     {

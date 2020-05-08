@@ -13,17 +13,20 @@ use Countable;
 use Serializable;
 use Traversable;
 
-/*
+/**
  * Basically, an ArrayObject. You could simply define something like:
  *     class QueryParams extends ArrayObject implements Parameters {}
  * and have 90% of the functionality
+ *
+ * @phpstan-extends ArrayAccess<string, mixed>
+ * @phpstan-extends Traversable<string, mixed>
  */
 interface ParametersInterface extends ArrayAccess, Countable, Serializable, Traversable
 {
     /**
      * Constructor
      *
-     * @param array $values
+     * @param array<string, mixed> $values
      */
     public function __construct(array $values = null);
 
@@ -32,8 +35,8 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      *
      * Allow deserialization from standard array
      *
-     * @param array $values
-     * @return mixed
+     * @param array<string, mixed> $values
+     * @return void
      */
     public function fromArray(array $values);
 
@@ -43,7 +46,7 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      * Allow deserialization from raw body; e.g., for PUT requests
      *
      * @param string $string
-     * @return mixed
+     * @return void
      */
     public function fromString($string);
 
@@ -52,7 +55,7 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      *
      * Allow serialization back to standard array
      *
-     * @return mixed
+     * @return array<string, mixed>
      */
     public function toArray();
 
@@ -61,7 +64,7 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      *
      * Allow serialization to query format; e.g., for PUT or POST requests
      *
-     * @return mixed
+     * @return string
      */
     public function toString();
 

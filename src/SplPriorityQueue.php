@@ -15,6 +15,8 @@ use Serializable;
  *
  * Also, provides predictable heap order for datums added with the same priority
  * (i.e., they will be emitted in the same order they are enqueued).
+ *
+ * @phpstan-template T
  */
 class SplPriorityQueue extends \SplPriorityQueue implements Serializable
 {
@@ -32,6 +34,8 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      * @param  mixed $datum
      * @param  mixed $priority
      * @return bool
+     *
+     * @phpstan-param T $datum
      */
     public function insert($datum, $priority)
     {
@@ -48,6 +52,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      * Array will be priority => data pairs
      *
      * @return array
+     * @phpstan-return array<int, T>
      */
     public function toArray()
     {

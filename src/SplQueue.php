@@ -12,6 +12,8 @@ use Serializable;
 
 /**
  * Serializable version of SplQueue
+ *
+ * @phpstan-template TValue
  */
 class SplQueue extends \SplQueue implements Serializable
 {
@@ -19,6 +21,7 @@ class SplQueue extends \SplQueue implements Serializable
      * Return an array representing the queue
      *
      * @return array
+     * @phpstan-return array<int, TValue>
      */
     public function toArray()
     {

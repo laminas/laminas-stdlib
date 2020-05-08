@@ -26,7 +26,7 @@ abstract class AbstractOptions implements ParameterObjectInterface
     /**
      * Constructor
      *
-     * @param  array|Traversable|null $options
+     * @param array<string, mixed>|Traversable<string, mixed>|null $options
      */
     public function __construct($options = null)
     {
@@ -38,7 +38,7 @@ abstract class AbstractOptions implements ParameterObjectInterface
     /**
      * Set one or more configuration properties
      *
-     * @param  array|Traversable|AbstractOptions $options
+     * @param  array<string, mixed>|Traversable<string, mixed>|AbstractOptions $options
      * @throws Exception\InvalidArgumentException
      * @return AbstractOptions Provides fluent interface
      */
@@ -70,7 +70,7 @@ abstract class AbstractOptions implements ParameterObjectInterface
     /**
      * Cast to array
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray()
     {

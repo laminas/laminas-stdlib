@@ -12,6 +12,8 @@ use Serializable;
 
 /**
  * Serializable version of SplStack
+ *
+ * @phpstan-template TValue
  */
 class SplStack extends \SplStack implements Serializable
 {
@@ -19,6 +21,7 @@ class SplStack extends \SplStack implements Serializable
      * Serialize to an array representing the stack
      *
      * @return array
+     * @phpstan-return array<int, TValue>
      */
     public function toArray()
     {

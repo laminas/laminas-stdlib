@@ -13,6 +13,10 @@ use ArrayObject as PhpArrayObject;
 
 /**
  * ArrayObject that acts as a stack with regards to iteration
+ *
+ * @phpstan-template TKey
+ * @phpstan-template TValue
+ * @phpstan-extends PhpArrayObject<TKey, TValue>
  */
 class ArrayStack extends PhpArrayObject
 {
@@ -23,6 +27,7 @@ class ArrayStack extends PhpArrayObject
      * ArrayIterator with that reversed array.
      *
      * @return ArrayIterator
+     * @phpstan-return ArrayIterator<TKey, TValue>
      */
     public function getIterator()
     {

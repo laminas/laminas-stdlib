@@ -35,6 +35,7 @@ class ConsoleHelper
     const HIGHLIGHT_INFO  = 'info';
     const HIGHLIGHT_ERROR = 'error';
 
+    /** @var array<string, string> */
     private $highlightMap = [
         self::HIGHLIGHT_INFO  => self::COLOR_GREEN,
         self::HIGHLIGHT_ERROR => self::COLOR_RED,

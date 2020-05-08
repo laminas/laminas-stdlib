@@ -13,7 +13,7 @@ use Traversable;
 class Message implements MessageInterface
 {
     /**
-     * @var array
+     * @var array<string|int, mixed>
      */
     protected $metadata = [];
 
@@ -28,7 +28,7 @@ class Message implements MessageInterface
      * Non-destructive setting of message metadata; always adds to the metadata, never overwrites
      * the entire metadata container.
      *
-     * @param  string|int|array|Traversable $spec
+     * @param  string|int|array<string|int, mixed>|Traversable<string|int, mixed> $spec
      * @param  mixed $value
      * @throws Exception\InvalidArgumentException
      * @return Message

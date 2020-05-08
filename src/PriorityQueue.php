@@ -23,6 +23,9 @@ use Serializable;
  * This class aggregates items for the queue itself, but also composes an
  * "inner" iterator in the form of an SplPriorityQueue object for performing
  * the actual iteration.
+ *
+ * @phpstan-template TValue
+ * @phpstan-implements IteratorAggregate<string, TValue>
  */
 class PriorityQueue implements Countable, IteratorAggregate, Serializable
 {
@@ -40,6 +43,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Actual items aggregated in the priority queue. Each item is an array
      * with keys "data" and "priority".
      * @var array
+     * @phpstan-var array<int, array{data: TValue, priority: int}>
      */
     protected $items      = [];
 
@@ -56,7 +60,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @param  mixed $data
      * @param  int $priority
-     * @return PriorityQueue
+     * @return $this
      */
     public function insert($data, $priority = 1)
     {
@@ -84,6 +88,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @param  mixed $datum
      * @return bool False if the item was not found, true otherwise.
+     *
+     * @phpstan-param TValue $datum
      */
     public function remove($datum)
     {
@@ -203,6 +209,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @param  int $flag
      * @return array
+     *
+     * @phpstan-return array<int, array{data: TValue, priority: int}>|array<int, int>|array<int, TValue>
      */
     public function toArray($flag = self::EXTR_DATA)
     {
@@ -228,7 +236,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * internal queue class. The class provided should extend SplPriorityQueue.
      *
      * @param  string $class
-     * @return PriorityQueue
+     * @return $this
      */
     public function setInternalQueueClass($class)
     {

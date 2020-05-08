@@ -11,6 +11,10 @@ namespace Laminas\Stdlib;
 use Countable;
 use Iterator;
 
+/**
+ * @phpstan-template TValue
+ * @phpstan-implements Iterator<string, TValue>
+ */
 class PriorityList implements Iterator, Countable
 {
     const EXTR_DATA     = 0x00000001;
@@ -20,6 +24,7 @@ class PriorityList implements Iterator, Countable
      * Internal list of all items.
      *
      * @var array[]
+     * @phpstan-var array<string, array{data: TValue, priority: int, serial: int}>
      */
     protected $items = [];
 
@@ -58,6 +63,8 @@ class PriorityList implements Iterator, Countable
      * @param  int     $priority
      *
      * @return void
+     *
+     * @phpstan-param TValue $value
      */
     public function insert($name, $value, $priority = 0)
     {
@@ -127,11 +134,13 @@ class PriorityList implements Iterator, Countable
      *
      * @param  string $name
      * @return mixed
+     *
+     * @phpstan-return TValue|null
      */
     public function get($name)
     {
         if (! isset($this->items[$name])) {
-            return;
+            return null;
         }
 
         return $this->items[$name]['data'];
@@ -156,6 +165,9 @@ class PriorityList implements Iterator, Countable
      * @param  array $item1,
      * @param  array $item2
      * @return int
+     *
+     * @phpstan-param array<string, array{data: TValue, priority: int, serial: int}> $item1
+     * @phpstan-param array<string, array{data: TValue, priority: int, serial: int}> $item2
      */
     protected function compare(array $item1, array $item2)
     {
@@ -187,6 +199,8 @@ class PriorityList implements Iterator, Countable
 
     /**
      * {@inheritDoc}
+     *
+     * @return void
      */
     public function rewind()
     {
@@ -196,6 +210,8 @@ class PriorityList implements Iterator, Countable
 
     /**
      * {@inheritDoc}
+     *
+     * @phpstan-return TValue|bool
      */
     public function current()
     {
@@ -210,6 +226,8 @@ class PriorityList implements Iterator, Countable
 
     /**
      * {@inheritDoc}
+     *
+     * @phpstan-return string|null
      */
     public function key()
     {
@@ -222,6 +240,8 @@ class PriorityList implements Iterator, Countable
 
     /**
      * {@inheritDoc}
+     *
+     * @phpstan-return TValue|bool
      */
     public function next()
     {
@@ -232,6 +252,8 @@ class PriorityList implements Iterator, Countable
 
     /**
      * {@inheritDoc}
+     *
+     * @return bool
      */
     public function valid()
     {
@@ -240,6 +262,7 @@ class PriorityList implements Iterator, Countable
 
     /**
      * @return self
+     * @phpstan-return PriorityList<TValue>
      */
     public function getIterator()
     {
@@ -248,6 +271,8 @@ class PriorityList implements Iterator, Countable
 
     /**
      * {@inheritDoc}
+     *
+     * @return int
      */
     public function count()
     {
@@ -260,6 +285,8 @@ class PriorityList implements Iterator, Countable
      * @param int $flag
      *
      * @return array
+     *
+     * @phpstan-return array<string, array{data: TValue, priority: int, serial: int}>|array<string, int>|array<string, TValue>
      */
     public function toArray($flag = self::EXTR_DATA)
     {

@@ -180,7 +180,7 @@ abstract class ArrayUtils
      * non-strict behaviour is used.
      *
      * @param mixed $needle
-     * @param array $haystack
+     * @param array<mixed> $haystack
      * @param int|bool $strict
      * @return bool
      */
@@ -211,6 +211,11 @@ abstract class ArrayUtils
      * @param  bool               $recursive    Recursively check all nested structures
      * @throws Exception\InvalidArgumentException if $iterator is not an array or a Traversable object
      * @return array
+     *
+     * @phpstan-template TKey
+     * @phpstan-template TValue
+     * @phpstan-param array<TKey, TValue>|Traversable<TKey, TValue> $iterator
+     * @phpstan-return array<TKey, TValue>
      */
     public static function iteratorToArray($iterator, $recursive = true)
     {
@@ -238,6 +243,7 @@ abstract class ArrayUtils
             }
 
             if ($value instanceof Traversable) {
+                /** @phpstan-ignore-next-line */
                 $array[$key] = static::iteratorToArray($value, $recursive);
                 continue;
             }
@@ -250,6 +256,7 @@ abstract class ArrayUtils
             $array[$key] = $value;
         }
 
+        /** @phpstan-var array<TKey, TValue> $array */
         return $array;
     }
 
@@ -260,10 +267,19 @@ abstract class ArrayUtils
      * from the second array will be appended to the first array. If both values are arrays, they
      * are merged together, else the value of the second array overwrites the one of the first array.
      *
+     * @phpstan-template TAKey
+     * @phpstan-template TAValue
+     * @phpstan-template TBKey
+     * @phpstan-template TBValue
+     *
      * @param  array $a
      * @param  array $b
      * @param  bool  $preserveNumericKeys
      * @return array
+     *
+     * @phpstan-param array<TAKey, TAValue> $a
+     * @phpstan-param array<TBKey, TBValue> $b
+     * @phpstan-return array<TAKey|TBKey, TAValue|TBValue>
      */
     public static function merge(array $a, array $b, $preserveNumericKeys = false)
     {
@@ -298,6 +314,12 @@ abstract class ArrayUtils
      * @param null|int $flag
      * @return array
      * @throws Exception\InvalidArgumentException
+     *
+     * @phpstan-template TDataKey
+     * @phpstan-template TDataValue
+     * @phpstan-param array<TDataKey, TDataValue> $data
+     * @phpstan-param callable(): bool $callback
+     * @phpstan-return array<TDataKey, TDataValue>
      */
     public static function filter(array $data, $callback, $flag = null)
     {
