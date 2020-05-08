@@ -9,4 +9,5 @@ parameters:
     paths:
         - %currentWorkingDirectory%/src
 
+    treatPhpDocTypesAsCertain: false
     inferPrivatePropertyTypeFromConstructor: true
