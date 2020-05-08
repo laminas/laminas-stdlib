@@ -240,13 +240,13 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
             return $input;
         }
 
-        $repeatCount = floor($lengthOfPadding / $padStringLength);
+        $repeatCount = (int) floor($lengthOfPadding / $padStringLength);
 
         if ($padType === STR_PAD_BOTH) {
             $repeatCountLeft = $repeatCountRight = ($repeatCount - $repeatCount % 2) / 2;
 
             $lastStringLength       = $lengthOfPadding - 2 * $repeatCountLeft * $padStringLength;
-            $lastStringLeftLength   = $lastStringRightLength = floor($lastStringLength / 2);
+            $lastStringLeftLength   = $lastStringRightLength = (int) floor($lastStringLength / 2);
             $lastStringRightLength += $lastStringLength % 2;
 
             $lastStringLeft  = $this->substr($padString, 0, $lastStringLeftLength);
