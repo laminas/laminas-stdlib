@@ -11,6 +11,7 @@ namespace LaminasTest\Stdlib;
 use Laminas\Stdlib\Exception\RuntimeException;
 use Laminas\Stdlib\Glob;
 use PHPUnit\Framework\TestCase;
+use function var_dump;
 
 class GlobTest extends TestCase
 {

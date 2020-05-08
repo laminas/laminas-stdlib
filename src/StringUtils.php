@@ -87,7 +87,7 @@ abstract class StringUtils
     public static function registerWrapper($wrapper)
     {
         $wrapper = (string) $wrapper;
-        if (! in_array($wrapper, static::$wrapperRegistry, true)) {
+        if (! in_array($wrapper, static::$wrapperRegistry ?: [], true)) {
             static::$wrapperRegistry[] = $wrapper;
         }
     }
@@ -97,10 +97,12 @@ abstract class StringUtils
      *
      * @param string $wrapper
      * @return void
+     *
+     * @phpstan-param class-string<StringWrapperInterface> $wrapper
      */
     public static function unregisterWrapper($wrapper)
     {
-        $index = array_search((string) $wrapper, static::$wrapperRegistry, true);
+        $index = array_search((string) $wrapper, static::$wrapperRegistry ?: [], true);
         if ($index !== false) {
             unset(static::$wrapperRegistry[$index]);
         }

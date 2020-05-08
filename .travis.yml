@@ -33,6 +33,7 @@ matrix:
         - CS_CHECK=true
         - BENCHMARKS=true
         - TEST_COVERAGE=true
+        - STATIC_ANALYSE=true
     - php: 7.2
       env:
         - DEPS=lowest
@@ -62,6 +63,7 @@ install:
 
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
+  - if [[ $STATIC_ANALYSE == 'true' ]]; then vendor/bin/phpstan analyze ; fi
   - if [[ $BENCHMARKS == 'true' ]]; then vendor/bin/phpbench run --revs=2 --iterations=2 --report=aggregate ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
 

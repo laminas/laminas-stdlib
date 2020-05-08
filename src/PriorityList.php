@@ -225,8 +225,6 @@ class PriorityList implements Iterator, Countable
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @phpstan-return string|null
      */
     public function key()
@@ -286,7 +284,7 @@ class PriorityList implements Iterator, Countable
      *
      * @return array
      *
-     * @phpstan-return array<string, array{data: TValue, priority: int, serial: int}>|array<string, int>|array<string, TValue>
+     * @phpstan-return array<string, array{data: TValue, priority: int, serial: int}|int|TValue>
      */
     public function toArray($flag = self::EXTR_DATA)
     {

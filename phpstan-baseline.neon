@@ -1,6 +1,11 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Parameter \\#3 \\$flag of function array_filter expects int, int\\|null given\\.$#"
+			count: 1
+			path: src/ArrayUtils.php
+
+		-
 			message: "#^Default value of the parameter \\#1 \\$resource \\(mixed\\) of method Laminas\\\\Stdlib\\\\ConsoleHelper\\:\\:__construct\\(\\) is incompatible with type resource\\.$#"
 			count: 1
 			path: src/ConsoleHelper.php
@@ -24,4 +29,19 @@ parameters:
 			message: "#^Parameter \\#1 \\$error_handler of function set_error_handler expects \\(callable\\(int, string, string, int, array\\)\\: bool\\)\\|null, array\\(class\\-string\\<static\\(Laminas\\\\Stdlib\\\\ErrorHandler\\)\\>, 'addError'\\) given\\.$#"
 			count: 1
 			path: src/ErrorHandler.php
+
+		-
+			message: "#^Method Laminas\\\\Stdlib\\\\StringWrapper\\\\AbstractStringWrapper\\:\\:getEncoding\\(\\) should return string but returns string\\|null\\.$#"
+			count: 1
+			path: src/StringWrapper/AbstractStringWrapper.php
+
+		-
+			message: "#^Parameter \\#3 \\$length of function iconv_substr expects int, int\\|null given\\.$#"
+			count: 1
+			path: src/StringWrapper/Iconv.php
+
+		-
+			message: "#^Parameter \\#3 \\$length of function substr expects int, int\\|null given\\.$#"
+			count: 1
+			path: src/StringWrapper/Native.php
 

@@ -27,17 +27,19 @@ class MbString extends AbstractStringWrapper
      */
     public static function getSupportedEncodings()
     {
-        if (static::$encodings === null) {
-            static::$encodings = array_map('strtoupper', mb_list_encodings());
-
-            // FIXME: Converting € (UTF-8) to ISO-8859-16 gives a wrong result
-            $indexIso885916 = array_search('ISO-8859-16', static::$encodings, true);
-            if ($indexIso885916 !== false) {
-                unset(static::$encodings[$indexIso885916]);
-            }
+        if (null !== static::$encodings) {
+            return static::$encodings;
         }
 
-        return static::$encodings;
+        $encodings = array_map('strtoupper', mb_list_encodings());
+
+        // FIXME: Converting € (UTF-8) to ISO-8859-16 gives a wrong result
+        $indexIso885916 = array_search('ISO-8859-16', $encodings, true);
+        if ($indexIso885916 !== false) {
+            unset($encodings[$indexIso885916]);
+        }
+
+        return static::$encodings = $encodings;
     }
 
     /**
