@@ -181,7 +181,7 @@ abstract class ArrayUtils
      *
      * @param mixed $needle
      * @param array<mixed> $haystack
-     * @param int|bool $strict
+     * @param bool $strict
      * @return bool
      */
     public static function inArray($needle, array $haystack, $strict = false)
@@ -231,7 +231,7 @@ abstract class ArrayUtils
             return iterator_to_array($iterator);
         }
 
-        if (method_exists($iterator, 'toArray')) {
+        if ($iterator instanceof Traversable && method_exists($iterator, 'toArray')) {
             return $iterator->toArray();
         }
 
@@ -303,6 +303,7 @@ abstract class ArrayUtils
             }
         }
 
+        /** @phpstan-var array<TAKey|TBKey, TAValue|TBValue|mixed> */
         return $a;
     }
 

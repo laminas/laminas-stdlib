@@ -20,3 +20,8 @@ parameters:
 			count: 1
 			path: src/ConsoleHelper.php
 
+		-
+			message: "#^Parameter \\#1 \\$error_handler of function set_error_handler expects \\(callable\\(int, string, string, int, array\\)\\: bool\\)\\|null, array\\(class\\-string\\<static\\(Laminas\\\\Stdlib\\\\ErrorHandler\\)\\>, 'addError'\\) given\\.$#"
+			count: 1
+			path: src/ErrorHandler.php
+

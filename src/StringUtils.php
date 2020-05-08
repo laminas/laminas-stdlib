@@ -21,7 +21,8 @@ abstract class StringUtils
     /**
      * Ordered list of registered string wrapper instances
      *
-     * @var StringWrapperInterface[]|null
+     * @var string[]|null
+     * @phpstan-var array<class-string<StringWrapperInterface>>|null
      */
     protected static $wrapperRegistry = null;
 
@@ -50,6 +51,7 @@ abstract class StringUtils
      * Get registered wrapper classes
      *
      * @return string[]
+     * @phpstan-return array<class-string<StringWrapperInterface>>
      */
     public static function getRegisteredWrappers()
     {
@@ -79,6 +81,8 @@ abstract class StringUtils
      *
      * @param string $wrapper
      * @return void
+     *
+     * @phpstan-param class-string<StringWrapperInterface> $wrapper
      */
     public static function registerWrapper($wrapper)
     {

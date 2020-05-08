@@ -164,8 +164,8 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
             return wordwrap($string, $width, $break, $cut);
         }
 
-        $stringWidth = $this->strlen($string);
-        $breakWidth  = $this->strlen($break);
+        $stringWidth = $this->strlen($string) ?: null;
+        $breakWidth  = $this->strlen($break) ?: null;
 
         $result    = '';
         $lastStart = $lastSpace = 0;

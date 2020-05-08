@@ -10,11 +10,15 @@ namespace Laminas\Stdlib\ArrayUtils;
 
 /**
  * Marker interface: can be used to replace keys completely in {@see ArrayUtils::merge()} operations
+ *
+ * @phpstan-template TData
  */
 interface MergeReplaceKeyInterface
 {
     /**
      * @return mixed
+     *
+     * @phpstan-return TData
      */
     public function getData();
 }
