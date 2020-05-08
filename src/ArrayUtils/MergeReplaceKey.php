@@ -8,6 +8,10 @@
 
 namespace Laminas\Stdlib\ArrayUtils;
 
+/**
+ * @template TData
+ * @template-implements MergeReplaceKeyInterface<TData>
+ */
 final class MergeReplaceKey implements MergeReplaceKeyInterface
 {
     /**
@@ -17,6 +21,7 @@ final class MergeReplaceKey implements MergeReplaceKeyInterface
 
     /**
      * @param mixed $data
+     * @psalm-param TData $data
      */
     public function __construct($data)
     {

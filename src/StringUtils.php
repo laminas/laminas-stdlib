@@ -29,7 +29,8 @@ abstract class StringUtils
     /**
      * Ordered list of registered string wrapper instances
      *
-     * @var StringWrapperInterface[]
+     * @var string[]|null
+     * @psalm-var array<class-string<StringWrapperInterface>>|null
      */
     protected static $wrapperRegistry = null;
 
@@ -50,7 +51,7 @@ abstract class StringUtils
     /**
      * Is PCRE compiled with Unicode support?
      *
-     * @var bool
+     * @var bool|null
      **/
     protected static $hasPcreUnicodeSupport = null;
 
@@ -58,6 +59,7 @@ abstract class StringUtils
      * Get registered wrapper classes
      *
      * @return string[]
+     * @psalm-return array<class-string<StringWrapperInterface>>
      */
     public static function getRegisteredWrappers()
     {
@@ -87,11 +89,13 @@ abstract class StringUtils
      *
      * @param string $wrapper
      * @return void
+     *
+     * @psalm-param class-string<StringWrapperInterface> $wrapper
      */
     public static function registerWrapper($wrapper)
     {
         $wrapper = (string) $wrapper;
-        if (! in_array($wrapper, static::$wrapperRegistry, true)) {
+        if (! in_array($wrapper, static::$wrapperRegistry ?: [], true)) {
             static::$wrapperRegistry[] = $wrapper;
         }
     }
@@ -101,10 +105,12 @@ abstract class StringUtils
      *
      * @param string $wrapper
      * @return void
+     *
+     * @psalm-param class-string<StringWrapperInterface> $wrapper
      */
     public static function unregisterWrapper($wrapper)
     {
-        $index = array_search((string) $wrapper, static::$wrapperRegistry, true);
+        $index = array_search((string) $wrapper, static::$wrapperRegistry ?? [], true);
         if ($index !== false) {
             unset(static::$wrapperRegistry[$index]);
         }

@@ -35,6 +35,12 @@ use function unserialize;
  * Custom framework ArrayObject implementation
  *
  * Extends version-specific "abstract" implementation.
+ *
+ * @template TKey as array-key
+ * @template TValue
+ *
+ * @template-implements IteratorAggregate<int|TKey, TValue>
+ * @template-implements ArrayAccess<int|TKey, TValue>
  */
 class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Countable
 {
@@ -51,6 +57,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * @var array
+     * @psalm-var array<int|TKey, TValue>
      */
     protected $storage;
 
@@ -60,12 +67,12 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     protected $flag;
 
     /**
-     * @var string
+     * @var class-string<\Iterator>
      */
     protected $iteratorClass;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $protectedProperties;
 
@@ -75,8 +82,11 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param array  $input
      * @param int    $flags
      * @param string $iteratorClass
+     *
+     * @psalm-param array<TKey, TValue> $input
+     * @psalm-param class-string<\Iterator> $iteratorClass
      */
-    public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = 'ArrayIterator')
+    public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = \ArrayIterator::class)
     {
         $this->setFlags($flags);
         $this->storage = $input;
@@ -112,7 +122,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     public function __set($key, $value)
     {
         if ($this->flag == self::ARRAY_AS_PROPS) {
-            return $this->offsetSet($key, $value);
+            $this->offsetSet($key, $value);
+            return;
         }
         if (in_array($key, $this->protectedProperties)) {
             throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
@@ -129,7 +140,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     public function __unset($key)
     {
         if ($this->flag == self::ARRAY_AS_PROPS) {
-            return $this->offsetUnset($key);
+            $this->offsetUnset($key);
+            return;
         }
         if (in_array($key, $this->protectedProperties)) {
             throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
@@ -142,6 +154,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  mixed $key
      * @return mixed
+     *
+     * @psalm-param TKey $key
+     * @psalm-return TValue
      */
     public function &__get($key)
     {
@@ -163,6 +178,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  mixed $value
      * @return void
+     *
+     * @psalm-param TValue $value
      */
     public function append($value)
     {
@@ -192,11 +209,15 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Exchange the array for another one.
      *
-     * @param  array|ArrayObject $data
+     * @param  array|\ArrayObject $data
      * @return array
+     *
+     * @psalm-param array<TKey, TValue>|\ArrayObject<TKey, TValue> $data
+     * @psalm-return array<int|TKey, TValue>
      */
     public function exchangeArray($data)
     {
+        /** @psalm-var array<TKey, TValue>|mixed $data */
         if (! is_array($data) && ! is_object($data)) {
             throw new Exception\InvalidArgumentException(
                 'Passed variable is not an array or object, using empty array instead'
@@ -204,9 +225,11 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (is_object($data) && ($data instanceof self || $data instanceof \ArrayObject)) {
+            /** @psalm-var array<TKey, TValue> $data */
             $data = $data->getArrayCopy();
         }
         if (! is_array($data)) {
+            /** @psalm-var array<TKey, TValue> $data */
             $data = (array) $data;
         }
 
@@ -221,6 +244,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Creates a copy of the ArrayObject.
      *
      * @return array
+     * @psalm-return array<int|TKey, TValue>
      */
     public function getArrayCopy()
     {
@@ -241,6 +265,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Create a new iterator from an ArrayObject instance
      *
      * @return \Iterator
+     * @psalm-return \Iterator<TKey, TValue>
      */
     public function getIterator()
     {
@@ -253,6 +278,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Gets the iterator classname for the ArrayObject.
      *
      * @return string
+     *
+     * @psalm-return class-string<\Iterator>
      */
     public function getIteratorClass()
     {
@@ -323,6 +350,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param  mixed $key
      * @param  mixed $value
      * @return void
+     *
+     * @psalm-param int|TKey $key
+     * @psalm-param TValue $value
      */
     public function offsetSet($key, $value)
     {
@@ -334,6 +364,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  mixed $key
      * @return void
+     *
+     * @psalm-param int|TKey $key
      */
     public function offsetUnset($key)
     {

@@ -30,6 +30,9 @@ use function unserialize;
  * This class aggregates items for the queue itself, but also composes an
  * "inner" iterator in the form of an SplPriorityQueue object for performing
  * the actual iteration.
+ *
+ * @template TValue
+ * @template-implements IteratorAggregate<int, TValue>
  */
 class PriorityQueue implements Countable, IteratorAggregate, Serializable
 {
@@ -40,6 +43,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     /**
      * Inner queue class to use for iteration
      * @var string
+     *
+     * @psalm-var class-string<\SplPriorityQueue>
      */
     protected $queueClass = SplPriorityQueue::class;
 
@@ -47,12 +52,13 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Actual items aggregated in the priority queue. Each item is an array
      * with keys "data" and "priority".
      * @var array
+     * @psalm-var array<int, array{data: TValue, priority: int}>
      */
     protected $items      = [];
 
     /**
      * Inner queue object
-     * @var SplPriorityQueue
+     * @var \SplPriorityQueue<int, TValue>|null
      */
     protected $queue;
 
@@ -63,7 +69,9 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @param  mixed $data
      * @param  int $priority
-     * @return PriorityQueue
+     * @return $this
+     *
+     * @psalm-param TValue $data
      */
     public function insert($data, $priority = 1)
     {
@@ -91,6 +99,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @param  mixed $datum
      * @return bool False if the item was not found, true otherwise.
+     *
+     * @psalm-param TValue $datum
      */
     public function remove($datum)
     {
@@ -193,11 +203,14 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * retrieves the inner queue object, and clones it for purposes of
      * iteration.
      *
-     * @return SplPriorityQueue
+     * @return \SplPriorityQueue
+     *
+     * @psalm-return \SplPriorityQueue<int, TValue>
      */
     public function getIterator()
     {
         $queue = $this->getQueue();
+
         return clone $queue;
     }
 
@@ -235,6 +248,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @param  int $flag
      * @return array
+     *
+     * @psalm-return array<int, array{data: TValue, priority: int}>|array<int, int>|array<int, TValue>
      */
     public function toArray($flag = self::EXTR_DATA)
     {
@@ -260,7 +275,9 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * internal queue class. The class provided should extend SplPriorityQueue.
      *
      * @param  string $class
-     * @return PriorityQueue
+     * @return $this
+     *
+     * @psalm-param class-string<\SplPriorityQueue> $class
      */
     public function setInternalQueueClass($class)
     {
@@ -304,7 +321,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Get the inner priority queue instance
      *
      * @throws Exception\DomainException
-     * @return SplPriorityQueue
+     * @return \SplPriorityQueue
+     * @psalm-return \SplPriorityQueue<int, TValue>
      */
     protected function getQueue()
     {
@@ -317,6 +335,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
                 ));
             }
         }
+
         return $this->queue;
     }
 

@@ -13,6 +13,9 @@ use ArrayObject as PhpArrayObject;
 use function http_build_query;
 use function parse_str;
 
+/**
+ * @template-extends PhpArrayObject<string, mixed>
+ */
 class Parameters extends PhpArrayObject implements ParametersInterface
 {
     /**
@@ -21,7 +24,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * Enforces that we have an array, and enforces parameter access to array
      * elements.
      *
-     * @param  array $values
+     * @param array<string, mixed> $values
      */
     public function __construct(array $values = null)
     {
@@ -34,7 +37,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
     /**
      * Populate from native PHP array
      *
-     * @param  array $values
+     * @param  array<string, mixed> $values
      * @return void
      */
     public function fromArray(array $values)
@@ -58,7 +61,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
     /**
      * Serialize to native PHP array
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function toArray()
     {
@@ -88,7 +91,8 @@ class Parameters extends PhpArrayObject implements ParametersInterface
         if ($this->offsetExists($name)) {
             return parent::offsetGet($name);
         }
-        return;
+
+        return null;
     }
 
     /**
@@ -107,7 +111,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
     /**
      * @param string $name
      * @param mixed $value
-     * @return Parameters
+     * @return $this
      */
     public function set($name, $value)
     {

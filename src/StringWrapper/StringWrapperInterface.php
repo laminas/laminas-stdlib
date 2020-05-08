@@ -18,6 +18,7 @@ interface StringWrapperInterface
      *
      * @param string      $encoding
      * @param string|null $convertEncoding
+     * @return bool
      */
     public static function isSupported($encoding, $convertEncoding = null);
 

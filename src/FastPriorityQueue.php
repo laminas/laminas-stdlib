@@ -30,6 +30,9 @@ use function unserialize;
  * elements from the queue and it also acts like an Iterator without removing
  * the elements. This behaviour can be used in mixed scenarios with high
  * performance boost.
+ *
+ * @template TValue
+ * @template-implements Iterator<int, TValue>
  */
 class FastPriorityQueue implements Iterator, Countable, Serializable
 {
@@ -45,21 +48,21 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Elements of the queue, divided by priorities
      *
-     * @var array
+     * @var array<int, array<int, TValue>>
      */
     protected $values = [];
 
     /**
      * Array of priorities
      *
-     * @var array
+     * @var array<int, int>
      */
     protected $priorities = [];
 
     /**
      * Array of priorities used for the iteration
      *
-     * @var array
+     * @var array<int, int>
      */
     protected $subPriorities = [];
 
@@ -96,6 +99,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @param mixed $value
      * @param integer $priority
+     * @return void
      */
     public function insert($value, $priority)
     {
@@ -138,6 +142,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @param  mixed $datum
      * @return bool False if the item was not found, true otherwise.
+     *
+     * @psalm-param TValue $datum
      */
     public function remove($datum)
     {
@@ -221,6 +227,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Set the iterator pointer to the next element in the queue
      * removing the previous element
+     *
+     * @return void
      */
     protected function nextAndRemove()
     {
@@ -242,6 +250,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Set the iterator pointer to the next element in the queue
      * without removing the previous element
+     *
+     * @return void
      */
     public function next()
     {
@@ -267,6 +277,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
 
     /**
      * Rewind the current iterator
+     * @return void
      */
     public function rewind()
     {
@@ -282,6 +293,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Array will be priority => data pairs
      *
      * @return array
+     *
+     * @psalm-return array<int, TValue>
      */
     public function toArray()
     {
@@ -327,6 +340,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Set the extract flag
      *
      * @param integer $flag
+     * @return void
      */
     public function setExtractFlags($flag)
     {
@@ -356,6 +370,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @param  mixed $datum
      * @return bool
+     *
+     * @psalm-param TValue $datum
      */
     public function contains($datum)
     {

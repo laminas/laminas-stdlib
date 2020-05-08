@@ -48,7 +48,7 @@ abstract class Glob
      * @param  string  $pattern
      * @param  int $flags
      * @param  bool $forceFallback
-     * @return array
+     * @return string[]
      * @throws Exception\RuntimeException
      */
     public static function glob($pattern, $flags = 0, $forceFallback = false)
@@ -65,7 +65,7 @@ abstract class Glob
      *
      * @param  string  $pattern
      * @param  int     $flags
-     * @return array
+     * @return string[]
      * @throws Exception\RuntimeException
      */
     protected static function systemGlob($pattern, $flags)
@@ -106,7 +106,7 @@ abstract class Glob
      *
      * @param  string  $pattern
      * @param  int     $flags
-     * @return array
+     * @return string[]
      * @throws Exception\RuntimeException
      */
     protected static function fallbackGlob($pattern, $flags)

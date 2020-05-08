@@ -15,6 +15,10 @@ use function array_reverse;
 
 /**
  * ArrayObject that acts as a stack with regards to iteration
+ *
+ * @template TKey of array-key
+ * @template TValue
+ * @template-extends PhpArrayObject<TKey, TValue>
  */
 class ArrayStack extends PhpArrayObject
 {
@@ -25,10 +29,13 @@ class ArrayStack extends PhpArrayObject
      * ArrayIterator with that reversed array.
      *
      * @return ArrayIterator
+     *
+     * @psalm-return ArrayIterator<TKey, TValue>
      */
     public function getIterator()
     {
         $array = $this->getArrayCopy();
-        return new ArrayIterator(array_reverse($array));
+        $reversed = array_reverse($array);
+        return new ArrayIterator($reversed);
     }
 }

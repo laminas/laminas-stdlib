@@ -15,6 +15,8 @@ use function unserialize;
 
 /**
  * Serializable version of SplStack
+ *
+ * @template TValue
  */
 class SplStack extends \SplStack implements Serializable
 {
@@ -22,6 +24,7 @@ class SplStack extends \SplStack implements Serializable
      * Serialize to an array representing the stack
      *
      * @return array
+     * @psalm-return array<int, TValue>
      */
     public function toArray()
     {

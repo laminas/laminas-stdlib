@@ -19,6 +19,10 @@ use function unserialize;
  *
  * Also, provides predictable heap order for datums added with the same priority
  * (i.e., they will be emitted in the same order they are enqueued).
+ *
+ * @template TPriority
+ * @template TValue
+ * @template-extends \SplPriorityQueue<TPriority, TValue>
  */
 class SplPriorityQueue extends \SplPriorityQueue implements Serializable
 {
@@ -35,14 +39,19 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      *
      * @param  mixed $datum
      * @param  mixed $priority
-     * @return void
+     * @return bool
+     *
+     * @psalm-param TValue $datum
+     * @psalm-param TPriority $priority
+     * @psalm-return true
      */
     public function insert($datum, $priority)
     {
         if (! is_array($priority)) {
             $priority = [$priority, $this->serial--];
         }
-        parent::insert($datum, $priority);
+
+        return parent::insert($datum, $priority);
     }
 
     /**
@@ -51,6 +60,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      * Array will be priority => data pairs
      *
      * @return array
+     * @psalm-return array<int, TValue>
      */
     public function toArray()
     {

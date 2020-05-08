@@ -15,6 +15,8 @@ use function unserialize;
 
 /**
  * Serializable version of SplQueue
+ *
+ * @template TValue
  */
 class SplQueue extends \SplQueue implements Serializable
 {
@@ -22,6 +24,7 @@ class SplQueue extends \SplQueue implements Serializable
      * Return an array representing the queue
      *
      * @return array
+     * @psalm-return array<int, TValue>
      */
     public function toArray()
     {

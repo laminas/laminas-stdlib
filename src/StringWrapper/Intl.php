@@ -52,7 +52,7 @@ class Intl extends AbstractStringWrapper
      * Returns the length of the given string
      *
      * @param string $str
-     * @return int|false
+     * @return int|false|null
      */
     public function strlen($str)
     {

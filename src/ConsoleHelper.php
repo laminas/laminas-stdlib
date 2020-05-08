@@ -48,6 +48,7 @@ class ConsoleHelper
     const HIGHLIGHT_INFO  = 'info';
     const HIGHLIGHT_ERROR = 'error';
 
+    /** @var array<string, string> */
     private $highlightMap = [
         self::HIGHLIGHT_INFO  => self::COLOR_GREEN,
         self::HIGHLIGHT_ERROR => self::COLOR_RED,
@@ -92,6 +93,7 @@ class ConsoleHelper
         foreach ($this->highlightMap as $key => $color) {
             $pattern = sprintf('#<%s>(.*?)</%s>#s', $key, $key);
             $color   = $this->supportsColor ? $color : '';
+            /** @var string $string */
             $string  = preg_replace($pattern, $color . '$1' . $reset, $string);
         }
         return $string;
@@ -160,12 +162,13 @@ class ConsoleHelper
     /**
      * Ensure newlines are appropriate for the current terminal.
      *
-     * @param string
+     * @param string $string
      * @return string
      */
     private function formatNewlines($string)
     {
         $string = str_replace($this->eol, "\0PHP_EOL\0", $string);
+        /** @var string $string */
         $string = preg_replace("/(\r\n|\n|\r)/", $this->eol, $string);
         return str_replace("\0PHP_EOL\0", $this->eol, $string);
     }

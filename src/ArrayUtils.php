@@ -196,7 +196,7 @@ abstract class ArrayUtils
      * non-strict behaviour is used.
      *
      * @param mixed $needle
-     * @param array $haystack
+     * @param array<mixed, mixed> $haystack
      * @param int|bool $strict
      * @return bool
      */
@@ -214,7 +214,7 @@ abstract class ArrayUtils
                 }
             }
         }
-        return in_array($needle, $haystack, $strict);
+        return in_array($needle, $haystack, (bool) $strict);
     }
 
     /**
@@ -227,6 +227,11 @@ abstract class ArrayUtils
      * @param  bool               $recursive    Recursively check all nested structures
      * @throws Exception\InvalidArgumentException if $iterator is not an array or a Traversable object
      * @return array
+     *
+     * @template TKey
+     * @template TValue
+     * @psalm-param iterable<TKey, TValue> $iterator
+     * @psalm-return array<TKey, TValue>
      */
     public static function iteratorToArray($iterator, $recursive = true)
     {
@@ -266,6 +271,7 @@ abstract class ArrayUtils
             $array[$key] = $value;
         }
 
+        /** @psalm-var array<TKey, TValue> $array */
         return $array;
     }
 
@@ -276,10 +282,19 @@ abstract class ArrayUtils
      * from the second array will be appended to the first array. If both values are arrays, they
      * are merged together, else the value of the second array overwrites the one of the first array.
      *
+     * @template TAKey
+     * @template TAValue
+     * @template TBKey
+     * @template TBValue
+     *
      * @param  array $a
      * @param  array $b
      * @param  bool  $preserveNumericKeys
      * @return array
+     *
+     * @psalm-param array<TAKey, TAValue> $a
+     * @psalm-param array<TBKey, TBValue> $b
+     * @psalm-return array<TAKey|TBKey, TAValue|TBValue>
      */
     public static function merge(array $a, array $b, $preserveNumericKeys = false)
     {
@@ -303,6 +318,7 @@ abstract class ArrayUtils
             }
         }
 
+        /** @psalm-var array<TAKey|TBKey, TAValue|TBValue|mixed> */
         return $a;
     }
 
@@ -314,6 +330,14 @@ abstract class ArrayUtils
      * @param null|int $flag
      * @return array
      * @throws Exception\InvalidArgumentException
+     *
+     * @template TDataKey
+     * @template TDataValue
+     * @template C = (callable(TDataValue): bool)|(callable(TDataValue, TDataKey): bool)|(callable(TDataKey): bool)
+     * @psalm-param array<TDataKey, TDataValue> $data
+     * @psalm-param C $callback
+     * @psalm-param null|1|2 $flag
+     * @psalm-return array<TDataKey, TDataValue>
      */
     public static function filter(array $data, $callback, $flag = null)
     {

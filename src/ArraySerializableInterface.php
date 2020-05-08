@@ -8,6 +8,10 @@
 
 namespace Laminas\Stdlib;
 
+/**
+ * @template TKey
+ * @template TValue
+ */
 interface ArraySerializableInterface
 {
     /**
@@ -15,6 +19,8 @@ interface ArraySerializableInterface
      *
      * @param  array $array
      * @return void
+     *
+     * @psalm-param array<TKey, TValue> $array
      */
     public function exchangeArray(array $array);
 
@@ -22,6 +28,8 @@ interface ArraySerializableInterface
      * Return an array representation of the object
      *
      * @return array
+     *
+     * @psalm-return array<TKey, TValue>
      */
     public function getArrayCopy();
 }

@@ -18,6 +18,10 @@ use function next;
 use function reset;
 use function uasort;
 
+/**
+ * @template TValue
+ * @template-implements Iterator<string, TValue>
+ */
 class PriorityList implements Iterator, Countable
 {
     const EXTR_DATA     = 0x00000001;
@@ -27,6 +31,7 @@ class PriorityList implements Iterator, Countable
      * Internal list of all items.
      *
      * @var array[]
+     * @psalm-var array<string, array{data: TValue, priority: int, serial: int}>
      */
     protected $items = [];
 
@@ -65,6 +70,8 @@ class PriorityList implements Iterator, Countable
      * @param  int     $priority
      *
      * @return void
+     *
+     * @psalm-param TValue $value
      */
     public function insert($name, $value, $priority = 0)
     {
@@ -134,11 +141,13 @@ class PriorityList implements Iterator, Countable
      *
      * @param  string $name
      * @return mixed
+     *
+     * @psalm-return TValue|null
      */
     public function get($name)
     {
         if (! isset($this->items[$name])) {
-            return;
+            return null;
         }
 
         return $this->items[$name]['data'];
@@ -163,6 +172,9 @@ class PriorityList implements Iterator, Countable
      * @param  array $item1,
      * @param  array $item2
      * @return int
+     *
+     * @psalm-param array{data: TValue, priority: int, serial: int} $item1
+     * @psalm-param array{data: TValue, priority: int, serial: int} $item2
      */
     protected function compare(array $item1, array $item2)
     {
@@ -194,6 +206,8 @@ class PriorityList implements Iterator, Countable
 
     /**
      * {@inheritDoc}
+     *
+     * @return void
      */
     public function rewind()
     {
@@ -203,6 +217,8 @@ class PriorityList implements Iterator, Countable
 
     /**
      * {@inheritDoc}
+     *
+     * @psalm-return TValue|false
      */
     public function current()
     {
@@ -213,7 +229,7 @@ class PriorityList implements Iterator, Countable
     }
 
     /**
-     * {@inheritDoc}
+     * @psalm-return string
      */
     public function key()
     {
@@ -226,13 +242,13 @@ class PriorityList implements Iterator, Countable
      */
     public function next()
     {
-        $node = next($this->items);
-
-        return $node ? $node['data'] : false;
+        next($this->items);
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return bool
      */
     public function valid()
     {
@@ -241,6 +257,7 @@ class PriorityList implements Iterator, Countable
 
     /**
      * @return self
+     * @psalm-return PriorityList<TValue>
      */
     public function getIterator()
     {
@@ -249,6 +266,8 @@ class PriorityList implements Iterator, Countable
 
     /**
      * {@inheritDoc}
+     *
+     * @return int
      */
     public function count()
     {
@@ -261,6 +280,13 @@ class PriorityList implements Iterator, Countable
      * @param int $flag
      *
      * @return array
+     *
+     * @psalm-param self::EXTR_* $flag
+     * @psalm-return (
+     *   $flag is self::EXTR_BOTH ? array<string, array{data: TValue, priority: int, serial: int}>
+     *   : $flag is self::EXTR_PRIORITY ? int
+     *   : TValue
+     * )
      */
     public function toArray($flag = self::EXTR_DATA)
     {

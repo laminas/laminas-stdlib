@@ -149,16 +149,16 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
     /**
      * Wraps a string to a given number of characters
      *
-     * @param  string  $string
+     * @param  string  $str
      * @param  int $width
      * @param  string  $break
      * @param  bool $cut
      * @return string|false
      */
-    public function wordWrap($string, $width = 75, $break = "\n", $cut = false)
+    public function wordWrap($str, $width = 75, $break = "\n", $cut = false)
     {
-        $string = (string) $string;
-        if ($string === '') {
+        $str = (string) $str;
+        if ($str === '') {
             return '';
         }
 
@@ -173,25 +173,25 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
         }
 
         if (StringUtils::isSingleByteEncoding($this->getEncoding())) {
-            return wordwrap($string, $width, $break, $cut);
+            return wordwrap($str, $width, $break, $cut);
         }
 
-        $stringWidth = $this->strlen($string);
-        $breakWidth  = $this->strlen($break);
+        $stringWidth = $this->strlen($str) ?? null;
+        $breakWidth  = $this->strlen($break) ?? null;
 
         $result    = '';
         $lastStart = $lastSpace = 0;
 
         for ($current = 0; $current < $stringWidth; $current++) {
-            $char = $this->substr($string, $current, 1);
+            $char = $this->substr($str, $current, 1);
 
             $possibleBreak = $char;
             if ($breakWidth !== 1) {
-                $possibleBreak = $this->substr($string, $current, $breakWidth);
+                $possibleBreak = $this->substr($str, $current, $breakWidth);
             }
 
             if ($possibleBreak === $break) {
-                $result    .= $this->substr($string, $lastStart, $current - $lastStart + $breakWidth);
+                $result    .= $this->substr($str, $lastStart, $current - $lastStart + $breakWidth);
                 $current   += $breakWidth - 1;
                 $lastStart  = $lastSpace = $current + 1;
                 continue;
@@ -199,7 +199,7 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
 
             if ($char === ' ') {
                 if ($current - $lastStart >= $width) {
-                    $result    .= $this->substr($string, $lastStart, $current - $lastStart) . $break;
+                    $result    .= $this->substr($str, $lastStart, $current - $lastStart) . $break;
                     $lastStart  = $current + 1;
                 }
 
@@ -208,20 +208,20 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
             }
 
             if ($current - $lastStart >= $width && $cut && $lastStart >= $lastSpace) {
-                $result    .= $this->substr($string, $lastStart, $current - $lastStart) . $break;
+                $result    .= $this->substr($str, $lastStart, $current - $lastStart) . $break;
                 $lastStart  = $lastSpace = $current;
                 continue;
             }
 
             if ($current - $lastStart >= $width && $lastStart < $lastSpace) {
-                $result    .= $this->substr($string, $lastStart, $lastSpace - $lastStart) . $break;
+                $result    .= $this->substr($str, $lastStart, $lastSpace - $lastStart) . $break;
                 $lastStart  = $lastSpace = $lastSpace + 1;
                 continue;
             }
         }
 
         if ($lastStart !== $current) {
-            $result .= $this->substr($string, $lastStart, $current - $lastStart);
+            $result .= $this->substr($str, $lastStart, $current - $lastStart);
         }
 
         return $result;
@@ -252,13 +252,13 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
             return $input;
         }
 
-        $repeatCount = floor($lengthOfPadding / $padStringLength);
+        $repeatCount = (int) floor($lengthOfPadding / $padStringLength);
 
         if ($padType === STR_PAD_BOTH) {
             $repeatCountLeft = $repeatCountRight = ($repeatCount - $repeatCount % 2) / 2;
 
             $lastStringLength       = $lengthOfPadding - 2 * $repeatCountLeft * $padStringLength;
-            $lastStringLeftLength   = $lastStringRightLength = floor($lastStringLength / 2);
+            $lastStringLeftLength   = $lastStringRightLength = (int) floor($lastStringLength / 2);
             $lastStringRightLength += $lastStringLength % 2;
 
             $lastStringLeft  = $this->substr($padString, 0, $lastStringLeftLength);
