@@ -147,7 +147,7 @@ class ConsoleHelper
     /**
      * Ensure newlines are appropriate for the current terminal.
      *
-     * @param string
+     * @param string $string
      * @return string
      */
     private function formatNewlines($string)

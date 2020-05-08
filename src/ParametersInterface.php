@@ -42,7 +42,7 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      *
      * Allow deserialization from raw body; e.g., for PUT requests
      *
-     * @param $string
+     * @param string $string
      * @return mixed
      */
     public function fromString($string);

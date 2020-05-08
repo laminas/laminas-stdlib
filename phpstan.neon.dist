@@ -1,0 +1,12 @@
+includes:
+    - phpstan-baseline.neon
+parameters:
+    level: max
+    parallel:
+        processTimeout: 180.0
+    fileExtensions:
+        - php
+    paths:
+        - %currentWorkingDirectory%/src
+
+    inferPrivatePropertyTypeFromConstructor: true

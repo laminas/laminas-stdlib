@@ -9,6 +9,7 @@
 namespace Laminas\Stdlib;
 
 use Traversable;
+use function get_object_vars;
 
 abstract class AbstractOptions implements ParameterObjectInterface
 {
@@ -78,7 +79,7 @@ abstract class AbstractOptions implements ParameterObjectInterface
             $letter = array_shift($letters);
             return '_' . strtolower($letter);
         };
-        foreach ($this as $key => $value) {
+        foreach (get_object_vars($this) as $key => $value) {
             if ($key === '__strictMode__') {
                 continue;
             }

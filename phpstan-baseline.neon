@@ -1,0 +1,22 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Default value of the parameter \\#1 \\$resource \\(mixed\\) of method Laminas\\\\Stdlib\\\\ConsoleHelper\\:\\:__construct\\(\\) is incompatible with type resource\\.$#"
+			count: 1
+			path: src/ConsoleHelper.php
+
+		-
+			message: "#^Default value of the parameter \\#3 \\$resource \\(mixed\\) of method Laminas\\\\Stdlib\\\\ConsoleHelper\\:\\:write\\(\\) is incompatible with type resource\\.$#"
+			count: 1
+			path: src/ConsoleHelper.php
+
+		-
+			message: "#^Default value of the parameter \\#3 \\$resource \\(mixed\\) of method Laminas\\\\Stdlib\\\\ConsoleHelper\\:\\:writeLine\\(\\) is incompatible with type resource\\.$#"
+			count: 1
+			path: src/ConsoleHelper.php
+
+		-
+			message: "#^Default value of the parameter \\#1 \\$resource \\(mixed\\) of method Laminas\\\\Stdlib\\\\ConsoleHelper\\:\\:detectColorCapabilities\\(\\) is incompatible with type resource\\.$#"
+			count: 1
+			path: src/ConsoleHelper.php
+

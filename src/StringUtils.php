@@ -21,7 +21,7 @@ abstract class StringUtils
     /**
      * Ordered list of registered string wrapper instances
      *
-     * @var StringWrapperInterface[]
+     * @var StringWrapperInterface[]|null
      */
     protected static $wrapperRegistry = null;
 
@@ -42,7 +42,7 @@ abstract class StringUtils
     /**
      * Is PCRE compiled with Unicode support?
      *
-     * @var bool
+     * @var bool|null
      **/
     protected static $hasPcreUnicodeSupport = null;
 

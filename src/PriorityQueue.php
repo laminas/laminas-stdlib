@@ -34,7 +34,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Inner queue class to use for iteration
      * @var string
      */
-    protected $queueClass = 'Laminas\Stdlib\SplPriorityQueue';
+    protected $queueClass = SplPriorityQueue::class;
 
     /**
      * Actual items aggregated in the priority queue. Each item is an array
@@ -45,7 +45,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
 
     /**
      * Inner queue object
-     * @var SplPriorityQueue
+     * @var \SplPriorityQueue|null
      */
     protected $queue;
 
@@ -88,6 +88,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     public function remove($datum)
     {
         $found = false;
+        $key = null;
         foreach ($this->items as $key => $item) {
             if ($item['data'] === $datum) {
                 $found = true;
@@ -159,11 +160,12 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * retrieves the inner queue object, and clones it for purposes of
      * iteration.
      *
-     * @return SplPriorityQueue
+     * @return \SplPriorityQueue
      */
     public function getIterator()
     {
         $queue = $this->getQueue();
+
         return clone $queue;
     }
 
@@ -270,19 +272,22 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Get the inner priority queue instance
      *
      * @throws Exception\DomainException
-     * @return SplPriorityQueue
+     * @return \SplPriorityQueue
      */
     protected function getQueue()
     {
-        if (null === $this->queue) {
-            $this->queue = new $this->queueClass();
-            if (! $this->queue instanceof \SplPriorityQueue) {
-                throw new Exception\DomainException(sprintf(
-                    'PriorityQueue expects an internal queue of type SplPriorityQueue; received "%s"',
-                    get_class($this->queue)
-                ));
-            }
+        if (null !== $this->queue) {
+            return $this->queue;
         }
+
+        $this->queue = new $this->queueClass();
+        if (! $this->queue instanceof \SplPriorityQueue) {
+            throw new Exception\DomainException(sprintf(
+                'PriorityQueue expects an internal queue of type SplPriorityQueue; received "%s"',
+                get_class($this->queue)
+            ));
+        }
+
         return $this->queue;
     }
 

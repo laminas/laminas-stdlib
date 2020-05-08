@@ -94,7 +94,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     public function __set($key, $value)
     {
         if ($this->flag == self::ARRAY_AS_PROPS) {
-            return $this->offsetSet($key, $value);
+            $this->offsetSet($key, $value);
+            return;
         }
         if (in_array($key, $this->protectedProperties)) {
             throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
@@ -111,7 +112,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     public function __unset($key)
     {
         if ($this->flag == self::ARRAY_AS_PROPS) {
-            return $this->offsetUnset($key);
+            $this->offsetUnset($key);
+            return;
         }
         if (in_array($key, $this->protectedProperties)) {
             throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
