@@ -48,7 +48,7 @@ matrix:
     - php: 7.4
       env:
         - DEPS=latest
-    - php: nighty
+    - php: nightly
       env:
         - DEPS=latest
 
