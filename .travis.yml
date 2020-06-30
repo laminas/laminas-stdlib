@@ -51,6 +51,7 @@ matrix:
     - php: nightly
       env:
         - DEPS=latest
+        - COMPOSER_ARGS="--no-interaction --ignore-platform-reqs"
   allow_failures:
     - php: nightly
 
