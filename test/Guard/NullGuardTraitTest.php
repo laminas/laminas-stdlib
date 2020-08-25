@@ -29,6 +29,6 @@ class NullGuardTraitTest extends TestCase
     public function testGuardAgainstNullAllowsNonNull()
     {
         $object = new GuardedObject;
-        $this->assertNull($object->setNotNull('foo'));
+        self::assertNull($object->setNotNull('foo'));
     }
 }

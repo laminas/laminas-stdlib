@@ -29,13 +29,13 @@ class ArrayOrTraversableGuardTraitTest extends TestCase
     public function testGuardForArrayOrTraversableAllowsArray()
     {
         $object = new GuardedObject;
-        $this->assertNull($object->setArrayOrTraversable([]));
+        self::assertNull($object->setArrayOrTraversable([]));
     }
 
     public function testGuardForArrayOrTraversableAllowsTraversable()
     {
         $object      = new GuardedObject;
         $traversable = new ArrayObject;
-        $this->assertNull($object->setArrayOrTraversable($traversable));
+        self::assertNull($object->setArrayOrTraversable($traversable));
     }
 }

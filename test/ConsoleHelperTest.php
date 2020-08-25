@@ -63,7 +63,7 @@ class ConsoleHelperTest extends TestCase
         $this->enableColorSupport();
         $colorized = $this->helper->colorize($string);
 
-        $this->assertEquals("  \033[32m-h|--help\033[0m    This help message", $colorized);
+        self::assertEquals("  \033[32m-h|--help\033[0m    This help message", $colorized);
     }
 
     public function testCanColorizeErrorString()
@@ -72,7 +72,7 @@ class ConsoleHelperTest extends TestCase
         $this->enableColorSupport();
         $colorized = $this->helper->colorize($string);
 
-        $this->assertEquals("\033[31mNOT OK\033[0m An error occurred", $colorized);
+        self::assertEquals("\033[31mNOT OK\033[0m An error occurred", $colorized);
     }
 
     public function testCanColorizeMixedStrings()
@@ -81,8 +81,8 @@ class ConsoleHelperTest extends TestCase
         $string = "<error>NOT OK</error>\n\n<info>Usage:</info> foo";
         $colorized = $this->helper->colorize($string);
 
-        $this->assertStringContainsString("\033[31mNOT OK\033[0m", $colorized, 'Colorized error string not found');
-        $this->assertStringContainsString("\033[32mUsage:\033[0m", $colorized, 'Colorized info string not found');
+        self::assertStringContainsString("\033[31mNOT OK\033[0m", $colorized, 'Colorized error string not found');
+        self::assertStringContainsString("\033[32mUsage:\033[0m", $colorized, 'Colorized info string not found');
     }
 
     public function testColorizationWillReplaceTagsWithEmptyStringsWhenColorSupportIsNotDetected()
@@ -91,11 +91,11 @@ class ConsoleHelperTest extends TestCase
         $string = "<error>NOT OK</error>\n\n<info>Usage:</info> foo";
         $colorized = $this->helper->colorize($string);
 
-        $this->assertStringNotContainsString("\033[31m", $colorized, 'Colorized error string discovered');
-        $this->assertStringNotContainsString("\033[32m", $colorized, 'Colorized info string discovered');
-        $this->assertStringNotContainsString("\033[0m", $colorized, 'Color reset sequence discovered');
-        $this->assertDoesNotMatchRegularExpression("/<\/?error>/", $colorized, 'Error template string discovered');
-        $this->assertDoesNotMatchRegularExpression("/<\/?info>/", $colorized, 'Info template string discovered');
+        self::assertStringNotContainsString("\033[31m", $colorized, 'Colorized error string discovered');
+        self::assertStringNotContainsString("\033[32m", $colorized, 'Colorized info string discovered');
+        self::assertStringNotContainsString("\033[0m", $colorized, 'Color reset sequence discovered');
+        self::assertDoesNotMatchRegularExpression("/<\/?error>/", $colorized, 'Error template string discovered');
+        self::assertDoesNotMatchRegularExpression("/<\/?info>/", $colorized, 'Info template string discovered');
     }
 
     public function testWriteFormatsLinesToPhpEolSequenceAndWritesToProvidedStream()
@@ -107,7 +107,7 @@ class ConsoleHelperTest extends TestCase
         $this->helper->write($string, false, $stream);
 
         $contents = $this->retrieveStreamContents($stream);
-        $this->assertStringContainsString("\r\n", $contents);
+        self::assertStringContainsString("\r\n", $contents);
     }
 
     public function testWriteWillColorizeOutputIfRequested()
@@ -119,7 +119,7 @@ class ConsoleHelperTest extends TestCase
         $this->helper->write($string, true, $stream);
 
         $contents = $this->retrieveStreamContents($stream);
-        $this->assertStringContainsString("\033[32mbar\033[0m", $contents);
+        self::assertStringContainsString("\033[32mbar\033[0m", $contents);
     }
 
     public function testWriteLineAppendsPhpEolSequenceToString()
@@ -131,7 +131,7 @@ class ConsoleHelperTest extends TestCase
         $this->helper->writeLine($string, false, $stream);
 
         $contents = $this->retrieveStreamContents($stream);
-        $this->assertMatchesRegularExpression("/bar\r\n$/", $contents);
+        self::assertMatchesRegularExpression("/bar\r\n$/", $contents);
     }
 
     public function testWriteErrorMessageWritesColorizedOutputToStderr()
@@ -144,6 +144,6 @@ class ConsoleHelperTest extends TestCase
         $this->helper->writeErrorMessage('an error occurred');
 
         $contents = $this->retrieveStreamContents($stderr);
-        $this->assertEquals("\033[31man error occurred\033[0m\r\n\r\n", $contents);
+        self::assertEquals("\033[31man error occurred\033[0m\r\n\r\n", $contents);
     }
 }

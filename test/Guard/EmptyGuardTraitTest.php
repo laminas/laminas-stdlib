@@ -28,6 +28,6 @@ class EmptyGuardTraitTest extends TestCase
     public function testGuardAgainstEmptyAllowsNonEmptyString()
     {
         $object = new GuardedObject;
-        $this->assertNull($object->setNotEmpty('foo'));
+        self::assertNull($object->setNotEmpty('foo'));
     }
 }

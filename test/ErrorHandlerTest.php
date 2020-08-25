@@ -23,42 +23,42 @@ class ErrorHandlerTest extends TestCase
 
     public function testNestedLevel()
     {
-        $this->assertSame(0, ErrorHandler::getNestedLevel());
+        self::assertSame(0, ErrorHandler::getNestedLevel());
 
         ErrorHandler::start();
-        $this->assertSame(1, ErrorHandler::getNestedLevel());
+        self::assertSame(1, ErrorHandler::getNestedLevel());
 
         ErrorHandler::start();
-        $this->assertSame(2, ErrorHandler::getNestedLevel());
+        self::assertSame(2, ErrorHandler::getNestedLevel());
 
         ErrorHandler::stop();
-        $this->assertSame(1, ErrorHandler::getNestedLevel());
+        self::assertSame(1, ErrorHandler::getNestedLevel());
 
         ErrorHandler::stop();
-        $this->assertSame(0, ErrorHandler::getNestedLevel());
+        self::assertSame(0, ErrorHandler::getNestedLevel());
     }
 
     public function testClean()
     {
         ErrorHandler::start();
-        $this->assertSame(1, ErrorHandler::getNestedLevel());
+        self::assertSame(1, ErrorHandler::getNestedLevel());
 
         ErrorHandler::start();
-        $this->assertSame(2, ErrorHandler::getNestedLevel());
+        self::assertSame(2, ErrorHandler::getNestedLevel());
 
         ErrorHandler::clean();
-        $this->assertSame(0, ErrorHandler::getNestedLevel());
+        self::assertSame(0, ErrorHandler::getNestedLevel());
     }
 
     public function testStarted()
     {
-        $this->assertFalse(ErrorHandler::started());
+        self::assertFalse(ErrorHandler::started());
 
         ErrorHandler::start();
-        $this->assertTrue(ErrorHandler::started());
+        self::assertTrue(ErrorHandler::started());
 
         ErrorHandler::stop();
-        $this->assertFalse(ErrorHandler::started());
+        self::assertFalse(ErrorHandler::started());
     }
 
     public function testReturnCatchedError()
@@ -67,7 +67,7 @@ class ErrorHandlerTest extends TestCase
         1 / 0; // Division by zero
         $err = ErrorHandler::stop();
 
-        $this->assertInstanceOf('ErrorException', $err);
+        self::assertInstanceOf('ErrorException', $err);
     }
 
     public function testThrowCatchedError()
@@ -86,19 +86,19 @@ class ErrorHandlerTest extends TestCase
         ErrorHandler::addError(2, 'test-msg2', 'test-file2', 200);
         $err = ErrorHandler::stop();
 
-        $this->assertInstanceOf('ErrorException', $err);
-        $this->assertEquals('test-file2', $err->getFile());
-        $this->assertEquals('test-msg2', $err->getMessage());
-        $this->assertEquals(200, $err->getLine());
-        $this->assertEquals(0, $err->getCode());
-        $this->assertEquals(2, $err->getSeverity());
+        self::assertInstanceOf('ErrorException', $err);
+        self::assertEquals('test-file2', $err->getFile());
+        self::assertEquals('test-msg2', $err->getMessage());
+        self::assertEquals(200, $err->getLine());
+        self::assertEquals(0, $err->getCode());
+        self::assertEquals(2, $err->getSeverity());
 
         $previous = $err->getPrevious();
-        $this->assertInstanceOf('ErrorException', $previous);
-        $this->assertEquals('test-file1', $previous->getFile());
-        $this->assertEquals('test-msg1', $previous->getMessage());
-        $this->assertEquals(100, $previous->getLine());
-        $this->assertEquals(0, $previous->getCode());
-        $this->assertEquals(1, $previous->getSeverity());
+        self::assertInstanceOf('ErrorException', $previous);
+        self::assertEquals('test-file1', $previous->getFile());
+        self::assertEquals('test-msg1', $previous->getMessage());
+        self::assertEquals(100, $previous->getLine());
+        self::assertEquals(0, $previous->getCode());
+        self::assertEquals(1, $previous->getSeverity());
     }
 }

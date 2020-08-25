@@ -35,17 +35,17 @@ class SplStackTest extends TestCase
         $s = serialize($this->stack);
         $unserialized = unserialize($s);
         $count = count($this->stack);
-        $this->assertSame($count, count($unserialized));
+        self::assertSame($count, count($unserialized));
 
         $expected = iterator_to_array($this->stack);
         $test = iterator_to_array($unserialized);
-        $this->assertSame($expected, $test);
+        self::assertSame($expected, $test);
     }
 
     public function testCanRetrieveQueueAsArray()
     {
         $expected = ['bat', 'baz', 'bar', 'foo'];
         $test     = $this->stack->toArray();
-        $this->assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, 1));
     }
 }
