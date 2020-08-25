@@ -24,7 +24,7 @@ class OptionsTest extends TestCase
     {
         $options = new TestOptions(['test_field' => 1]);
 
-        $this->assertEquals(1, $options->test_field);
+        self::assertEquals(1, $options->test_field);
     }
 
     public function testConstructionWithTraversable()
@@ -32,14 +32,14 @@ class OptionsTest extends TestCase
         $config = new ArrayObject(['test_field' => 1]);
         $options = new TestOptions($config);
 
-        $this->assertEquals(1, $options->test_field);
+        self::assertEquals(1, $options->test_field);
     }
 
     public function testConstructionWithOptions()
     {
         $options = new TestOptions(new TestOptions(['test_field' => 1]));
 
-        $this->assertEquals(1, $options->test_field);
+        self::assertEquals(1, $options->test_field);
     }
 
     public function testInvalidFieldThrowsException()
@@ -51,7 +51,7 @@ class OptionsTest extends TestCase
 
     public function testNonStrictOptionsDoesNotThrowException()
     {
-        $this->assertInstanceOf(
+        self::assertInstanceOf(
             'LaminasTest\Stdlib\TestAsset\TestOptionsNoStrict',
             new TestOptionsNoStrict(['foo' => 'bar'])
         );
@@ -59,16 +59,16 @@ class OptionsTest extends TestCase
 
     public function testConstructionWithNull()
     {
-        $this->assertInstanceOf('LaminasTest\Stdlib\TestAsset\TestOptions', new TestOptions(null));
+        self::assertInstanceOf('LaminasTest\Stdlib\TestAsset\TestOptions', new TestOptions(null));
     }
 
     public function testUnsetting()
     {
         $options = new TestOptions(['test_field' => 1]);
 
-        $this->assertEquals(true, isset($options->test_field));
+        self::assertEquals(true, isset($options->test_field));
         unset($options->testField);
-        $this->assertEquals(false, isset($options->test_field));
+        self::assertEquals(false, isset($options->test_field));
     }
 
     public function testUnsetThrowsInvalidArgumentException()
@@ -94,8 +94,8 @@ class OptionsTest extends TestCase
         $array = ['test_field' => 3];
         $options = new TestOptions();
 
-        $this->assertSame($options, $options->setFromArray($array));
-        $this->assertEquals(3, $options->test_field);
+        self::assertSame($options, $options->setFromArray($array));
+        self::assertEquals(3, $options->test_field);
     }
 
     public function testSetFromArrayThrowsInvalidArgumentException()
@@ -109,14 +109,14 @@ class OptionsTest extends TestCase
     {
         $options = new TestOptionsDerived(['parent_public' => 1]);
 
-        $this->assertEquals(1, $options->parent_public);
+        self::assertEquals(1, $options->parent_public);
     }
 
     public function testParentProtectedProperty()
     {
         $options = new TestOptionsDerived(['parent_protected' => 1]);
 
-        $this->assertEquals(1, $options->parent_protected);
+        self::assertEquals(1, $options->parent_protected);
     }
 
     public function testParentPrivateProperty()
@@ -134,14 +134,14 @@ class OptionsTest extends TestCase
     {
         $options = new TestOptionsDerived(['derived_public' => 1]);
 
-        $this->assertEquals(1, $options->derived_public);
+        self::assertEquals(1, $options->derived_public);
     }
 
     public function testDerivedProtectedProperty()
     {
         $options = new TestOptionsDerived(['derived_protected' => 1]);
 
-        $this->assertEquals(1, $options->derived_protected);
+        self::assertEquals(1, $options->derived_protected);
     }
 
     public function testDerivedPrivateProperty()
@@ -176,7 +176,7 @@ class OptionsTest extends TestCase
         $options = new TestOptionsWithoutGetter([
             'foo' => 'bar',
         ]);
-        $this->assertFalse(isset($options->foo));
+        self::assertFalse(isset($options->foo));
     }
 
     /**
@@ -199,6 +199,6 @@ class OptionsTest extends TestCase
         $options = new TestOptions([
             'test_field' => 1,
         ]);
-        $this->assertTrue(isset($options->testField));
+        self::assertTrue(isset($options->testField));
     }
 }

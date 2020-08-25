@@ -13,7 +13,7 @@ use LaminasTest\Stdlib\TestAsset\GuardedObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers   Laminas\Stdlib\Guard\EmptyGuardTrait
+ * @covers \Laminas\Stdlib\Guard\EmptyGuardTrait
  */
 class EmptyGuardTraitTest extends TestCase
 {
@@ -28,6 +28,6 @@ class EmptyGuardTraitTest extends TestCase
     public function testGuardAgainstEmptyAllowsNonEmptyString()
     {
         $object = new GuardedObject;
-        $this->assertNull($object->setNotEmpty('foo'));
+        self::assertNull($object->setNotEmpty('foo'));
     }
 }

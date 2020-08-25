@@ -291,8 +291,8 @@ class ArrayUtilsTest extends TestCase
                 'foo' => 'get',
             ]),
         ];
-        $this->assertInstanceOf('Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface', $b['car']);
-        $this->assertEquals($expected, ArrayUtils::merge($a, $b));
+        self::assertInstanceOf('Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface', $b['car']);
+        self::assertEquals($expected, ArrayUtils::merge($a, $b));
     }
 
     /**
@@ -311,7 +311,7 @@ class ArrayUtilsTest extends TestCase
         $expected = [
             'bar' => 'bat'
         ];
-        $this->assertEquals($expected, ArrayUtils::merge($a, $b));
+        self::assertEquals($expected, ArrayUtils::merge($a, $b));
     }
 
     public static function validIterators()
@@ -356,7 +356,7 @@ class ArrayUtilsTest extends TestCase
      */
     public function testValidArraysWithStringKeys($test)
     {
-        $this->assertTrue(ArrayUtils::hasStringKeys($test));
+        self::assertTrue(ArrayUtils::hasStringKeys($test));
     }
 
     /**
@@ -364,7 +364,7 @@ class ArrayUtilsTest extends TestCase
      */
     public function testValidArraysWithIntegerKeys($test)
     {
-        $this->assertTrue(ArrayUtils::hasIntegerKeys($test));
+        self::assertTrue(ArrayUtils::hasIntegerKeys($test));
     }
 
     /**
@@ -372,7 +372,7 @@ class ArrayUtilsTest extends TestCase
      */
     public function testValidArraysWithNumericKeys($test)
     {
-        $this->assertTrue(ArrayUtils::hasNumericKeys($test));
+        self::assertTrue(ArrayUtils::hasNumericKeys($test));
     }
 
     /**
@@ -380,17 +380,17 @@ class ArrayUtilsTest extends TestCase
      */
     public function testInvalidArraysAlwaysReturnFalse($test)
     {
-        $this->assertFalse(ArrayUtils::hasStringKeys($test, false));
-        $this->assertFalse(ArrayUtils::hasIntegerKeys($test, false));
-        $this->assertFalse(ArrayUtils::hasNumericKeys($test, false));
-        $this->assertFalse(ArrayUtils::isList($test, false));
-        $this->assertFalse(ArrayUtils::isHashTable($test, false));
+        self::assertFalse(ArrayUtils::hasStringKeys($test, false));
+        self::assertFalse(ArrayUtils::hasIntegerKeys($test, false));
+        self::assertFalse(ArrayUtils::hasNumericKeys($test, false));
+        self::assertFalse(ArrayUtils::isList($test, false));
+        self::assertFalse(ArrayUtils::isHashTable($test, false));
 
-        $this->assertFalse(ArrayUtils::hasStringKeys($test, false));
-        $this->assertFalse(ArrayUtils::hasIntegerKeys($test, false));
-        $this->assertFalse(ArrayUtils::hasNumericKeys($test, false));
-        $this->assertFalse(ArrayUtils::isList($test, false));
-        $this->assertFalse(ArrayUtils::isHashTable($test, false));
+        self::assertFalse(ArrayUtils::hasStringKeys($test, false));
+        self::assertFalse(ArrayUtils::hasIntegerKeys($test, false));
+        self::assertFalse(ArrayUtils::hasNumericKeys($test, false));
+        self::assertFalse(ArrayUtils::isList($test, false));
+        self::assertFalse(ArrayUtils::isHashTable($test, false));
     }
 
     /**
@@ -398,11 +398,11 @@ class ArrayUtilsTest extends TestCase
      */
     public function testLists($test)
     {
-        $this->assertTrue(ArrayUtils::isList($test));
-        $this->assertTrue(ArrayUtils::hasIntegerKeys($test));
-        $this->assertTrue(ArrayUtils::hasNumericKeys($test));
-        $this->assertFalse(ArrayUtils::hasStringKeys($test));
-        $this->assertFalse(ArrayUtils::isHashTable($test));
+        self::assertTrue(ArrayUtils::isList($test));
+        self::assertTrue(ArrayUtils::hasIntegerKeys($test));
+        self::assertTrue(ArrayUtils::hasNumericKeys($test));
+        self::assertFalse(ArrayUtils::hasStringKeys($test));
+        self::assertFalse(ArrayUtils::isHashTable($test));
     }
 
     /**
@@ -410,28 +410,28 @@ class ArrayUtilsTest extends TestCase
      */
     public function testHashTables($test)
     {
-        $this->assertTrue(ArrayUtils::isHashTable($test));
-        $this->assertFalse(ArrayUtils::isList($test));
+        self::assertTrue(ArrayUtils::isHashTable($test));
+        self::assertFalse(ArrayUtils::isList($test));
     }
 
     public function testEmptyArrayReturnsTrue()
     {
         $test = [];
-        $this->assertTrue(ArrayUtils::hasStringKeys($test, true));
-        $this->assertTrue(ArrayUtils::hasIntegerKeys($test, true));
-        $this->assertTrue(ArrayUtils::hasNumericKeys($test, true));
-        $this->assertTrue(ArrayUtils::isList($test, true));
-        $this->assertTrue(ArrayUtils::isHashTable($test, true));
+        self::assertTrue(ArrayUtils::hasStringKeys($test, true));
+        self::assertTrue(ArrayUtils::hasIntegerKeys($test, true));
+        self::assertTrue(ArrayUtils::hasNumericKeys($test, true));
+        self::assertTrue(ArrayUtils::isList($test, true));
+        self::assertTrue(ArrayUtils::isHashTable($test, true));
     }
 
     public function testEmptyArrayReturnsFalse()
     {
         $test = [];
-        $this->assertFalse(ArrayUtils::hasStringKeys($test, false));
-        $this->assertFalse(ArrayUtils::hasIntegerKeys($test, false));
-        $this->assertFalse(ArrayUtils::hasNumericKeys($test, false));
-        $this->assertFalse(ArrayUtils::isList($test, false));
-        $this->assertFalse(ArrayUtils::isHashTable($test, false));
+        self::assertFalse(ArrayUtils::hasStringKeys($test, false));
+        self::assertFalse(ArrayUtils::hasIntegerKeys($test, false));
+        self::assertFalse(ArrayUtils::hasNumericKeys($test, false));
+        self::assertFalse(ArrayUtils::isList($test, false));
+        self::assertFalse(ArrayUtils::isHashTable($test, false));
     }
 
     /**
@@ -439,7 +439,7 @@ class ArrayUtilsTest extends TestCase
      */
     public function testMerge($a, $b, $preserveNumericKeys, $expected)
     {
-        $this->assertEquals($expected, ArrayUtils::merge($a, $b, $preserveNumericKeys));
+        self::assertEquals($expected, ArrayUtils::merge($a, $b, $preserveNumericKeys));
     }
 
     /**
@@ -448,7 +448,7 @@ class ArrayUtilsTest extends TestCase
     public function testValidIteratorsReturnArrayRepresentation($test, $expected)
     {
         $result = ArrayUtils::iteratorToArray($test);
-        $this->assertEquals($expected, $result);
+        self::assertEquals($expected, $result);
     }
 
     /**
@@ -457,7 +457,7 @@ class ArrayUtilsTest extends TestCase
     public function testInvalidIteratorsRaiseInvalidArgumentException($test)
     {
         $this->expectException(InvalidArgumentException::class);
-        $this->assertFalse(ArrayUtils::iteratorToArray($test));
+        self::assertFalse(ArrayUtils::iteratorToArray($test));
     }
 
     public function filterArrays()
@@ -509,7 +509,7 @@ class ArrayUtilsTest extends TestCase
      */
     public function testFiltersArray($data, $callback, $flag, $result)
     {
-        $this->assertEquals($result, ArrayUtils::filter($data, $callback, $flag));
+        self::assertEquals($result, ArrayUtils::filter($data, $callback, $flag));
     }
 
     public function testInvalidCallableRaiseInvalidArgumentException()

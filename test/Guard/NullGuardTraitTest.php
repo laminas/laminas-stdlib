@@ -13,7 +13,7 @@ use LaminasTest\Stdlib\TestAsset\GuardedObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers   Laminas\Stdlib\Guard\NullGuardTrait
+ * @covers \Laminas\Stdlib\Guard\NullGuardTrait
  */
 class NullGuardTraitTest extends TestCase
 {
@@ -29,6 +29,6 @@ class NullGuardTraitTest extends TestCase
     public function testGuardAgainstNullAllowsNonNull()
     {
         $object = new GuardedObject;
-        $this->assertNull($object->setNotNull('foo'));
+        self::assertNull($object->setNotNull('foo'));
     }
 }

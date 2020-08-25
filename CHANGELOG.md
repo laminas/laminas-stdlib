@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- Nothing.
+- [#10](https://github.com/laminas/laminas-stdlib/pull/10) removes support for PHP versions prior to PHP 7.3.
 
 ### Fixed
 

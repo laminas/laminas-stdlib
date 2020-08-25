@@ -16,47 +16,47 @@ class ParametersTest extends TestCase
     public function testParametersConstructionAndClassStructure()
     {
         $parameters = new Parameters();
-        $this->assertInstanceOf('Laminas\Stdlib\ParametersInterface', $parameters);
-        $this->assertInstanceOf('ArrayObject', $parameters);
-        $this->assertInstanceOf('ArrayAccess', $parameters);
-        $this->assertInstanceOf('Countable', $parameters);
-        $this->assertInstanceOf('Serializable', $parameters);
-        $this->assertInstanceOf('Traversable', $parameters);
+        self::assertInstanceOf('Laminas\Stdlib\ParametersInterface', $parameters);
+        self::assertInstanceOf('ArrayObject', $parameters);
+        self::assertInstanceOf('ArrayAccess', $parameters);
+        self::assertInstanceOf('Countable', $parameters);
+        self::assertInstanceOf('Serializable', $parameters);
+        self::assertInstanceOf('Traversable', $parameters);
     }
 
     public function testParametersPersistNameAndValues()
     {
         $parameters = new Parameters(['foo' => 'bar']);
-        $this->assertEquals('bar', $parameters['foo']);
-        $this->assertEquals('bar', $parameters->foo);
+        self::assertEquals('bar', $parameters['foo']);
+        self::assertEquals('bar', $parameters->foo);
         $parameters->offsetSet('baz', 5);
-        $this->assertEquals(5, $parameters->baz);
+        self::assertEquals(5, $parameters->baz);
 
         $parameters->fromArray(['bar' => 'foo']);
-        $this->assertEquals('foo', $parameters->bar);
+        self::assertEquals('foo', $parameters->bar);
 
         $parameters->fromString('bar=foo&five=5');
-        $this->assertEquals('foo', $parameters->bar);
-        $this->assertEquals('5', $parameters->five);
-        $this->assertEquals(['bar' => 'foo', 'five' => '5'], $parameters->toArray());
-        $this->assertEquals('bar=foo&five=5', $parameters->toString());
+        self::assertEquals('foo', $parameters->bar);
+        self::assertEquals('5', $parameters->five);
+        self::assertEquals(['bar' => 'foo', 'five' => '5'], $parameters->toArray());
+        self::assertEquals('bar=foo&five=5', $parameters->toString());
 
         $parameters->fromArray([]);
         $parameters->set('foof', 'barf');
-        $this->assertEquals('barf', $parameters->get('foof'));
-        $this->assertEquals('barf', $parameters->foof);
+        self::assertEquals('barf', $parameters->get('foof'));
+        self::assertEquals('barf', $parameters->foof);
     }
 
     public function testParametersOffsetgetReturnsNullIfNonexistentKeyIsProvided()
     {
         $parameters = new Parameters;
-        $this->assertNull($parameters->foo);
+        self::assertNull($parameters->foo);
     }
 
     public function testParametersGetReturnsDefaultValueIfNonExistent()
     {
         $parameters = new Parameters();
 
-        $this->assertEquals(5, $parameters->get('nonExistentProp', 5));
+        self::assertEquals(5, $parameters->get('nonExistentProp', 5));
     }
 }

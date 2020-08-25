@@ -18,31 +18,31 @@ class MessageTest extends TestCase
     {
         $message = new Message();
         $ret = $message->setContent('I can set content');
-        $this->assertInstanceOf('Laminas\Stdlib\Message', $ret);
-        $this->assertEquals('I can set content', $message->getContent());
+        self::assertInstanceOf('Laminas\Stdlib\Message', $ret);
+        self::assertEquals('I can set content', $message->getContent());
     }
 
     public function testMessageCanSetAndGetMetadataKeyAsString()
     {
         $message = new Message();
         $ret = $message->setMetadata('foo', 'bar');
-        $this->assertInstanceOf('Laminas\Stdlib\Message', $ret);
-        $this->assertEquals('bar', $message->getMetadata('foo'));
-        $this->assertEquals(['foo' => 'bar'], $message->getMetadata());
+        self::assertInstanceOf('Laminas\Stdlib\Message', $ret);
+        self::assertEquals('bar', $message->getMetadata('foo'));
+        self::assertEquals(['foo' => 'bar'], $message->getMetadata());
     }
 
     public function testMessageCanSetAndGetMetadataKeyAsArray()
     {
         $message = new Message();
         $ret = $message->setMetadata(['foo' => 'bar']);
-        $this->assertInstanceOf('Laminas\Stdlib\Message', $ret);
-        $this->assertEquals('bar', $message->getMetadata('foo'));
+        self::assertInstanceOf('Laminas\Stdlib\Message', $ret);
+        self::assertEquals('bar', $message->getMetadata('foo'));
     }
 
     public function testMessageGetMetadataWillUseDefaultValueIfNoneExist()
     {
         $message = new Message();
-        $this->assertEquals('bar', $message->getMetadata('foo', 'bar'));
+        self::assertEquals('bar', $message->getMetadata('foo', 'bar'));
     }
 
     public function testMessageThrowsExceptionOnInvalidKeyForMetadataSet()
@@ -67,6 +67,6 @@ class MessageTest extends TestCase
         $message->setMetadata(['Foo' => 'bar', 'One' => 'Two']);
         $message->setContent('This is my content');
         $expected = "Foo: bar\r\nOne: Two\r\n\r\nThis is my content";
-        $this->assertEquals($expected, $message->toString());
+        self::assertEquals($expected, $message->toString());
     }
 }

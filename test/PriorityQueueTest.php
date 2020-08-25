@@ -21,7 +21,7 @@ class PriorityQueueTest extends TestCase
      */
     protected $queue;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->queue = new PriorityQueue();
         $this->queue->insert('foo', 3);
@@ -35,7 +35,7 @@ class PriorityQueueTest extends TestCase
         $s = serialize($this->queue);
         $unserialized = unserialize($s);
         $count = count($this->queue);
-        $this->assertSame(
+        self::assertSame(
             $count,
             count($unserialized),
             'Expected count ' . $count . '; received ' . count($unserialized)
@@ -43,7 +43,7 @@ class PriorityQueueTest extends TestCase
 
         $expected = iterator_to_array($this->queue);
         $test = iterator_to_array($unserialized);
-        $this->assertSame(
+        self::assertSame(
             $expected,
             $test,
             'Expected: ' . var_export($expected, 1) . "\nReceived:" . var_export($test, 1)
@@ -59,7 +59,7 @@ class PriorityQueueTest extends TestCase
             'bat',
         ];
         $test     = $this->queue->toArray();
-        $this->assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, 1));
     }
 
     public function testCanCastToArrayOfPrioritiesOnly()
@@ -71,7 +71,7 @@ class PriorityQueueTest extends TestCase
             1,
         ];
         $test     = $this->queue->toArray(PriorityQueue::EXTR_PRIORITY);
-        $this->assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, 1));
     }
 
     public function testCanCastToArrayOfDataPriorityPairs()
@@ -83,7 +83,7 @@ class PriorityQueueTest extends TestCase
             ['data' => 'bat', 'priority' => 1],
         ];
         $test     = $this->queue->toArray(PriorityQueue::EXTR_BOTH);
-        $this->assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, 1));
     }
 
     public function testCanIterateMultipleTimesAndReceiveSameResults()
@@ -95,7 +95,7 @@ class PriorityQueueTest extends TestCase
             foreach ($this->queue as $item) {
                 $test[] = $item;
             }
-            $this->assertEquals($expected, $test, 'Failed at iteration ' . $i);
+            self::assertEquals($expected, $test, 'Failed at iteration ' . $i);
         }
     }
 
@@ -104,19 +104,19 @@ class PriorityQueueTest extends TestCase
         $this->queue->remove('baz');
         $expected = ['bar', 'foo', 'bat'];
         $test = array_values(iterator_to_array($this->queue));
-        $this->assertEquals($expected, $test);
+        self::assertEquals($expected, $test);
     }
 
     public function testCanTestForExistenceOfItemInQueue()
     {
-        $this->assertTrue($this->queue->contains('foo'));
-        $this->assertFalse($this->queue->contains('foobar'));
+        self::assertTrue($this->queue->contains('foo'));
+        self::assertFalse($this->queue->contains('foobar'));
     }
 
     public function testCanTestForExistenceOfPriorityInQueue()
     {
-        $this->assertTrue($this->queue->hasPriority(3));
-        $this->assertFalse($this->queue->hasPriority(1000));
+        self::assertTrue($this->queue->hasPriority(3));
+        self::assertFalse($this->queue->hasPriority(1000));
     }
 
     public function testCloningAlsoClonesQueue()
@@ -131,20 +131,20 @@ class PriorityQueueTest extends TestCase
         $queueClone = clone $queue;
 
         while (! $queue->isEmpty()) {
-            $this->assertSame($foo, $queue->top());
+            self::assertSame($foo, $queue->top());
             $queue->remove($queue->top());
         }
 
-        $this->assertTrue($queue->isEmpty());
-        $this->assertFalse($queueClone->isEmpty());
-        $this->assertEquals(2, $queueClone->count());
+        self::assertTrue($queue->isEmpty());
+        self::assertFalse($queueClone->isEmpty());
+        self::assertEquals(2, $queueClone->count());
 
         while (! $queueClone->isEmpty()) {
-            $this->assertSame($foo, $queueClone->top());
+            self::assertSame($foo, $queueClone->top());
             $queueClone->remove($queueClone->top());
         }
 
-        $this->assertTrue($queueClone->isEmpty());
+        self::assertTrue($queueClone->isEmpty());
     }
 
     public function testQueueRevertsToInitialStateWhenEmpty()
@@ -158,6 +158,6 @@ class PriorityQueueTest extends TestCase
         $testQueue->remove('foo');
         $testQueue->remove('bar');
 
-        $this->assertEquals($queue, $testQueue);
+        self::assertEquals($queue, $testQueue);
     }
 }

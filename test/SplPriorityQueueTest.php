@@ -21,7 +21,7 @@ class SplPriorityQueueTest extends TestCase
      */
     protected $queue;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->queue = new SplPriorityQueue();
         $this->queue->insert('foo', 3);
@@ -40,7 +40,7 @@ class SplPriorityQueueTest extends TestCase
 
         $expected = ['foo', 'bar', 'baz', 'bat'];
         $test = array_values(iterator_to_array($queue));
-        $this->assertEquals($expected, $test);
+        self::assertEquals($expected, $test);
     }
 
     public function testSerializationAndDeserializationShouldMaintainState()
@@ -49,13 +49,13 @@ class SplPriorityQueueTest extends TestCase
         $unserialized = unserialize($s);
 
         // assert same size
-        $this->assertSameSize($this->queue, $unserialized);
+        self::assertSameSize($this->queue, $unserialized);
 
         // assert same values
-        $this->assertSame(iterator_to_array($this->queue), iterator_to_array($unserialized));
+        self::assertSame(iterator_to_array($this->queue), iterator_to_array($unserialized));
 
         // assert equal
-        $this->assertEquals($this->queue, $unserialized);
+        self::assertEquals($this->queue, $unserialized);
     }
 
     public function testCanRetrieveQueueAsArray()
@@ -67,6 +67,6 @@ class SplPriorityQueueTest extends TestCase
             'bat',
         ];
         $test     = $this->queue->toArray();
-        $this->assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, 1));
     }
 }
