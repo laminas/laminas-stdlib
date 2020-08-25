@@ -29,7 +29,7 @@ class GlobTest extends TestCase
     public function testNonMatchingGlobReturnsArray()
     {
         $result = Glob::glob('/some/path/{,*.}{this,orthis}.php', Glob::GLOB_BRACE);
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     public function testThrowExceptionOnError()

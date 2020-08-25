@@ -18,7 +18,7 @@ class PriorityListTest extends TestCase
      */
     protected $list;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->list = new PriorityList();
     }

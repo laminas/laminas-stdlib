@@ -27,7 +27,7 @@ class FastPriorityQueueTest extends TestCase
      */
     protected $expected;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->queue = new FastPriorityQueue();
         $this->insertDataQueue($this->queue);

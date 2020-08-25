@@ -13,7 +13,7 @@ use LaminasTest\Stdlib\TestAsset\GuardedObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers   Laminas\Stdlib\Guard\NullGuardTrait
+ * @covers \Laminas\Stdlib\Guard\NullGuardTrait
  */
 class NullGuardTraitTest extends TestCase
 {

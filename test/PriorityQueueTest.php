@@ -21,7 +21,7 @@ class PriorityQueueTest extends TestCase
      */
     protected $queue;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->queue = new PriorityQueue();
         $this->queue->insert('foo', 3);

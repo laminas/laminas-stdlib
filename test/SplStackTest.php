@@ -21,7 +21,7 @@ class SplStackTest extends TestCase
      */
     protected $stack;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->stack = new SplStack();
         $this->stack->push('foo');

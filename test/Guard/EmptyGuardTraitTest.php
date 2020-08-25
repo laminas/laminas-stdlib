@@ -13,7 +13,7 @@ use LaminasTest\Stdlib\TestAsset\GuardedObject;
 use PHPUnit\Framework\TestCase;
 
 /**
- * @covers   Laminas\Stdlib\Guard\EmptyGuardTrait
+ * @covers \Laminas\Stdlib\Guard\EmptyGuardTrait
  */
 class EmptyGuardTraitTest extends TestCase
 {

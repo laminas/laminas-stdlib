@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class ErrorHandlerTest extends TestCase
 {
-    public function tearDown()
+    protected function tearDown() : void
     {
         if (ErrorHandler::getNestedLevel()) {
             ErrorHandler::clean();

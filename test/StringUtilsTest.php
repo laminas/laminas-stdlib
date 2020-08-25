@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 
 class StringUtilsTest extends TestCase
 {
-    public function tearDown()
+    protected function tearDown() : void
     {
         StringUtils::resetRegisteredWrappers();
     }
