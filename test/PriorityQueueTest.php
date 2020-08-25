@@ -11,6 +11,13 @@ namespace LaminasTest\Stdlib;
 use Laminas\Stdlib\PriorityQueue;
 use PHPUnit\Framework\TestCase;
 
+use function array_values;
+use function count;
+use function iterator_to_array;
+use function serialize;
+use function unserialize;
+use function var_export;
+
 /**
  * @group      Laminas_Stdlib
  */

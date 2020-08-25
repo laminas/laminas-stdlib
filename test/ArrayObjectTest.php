@@ -10,8 +10,18 @@ namespace LaminasTest\Stdlib;
 
 use InvalidArgumentException;
 use Laminas\Stdlib\ArrayObject;
-use PHPUnit\Framework\Error\Warning;
 use PHPUnit\Framework\TestCase;
+
+use function asort;
+use function ksort;
+use function natcasesort;
+use function natsort;
+use function preg_replace;
+use function serialize;
+use function strcasecmp;
+use function uasort;
+use function uksort;
+use function unserialize;
 
 class ArrayObjectTest extends TestCase
 {

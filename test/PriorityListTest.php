@@ -11,6 +11,10 @@ namespace LaminasTest\Stdlib;
 use Laminas\Stdlib\PriorityList;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+use function count;
+use function iterator_to_array;
+
 class PriorityListTest extends TestCase
 {
     /**

@@ -8,6 +8,8 @@
 
 namespace Laminas\Stdlib\StringWrapper;
 
+use const STR_PAD_RIGHT;
+
 interface StringWrapperInterface
 {
     /**

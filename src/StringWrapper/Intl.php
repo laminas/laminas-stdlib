@@ -10,6 +10,11 @@ namespace Laminas\Stdlib\StringWrapper;
 
 use Laminas\Stdlib\Exception;
 
+use function extension_loaded;
+use function grapheme_strlen;
+use function grapheme_strpos;
+use function grapheme_substr;
+
 class Intl extends AbstractStringWrapper
 {
     /**

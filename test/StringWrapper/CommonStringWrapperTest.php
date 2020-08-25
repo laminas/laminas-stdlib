@@ -12,6 +12,10 @@ use Laminas\Stdlib\Exception;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 use PHPUnit\Framework\TestCase;
 
+use const STR_PAD_BOTH;
+use const STR_PAD_LEFT;
+use const STR_PAD_RIGHT;
+
 abstract class CommonStringWrapperTest extends TestCase
 {
     /**

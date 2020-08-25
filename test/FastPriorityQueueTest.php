@@ -12,6 +12,15 @@ use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Laminas\Stdlib\FastPriorityQueue;
 use PHPUnit\Framework\TestCase;
 
+use function array_keys;
+use function array_rand;
+use function count;
+use function iterator_to_array;
+use function serialize;
+use function sprintf;
+use function unserialize;
+use function var_export;
+
 /**
  * @group      Laminas_Stdlib
  */

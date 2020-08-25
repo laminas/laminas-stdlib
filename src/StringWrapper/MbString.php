@@ -10,6 +10,15 @@ namespace Laminas\Stdlib\StringWrapper;
 
 use Laminas\Stdlib\Exception;
 
+use function array_map;
+use function array_search;
+use function extension_loaded;
+use function mb_convert_encoding;
+use function mb_list_encodings;
+use function mb_strlen;
+use function mb_strpos;
+use function mb_substr;
+
 class MbString extends AbstractStringWrapper
 {
     /**

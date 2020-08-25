@@ -12,6 +12,22 @@ use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
 use Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface;
 use Traversable;
 
+use function array_filter;
+use function array_key_exists;
+use function array_keys;
+use function array_values;
+use function in_array;
+use function is_array;
+use function is_callable;
+use function is_float;
+use function is_int;
+use function is_object;
+use function is_scalar;
+use function is_string;
+use function iterator_to_array;
+use function method_exists;
+use function sprintf;
+
 /**
  * Utility class for testing and manipulation of PHP arrays.
  *

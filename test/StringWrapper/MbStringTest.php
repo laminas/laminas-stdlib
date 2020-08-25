@@ -11,6 +11,9 @@ namespace LaminasTest\Stdlib\StringWrapper;
 use Laminas\Stdlib\Exception;
 use Laminas\Stdlib\StringWrapper\MbString;
 
+use function array_shift;
+use function extension_loaded;
+
 class MbStringTest extends CommonStringWrapperTest
 {
     protected function setUp() : void

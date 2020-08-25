@@ -10,6 +10,8 @@ namespace LaminasTest\Stdlib\StringWrapper;
 
 use Laminas\Stdlib\StringWrapper\Native;
 
+use function array_shift;
+
 class NativeTest extends CommonStringWrapperTest
 {
     protected function getWrapper($encoding = null, $convertEncoding = null)

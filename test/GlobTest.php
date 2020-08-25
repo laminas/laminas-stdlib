@@ -12,6 +12,13 @@ use Laminas\Stdlib\Exception\RuntimeException;
 use Laminas\Stdlib\Glob;
 use PHPUnit\Framework\TestCase;
 
+use function count;
+use function defined;
+use function glob;
+use function str_repeat;
+
+use const GLOB_BRACE;
+
 class GlobTest extends TestCase
 {
     public function testFallback()

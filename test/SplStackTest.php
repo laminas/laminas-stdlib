@@ -11,6 +11,12 @@ namespace LaminasTest\Stdlib;
 use Laminas\Stdlib\SplStack;
 use PHPUnit\Framework\TestCase;
 
+use function count;
+use function iterator_to_array;
+use function serialize;
+use function unserialize;
+use function var_export;
+
 /**
  * @group      Laminas_Stdlib
  */

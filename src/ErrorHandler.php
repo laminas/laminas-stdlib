@@ -10,6 +10,14 @@ namespace Laminas\Stdlib;
 
 use ErrorException;
 
+use function array_pop;
+use function count;
+use function get_called_class;
+use function restore_error_handler;
+use function set_error_handler;
+
+use const E_WARNING;
+
 /**
  * ErrorHandler that can be used to catch internal PHP errors
  * and convert to an ErrorException instance.
@@ -48,7 +56,7 @@ abstract class ErrorHandler
      *
      * @param int $errorLevel
      */
-    public static function start($errorLevel = \E_WARNING)
+    public static function start($errorLevel = E_WARNING)
     {
         if (! static::$stack) {
             set_error_handler([get_called_class(), 'addError'], $errorLevel);

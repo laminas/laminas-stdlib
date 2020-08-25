@@ -13,6 +13,10 @@ use Laminas\Stdlib\ErrorHandler;
 use Laminas\Stdlib\StringUtils;
 use PHPUnit\Framework\TestCase;
 
+use function defined;
+use function extension_loaded;
+use function preg_match;
+
 class StringUtilsTest extends TestCase
 {
     protected function tearDown() : void

@@ -10,6 +10,12 @@ namespace Laminas\Stdlib\StringWrapper;
 
 use Laminas\Stdlib\Exception;
 
+use function extension_loaded;
+use function iconv;
+use function iconv_strlen;
+use function iconv_strpos;
+use function iconv_substr;
+
 class Iconv extends AbstractStringWrapper
 {
     /**

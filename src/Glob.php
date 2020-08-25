@@ -8,6 +8,22 @@
 
 namespace Laminas\Stdlib;
 
+use function array_merge;
+use function array_unique;
+use function defined;
+use function glob;
+use function strlen;
+use function strpos;
+use function substr;
+
+use const GLOB_BRACE;
+use const GLOB_ERR;
+use const GLOB_MARK;
+use const GLOB_NOCHECK;
+use const GLOB_NOESCAPE;
+use const GLOB_NOSORT;
+use const GLOB_ONLYDIR;
+
 /**
  * Wrapper for glob with fallback if GLOB_BRACE is not available.
  */

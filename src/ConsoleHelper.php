@@ -8,6 +8,19 @@
 
 namespace Laminas\Stdlib;
 
+use function function_exists;
+use function fwrite;
+use function getenv;
+use function posix_isatty;
+use function preg_replace;
+use function sprintf;
+use function str_replace;
+
+use const DIRECTORY_SEPARATOR;
+use const PHP_EOL;
+use const STDERR;
+use const STDOUT;
+
 /**
  * Utilities for console tooling.
  *

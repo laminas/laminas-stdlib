@@ -11,6 +11,11 @@ namespace LaminasTest\Stdlib;
 use Laminas\Stdlib\SplQueue;
 use PHPUnit\Framework\TestCase;
 
+use function count;
+use function iterator_to_array;
+use function serialize;
+use function unserialize;
+
 /**
  * @group      Laminas_Stdlib
  */

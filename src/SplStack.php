@@ -10,6 +10,9 @@ namespace Laminas\Stdlib;
 
 use Serializable;
 
+use function serialize;
+use function unserialize;
+
 /**
  * Serializable version of SplStack
  */
