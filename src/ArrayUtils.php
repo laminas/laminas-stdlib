@@ -226,7 +226,7 @@ abstract class ArrayUtils
             return iterator_to_array($iterator);
         }
 
-        if (method_exists($iterator, 'toArray')) {
+        if (is_object($iterator) && method_exists($iterator, 'toArray')) {
             return $iterator->toArray();
         }
 

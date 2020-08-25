@@ -64,7 +64,7 @@ class ErrorHandlerTest extends TestCase
     public function testReturnCatchedError()
     {
         ErrorHandler::start();
-        strpos(); // Invalid argument list
+        1 / 0; // Division by zero
         $err = ErrorHandler::stop();
 
         $this->assertInstanceOf('ErrorException', $err);
@@ -73,7 +73,7 @@ class ErrorHandlerTest extends TestCase
     public function testThrowCatchedError()
     {
         ErrorHandler::start();
-        strpos(); // Invalid argument list
+        1 / 0; // Division by zero
 
         $this->expectException(ErrorException::class);
         ErrorHandler::stop(true);
