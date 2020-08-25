@@ -10,6 +10,14 @@ namespace Laminas\Stdlib;
 
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
+use function array_search;
+use function defined;
+use function extension_loaded;
+use function in_array;
+use function is_string;
+use function preg_match;
+use function strtoupper;
+
 /**
  * Utility class for handling strings of different character encodings
  * using available PHP extensions.

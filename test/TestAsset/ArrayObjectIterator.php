@@ -8,6 +8,12 @@
 
 namespace LaminasTest\Stdlib\TestAsset;
 
+use function current;
+use function is_array;
+use function key;
+use function next;
+use function reset;
+
 class ArrayObjectIterator implements \Iterator
 {
 

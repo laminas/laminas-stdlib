@@ -13,6 +13,24 @@ use Countable;
 use IteratorAggregate;
 use Serializable;
 
+use function array_keys;
+use function asort;
+use function class_exists;
+use function count;
+use function get_object_vars;
+use function in_array;
+use function is_array;
+use function is_callable;
+use function is_object;
+use function ksort;
+use function natcasesort;
+use function natsort;
+use function serialize;
+use function strpos;
+use function uasort;
+use function uksort;
+use function unserialize;
+
 /**
  * Custom framework ArrayObject implementation
  *

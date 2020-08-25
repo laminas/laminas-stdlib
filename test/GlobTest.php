@@ -12,6 +12,13 @@ use Laminas\Stdlib\Exception\RuntimeException;
 use Laminas\Stdlib\Glob;
 use PHPUnit\Framework\TestCase;
 
+use function count;
+use function defined;
+use function glob;
+use function str_repeat;
+
+use const GLOB_BRACE;
+
 class GlobTest extends TestCase
 {
     public function testFallback()
@@ -20,7 +27,7 @@ class GlobTest extends TestCase
             $this->markTestSkipped('GLOB_BRACE not available');
         }
 
-        $this->assertEquals(
+        self::assertEquals(
             glob(__DIR__ . '/_files/{alph,bet}a', GLOB_BRACE),
             Glob::glob(__DIR__ . '/_files/{alph,bet}a', Glob::GLOB_BRACE, true)
         );
@@ -29,7 +36,7 @@ class GlobTest extends TestCase
     public function testNonMatchingGlobReturnsArray()
     {
         $result = Glob::glob('/some/path/{,*.}{this,orthis}.php', Glob::GLOB_BRACE);
-        $this->assertInternalType('array', $result);
+        self::assertIsArray($result);
     }
 
     public function testThrowExceptionOnError()
@@ -50,10 +57,10 @@ class GlobTest extends TestCase
     {
         $result = Glob::glob(__DIR__ . '/_files/' . $pattern, Glob::GLOB_BRACE);
 
-        $this->assertCount(count($expectedSequence), $result);
+        self::assertCount(count($expectedSequence), $result);
 
         foreach ($expectedSequence as $i => $expectedFileName) {
-            $this->assertStringEndsWith($expectedFileName, $result[$i]);
+            self::assertStringEndsWith($expectedFileName, $result[$i]);
         }
     }
 

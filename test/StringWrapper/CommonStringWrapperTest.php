@@ -12,6 +12,10 @@ use Laminas\Stdlib\Exception;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 use PHPUnit\Framework\TestCase;
 
+use const STR_PAD_BOTH;
+use const STR_PAD_LEFT;
+use const STR_PAD_RIGHT;
+
 abstract class CommonStringWrapperTest extends TestCase
 {
     /**
@@ -43,7 +47,7 @@ abstract class CommonStringWrapperTest extends TestCase
         }
 
         $result = $wrapper->strlen($str);
-        $this->assertSame($expected, $result);
+        self::assertSame($expected, $result);
     }
 
     public function substrProvider()
@@ -72,7 +76,7 @@ abstract class CommonStringWrapperTest extends TestCase
         }
 
         $result = $wrapper->substr($str, $offset, $length);
-        $this->assertSame($expected, $result);
+        self::assertSame($expected, $result);
     }
 
     public function strposProvider()
@@ -101,7 +105,7 @@ abstract class CommonStringWrapperTest extends TestCase
         }
 
         $result = $wrapper->strpos($haystack, $needle, $offset);
-        $this->assertSame($expected, $result);
+        self::assertSame($expected, $result);
     }
 
     public function convertProvider()
@@ -131,11 +135,11 @@ abstract class CommonStringWrapperTest extends TestCase
         }
 
         $result = $wrapper->convert($str);
-        $this->assertSame($expected, $result);
+        self::assertSame($expected, $result);
 
         // backword
         $result = $wrapper->convert($expected, true);
-        $this->assertSame($str, $result);
+        self::assertSame($str, $result);
     }
 
     public function wordWrapProvider()
@@ -202,7 +206,7 @@ abstract class CommonStringWrapperTest extends TestCase
         }
 
         $result = $wrapper->wordWrap($string, $width, $break, $cut);
-        $this->assertSame($expected, $result);
+        self::assertSame($expected, $result);
     }
 
     public function testWordWrapInvalidArgument()
@@ -258,6 +262,6 @@ abstract class CommonStringWrapperTest extends TestCase
         }
 
         $result = $wrapper->strPad($input, $padLength, $padString, $padType);
-        $this->assertSame($expected, $result);
+        self::assertSame($expected, $result);
     }
 }

@@ -10,6 +10,16 @@ namespace Laminas\Stdlib;
 
 use Traversable;
 
+use function array_shift;
+use function is_array;
+use function is_callable;
+use function method_exists;
+use function preg_replace_callback;
+use function sprintf;
+use function str_replace;
+use function strtolower;
+use function ucwords;
+
 abstract class AbstractOptions implements ParameterObjectInterface
 {
     // @codingStandardsIgnoreStart

@@ -12,6 +12,22 @@ use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
 use Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface;
 use Traversable;
 
+use function array_filter;
+use function array_key_exists;
+use function array_keys;
+use function array_values;
+use function in_array;
+use function is_array;
+use function is_callable;
+use function is_float;
+use function is_int;
+use function is_object;
+use function is_scalar;
+use function is_string;
+use function iterator_to_array;
+use function method_exists;
+use function sprintf;
+
 /**
  * Utility class for testing and manipulation of PHP arrays.
  *
@@ -46,7 +62,7 @@ abstract class ArrayUtils
             return $allowEmpty;
         }
 
-        return count(array_filter(array_keys($value), 'is_string')) > 0;
+        return [] !== array_filter(array_keys($value), 'is_string');
     }
 
     /**
@@ -66,7 +82,7 @@ abstract class ArrayUtils
             return $allowEmpty;
         }
 
-        return count(array_filter(array_keys($value), 'is_int')) > 0;
+        return [] !== array_filter(array_keys($value), 'is_int');
     }
 
     /**
@@ -93,7 +109,7 @@ abstract class ArrayUtils
             return $allowEmpty;
         }
 
-        return count(array_filter(array_keys($value), 'is_numeric')) > 0;
+        return [] !== array_filter(array_keys($value), 'is_numeric');
     }
 
     /**
@@ -226,7 +242,7 @@ abstract class ArrayUtils
             return iterator_to_array($iterator);
         }
 
-        if (method_exists($iterator, 'toArray')) {
+        if (is_object($iterator) && method_exists($iterator, 'toArray')) {
             return $iterator->toArray();
         }
 

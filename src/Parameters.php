@@ -10,6 +10,9 @@ namespace Laminas\Stdlib;
 
 use ArrayObject as PhpArrayObject;
 
+use function http_build_query;
+use function parse_str;
+
 class Parameters extends PhpArrayObject implements ParametersInterface
 {
     /**

@@ -11,9 +11,12 @@ namespace LaminasTest\Stdlib\StringWrapper;
 use Laminas\Stdlib\Exception;
 use Laminas\Stdlib\StringWrapper\Iconv;
 
+use function array_shift;
+use function extension_loaded;
+
 class IconvTest extends CommonStringWrapperTest
 {
-    public function setUp()
+    protected function setUp() : void
     {
         if (! extension_loaded('iconv')) {
             try {

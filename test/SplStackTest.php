@@ -11,6 +11,12 @@ namespace LaminasTest\Stdlib;
 use Laminas\Stdlib\SplStack;
 use PHPUnit\Framework\TestCase;
 
+use function count;
+use function iterator_to_array;
+use function serialize;
+use function unserialize;
+use function var_export;
+
 /**
  * @group      Laminas_Stdlib
  */
@@ -21,7 +27,7 @@ class SplStackTest extends TestCase
      */
     protected $stack;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->stack = new SplStack();
         $this->stack->push('foo');
@@ -35,17 +41,17 @@ class SplStackTest extends TestCase
         $s = serialize($this->stack);
         $unserialized = unserialize($s);
         $count = count($this->stack);
-        $this->assertSame($count, count($unserialized));
+        self::assertSame($count, count($unserialized));
 
         $expected = iterator_to_array($this->stack);
         $test = iterator_to_array($unserialized);
-        $this->assertSame($expected, $test);
+        self::assertSame($expected, $test);
     }
 
     public function testCanRetrieveQueueAsArray()
     {
         $expected = ['bat', 'baz', 'bar', 'foo'];
         $test     = $this->stack->toArray();
-        $this->assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, 1));
     }
 }

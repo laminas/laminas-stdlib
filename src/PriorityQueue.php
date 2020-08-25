@@ -12,6 +12,13 @@ use Countable;
 use IteratorAggregate;
 use Serializable;
 
+use function array_map;
+use function count;
+use function get_class;
+use function serialize;
+use function sprintf;
+use function unserialize;
+
 /**
  * Re-usable, serializable priority queue implementation
  *

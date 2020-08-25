@@ -11,6 +11,11 @@ namespace LaminasTest\Stdlib;
 use Laminas\Stdlib\SplQueue;
 use PHPUnit\Framework\TestCase;
 
+use function count;
+use function iterator_to_array;
+use function serialize;
+use function unserialize;
+
 /**
  * @group      Laminas_Stdlib
  */
@@ -21,7 +26,7 @@ class SplQueueTest extends TestCase
      */
     protected $queue;
 
-    public function setUp()
+    protected function setUp() : void
     {
         $this->queue = new SplQueue();
         $this->queue->push('foo');
@@ -34,16 +39,16 @@ class SplQueueTest extends TestCase
         $s = serialize($this->queue);
         $unserialized = unserialize($s);
         $count = count($this->queue);
-        $this->assertSame($count, count($unserialized));
+        self::assertSame($count, count($unserialized));
 
         $expected = iterator_to_array($this->queue);
         $test = iterator_to_array($unserialized);
-        $this->assertSame($expected, $test);
+        self::assertSame($expected, $test);
     }
 
     public function testCanRetrieveQueueAsArray()
     {
         $expected = ['foo', 'bar', 'baz'];
-        $this->assertSame($expected, $this->queue->toArray());
+        self::assertSame($expected, $this->queue->toArray());
     }
 }

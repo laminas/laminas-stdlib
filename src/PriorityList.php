@@ -11,6 +11,13 @@ namespace Laminas\Stdlib;
 use Countable;
 use Iterator;
 
+use function array_map;
+use function current;
+use function key;
+use function next;
+use function reset;
+use function uasort;
+
 class PriorityList implements Iterator, Countable
 {
     const EXTR_DATA     = 0x00000001;

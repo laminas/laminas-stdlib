@@ -10,6 +10,10 @@ namespace Laminas\Stdlib;
 
 use Serializable;
 
+use function is_array;
+use function serialize;
+use function unserialize;
+
 /**
  * Serializable version of SplPriorityQueue
  *

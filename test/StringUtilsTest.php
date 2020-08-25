@@ -13,9 +13,13 @@ use Laminas\Stdlib\ErrorHandler;
 use Laminas\Stdlib\StringUtils;
 use PHPUnit\Framework\TestCase;
 
+use function defined;
+use function extension_loaded;
+use function preg_match;
+
 class StringUtilsTest extends TestCase
 {
-    public function tearDown()
+    protected function tearDown() : void
     {
         StringUtils::resetRegisteredWrappers();
     }
@@ -51,7 +55,7 @@ class StringUtilsTest extends TestCase
      */
     public function testIsSingleByteEncodingReturnsTrue($encoding)
     {
-        $this->assertTrue(StringUtils::isSingleByteEncoding($encoding));
+        self::assertTrue(StringUtils::isSingleByteEncoding($encoding));
     }
 
     public function getNonSingleByteEncodings()
@@ -70,28 +74,28 @@ class StringUtilsTest extends TestCase
      */
     public function testIsSingleByteEncodingReturnsFalse($encoding)
     {
-        $this->assertFalse(StringUtils::isSingleByteEncoding($encoding));
+        self::assertFalse(StringUtils::isSingleByteEncoding($encoding));
     }
 
     public function testGetWrapper()
     {
         $wrapper = StringUtils::getWrapper('ISO-8859-1');
         if (extension_loaded('mbstring')) {
-            $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\MbString', $wrapper);
+            self::assertInstanceOf('Laminas\Stdlib\StringWrapper\MbString', $wrapper);
         } elseif (extension_loaded('iconv')) {
-            $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\Iconv', $wrapper);
+            self::assertInstanceOf('Laminas\Stdlib\StringWrapper\Iconv', $wrapper);
         } else {
-            $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\Native', $wrapper);
+            self::assertInstanceOf('Laminas\Stdlib\StringWrapper\Native', $wrapper);
         }
 
         try {
             $wrapper = StringUtils::getWrapper('UTF-8');
             if (extension_loaded('intl')) {
-                $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\Intl', $wrapper);
+                self::assertInstanceOf('Laminas\Stdlib\StringWrapper\Intl', $wrapper);
             } elseif (extension_loaded('mbstring')) {
-                $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\MbString', $wrapper);
+                self::assertInstanceOf('Laminas\Stdlib\StringWrapper\MbString', $wrapper);
             } elseif (extension_loaded('iconv')) {
-                $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\Iconv', $wrapper);
+                self::assertInstanceOf('Laminas\Stdlib\StringWrapper\Iconv', $wrapper);
             }
         } catch (Exception $e) {
             if (extension_loaded('intl')
@@ -105,9 +109,9 @@ class StringUtilsTest extends TestCase
         try {
             $wrapper = StringUtils::getWrapper('UTF-8', 'ISO-8859-1');
             if (extension_loaded('mbstring')) {
-                $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\MbString', $wrapper);
+                self::assertInstanceOf('Laminas\Stdlib\StringWrapper\MbString', $wrapper);
             } elseif (extension_loaded('iconv')) {
-                $this->assertInstanceOf('Laminas\Stdlib\StringWrapper\Iconv', $wrapper);
+                self::assertInstanceOf('Laminas\Stdlib\StringWrapper\Iconv', $wrapper);
             }
         } catch (Exception $e) {
             if (extension_loaded('mbstring') || extension_loaded('iconv')) {
@@ -145,7 +149,7 @@ class StringUtilsTest extends TestCase
      */
     public function testIsValidUtf8($str, $valid)
     {
-        $this->assertSame($valid, StringUtils::isValidUtf8($str));
+        self::assertSame($valid, StringUtils::isValidUtf8($str));
     }
 
     public function testHasPcreUnicodeSupport()
@@ -154,6 +158,6 @@ class StringUtilsTest extends TestCase
         $expected = defined('PREG_BAD_UTF8_OFFSET_ERROR') && preg_match('/\pL/u', 'a') == 1;
         ErrorHandler::stop();
 
-        $this->assertSame($expected, StringUtils::hasPcreUnicodeSupport());
+        self::assertSame($expected, StringUtils::hasPcreUnicodeSupport());
     }
 }

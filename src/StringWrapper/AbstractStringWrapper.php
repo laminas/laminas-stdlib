@@ -11,6 +11,18 @@ namespace Laminas\Stdlib\StringWrapper;
 use Laminas\Stdlib\Exception;
 use Laminas\Stdlib\StringUtils;
 
+use function floor;
+use function in_array;
+use function sprintf;
+use function str_pad;
+use function str_repeat;
+use function strtoupper;
+use function wordwrap;
+
+use const STR_PAD_BOTH;
+use const STR_PAD_LEFT;
+use const STR_PAD_RIGHT;
+
 abstract class AbstractStringWrapper implements StringWrapperInterface
 {
     /**

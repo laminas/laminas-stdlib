@@ -15,6 +15,8 @@ use PhpBench\Benchmark\Metadata\Annotations\Iterations;
 use PhpBench\Benchmark\Metadata\Annotations\Revs;
 use PhpBench\Benchmark\Metadata\Annotations\Warmup;
 
+use function rand;
+
 /**
  * @Revs(1000)
  * @Iterations(10)
