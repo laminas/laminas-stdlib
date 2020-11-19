@@ -22,7 +22,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- Nothing.
+- [#13](https://github.com/laminas/laminas-stdlib/pull/13) fixes an issue whereby calling `Laminas\Stdlib\PriorityQueue::extract()` left the instance in an invalid state, causing other functionality like `count()` and `contains()` to reflect the prior state.
 
 ## 3.3.0 - 2020-08-25
 
