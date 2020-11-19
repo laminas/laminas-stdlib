@@ -197,7 +197,7 @@
             </div>
 
             
-            <div class="col-4 text-sm-right">
+            <div class="col-4 text-right">
                 
                     
 
@@ -309,11 +309,9 @@ all beneath it in a minimal fashion.</p>
 
 $helper = new ConsoleHelper();
 $helper-&gt;writeLine('This is output');</code></pre>
-
 <p>You can optionally pass a PHP stream resource to the constructor, which will be
 used to determine whether or not color support is available:</p>
 <pre class="highlight"><code class="language-php">$helper = new ConsoleHelper($stream);</code></pre>
-
 <p>By default, it assumes <code>STDOUT</code>, and tests against that.</p>
 <h2 id="available-methods">Available methods</h2>
 <p><code>ConsoleHelper</code> provides the following methods.</p>
@@ -383,7 +381,6 @@ class HelloWorld
         ));
     }
 }</code></pre>
-
 <h2 id="when-to-upgrade">When to upgrade</h2>
 <p><code>ConsoleHelper</code> is deliberately simple, and assumes that your primary need for
 console tooling is for output considerations.</p>
