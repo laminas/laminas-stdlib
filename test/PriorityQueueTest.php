@@ -167,4 +167,18 @@ class PriorityQueueTest extends TestCase
 
         self::assertEquals($queue, $testQueue);
     }
+
+    /**
+     * @see https://github.com/laminas/laminas-stdlib/issues/12
+     */
+    public function testUpdatesCountAfterExtractingTopElement(): void
+    {
+        $queue = new PriorityQueue();
+        $queue->insert('first');
+        $queue->insert('second');
+
+        $queue->extract();
+
+        $this->assertCount(1, $queue);
+    }
 }
