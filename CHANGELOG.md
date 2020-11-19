@@ -2,20 +2,37 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 3.4.0 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Nothing.
+
 ## 3.3.1 - 2020-11-19
 
 ### Fixed
 
 - [#13](https://github.com/laminas/laminas-stdlib/pull/13) fixes an issue whereby calling `Laminas\Stdlib\PriorityQueue::extract()` left the instance in an invalid state, causing other functionality like `count()` and `contains()` to reflect the prior state.
 
-
 -----
 
 ### Release Notes for [3.3.1](https://github.com/laminas/laminas-stdlib/milestone/2)
-
-
-
-### 3.3.1
 
 - Total issues resolved: **1**
 - Total pull requests resolved: **1**
