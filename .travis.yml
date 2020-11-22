@@ -50,6 +50,7 @@ install:
 
 script:
   - if [[ $TEST_COVERAGE == 'true' ]]; then composer test-coverage ; else composer test ; fi
+  - if [[ $TEST_COVERAGE == 'true' ]]; then composer static-analysis --ignore-baseline; fi
   - if [[ $BENCHMARKS == 'true' ]]; then vendor/bin/phpbench run --revs=2 --iterations=2 --report=aggregate ; fi
   - if [[ $CS_CHECK == 'true' ]]; then composer cs-check ; fi
 
