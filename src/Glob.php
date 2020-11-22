@@ -111,7 +111,7 @@ abstract class Glob
      */
     protected static function fallbackGlob($pattern, $flags)
     {
-        if (! $flags & self::GLOB_BRACE) {
+        if (! ($flags & self::GLOB_BRACE)) {
             return static::systemGlob($pattern, $flags);
         }
 
@@ -145,7 +145,7 @@ abstract class Glob
         $next = static::nextBraceSub($pattern, $begin + 1, $flags);
 
         if ($next === null) {
-            return static::systemGlob($pattern, $flags);
+            static::systemGlob($pattern, $flags);
         }
 
         $rest = $next;
@@ -154,7 +154,7 @@ abstract class Glob
             $rest = static::nextBraceSub($pattern, $rest + 1, $flags);
 
             if ($rest === null) {
-                return static::systemGlob($pattern, $flags);
+                static::systemGlob($pattern, $flags);
             }
         }
 
@@ -179,6 +179,10 @@ abstract class Glob
             $next = static::nextBraceSub($pattern, $p, $flags);
         }
 
+        if (! ($flags & self::GLOB_NOSORT)) {
+            sort($paths);
+        }
+
         return array_unique($paths);
     }
 
@@ -197,7 +201,7 @@ abstract class Glob
         $current = $begin;
 
         while ($current < $length) {
-            if (! $flags & self::GLOB_NOESCAPE && $pattern[$current] === '\\') {
+            if (! ($flags & self::GLOB_NOESCAPE) && $pattern[$current] === '\\') {
                 if (++$current === $length) {
                     break;
                 }
