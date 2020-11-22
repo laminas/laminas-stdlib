@@ -98,7 +98,9 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
     public function unserialize($data)
     {
         $this->serial = PHP_INT_MAX;
-        foreach (unserialize($data) as $item) {
+        /** @psalm-var array{data: TValue, priority: TPriority}[] $unserialized */
+        $unserialized = unserialize($data);
+        foreach ($unserialized as $item) {
             $this->serial--;
             $this->insert($item['data'], $item['priority']);
         }

@@ -108,13 +108,12 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
         foreach ($this->items as $key => $item) {
             if ($item['data'] === $datum) {
                 $found = true;
+                unset($this->items[$key]);
                 break;
             }
         }
         if ($found) {
-            unset($this->items[$key]);
             $this->queue = null;
-
             if (! $this->isEmpty()) {
                 $queue = $this->getQueue();
                 foreach ($this->items as $item) {
@@ -234,7 +233,9 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      */
     public function unserialize($data)
     {
-        foreach (unserialize($data) as $item) {
+        /** @psalm-var array{data: TValue, priority: int}[] $unserialized */
+        $unserialized = unserialize($data);
+        foreach ($unserialized as $item) {
             $this->insert($item['data'], $item['priority']);
         }
     }
@@ -249,7 +250,12 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * @param  int $flag
      * @return array
      *
-     * @psalm-return array<int, array{data: TValue, priority: int}>|array<int, int>|array<int, TValue>
+     * @psalm-param self::EXTR_* $flag
+     * @psalm-return (
+     *     $flag is self::EXTR_BOTH ? array<int, array{data: TValue, priority: int}>
+     *     : $flag is self::EXTR_PRIORITY ? array<int, int>
+     *     : array<int, TValue>
+     * )
      */
     public function toArray($flag = self::EXTR_DATA)
     {
@@ -326,17 +332,21 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      */
     protected function getQueue()
     {
-        if (null === $this->queue) {
-            $this->queue = new $this->queueClass();
-            if (! $this->queue instanceof \SplPriorityQueue) {
+        $queue = $this->queue;
+        if (null === $queue) {
+            /** @var \SplPriorityQueue<int, TValue>|object $queue */
+            $queue = new $this->queueClass();
+            if (! $queue instanceof \SplPriorityQueue) {
                 throw new Exception\DomainException(sprintf(
                     'PriorityQueue expects an internal queue of type SplPriorityQueue; received "%s"',
-                    get_class($this->queue)
+                    get_class($queue)
                 ));
             }
+
+            $this->queue = $queue;
         }
 
-        return $this->queue;
+        return $queue;
     }
 
     /**

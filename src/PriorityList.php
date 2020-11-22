@@ -283,9 +283,9 @@ class PriorityList implements Iterator, Countable
      *
      * @psalm-param self::EXTR_* $flag
      * @psalm-return (
-     *   $flag is self::EXTR_BOTH ? array<string, array{data: TValue, priority: int, serial: int}>
-     *   : $flag is self::EXTR_PRIORITY ? int
-     *   : TValue
+     *     $flag is self::EXTR_BOTH ? array<string, array{data: TValue, priority: int, serial: int}>
+     *     : $flag is self::EXTR_PRIORITY ? int
+     *     : TValue
      * )
      */
     public function toArray($flag = self::EXTR_DATA)

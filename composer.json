@@ -28,6 +28,7 @@
         "laminas/laminas-coding-standard": "~1.0.0",
         "phpbench/phpbench": "^0.17.1",
         "phpunit/phpunit": "~9.3.7",
+        "psalm/plugin-phpunit": "^0.13.0",
         "vimeo/psalm": "^4.2"
     },
     "autoload": {

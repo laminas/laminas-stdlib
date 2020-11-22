@@ -98,7 +98,7 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
     /**
      * Get the defined character encoding to work with
      *
-     * @return string
+     * @return string|null
      * @throws Exception\LogicException If no encoding was defined
      */
     public function getEncoding()
@@ -122,6 +122,7 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
      * @param string  $str
      * @param bool $reverse
      * @return string|false
+     * @throws Exception\RuntimeException
      */
     public function convert($str, $reverse = false)
     {
@@ -149,16 +150,16 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
     /**
      * Wraps a string to a given number of characters
      *
-     * @param  string  $str
+     * @param  string  $string
      * @param  int $width
      * @param  string  $break
      * @param  bool $cut
      * @return string|false
      */
-    public function wordWrap($str, $width = 75, $break = "\n", $cut = false)
+    public function wordWrap($string, $width = 75, $break = "\n", $cut = false)
     {
-        $str = (string) $str;
-        if ($str === '') {
+        $string = (string) $string;
+        if ($string === '') {
             return '';
         }
 
@@ -173,25 +174,25 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
         }
 
         if (StringUtils::isSingleByteEncoding($this->getEncoding())) {
-            return wordwrap($str, $width, $break, $cut);
+            return wordwrap($string, $width, $break, $cut);
         }
 
-        $stringWidth = $this->strlen($str) ?? null;
-        $breakWidth  = $this->strlen($break) ?? null;
+        $stringWidth = $this->strlen($string);
+        $breakWidth  = $this->strlen($break);
 
         $result    = '';
         $lastStart = $lastSpace = 0;
 
         for ($current = 0; $current < $stringWidth; $current++) {
-            $char = $this->substr($str, $current, 1);
+            $char = $this->substr($string, $current, 1);
 
             $possibleBreak = $char;
             if ($breakWidth !== 1) {
-                $possibleBreak = $this->substr($str, $current, $breakWidth);
+                $possibleBreak = $this->substr($string, $current, $breakWidth);
             }
 
             if ($possibleBreak === $break) {
-                $result    .= $this->substr($str, $lastStart, $current - $lastStart + $breakWidth);
+                $result    .= $this->substr($string, $lastStart, $current - $lastStart + $breakWidth);
                 $current   += $breakWidth - 1;
                 $lastStart  = $lastSpace = $current + 1;
                 continue;
@@ -199,7 +200,7 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
 
             if ($char === ' ') {
                 if ($current - $lastStart >= $width) {
-                    $result    .= $this->substr($str, $lastStart, $current - $lastStart) . $break;
+                    $result    .= $this->substr($string, $lastStart, $current - $lastStart) . $break;
                     $lastStart  = $current + 1;
                 }
 
@@ -208,20 +209,20 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
             }
 
             if ($current - $lastStart >= $width && $cut && $lastStart >= $lastSpace) {
-                $result    .= $this->substr($str, $lastStart, $current - $lastStart) . $break;
+                $result    .= $this->substr($string, $lastStart, $current - $lastStart) . $break;
                 $lastStart  = $lastSpace = $current;
                 continue;
             }
 
             if ($current - $lastStart >= $width && $lastStart < $lastSpace) {
-                $result    .= $this->substr($str, $lastStart, $lastSpace - $lastStart) . $break;
+                $result    .= $this->substr($string, $lastStart, $lastSpace - $lastStart) . $break;
                 $lastStart  = $lastSpace = $lastSpace + 1;
                 continue;
             }
         }
 
         if ($lastStart !== $current) {
-            $result .= $this->substr($str, $lastStart, $current - $lastStart);
+            $result .= $this->substr($string, $lastStart, $current - $lastStart);
         }
 
         return $result;

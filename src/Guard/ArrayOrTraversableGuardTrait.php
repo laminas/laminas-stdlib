@@ -8,6 +8,7 @@
 
 namespace Laminas\Stdlib\Guard;
 
+use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Traversable;
 
 use function get_class;
@@ -28,11 +29,17 @@ trait ArrayOrTraversableGuardTrait
      * @param  string $dataName       the data name
      * @param  string $exceptionClass FQCN for the exception
      * @throws \Exception
+     *
+     * @template TKey
+     * @template TValue
+     * @psalm-param iterable<TKey, TValue>|mixed
+     * @psalm-param class-string<\Exception> $exceptionClass
+     * @psalm-assert iterable<TKey, TValue> $data
      */
     protected function guardForArrayOrTraversable(
         $data,
         $dataName = 'Argument',
-        $exceptionClass = 'Laminas\Stdlib\Exception\InvalidArgumentException'
+        $exceptionClass = InvalidArgumentException::class
     ) {
         if (! is_array($data) && ! ($data instanceof Traversable)) {
             $message = sprintf(

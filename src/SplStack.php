@@ -17,6 +17,7 @@ use function unserialize;
  * Serializable version of SplStack
  *
  * @template TValue
+ * @template-extends \SplStack<TValue>
  */
 class SplStack extends \SplStack implements Serializable
 {
@@ -53,7 +54,9 @@ class SplStack extends \SplStack implements Serializable
      */
     public function unserialize($data)
     {
-        foreach (unserialize($data) as $item) {
+        /** @psalm-var TValue[] $unserialized */
+        $unserialized = unserialize($data);
+        foreach ($unserialized as $item) {
             $this->unshift($item);
         }
     }

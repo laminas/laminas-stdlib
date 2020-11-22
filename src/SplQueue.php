@@ -17,6 +17,7 @@ use function unserialize;
  * Serializable version of SplQueue
  *
  * @template TValue
+ * @template-extends \SplQueue<TValue>
  */
 class SplQueue extends \SplQueue implements Serializable
 {
@@ -53,7 +54,9 @@ class SplQueue extends \SplQueue implements Serializable
      */
     public function unserialize($data)
     {
-        foreach (unserialize($data) as $item) {
+        /** @psalm-var TValue[] $unserialized */
+        $unserialized = unserialize($data);
+        foreach ($unserialized as $item) {
             $this->push($item);
         }
     }

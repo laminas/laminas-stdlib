@@ -21,6 +21,7 @@ class Intl extends AbstractStringWrapper
      * List of supported character sets (upper case)
      *
      * @var string[]
+     * @psalm-var non-empty-list<string>
      */
     protected static $encodings = ['UTF-8'];
 
@@ -28,6 +29,7 @@ class Intl extends AbstractStringWrapper
      * Get a list of supported character encodings
      *
      * @return string[]
+     * @psalm-return non-empty-list<string>
      */
     public static function getSupportedEncodings()
     {

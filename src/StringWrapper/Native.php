@@ -56,6 +56,7 @@ class Native extends AbstractStringWrapper
      * Get a list of supported character encodings
      *
      * @return string[]
+     * @psalm-return non-empty-list<string>
      */
     public static function getSupportedEncodings()
     {

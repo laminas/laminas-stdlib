@@ -8,14 +8,22 @@
 
 namespace Laminas\Stdlib;
 
+/**
+ * @template TContent
+ * @template TMetaKey of array-key
+ * @template TMetaValue
+ */
 interface MessageInterface
 {
     /**
      * Set metadata
      *
-     * @param  string|int|array<string|int, mixed>|\Traversable<string|int, mixed> $spec
+     * @param  string|int|iterable<string|int, mixed> $spec
      * @param  mixed $value
      * @return $this
+     *
+     * @psalm-param TMetaKey|iterable<TMetaKey, TMetaValue> $spec
+     * @psalm-param TMetaValue|null $value
      */
     public function setMetadata($spec, $value = null);
 
@@ -24,6 +32,9 @@ interface MessageInterface
      *
      * @param  null|string|int $key
      * @return mixed
+     *
+     * @psalm-param TMetaKey|null $key
+     * @psalm-return ($key is null ? iterable<TMetaKey, TMetaValue> : (TMetaValue|null))
      */
     public function getMetadata($key = null);
 
@@ -31,7 +42,9 @@ interface MessageInterface
      * Set content
      *
      * @param  mixed $content
-     * @return mixed
+     * @return $this
+     *
+     * @psalm-param TContent $content
      */
     public function setContent($content);
 
@@ -39,6 +52,8 @@ interface MessageInterface
      * Get content
      *
      * @return mixed
+     *
+     * @psalm-return TContent
      */
     public function getContent();
 }

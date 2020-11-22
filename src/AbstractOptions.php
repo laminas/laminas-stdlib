@@ -21,6 +21,10 @@ use function str_replace;
 use function strtolower;
 use function ucwords;
 
+/**
+ * @template-implements ParameterObjectInterface<mixed>
+ * @psalm-seal-properties
+ */
 abstract class AbstractOptions implements ParameterObjectInterface
 {
     // @codingStandardsIgnoreStart
@@ -36,7 +40,7 @@ abstract class AbstractOptions implements ParameterObjectInterface
     /**
      * Constructor
      *
-     * @param array<string, mixed>|Traversable<string, mixed>|null $options
+     * @param iterable<string, mixed>|AbstractOptions|null $options
      */
     public function __construct($options = null)
     {
@@ -48,12 +52,17 @@ abstract class AbstractOptions implements ParameterObjectInterface
     /**
      * Set one or more configuration properties
      *
-     * @param  array<string, mixed>|Traversable<string, mixed>|AbstractOptions $options
+     * @param  iterable<string, mixed>|AbstractOptions $options
      * @throws Exception\InvalidArgumentException
-     * @return AbstractOptions Provides fluent interface
+     * @return $this Provides fluent interface
+     *
+     * @template TValue
+     * @psalm-param iterable<string, TValue>|AbstractOptions $options
+     * @psalm-assert iterable<string, TValue>|AbstractOptions $options
      */
     public function setFromArray($options)
     {
+        /** @psalm-var iterable<string, TValue>|AbstractOptions|mixed $options */
         if ($options instanceof self) {
             $options = $options->toArray();
         }
@@ -70,6 +79,10 @@ abstract class AbstractOptions implements ParameterObjectInterface
             );
         }
 
+        /**
+         * @psalm-suppress MixedAssignment
+         * @psalm-suppress MixedArgument
+         */
         foreach ($options as $key => $value) {
             $this->__set($key, $value);
         }
@@ -85,10 +98,17 @@ abstract class AbstractOptions implements ParameterObjectInterface
     public function toArray()
     {
         $array = [];
-        $transform = function ($letters) {
-            $letter = array_shift($letters);
-            return '_' . strtolower($letter);
-        };
+        $transform =
+            /**
+             * @param string[] $letters
+             * @return string
+             */
+            function (array $letters): string {
+                $letter = array_shift($letters);
+                return '_' . strtolower($letter);
+            };
+
+        /** @psalm-suppress MixedAssignment */
         foreach (get_object_vars($this) as $key => $value) {
             if ($key === '__strictMode__') {
                 continue;

@@ -51,6 +51,8 @@ abstract class ArrayUtils
      * @param  mixed $value
      * @param  bool  $allowEmpty    Should an empty array() return true
      * @return bool
+     *
+     * @psalm-pure
      */
     public static function hasStringKeys($value, $allowEmpty = false)
     {
@@ -71,6 +73,8 @@ abstract class ArrayUtils
      * @param  mixed $value
      * @param  bool  $allowEmpty    Should an empty array() return true
      * @return bool
+     *
+     * @psalm-pure
      */
     public static function hasIntegerKeys($value, $allowEmpty = false)
     {
@@ -98,6 +102,8 @@ abstract class ArrayUtils
      * @param  mixed $value
      * @param  bool  $allowEmpty    Should an empty array() return true
      * @return bool
+     *
+     * @psalm-pure
      */
     public static function hasNumericKeys($value, $allowEmpty = false)
     {
@@ -131,6 +137,11 @@ abstract class ArrayUtils
      * @param  mixed $value
      * @param  bool  $allowEmpty    Is an empty list a valid list?
      * @return bool
+     *
+     * @template TValue
+     * @psalm-param array<array-key, TValue>|mixed $value
+     * @psalm-assert list<TValue> $value
+     * @psalm-pure
      */
     public static function isList($value, $allowEmpty = false)
     {
@@ -199,6 +210,10 @@ abstract class ArrayUtils
      * @param array<mixed, mixed> $haystack
      * @param int|bool $strict
      * @return bool
+     *
+     * @template TKey as array-key
+     * @template TValue
+     * @psalm-param array<TKey, TValue> $haystack
      */
     public static function inArray($needle, array $haystack, $strict = false)
     {
@@ -231,7 +246,11 @@ abstract class ArrayUtils
      * @template TKey
      * @template TValue
      * @psalm-param iterable<TKey, TValue> $iterator
-     * @psalm-return array<TKey, TValue>
+     * @psalm-return (
+     *     $recursive is false ? array<TKey, TValue>
+     *     : $iterator is array ? array<TKey, mixed>
+     *     : array<array-key, mixed>)
+     * )
      */
     public static function iteratorToArray($iterator, $recursive = true)
     {
@@ -250,6 +269,8 @@ abstract class ArrayUtils
         if (is_object($iterator) && method_exists($iterator, 'toArray')) {
             return $iterator->toArray();
         }
+
+        /** @psalm-var iterable<TKey, TValue> $iterator */
 
         $array = [];
         foreach ($iterator as $key => $value) {
@@ -271,7 +292,6 @@ abstract class ArrayUtils
             $array[$key] = $value;
         }
 
-        /** @psalm-var array<TKey, TValue> $array */
         return $array;
     }
 
@@ -282,19 +302,18 @@ abstract class ArrayUtils
      * from the second array will be appended to the first array. If both values are arrays, they
      * are merged together, else the value of the second array overwrites the one of the first array.
      *
-     * @template TAKey
-     * @template TAValue
-     * @template TBKey
-     * @template TBValue
-     *
      * @param  array $a
      * @param  array $b
      * @param  bool  $preserveNumericKeys
      * @return array
      *
+     * @template TAKey as array-key
+     * @template TAValue
+     * @template TBKey as array-key
+     * @template TBValue
      * @psalm-param array<TAKey, TAValue> $a
      * @psalm-param array<TBKey, TBValue> $b
-     * @psalm-return array<TAKey|TBKey, TAValue|TBValue>
+     * @psalm-return ($preserveNumericKeys is true ? array<TAKey|TBKey, mixed> : array<int|TAKey|TBKey, mixed>)
      */
     public static function merge(array $a, array $b, $preserveNumericKeys = false)
     {
@@ -318,7 +337,6 @@ abstract class ArrayUtils
             }
         }
 
-        /** @psalm-var array<TAKey|TBKey, TAValue|TBValue|mixed> */
         return $a;
     }
 
@@ -331,12 +349,11 @@ abstract class ArrayUtils
      * @return array
      * @throws Exception\InvalidArgumentException
      *
-     * @template TDataKey
+     * @template TDataKey as array-key
      * @template TDataValue
-     * @template C = (callable(TDataValue): bool)|(callable(TDataValue, TDataKey): bool)|(callable(TDataKey): bool)
      * @psalm-param array<TDataKey, TDataValue> $data
-     * @psalm-param C $callback
-     * @psalm-param null|1|2 $flag
+     * @psalm-param callable(TDataValue|TDataKey, TDataKey=): bool $callback
+     * @psalm-param null|self::ARRAY_FILTER_USE_BOTH|self::ARRAY_FILTER_USE_KEY $flag
      * @psalm-return array<TDataKey, TDataValue>
      */
     public static function filter(array $data, $callback, $flag = null)
@@ -348,6 +365,6 @@ abstract class ArrayUtils
             ));
         }
 
-        return array_filter($data, $callback, $flag);
+        return array_filter($data, $callback, $flag ?: 0);
     }
 }

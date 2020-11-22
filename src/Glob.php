@@ -50,6 +50,8 @@ abstract class Glob
      * @param  bool $forceFallback
      * @return string[]
      * @throws Exception\RuntimeException
+     *
+     * @psalm-param int-mask-of<static::GLOB_*> $flags
      */
     public static function glob($pattern, $flags = 0, $forceFallback = false)
     {
@@ -67,6 +69,8 @@ abstract class Glob
      * @param  int     $flags
      * @return string[]
      * @throws Exception\RuntimeException
+     *
+     * @psalm-param int-mask-of<static::GLOB_*> $flags
      */
     protected static function systemGlob($pattern, $flags)
     {
@@ -108,6 +112,8 @@ abstract class Glob
      * @param  int     $flags
      * @return string[]
      * @throws Exception\RuntimeException
+     *
+     * @psalm-param int-mask-of<static::GLOB_*> $flags
      */
     protected static function fallbackGlob($pattern, $flags)
     {
@@ -189,6 +195,8 @@ abstract class Glob
      * @param  int $begin
      * @param  int $flags
      * @return int|null
+     *
+     * @psalm-param int-mask-of<static::GLOB_*> $flags
      */
     protected static function nextBraceSub($pattern, $begin, $flags)
     {

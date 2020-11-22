@@ -16,6 +16,7 @@ final class MergeReplaceKey implements MergeReplaceKeyInterface
 {
     /**
      * @var mixed
+     * @psalm-var TData
      */
     protected $data;
 
@@ -30,6 +31,7 @@ final class MergeReplaceKey implements MergeReplaceKeyInterface
 
     /**
      * {@inheritDoc}
+     * @psalm-return TData
      */
     public function getData()
     {

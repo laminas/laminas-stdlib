@@ -8,6 +8,7 @@
 
 namespace Laminas\Stdlib\Guard;
 
+use Laminas\Stdlib\Exception\InvalidArgumentException;
 use function sprintf;
 
 /**
@@ -22,11 +23,16 @@ trait NullGuardTrait
      * @param  string $dataName       the data name
      * @param  string $exceptionClass FQCN for the exception
      * @throws \Exception
+     *
+     * @template TValue
+     * @psalm-param TValue|null $data
+     * @psalm-param class-string<\Exception> $exceptionClass
+     * @psalm-assert TValue $data
      */
     protected function guardAgainstNull(
         $data,
         $dataName = 'Argument',
-        $exceptionClass = 'Laminas\Stdlib\Exception\InvalidArgumentException'
+        $exceptionClass = InvalidArgumentException::class
     ) {
         if (null === $data) {
             $message = sprintf('%s cannot be null', $dataName);

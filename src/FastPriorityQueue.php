@@ -42,6 +42,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
 
     /**
      * @var integer
+     * @psalm-var self::EXTR_*
      */
     protected $extractFlag = self::EXTR_DATA;
 
@@ -103,6 +104,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      */
     public function insert($value, $priority)
     {
+        /** @psalm-var mixed $priority */
         if (! is_int($priority)) {
             throw new Exception\InvalidArgumentException('The priority must be an integer');
         }
@@ -119,6 +121,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * order of insertion
      *
      * @return mixed
+     * @psalm-return TValue|array{data: TValue, priority: int}|int|false
      */
     public function extract()
     {
@@ -144,6 +147,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * @return bool False if the item was not found, true otherwise.
      *
      * @psalm-param TValue $datum
+     * @psalm-suppress PossiblyNullArrayOffset
      */
     public function remove($datum)
     {
@@ -198,6 +202,9 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Get the current element in the queue
      *
      * @return mixed
+     *
+     * @psalm-suppress ImplementedReturnTypeMismatch
+     * @psalm-return TValue|array{data: TValue, priority: int}|int|null|false
      */
     public function current()
     {
@@ -217,7 +224,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Get the index of the current element in the queue
      *
-     * @return integer
+     * @return int
      */
     public function key()
     {
@@ -294,7 +301,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @return array
      *
-     * @psalm-return array<int, TValue>
+     * @psalm-return array<int, TValue|array{data: TValue, priority: int}|false|int|null>
      */
     public function toArray()
     {
@@ -331,7 +338,11 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      */
     public function unserialize($data)
     {
-        foreach (unserialize($data) as $item) {
+        /**
+         * @psalm-var array<array-key, array{data: TValue, priority: int}> $unserialized
+         */
+        $unserialized = unserialize($data);
+        foreach ($unserialized as $item) {
             $this->insert($item['data'], $item['priority']);
         }
     }
@@ -341,6 +352,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @param integer $flag
      * @return void
+     *
+     * @psalm-param self::EXTR_* $flag
      */
     public function setExtractFlags($flag)
     {

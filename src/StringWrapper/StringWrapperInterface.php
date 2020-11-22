@@ -92,13 +92,13 @@ interface StringWrapperInterface
     /**
      * Wraps a string to a given number of characters
      *
-     * @param  string  $str
+     * @param  string  $string
      * @param  int $width
      * @param  string  $break
      * @param  bool $cut
      * @return string
      */
-    public function wordWrap($str, $width = 75, $break = "\n", $cut = false);
+    public function wordWrap($string, $width = 75, $break = "\n", $cut = false);
 
     /**
      * Pad a string to a certain length with another string

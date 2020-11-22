@@ -8,18 +8,25 @@
 
 namespace Laminas\Stdlib;
 
+/**
+ * @template TValue
+ */
 interface ParameterObjectInterface
 {
     /**
      * @param string $key
      * @param mixed $value
      * @return void
+     *
+     * @psalm-param TValue $value
      */
     public function __set($key, $value);
 
     /**
      * @param string $key
      * @return mixed
+     *
+     * @psalm-return TValue
      */
     public function __get($key);
 

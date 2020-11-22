@@ -59,7 +59,8 @@ abstract class StringUtils
      * Get registered wrapper classes
      *
      * @return string[]
-     * @psalm-return array<class-string<StringWrapperInterface>>
+     * @psalm-return array<int, class-string<StringWrapperInterface>>
+     * @psalm-suppress MixedReturnTypeCoercion
      */
     public static function getRegisteredWrappers()
     {
@@ -67,18 +68,18 @@ abstract class StringUtils
             static::$wrapperRegistry = [];
 
             if (extension_loaded('intl')) {
-                static::$wrapperRegistry[] = 'Laminas\Stdlib\StringWrapper\Intl';
+                static::$wrapperRegistry[] = StringWrapper\Intl::class;
             }
 
             if (extension_loaded('mbstring')) {
-                static::$wrapperRegistry[] = 'Laminas\Stdlib\StringWrapper\MbString';
+                static::$wrapperRegistry[] = StringWrapper\MbString::class;
             }
 
             if (extension_loaded('iconv')) {
-                static::$wrapperRegistry[] = 'Laminas\Stdlib\StringWrapper\Iconv';
+                static::$wrapperRegistry[] = StringWrapper\Iconv::class;
             }
 
-            static::$wrapperRegistry[] = 'Laminas\Stdlib\StringWrapper\Native';
+            static::$wrapperRegistry[] = StringWrapper\Native::class;
         }
 
         return static::$wrapperRegistry;
@@ -112,6 +113,7 @@ abstract class StringUtils
     {
         $index = array_search((string) $wrapper, static::$wrapperRegistry ?? [], true);
         if ($index !== false) {
+            /** @psalm-suppress PossiblyNullArrayAccess */
             unset(static::$wrapperRegistry[$index]);
         }
     }
@@ -177,6 +179,8 @@ abstract class StringUtils
      *
      * @param string $str
      * @return bool
+     *
+     * @psalm-suppress RedundantConditionGivenDocblockType
      */
     public static function isValidUtf8($str)
     {

@@ -8,6 +8,7 @@
 
 namespace Laminas\Stdlib\Guard;
 
+use Laminas\Stdlib\Exception\InvalidArgumentException;
 use function sprintf;
 
 /**
@@ -22,11 +23,13 @@ trait EmptyGuardTrait
      * @param  string $dataName       the data name
      * @param  string $exceptionClass FQCN for the exception
      * @throws \Exception
+     *
+     * @psalm-param class-string<\Exception> $exceptionClass
      */
     protected function guardAgainstEmpty(
         $data,
         $dataName = 'Argument',
-        $exceptionClass = 'Laminas\Stdlib\Exception\InvalidArgumentException'
+        $exceptionClass = InvalidArgumentException::class
     ) {
         if (empty($data)) {
             $message = sprintf('%s cannot be empty', $dataName);

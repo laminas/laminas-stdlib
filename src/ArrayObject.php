@@ -36,11 +36,12 @@ use function unserialize;
  *
  * Extends version-specific "abstract" implementation.
  *
- * @template TKey as array-key
- * @template TValue
+ * @psalm-type TKey=array-key
+ * @psalm-type TValue=mixed
+ * @template TIterator as \Iterator<array-key, mixed>
  *
- * @template-implements IteratorAggregate<int|TKey, TValue>
- * @template-implements ArrayAccess<int|TKey, TValue>
+ * @template-implements IteratorAggregate<array-key, mixed>
+ * @template-implements ArrayAccess<array-key, mixed>
  */
 class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Countable
 {
@@ -57,17 +58,19 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * @var array
-     * @psalm-var array<int|TKey, TValue>
+     * @psalm-var array<TKey, TValue>
      */
     protected $storage;
 
     /**
      * @var int
+     * @psalm-var self::STD_PROP_LIST | self::ARRAY_AS_PROPS
      */
     protected $flag;
 
     /**
-     * @var class-string<\Iterator>
+     * @var class-string<TIterator>
+     * @psalm-suppress PropertyNotSetInConstructor
      */
     protected $iteratorClass;
 
@@ -84,7 +87,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param string $iteratorClass
      *
      * @psalm-param array<TKey, TValue> $input
-     * @psalm-param class-string<\Iterator> $iteratorClass
+     * @psalm-param self::STD_PROP_LIST | self::ARRAY_AS_PROPS $flags
+     * @psalm-param class-string<TIterator> $iteratorClass
      */
     public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = \ArrayIterator::class)
     {
@@ -99,6 +103,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  mixed $key
      * @return bool
+     *
+     * @psalm-param TKey $key
      */
     public function __isset($key)
     {
@@ -118,6 +124,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param  mixed $key
      * @param  mixed $value
      * @return void
+     *
+     * @psalm-param TKey $key
+     * @psalm-param TValue $value
      */
     public function __set($key, $value)
     {
@@ -136,6 +145,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  mixed $key
      * @return void
+     *
+     * @psalm-param TKey $key
      */
     public function __unset($key)
     {
@@ -156,12 +167,13 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @return mixed
      *
      * @psalm-param TKey $key
-     * @psalm-return TValue
+     * @psalm-return TValue|null
      */
     public function &__get($key)
     {
         $ret = null;
         if ($this->flag == self::ARRAY_AS_PROPS) {
+            /** @psalm-var TValue|mixed $ret */
             $ret =& $this->offsetGet($key);
 
             return $ret;
@@ -213,7 +225,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @return array
      *
      * @psalm-param array<TKey, TValue>|\ArrayObject<TKey, TValue> $data
-     * @psalm-return array<int|TKey, TValue>
+     * @psalm-return array<TKey, TValue>
      */
     public function exchangeArray($data)
     {
@@ -244,7 +256,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Creates a copy of the ArrayObject.
      *
      * @return array
-     * @psalm-return array<int|TKey, TValue>
+     * @psalm-return array<TKey, TValue>
      */
     public function getArrayCopy()
     {
@@ -265,7 +277,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Create a new iterator from an ArrayObject instance
      *
      * @return \Iterator
-     * @psalm-return \Iterator<TKey, TValue>
+     * @psalm-return TIterator
      */
     public function getIterator()
     {
@@ -279,7 +291,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @return string
      *
-     * @psalm-return class-string<\Iterator>
+     * @psalm-return class-string<TIterator>
      */
     public function getIteratorClass()
     {
@@ -321,6 +333,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  mixed $key
      * @return bool
+     *
+     * @psalm-param TKey $key
      */
     public function offsetExists($key)
     {
@@ -332,6 +346,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  mixed $key
      * @return mixed
+     *
+     * @psalm-param TKey $key
+     * @psalm-return TValue|null
      */
     public function &offsetGet($key)
     {
@@ -339,6 +356,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         if (! $this->offsetExists($key)) {
             return $ret;
         }
+
+        /** @psalm-var TValue $ret */
         $ret =& $this->storage[$key];
 
         return $ret;
@@ -351,7 +370,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param  mixed $value
      * @return void
      *
-     * @psalm-param int|TKey $key
+     * @psalm-param TKey $key
      * @psalm-param TValue $value
      */
     public function offsetSet($key, $value)
@@ -365,7 +384,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param  mixed $key
      * @return void
      *
-     * @psalm-param int|TKey $key
+     * @psalm-param TKey $key
      */
     public function offsetUnset($key)
     {
@@ -389,6 +408,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  int  $flags
      * @return void
+     *
+     * @psalm-param self::STD_PROP_LIST | self::ARRAY_AS_PROPS $flags
      */
     public function setFlags($flags)
     {
@@ -400,6 +421,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  string $class
      * @return void
+     *
+     * @psalm-param class-string<TIterator> $class
      */
     public function setIteratorClass($class)
     {
@@ -410,6 +433,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (strpos($class, '\\') === 0) {
+            /** @psalm-var class-string<TIterator> $class */
             $class = '\\' . $class;
             if (class_exists($class)) {
                 $this->iteratorClass = $class;
@@ -426,6 +450,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  callable $function
      * @return void
+     *
+     * @psalm-param callable(TValue, TValue): int $function
+     * @psalm-suppress RedundantConditionGivenDocblockType
      */
     public function uasort($function)
     {
@@ -439,6 +466,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param  callable $function
      * @return void
+     *
+     * @psalm-param callable(TKey, TKey): int $function
+     * @psalm-suppress RedundantConditionGivenDocblockType
      */
     public function uksort($function)
     {
@@ -455,6 +485,10 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public function unserialize($data)
     {
+        /**
+         * @psalm-type AR = array{flag: self::STD_PROP_LIST | self::ARRAY_AS_PROPS, storage: array<TKey, TValue>, iteratorClass: class-string<\Iterator<TKey, TValue>>}&array<array-key, mixed>
+         * @psalm-var AR $ar
+         */
         $ar                        = unserialize($data);
         $this->protectedProperties = array_keys(get_object_vars($this));
 
@@ -462,15 +496,19 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         $this->exchangeArray($ar['storage']);
         $this->setIteratorClass($ar['iteratorClass']);
 
+        /** @psalm-suppress MixedAssignment */
         foreach ($ar as $k => $v) {
             switch ($k) {
                 case 'flag':
+                    /** @psalm-var self::STD_PROP_LIST | self::ARRAY_AS_PROPS $v */
                     $this->setFlags($v);
                     break;
                 case 'storage':
+                    /** @psalm-var array<TKey, TValue> $v */
                     $this->exchangeArray($v);
                     break;
                 case 'iteratorClass':
+                    /** @psalm-var class-string<\Iterator<TKey, TValue>> $v */
                     $this->setIteratorClass($v);
                     break;
                 case 'protectedProperties':
