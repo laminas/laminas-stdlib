@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class EmptyGuardTraitTest extends TestCase
 {
-    public function testGuardAgainstEmptyThrowsException()
+    public function testGuardAgainstEmptyThrowsException(): void
     {
         $object = new GuardedObject;
         $this->expectException(InvalidArgumentException::class);
@@ -25,7 +25,7 @@ class EmptyGuardTraitTest extends TestCase
         $object->setNotEmpty('');
     }
 
-    public function testGuardAgainstEmptyAllowsNonEmptyString()
+    public function testGuardAgainstEmptyAllowsNonEmptyString(): void
     {
         $object = new GuardedObject;
         self::assertNull($object->setNotEmpty('foo'));

@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 
 class ParametersTest extends TestCase
 {
-    public function testParametersConstructionAndClassStructure()
+    public function testParametersConstructionAndClassStructure(): void
     {
         $parameters = new Parameters();
         self::assertInstanceOf('Laminas\Stdlib\ParametersInterface', $parameters);
@@ -24,7 +24,7 @@ class ParametersTest extends TestCase
         self::assertInstanceOf('Traversable', $parameters);
     }
 
-    public function testParametersPersistNameAndValues()
+    public function testParametersPersistNameAndValues(): void
     {
         $parameters = new Parameters(['foo' => 'bar']);
         self::assertEquals('bar', $parameters['foo']);
@@ -47,13 +47,13 @@ class ParametersTest extends TestCase
         self::assertEquals('barf', $parameters->foof);
     }
 
-    public function testParametersOffsetgetReturnsNullIfNonexistentKeyIsProvided()
+    public function testParametersOffsetgetReturnsNullIfNonexistentKeyIsProvided(): void
     {
         $parameters = new Parameters;
         self::assertNull($parameters->foo);
     }
 
-    public function testParametersGetReturnsDefaultValueIfNonExistent()
+    public function testParametersGetReturnsDefaultValueIfNonExistent(): void
     {
         $parameters = new Parameters();
 

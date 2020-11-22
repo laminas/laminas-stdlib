@@ -8,7 +8,6 @@
     errorBaseline="psalm-baseline.xml"
 >
     <projectFiles>
-        <directory name="bin"/>
         <directory name="src"/>
         <directory name="test"/>
         <ignoreFiles>

@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ArrayOrTraversableGuardTraitTest extends TestCase
 {
-    public function testGuardForArrayOrTraversableThrowsException()
+    public function testGuardForArrayOrTraversableThrowsException(): void
     {
         $object = new GuardedObject;
         $this->expectException(InvalidArgumentException::class);
@@ -26,13 +26,13 @@ class ArrayOrTraversableGuardTraitTest extends TestCase
         $object->setArrayOrTraversable('');
     }
 
-    public function testGuardForArrayOrTraversableAllowsArray()
+    public function testGuardForArrayOrTraversableAllowsArray(): void
     {
         $object = new GuardedObject;
         self::assertNull($object->setArrayOrTraversable([]));
     }
 
-    public function testGuardForArrayOrTraversableAllowsTraversable()
+    public function testGuardForArrayOrTraversableAllowsTraversable(): void
     {
         $object      = new GuardedObject;
         $traversable = new ArrayObject;

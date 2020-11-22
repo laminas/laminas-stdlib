@@ -73,7 +73,7 @@ class FastPriorityQueueTest extends TestCase
      * Test the insert and extract operations for the queue
      * We test that extract() function remove the elements
      */
-    public function testInsertExtract()
+    public function testInsertExtract(): void
     {
         foreach ($this->expected as $value) {
             self::assertEquals($value, $this->queue->extract());
@@ -82,7 +82,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertTrue($this->queue->isEmpty());
     }
 
-    public function testIteratePreserveElements()
+    public function testIteratePreserveElements(): void
     {
         $i = 0;
         foreach ($this->queue as $value) {
@@ -95,7 +95,7 @@ class FastPriorityQueueTest extends TestCase
         }
     }
 
-    public function testMaintainsInsertOrderForDataOfEqualPriority()
+    public function testMaintainsInsertOrderForDataOfEqualPriority(): void
     {
         $queue = new FastPriorityQueue();
         $queue->insert('foo', 1000);
@@ -111,7 +111,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertEquals($expected, $test);
     }
 
-    public function testSerializationAndDeserializationShouldMaintainState()
+    public function testSerializationAndDeserializationShouldMaintainState(): void
     {
         $s = serialize($this->queue);
         $unserialized = unserialize($s);
@@ -137,18 +137,18 @@ class FastPriorityQueueTest extends TestCase
         );
     }
 
-    public function testCanRetrieveQueueAsArray()
+    public function testCanRetrieveQueueAsArray(): void
     {
         $test = $this->queue->toArray();
         self::assertSame($this->expected, $test, var_export($test, 1));
     }
 
-    public function testIteratorFunctions()
+    public function testIteratorFunctions(): void
     {
         self::assertEquals($this->expected, iterator_to_array($this->queue));
     }
 
-    public function testRewindOperation()
+    public function testRewindOperation(): void
     {
         self::assertEquals(0, $this->queue->key());
         $this->queue->next();
@@ -157,7 +157,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertEquals(0, $this->queue->key());
     }
 
-    public function testSetExtractFlag()
+    public function testSetExtractFlag(): void
     {
         $priorities = $this->getDataPriorityQueue();
         $this->queue->setExtractFlags(FastPriorityQueue::EXTR_DATA);
@@ -172,14 +172,14 @@ class FastPriorityQueueTest extends TestCase
         self::assertEquals($expected, $this->queue->extract());
     }
 
-    public function testSetInvalidExtractFlag()
+    public function testSetInvalidExtractFlag(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The extract flag specified is not valid');
         $this->queue->setExtractFlags('foo');
     }
 
-    public function testIsEmpty()
+    public function testIsEmpty(): void
     {
         $queue = new FastPriorityQueue();
         self::assertTrue($queue->isEmpty());
@@ -189,7 +189,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertTrue($queue->isEmpty());
     }
 
-    public function testContains()
+    public function testContains(): void
     {
         foreach ($this->expected as $value) {
             self::assertTrue($this->queue->contains($value));
@@ -197,7 +197,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertFalse($this->queue->contains('foo'));
     }
 
-    public function testHasPriority()
+    public function testHasPriority(): void
     {
         foreach ($this->getDataPriorityQueue() as $value => $priority) {
             self::assertTrue($this->queue->hasPriority($priority));
@@ -205,7 +205,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertFalse($this->queue->hasPriority(10000));
     }
 
-    public function testCanRemoveItemFromQueue()
+    public function testCanRemoveItemFromQueue(): void
     {
         self::assertTrue($this->queue->remove('test5'));
         $tot = count($this->getDataPriorityQueue()) - 1;
@@ -219,7 +219,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertEquals($expected, $test);
     }
 
-    public function testRemoveOnlyTheFirstOccurenceFromQueue()
+    public function testRemoveOnlyTheFirstOccurenceFromQueue(): void
     {
         $data = $this->getDataPriorityQueue();
         $this->queue->insert('test2', $data['test2']);
@@ -244,7 +244,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertEquals($this->expected, $test);
     }
 
-    public function testRewindShouldNotRaiseErrorWhenQueueIsEmpty()
+    public function testRewindShouldNotRaiseErrorWhenQueueIsEmpty(): void
     {
         $queue = new FastPriorityQueue();
         self::assertTrue($queue->isEmpty());
@@ -252,7 +252,7 @@ class FastPriorityQueueTest extends TestCase
         $queue->rewind();
     }
 
-    public function testRemoveShouldFindItemEvenIfMultipleItemsAreInQueue()
+    public function testRemoveShouldFindItemEvenIfMultipleItemsAreInQueue(): void
     {
         $prototype = function ($e) {
         };
@@ -274,7 +274,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertFalse($queue->contains($listener));
     }
 
-    public function testIterativelyRemovingItemsShouldRemoveAllItems()
+    public function testIterativelyRemovingItemsShouldRemoveAllItems(): void
     {
         $prototype = function ($e) {
         };
@@ -299,7 +299,7 @@ class FastPriorityQueueTest extends TestCase
         }
     }
 
-    public function testRemoveShouldNotAffectExtract()
+    public function testRemoveShouldNotAffectExtract(): void
     {
         // Removing an element with low priority
         $queue = new FastPriorityQueue();
@@ -341,7 +341,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertTrue($queue->isEmpty());
     }
 
-    public function testZeroPriority()
+    public function testZeroPriority(): void
     {
         $queue = new FastPriorityQueue();
         $queue->insert('a', 0);

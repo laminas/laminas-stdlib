@@ -17,7 +17,7 @@ use PHPUnit\Framework\TestCase;
  */
 class NullGuardTraitTest extends TestCase
 {
-    public function testGuardAgainstNullThrowsException()
+    public function testGuardAgainstNullThrowsException(): void
     {
         $object = new GuardedObject;
         $this->expectException(InvalidArgumentException::class);
@@ -26,7 +26,7 @@ class NullGuardTraitTest extends TestCase
         $object->setNotNull(null);
     }
 
-    public function testGuardAgainstNullAllowsNonNull()
+    public function testGuardAgainstNullAllowsNonNull(): void
     {
         $object = new GuardedObject;
         self::assertNull($object->setNotNull('foo'));

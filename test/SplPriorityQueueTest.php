@@ -36,7 +36,7 @@ class SplPriorityQueueTest extends TestCase
         $this->queue->insert('bat', 1);
     }
 
-    public function testMaintainsInsertOrderForDataOfEqualPriority()
+    public function testMaintainsInsertOrderForDataOfEqualPriority(): void
     {
         $queue = new SplPriorityQueue();
         $queue->insert('foo', 1000);
@@ -49,7 +49,7 @@ class SplPriorityQueueTest extends TestCase
         self::assertEquals($expected, $test);
     }
 
-    public function testSerializationAndDeserializationShouldMaintainState()
+    public function testSerializationAndDeserializationShouldMaintainState(): void
     {
         $s = serialize($this->queue);
         $unserialized = unserialize($s);
@@ -64,7 +64,7 @@ class SplPriorityQueueTest extends TestCase
         self::assertEquals($this->queue, $unserialized);
     }
 
-    public function testCanRetrieveQueueAsArray()
+    public function testCanRetrieveQueueAsArray(): void
     {
         $expected = [
             'bar',

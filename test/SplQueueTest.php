@@ -34,7 +34,7 @@ class SplQueueTest extends TestCase
         $this->queue->push('baz');
     }
 
-    public function testSerializationAndDeserializationShouldMaintainState()
+    public function testSerializationAndDeserializationShouldMaintainState(): void
     {
         $s = serialize($this->queue);
         $unserialized = unserialize($s);
@@ -46,7 +46,7 @@ class SplQueueTest extends TestCase
         self::assertSame($expected, $test);
     }
 
-    public function testCanRetrieveQueueAsArray()
+    public function testCanRetrieveQueueAsArray(): void
     {
         $expected = ['foo', 'bar', 'baz'];
         self::assertSame($expected, $this->queue->toArray());

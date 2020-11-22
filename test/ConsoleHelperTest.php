@@ -62,7 +62,7 @@ class ConsoleHelperTest extends TestCase
         return $contents;
     }
 
-    public function testCanColorizeInfoString()
+    public function testCanColorizeInfoString(): void
     {
         $string = '  <info>-h|--help</info>    This help message';
         $this->enableColorSupport();
@@ -71,7 +71,7 @@ class ConsoleHelperTest extends TestCase
         self::assertEquals("  \033[32m-h|--help\033[0m    This help message", $colorized);
     }
 
-    public function testCanColorizeErrorString()
+    public function testCanColorizeErrorString(): void
     {
         $string = '<error>NOT OK</error> An error occurred';
         $this->enableColorSupport();
@@ -80,7 +80,7 @@ class ConsoleHelperTest extends TestCase
         self::assertEquals("\033[31mNOT OK\033[0m An error occurred", $colorized);
     }
 
-    public function testCanColorizeMixedStrings()
+    public function testCanColorizeMixedStrings(): void
     {
         $this->enableColorSupport();
         $string = "<error>NOT OK</error>\n\n<info>Usage:</info> foo";
@@ -90,7 +90,7 @@ class ConsoleHelperTest extends TestCase
         self::assertStringContainsString("\033[32mUsage:\033[0m", $colorized, 'Colorized info string not found');
     }
 
-    public function testColorizationWillReplaceTagsWithEmptyStringsWhenColorSupportIsNotDetected()
+    public function testColorizationWillReplaceTagsWithEmptyStringsWhenColorSupportIsNotDetected(): void
     {
         $this->disableColorSupport();
         $string = "<error>NOT OK</error>\n\n<info>Usage:</info> foo";
@@ -103,7 +103,7 @@ class ConsoleHelperTest extends TestCase
         self::assertDoesNotMatchRegularExpression("/<\/?info>/", $colorized, 'Info template string discovered');
     }
 
-    public function testWriteFormatsLinesToPhpEolSequenceAndWritesToProvidedStream()
+    public function testWriteFormatsLinesToPhpEolSequenceAndWritesToProvidedStream(): void
     {
         $this->overrideEolSequence("\r\n");
         $string = "foo bar\nbaz bat";
@@ -115,7 +115,7 @@ class ConsoleHelperTest extends TestCase
         self::assertStringContainsString("\r\n", $contents);
     }
 
-    public function testWriteWillColorizeOutputIfRequested()
+    public function testWriteWillColorizeOutputIfRequested(): void
     {
         $this->enableColorSupport();
         $string = 'foo <info>bar</info>';
@@ -127,7 +127,7 @@ class ConsoleHelperTest extends TestCase
         self::assertStringContainsString("\033[32mbar\033[0m", $contents);
     }
 
-    public function testWriteLineAppendsPhpEolSequenceToString()
+    public function testWriteLineAppendsPhpEolSequenceToString(): void
     {
         $this->overrideEolSequence("\r\n");
         $string = 'foo bar';
@@ -139,7 +139,7 @@ class ConsoleHelperTest extends TestCase
         self::assertMatchesRegularExpression("/bar\r\n$/", $contents);
     }
 
-    public function testWriteErrorMessageWritesColorizedOutputToStderr()
+    public function testWriteErrorMessageWritesColorizedOutputToStderr(): void
     {
         $stderr = fopen('php://temp', 'w+');
         $this->overrideStderrResource($stderr);

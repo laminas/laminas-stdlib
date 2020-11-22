@@ -267,7 +267,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @group 6903
      */
-    public function testMergeReplaceKey()
+    public function testMergeReplaceKey(): void
     {
         $expected = [
             'car' => [
@@ -298,7 +298,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @group 6899
      */
-    public function testAllowsRemovingKeys()
+    public function testAllowsRemovingKeys(): void
     {
         $a = [
             'foo' => 'bar',
@@ -354,7 +354,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validArraysWithStringKeys
      */
-    public function testValidArraysWithStringKeys($test)
+    public function testValidArraysWithStringKeys($test): void
     {
         self::assertTrue(ArrayUtils::hasStringKeys($test));
     }
@@ -362,7 +362,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validArraysWithIntegerKeys
      */
-    public function testValidArraysWithIntegerKeys($test)
+    public function testValidArraysWithIntegerKeys($test): void
     {
         self::assertTrue(ArrayUtils::hasIntegerKeys($test));
     }
@@ -370,7 +370,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validArraysWithNumericKeys
      */
-    public function testValidArraysWithNumericKeys($test)
+    public function testValidArraysWithNumericKeys($test): void
     {
         self::assertTrue(ArrayUtils::hasNumericKeys($test));
     }
@@ -378,7 +378,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider invalidArrays
      */
-    public function testInvalidArraysAlwaysReturnFalse($test)
+    public function testInvalidArraysAlwaysReturnFalse($test): void
     {
         self::assertFalse(ArrayUtils::hasStringKeys($test, false));
         self::assertFalse(ArrayUtils::hasIntegerKeys($test, false));
@@ -396,7 +396,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validLists
      */
-    public function testLists($test)
+    public function testLists($test): void
     {
         self::assertTrue(ArrayUtils::isList($test));
         self::assertTrue(ArrayUtils::hasIntegerKeys($test));
@@ -408,13 +408,13 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validHashTables
      */
-    public function testHashTables($test)
+    public function testHashTables($test): void
     {
         self::assertTrue(ArrayUtils::isHashTable($test));
         self::assertFalse(ArrayUtils::isList($test));
     }
 
-    public function testEmptyArrayReturnsTrue()
+    public function testEmptyArrayReturnsTrue(): void
     {
         $test = [];
         self::assertTrue(ArrayUtils::hasStringKeys($test, true));
@@ -424,7 +424,7 @@ class ArrayUtilsTest extends TestCase
         self::assertTrue(ArrayUtils::isHashTable($test, true));
     }
 
-    public function testEmptyArrayReturnsFalse()
+    public function testEmptyArrayReturnsFalse(): void
     {
         $test = [];
         self::assertFalse(ArrayUtils::hasStringKeys($test, false));
@@ -437,7 +437,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider mergeArrays
      */
-    public function testMerge($a, $b, $preserveNumericKeys, $expected)
+    public function testMerge($a, $b, $preserveNumericKeys, $expected): void
     {
         self::assertEquals($expected, ArrayUtils::merge($a, $b, $preserveNumericKeys));
     }
@@ -445,7 +445,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validIterators
      */
-    public function testValidIteratorsReturnArrayRepresentation($test, $expected)
+    public function testValidIteratorsReturnArrayRepresentation($test, $expected): void
     {
         $result = ArrayUtils::iteratorToArray($test);
         self::assertEquals($expected, $result);
@@ -454,7 +454,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider invalidIterators
      */
-    public function testInvalidIteratorsRaiseInvalidArgumentException($test)
+    public function testInvalidIteratorsRaiseInvalidArgumentException($test): void
     {
         $this->expectException(InvalidArgumentException::class);
         self::assertFalse(ArrayUtils::iteratorToArray($test));
@@ -507,12 +507,12 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider filterArrays
      */
-    public function testFiltersArray($data, $callback, $flag, $result)
+    public function testFiltersArray($data, $callback, $flag, $result): void
     {
         self::assertEquals($result, ArrayUtils::filter($data, $callback, $flag));
     }
 
-    public function testInvalidCallableRaiseInvalidArgumentException()
+    public function testInvalidCallableRaiseInvalidArgumentException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         ArrayUtils::filter([], "INVALID");

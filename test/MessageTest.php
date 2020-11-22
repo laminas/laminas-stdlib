@@ -14,7 +14,7 @@ use PHPUnit\Framework\TestCase;
 
 class MessageTest extends TestCase
 {
-    public function testMessageCanSetAndGetContent()
+    public function testMessageCanSetAndGetContent(): void
     {
         $message = new Message();
         $ret = $message->setContent('I can set content');
@@ -22,7 +22,7 @@ class MessageTest extends TestCase
         self::assertEquals('I can set content', $message->getContent());
     }
 
-    public function testMessageCanSetAndGetMetadataKeyAsString()
+    public function testMessageCanSetAndGetMetadataKeyAsString(): void
     {
         $message = new Message();
         $ret = $message->setMetadata('foo', 'bar');
@@ -31,7 +31,7 @@ class MessageTest extends TestCase
         self::assertEquals(['foo' => 'bar'], $message->getMetadata());
     }
 
-    public function testMessageCanSetAndGetMetadataKeyAsArray()
+    public function testMessageCanSetAndGetMetadataKeyAsArray(): void
     {
         $message = new Message();
         $ret = $message->setMetadata(['foo' => 'bar']);
@@ -39,13 +39,13 @@ class MessageTest extends TestCase
         self::assertEquals('bar', $message->getMetadata('foo'));
     }
 
-    public function testMessageGetMetadataWillUseDefaultValueIfNoneExist()
+    public function testMessageGetMetadataWillUseDefaultValueIfNoneExist(): void
     {
         $message = new Message();
         self::assertEquals('bar', $message->getMetadata('foo', 'bar'));
     }
 
-    public function testMessageThrowsExceptionOnInvalidKeyForMetadataSet()
+    public function testMessageThrowsExceptionOnInvalidKeyForMetadataSet(): void
     {
         $message = new Message();
 
@@ -53,7 +53,7 @@ class MessageTest extends TestCase
         $message->setMetadata(new \stdClass());
     }
 
-    public function testMessageThrowsExceptionOnInvalidKeyForMetadataGet()
+    public function testMessageThrowsExceptionOnInvalidKeyForMetadataGet(): void
     {
         $message = new Message();
 
@@ -61,7 +61,7 @@ class MessageTest extends TestCase
         $message->getMetadata(new \stdClass());
     }
 
-    public function testMessageToStringWorks()
+    public function testMessageToStringWorks(): void
     {
         $message = new Message();
         $message->setMetadata(['Foo' => 'bar', 'One' => 'Two']);
