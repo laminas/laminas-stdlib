@@ -23,7 +23,6 @@ use function ucwords;
 
 /**
  * @template-implements ParameterObjectInterface<mixed>
- * @psalm-seal-properties
  */
 abstract class AbstractOptions implements ParameterObjectInterface
 {
