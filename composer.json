@@ -51,7 +51,7 @@
         "cs-fix": "phpcbf",
         "test": "phpunit --colors=always",
         "test-coverage": "phpunit --colors=always --coverage-clover clover.xml",
-        "static-analysis": "psalm --shepherd --stats"
+        "static-analysis": "psalm --long-progress --shepherd --stats"
     },
     "replace": {
         "zendframework/zend-stdlib": "^3.2.1"
