@@ -36,9 +36,9 @@ use function unserialize;
  *
  * Extends version-specific "abstract" implementation.
  *
- * @psalm-type TKey=array-key
- * @psalm-type TValue=mixed
- * @template TIterator as \Iterator<array-key, mixed>
+ * @template TKey as array-key
+ * @template TValue
+ * @template TIterator as \Iterator
  *
  * @template-implements IteratorAggregate<array-key, mixed>
  * @template-implements ArrayAccess<array-key, mixed>
@@ -58,7 +58,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * @var array
-     * @psalm-var array<TKey, TValue>
+     * @psalm-var array<TKey, TValue>|\Countable
      */
     protected $storage;
 
@@ -86,7 +86,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @param int    $flags
      * @param string $iteratorClass
      *
-     * @psalm-param array<TKey, TValue> $input
+     * @psalm-param array<TKey, TValue>|\Countable $input
      * @psalm-param self::STD_PROP_LIST | self::ARRAY_AS_PROPS $flags
      * @psalm-param class-string<TIterator> $iteratorClass
      */
@@ -173,7 +173,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     {
         $ret = null;
         if ($this->flag == self::ARRAY_AS_PROPS) {
-            /** @psalm-var TValue|mixed $ret */
             $ret =& $this->offsetGet($key);
 
             return $ret;
@@ -182,7 +181,10 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
             throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
         }
 
-        return $this->$key;
+        /** @var TValue|null $value */
+        $value = $this->$key;
+
+        return $value;
     }
 
     /**
@@ -221,15 +223,16 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Exchange the array for another one.
      *
-     * @param  array|\ArrayObject $data
+     * @param  array|ArrayObject|\ArrayObject $data
      * @return array
      *
-     * @psalm-param array<TKey, TValue>|\ArrayObject<TKey, TValue> $data
-     * @psalm-return array<TKey, TValue>
+     * @psalm-param array<TKey, TValue>|ArrayObject<TKey, TValue, \Iterator>|\ArrayObject<TKey, TValue> $data
+     * @psalm-return array<TKey, TValue>|\Countable
+     * @psalm-suppress DocblockTypeContradiction
+     * @psalm-suppress RedundantCondition
      */
     public function exchangeArray($data)
     {
-        /** @psalm-var array<TKey, TValue>|mixed $data */
         if (! is_array($data) && ! is_object($data)) {
             throw new Exception\InvalidArgumentException(
                 'Passed variable is not an array or object, using empty array instead'
@@ -237,7 +240,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (is_object($data) && ($data instanceof self || $data instanceof \ArrayObject)) {
-            /** @psalm-var array<TKey, TValue> $data */
             $data = $data->getArrayCopy();
         }
         if (! is_array($data)) {
@@ -486,8 +488,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     public function unserialize($data)
     {
         /**
-         * @psalm-type AR = array{flag: self::STD_PROP_LIST | self::ARRAY_AS_PROPS, storage: array<TKey, TValue>, iteratorClass: class-string<\Iterator<TKey, TValue>>}&array<array-key, mixed>
-         * @psalm-var AR $ar
+         * @psalm-var array{flag: self::STD_PROP_LIST | self::ARRAY_AS_PROPS, storage: array<TKey, TValue>, iteratorClass: class-string<\Iterator<TKey, TValue>>}&array<array-key, mixed> $ar
          */
         $ar                        = unserialize($data);
         $this->protectedProperties = array_keys(get_object_vars($this));
