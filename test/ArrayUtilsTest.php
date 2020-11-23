@@ -18,7 +18,10 @@ use stdClass;
 
 class ArrayUtilsTest extends TestCase
 {
-    public static function validHashTables()
+    /**
+     * @psalm-return array<array-key, array<array-key, mixed>>
+     */
+    public static function validHashTables(): array
     {
         return [
             [[
@@ -43,7 +46,10 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    public static function validLists()
+    /**
+     * @psalm-return array<array-key, array<array-key, mixed>>
+     */
+    public static function validLists(): array
     {
         return [
             [[null]],
@@ -64,7 +70,10 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    public static function validArraysWithStringKeys()
+    /**
+     * @psalm-return array<array-key, array<array-key, mixed>>
+     */
+    public static function validArraysWithStringKeys(): array
     {
         return [
             [[
@@ -78,7 +87,10 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    public static function validArraysWithNumericKeys()
+    /**
+     * @psalm-return array<array-key, array<array-key, mixed>>
+     */
+    public static function validArraysWithNumericKeys(): array
     {
         return [
             [[
@@ -107,7 +119,10 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    public static function validArraysWithIntegerKeys()
+    /**
+     * @psalm-return array<array-key, array<array-key, mixed>>
+     */
+    public static function validArraysWithIntegerKeys(): array
     {
         return [
             [[
@@ -131,7 +146,10 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    public static function invalidArrays()
+    /**
+     * @psalm-return array<array-key, array<array-key, mixed>>
+     */
+    public static function invalidArrays(): array
     {
         return [
             [new stdClass()],
@@ -141,7 +159,10 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    public static function mergeArrays()
+    /**
+     * @psalm-return array<array-key, array<array-key, mixed>>
+     */
+    public static function mergeArrays(): array
     {
         return [
             'merge-integer-and-string-keys' => [
@@ -291,7 +312,7 @@ class ArrayUtilsTest extends TestCase
                 'foo' => 'get',
             ]),
         ];
-        self::assertInstanceOf('Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface', $b['car']);
+        self::assertInstanceOf(ArrayUtils\MergeReplaceKeyInterface::class, $b['car']);
         self::assertEquals($expected, ArrayUtils::merge($a, $b));
     }
 
@@ -314,7 +335,10 @@ class ArrayUtilsTest extends TestCase
         self::assertEquals($expected, ArrayUtils::merge($a, $b));
     }
 
-    public static function validIterators()
+    /**
+     * @psalm-return array<array-key, array<array-key, mixed>>
+     */
+    public static function validIterators(): array
     {
         $array = [
             'foo' => [
@@ -336,7 +360,10 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    public static function invalidIterators()
+    /**
+     * @psalm-return array<array-key, array<array-key, mixed>>
+     */
+    public static function invalidIterators(): array
     {
         return [
             [null],
@@ -460,7 +487,10 @@ class ArrayUtilsTest extends TestCase
         self::assertFalse(ArrayUtils::iteratorToArray($test));
     }
 
-    public function filterArrays()
+    /**
+     * @psalm-return array<array-key, array<array-key, mixed>>
+     */
+    public function filterArrays(): array
     {
         return [
             [

@@ -29,18 +29,18 @@ class ArrayObjectTest extends TestCase
     {
         $ar = new ArrayObject();
         self::assertEquals(ArrayObject::STD_PROP_LIST, $ar->getFlags());
-        self::assertEquals('ArrayIterator', $ar->getIteratorClass());
-        self::assertInstanceOf('ArrayIterator', $ar->getIterator());
+        self::assertEquals(\ArrayIterator::class, $ar->getIteratorClass());
+        self::assertInstanceOf(\ArrayIterator::class, $ar->getIterator());
         self::assertSame([], $ar->getArrayCopy());
         self::assertEquals(0, $ar->count());
     }
 
     public function testConstructorParameters(): void
     {
-        $ar = new ArrayObject(['foo' => 'bar'], ArrayObject::ARRAY_AS_PROPS, 'RecursiveArrayIterator');
+        $ar = new ArrayObject(['foo' => 'bar'], ArrayObject::ARRAY_AS_PROPS, \RecursiveArrayIterator::class);
         self::assertEquals(ArrayObject::ARRAY_AS_PROPS, $ar->getFlags());
-        self::assertEquals('RecursiveArrayIterator', $ar->getIteratorClass());
-        self::assertInstanceOf('RecursiveArrayIterator', $ar->getIterator());
+        self::assertEquals(\RecursiveArrayIterator::class, $ar->getIteratorClass());
+        self::assertInstanceOf(\RecursiveArrayIterator::class, $ar->getIterator());
         self::assertSame(['foo' => 'bar'], $ar->getArrayCopy());
         self::assertEquals(1, $ar->count());
         self::assertSame('bar', $ar->foo);
@@ -69,6 +69,7 @@ class ArrayObjectTest extends TestCase
 
     public function testStdPropListStillHandlesArrays(): void
     {
+        /** @psalm-var ArrayObject<array-key, string, \ArrayIterator> $ar */
         $ar = new ArrayObject();
         $ar->foo = 'bar';
         $ar['foo'] = 'baz';
@@ -80,7 +81,9 @@ class ArrayObjectTest extends TestCase
 
     public function testArrayAsProps(): void
     {
+        /** @psalm-var ArrayObject<array-key, string, \ArrayIterator> $ar */
         $ar = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+
         $ar->foo = 'bar';
         $ar['foo'] = 'baz';
         $ar->bar = 'foo';
@@ -94,6 +97,7 @@ class ArrayObjectTest extends TestCase
 
     public function testAppend(): void
     {
+        /** @psalm-var ArrayObject<array-key, string, \ArrayIterator> $ar */
         $ar = new ArrayObject(['one', 'two']);
         self::assertEquals(2, $ar->count());
 
@@ -128,6 +132,7 @@ class ArrayObjectTest extends TestCase
 
     public function testExchangeArray(): void
     {
+        /** @psalm-var ArrayObject<array-key, mixed, \ArrayIterator> $ar */
         $ar = new ArrayObject(['foo' => 'bar']);
         $old = $ar->exchangeArray(['bar' => 'baz']);
 
@@ -137,6 +142,7 @@ class ArrayObjectTest extends TestCase
 
     public function testExchangeArrayPhpArrayObject(): void
     {
+        /** @psalm-var ArrayObject<array-key, mixed, \ArrayIterator> $ar */
         $ar = new ArrayObject(['foo' => 'bar']);
         $old = $ar->exchangeArray(new \ArrayObject(['bar' => 'baz']));
 
@@ -146,6 +152,7 @@ class ArrayObjectTest extends TestCase
 
     public function testExchangeArrayStdlibArrayObject(): void
     {
+        /** @psalm-var ArrayObject<array-key, string, \ArrayIterator> $ar */
         $ar = new ArrayObject(['foo' => 'bar']);
         $old = $ar->exchangeArray(new ArrayObject(['bar' => 'baz']));
 
@@ -155,10 +162,12 @@ class ArrayObjectTest extends TestCase
 
     public function testExchangeArrayTestAssetIterator(): void
     {
+        /** @psalm-var ArrayObject<array-key, string, \ArrayIterator> $ar */
         $ar = new ArrayObject();
         $ar->exchangeArray(new TestAsset\ArrayObjectIterator(['foo' => 'bar']));
 
         // make sure it does what php array object does:
+        /** @psalm-var ArrayObject<array-key, string, \ArrayIterator> $ar2 */
         $ar2 = new \ArrayObject();
         $ar2->exchangeArray(new TestAsset\ArrayObjectIterator(['foo' => 'bar']));
 
@@ -209,14 +218,14 @@ class ArrayObjectTest extends TestCase
 
     public function testIteratorClass(): void
     {
-        $ar = new ArrayObject([], ArrayObject::STD_PROP_LIST, 'RecursiveArrayIterator');
-        self::assertEquals('RecursiveArrayIterator', $ar->getIteratorClass());
-        $ar = new ArrayObject([], ArrayObject::STD_PROP_LIST, 'ArrayIterator');
-        self::assertEquals('ArrayIterator', $ar->getIteratorClass());
-        $ar->setIteratorClass('RecursiveArrayIterator');
-        self::assertEquals('RecursiveArrayIterator', $ar->getIteratorClass());
-        $ar->setIteratorClass('ArrayIterator');
-        self::assertEquals('ArrayIterator', $ar->getIteratorClass());
+        $ar = new ArrayObject([], ArrayObject::STD_PROP_LIST, \RecursiveArrayIterator::class);
+        self::assertEquals(\RecursiveArrayIterator::class, $ar->getIteratorClass());
+        $ar = new ArrayObject([], ArrayObject::STD_PROP_LIST, \ArrayIterator::class);
+        self::assertEquals(\ArrayIterator::class, $ar->getIteratorClass());
+        $ar->setIteratorClass(\RecursiveArrayIterator::class);
+        self::assertEquals(\RecursiveArrayIterator::class, $ar->getIteratorClass());
+        $ar->setIteratorClass(\ArrayIterator::class);
+        self::assertEquals(\ArrayIterator::class, $ar->getIteratorClass());
     }
 
     public function testInvalidIteratorClassThrowsInvalidArgumentException(): void
@@ -254,6 +263,7 @@ class ArrayObjectTest extends TestCase
 
     public function testOffsetExists(): void
     {
+        /** @psalm-var ArrayObject<array-key, string, \Iterator> $ar */
         $ar = new ArrayObject();
         $ar['foo'] = 'bar';
         $ar->bar = 'baz';
@@ -273,6 +283,7 @@ class ArrayObjectTest extends TestCase
 
     public function testOffsetGetOffsetSet(): void
     {
+        /** @psalm-var ArrayObject<array-key, string, \Iterator> $ar */
         $ar = new ArrayObject();
         $ar['foo'] = 'bar';
         $ar->bar = 'baz';
@@ -293,12 +304,14 @@ class ArrayObjectTest extends TestCase
     public function testOffsetSetThrowsExceptionOnProtectedProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
+        /** @psalm-var ArrayObject<array-key, mixed, \Iterator> $ar */
         $ar = new ArrayObject();
         $ar->protectedProperties = null;
     }
 
     public function testOffsetUnset(): void
     {
+        /** @psalm-var ArrayObject<array-key, mixed, \Iterator> $ar */
         $ar = new ArrayObject();
         $ar['foo'] = 'bar';
         $ar->bar = 'foo';
@@ -311,6 +324,7 @@ class ArrayObjectTest extends TestCase
 
     public function testOffsetUnsetMultidimensional(): void
     {
+        /** @psalm-var ArrayObject<array-key, mixed, \Iterator> $ar */
         $ar = new ArrayObject();
         $ar['foo'] = ['bar' => ['baz' => 'boo']];
         unset($ar['foo']['bar']['baz']);
@@ -327,11 +341,13 @@ class ArrayObjectTest extends TestCase
 
     public function testSerializeUnserialize(): void
     {
+        /** @psalm-var ArrayObject<array-key, mixed, \Iterator> $ar */
         $ar = new ArrayObject();
         $ar->foo = 'bar';
         $ar['bar'] = 'foo';
         $serialized = $ar->serialize();
 
+        /** @psalm-var ArrayObject<array-key, mixed, \Iterator> $ar */
         $ar = new ArrayObject();
         $ar->unserialize($serialized);
 
@@ -376,6 +392,7 @@ class ArrayObjectTest extends TestCase
      */
     public function testSerializationRestoresProperties(): void
     {
+        /** @psalm-var ArrayObject<array-key, mixed, \Iterator> $ar */
         $ar        = new ArrayObject();
         $ar->foo   = 'bar';
         $ar['bar'] = 'foo';
