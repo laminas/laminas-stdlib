@@ -7,6 +7,7 @@
  */
 
 namespace LaminasTest\Stdlib\TestAsset;
+
 class ArrayObjectObjectVars
 {
     public $public = 'prop:public';

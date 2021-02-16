@@ -8,16 +8,18 @@
 
 namespace LaminasTest\Stdlib\Hydrator\Aggregate;
 
+use Laminas\EventManager\EventManagerInterface;
 use Laminas\Stdlib\Hydrator\Aggregate\ExtractEvent;
 use Laminas\Stdlib\Hydrator\Aggregate\HydrateEvent;
 use Laminas\Stdlib\Hydrator\Aggregate\HydratorListener;
-use PHPUnit_Framework_TestCase;
+use Laminas\Stdlib\Hydrator\HydratorInterface;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 
 /**
  * Unit tests for {@see \Laminas\Stdlib\Hydrator\Aggregate\HydratorListener}
  */
-class HydratorListenerTest extends PHPUnit_Framework_TestCase
+class HydratorListenerTest extends TestCase
 {
     /**
      * @var \Laminas\Stdlib\Hydrator\HydratorInterface|\PHPUnit_Framework_MockObject_MockObject
@@ -36,7 +38,7 @@ class HydratorListenerTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->hydrator = $this->getMock('Laminas\Hydrator\HydratorInterface');
+        $this->hydrator = $this->createMock(HydratorInterface::class);
         $this->listener = new HydratorListener($this->hydrator);
     }
 
@@ -45,7 +47,7 @@ class HydratorListenerTest extends PHPUnit_Framework_TestCase
      */
     public function testAttach()
     {
-        $eventManager = $this->getMock('Laminas\EventManager\EventManagerInterface');
+        $eventManager = $this->createMock(EventManagerInterface::class);
 
         $eventManager
             ->expects($this->exactly(2))
@@ -69,10 +71,7 @@ class HydratorListenerTest extends PHPUnit_Framework_TestCase
         $object   = new stdClass();
         $hydrated = new stdClass();
         $data     = ['foo' => 'bar'];
-        $event    = $this
-            ->getMockBuilder('Laminas\Stdlib\Hydrator\Aggregate\HydrateEvent')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $event    = $this->createMock(HydrateEvent::class);
 
         $event->expects($this->any())->method('getHydratedObject')->will($this->returnValue($object));
         $event->expects($this->any())->method('getHydrationData')->will($this->returnValue($data));

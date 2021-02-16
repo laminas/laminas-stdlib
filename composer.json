@@ -18,15 +18,8 @@
     "config": {
         "sort-packages": true
     },
-    "extra": {
-        "branch-alias": {
-            "dev-release-2.7": "2.7-dev",
-            "dev-master": "3.0-dev",
-            "dev-develop": "3.1-dev"
-        }
-    },
     "require": {
-        "php": "^5.5 || ^7.0",
+        "php": "^5.6 || ^7.0",
         "laminas/laminas-hydrator": "~1.1",
         "laminas/laminas-zendframework-bridge": "^1.0"
     },
@@ -39,7 +32,7 @@
         "laminas/laminas-inputfilter": "~2.5",
         "laminas/laminas-serializer": "~2.5",
         "laminas/laminas-servicemanager": "~2.5",
-        "phpunit/phpunit": "~4.0"
+        "phpunit/phpunit": "^5.7.27 || ^6.5.14 || ^7.5.20"
     },
     "suggest": {
         "laminas/laminas-eventmanager": "To support aggregate hydrator usage",

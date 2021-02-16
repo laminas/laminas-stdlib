@@ -9,13 +9,12 @@
 namespace LaminasTest\Stdlib\Hydrator\Strategy;
 
 use Laminas\Stdlib\Hydrator\Strategy\DateTimeFormatterStrategy;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for {@see \Laminas\Stdlib\Hydrator\Strategy\DateTimeFormatterStrategy}
- *
  * @covers \Laminas\Stdlib\Hydrator\Strategy\DateTimeFormatterStrategy
  */
-class DateTimeFormatterStrategyTest extends \PHPUnit_Framework_TestCase
+class DateTimeFormatterStrategyTest extends TestCase
 {
     public function testHydrate()
     {
@@ -57,7 +56,9 @@ class DateTimeFormatterStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testAcceptsStringCastableDateTimeFormat()
     {
-        $format = $this->getMock('stdClass', ['__toString']);
+        $format = $this->getMockBuilder('stdClass')
+            ->setMethods(['__toString'])
+            ->getMock();
 
         $format->expects($this->once())->method('__toString')->will($this->returnValue('d/m/Y'));
 

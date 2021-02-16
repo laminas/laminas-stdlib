@@ -9,19 +9,20 @@
 namespace LaminasTest\Stdlib\Hydrator\Aggregate;
 
 use Laminas\EventManager\EventManager;
+use Laminas\EventManager\EventManagerInterface;
 use Laminas\Hydrator\Aggregate\HydratorListener;
 use Laminas\Hydrator\HydratorInterface;
 use Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator;
 use Laminas\Stdlib\Hydrator\Aggregate\ExtractEvent;
 use Laminas\Stdlib\Hydrator\Aggregate\HydrateEvent;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use Prophecy\Argument;
 use stdClass;
 
 /**
  * Unit tests for {@see \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator}
  */
-class AggregateHydratorTest extends PHPUnit_Framework_TestCase
+class AggregateHydratorTest extends TestCase
 {
     /**
      * @var \Laminas\Stdlib\Hydrator\Aggregate\AggregateHydrator
@@ -38,7 +39,7 @@ class AggregateHydratorTest extends PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->eventManager = $this->getMock(EventManager::class);
+        $this->eventManager = $this->createMock(EventManager::class);
         $this->hydrator     = new AggregateHydrator();
 
         $this->hydrator->setEventManager($this->eventManager);
@@ -166,9 +167,9 @@ class AggregateHydratorTest extends PHPUnit_Framework_TestCase
     public function testGetSetManager()
     {
         $hydrator     = new AggregateHydrator();
-        $eventManager = $this->getMock('Laminas\EventManager\EventManagerInterface');
+        $eventManager = $this->createMock(EventManagerInterface::class);
 
-        $this->assertInstanceOf('Laminas\EventManager\EventManagerInterface', $hydrator->getEventManager());
+        $this->assertInstanceOf(EventManagerInterface::class, $hydrator->getEventManager());
 
         $eventManager
             ->expects($this->once())

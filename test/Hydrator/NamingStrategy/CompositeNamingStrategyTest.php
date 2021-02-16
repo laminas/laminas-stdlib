@@ -10,18 +10,17 @@ namespace LaminasTest\Stdlib\Hydrator\NamingStrategy;
 
 use Laminas\Stdlib\Hydrator\NamingStrategy\CompositeNamingStrategy;
 use Laminas\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Tests for {@see \Laminas\Stdlib\Hydrator\NamingStrategy\CompositeNamingStrategy}
- *
  * @covers \Laminas\Stdlib\Hydrator\NamingStrategy\CompositeNamingStrategy
  */
-class CompositeNamingStrategyTest extends \PHPUnit_Framework_TestCase
+class CompositeNamingStrategyTest extends TestCase
 {
     public function testGetSameNameWhenNoNamingStrategyExistsForTheName()
     {
         $compositeNamingStrategy = new CompositeNamingStrategy([
-            'foo' => $this->getMock('Laminas\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface')
+            'foo' => $this->createMock(NamingStrategyInterface::class)
         ]);
 
         $this->assertEquals('bar', $compositeNamingStrategy->hydrate('bar'));
@@ -31,7 +30,7 @@ class CompositeNamingStrategyTest extends \PHPUnit_Framework_TestCase
     public function testUseDefaultNamingStrategy()
     {
         /* @var $defaultNamingStrategy NamingStrategyInterface|\PHPUnit_Framework_MockObject_MockObject*/
-        $defaultNamingStrategy = $this->getMock('Laminas\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface');
+        $defaultNamingStrategy = $this->createMock(NamingStrategyInterface::class);
         $defaultNamingStrategy->expects($this->at(0))
             ->method('hydrate')
             ->with('foo')
@@ -42,7 +41,7 @@ class CompositeNamingStrategyTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('foo'));
 
         $compositeNamingStrategy = new CompositeNamingStrategy(
-            ['bar' => $this->getMock('Laminas\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface')],
+            ['bar' => $this->createMock(NamingStrategyInterface::class)],
             $defaultNamingStrategy
         );
         $this->assertEquals('Foo', $compositeNamingStrategy->hydrate('foo'));
@@ -51,7 +50,7 @@ class CompositeNamingStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testHydrate()
     {
-        $fooNamingStrategy = $this->getMock('Laminas\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface');
+        $fooNamingStrategy = $this->createMock(NamingStrategyInterface::class);
         $fooNamingStrategy->expects($this->once())
             ->method('hydrate')
             ->with('foo')
@@ -62,7 +61,7 @@ class CompositeNamingStrategyTest extends \PHPUnit_Framework_TestCase
 
     public function testExtract()
     {
-        $fooNamingStrategy = $this->getMock('Laminas\Stdlib\Hydrator\NamingStrategy\NamingStrategyInterface');
+        $fooNamingStrategy = $this->createMock(NamingStrategyInterface::class);
         $fooNamingStrategy->expects($this->once())
             ->method('extract')
             ->with('FOO')

@@ -8,19 +8,26 @@
 
 namespace LaminasTest\Stdlib;
 
+use ArrayAccess;
+use ArrayObject;
+use Countable;
 use Laminas\Stdlib\Parameters;
+use Laminas\Stdlib\ParametersInterface;
+use PHPUnit\Framework\TestCase;
+use Serializable;
+use Traversable;
 
-class ParametersTest extends \PHPUnit_Framework_TestCase
+class ParametersTest extends TestCase
 {
     public function testParametersConstructionAndClassStructure()
     {
         $parameters = new Parameters();
-        $this->assertInstanceOf('Laminas\Stdlib\ParametersInterface', $parameters);
-        $this->assertInstanceOf('ArrayObject', $parameters);
-        $this->assertInstanceOf('ArrayAccess', $parameters);
-        $this->assertInstanceOf('Countable', $parameters);
-        $this->assertInstanceOf('Serializable', $parameters);
-        $this->assertInstanceOf('Traversable', $parameters);
+        $this->assertInstanceOf(ParametersInterface::class, $parameters);
+        $this->assertInstanceOf(ArrayObject::class, $parameters);
+        $this->assertInstanceOf(ArrayAccess::class, $parameters);
+        $this->assertInstanceOf(Countable::class, $parameters);
+        $this->assertInstanceOf(Serializable::class, $parameters);
+        $this->assertInstanceOf(Traversable::class, $parameters);
     }
 
     public function testParametersPersistNameAndValues()

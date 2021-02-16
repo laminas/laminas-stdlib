@@ -10,11 +10,10 @@ namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\Hydrator\ClassMethods;
 use Laminas\Stdlib\Hydrator\HydratorInterface;
+use Laminas\Stdlib\Hydrator\Strategy\StrategyInterface;
+use PHPUnit\Framework\TestCase;
 
-/**
- * @group      Laminas_Stdlib
- */
-class HydratorStrategyTest extends \PHPUnit_Framework_TestCase
+class HydratorStrategyTest extends TestCase
 {
     /**
      * The hydrator that is used during testing.
@@ -106,7 +105,7 @@ class HydratorStrategyTest extends \PHPUnit_Framework_TestCase
     {
         $hydrator = new ClassMethods($underscoreSeparatedKeys);
 
-        $strategy = $this->getMock('Laminas\Stdlib\Hydrator\Strategy\StrategyInterface');
+        $strategy = $this->createMock(StrategyInterface::class);
 
         $entity = new TestAsset\ClassMethodsUnderscore();
         $value = $entity->getFooBar();
