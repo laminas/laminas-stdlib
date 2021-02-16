@@ -27,11 +27,11 @@
         "athletic/athletic": "~0.1",
         "fabpot/php-cs-fixer": "1.7.*",
         "laminas/laminas-config": "~2.5",
-        "laminas/laminas-eventmanager": "~2.5",
+        "laminas/laminas-eventmanager": "^2.6.1",
         "laminas/laminas-filter": "~2.5",
         "laminas/laminas-inputfilter": "~2.5",
         "laminas/laminas-serializer": "~2.5",
-        "laminas/laminas-servicemanager": "~2.5",
+        "laminas/laminas-servicemanager": "^2.7.5 || ^3.0.3",
         "phpunit/phpunit": "^5.7.27 || ^6.5.14 || ^7.5.20"
     },
     "suggest": {
