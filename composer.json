@@ -16,10 +16,7 @@
         "forum": "https://discourse.laminas.dev"
     },
     "config": {
-        "sort-packages": true,
-        "platform": {
-            "php": "7.4"
-        }
+        "sort-packages": true
     },
     "extra": {
     },
