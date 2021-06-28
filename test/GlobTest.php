@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
@@ -49,11 +45,9 @@ class GlobTest extends TestCase
     }
 
     /**
-     * @param string $pattern
-     *
      * @dataProvider patternsProvider
      */
-    public function testPatterns($pattern, $expectedSequence)
+    public function testPatterns(string $pattern, array $expectedSequence)
     {
         $result = Glob::glob(__DIR__ . '/_files/' . $pattern, Glob::GLOB_BRACE);
 
@@ -64,16 +58,26 @@ class GlobTest extends TestCase
         }
     }
 
-    public function patternsProvider()
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: string,
+     *     1: string[]
+     * }>
+     */
+    public function patternsProvider(): array
     {
         return [
             [
                 "{{,*.}alph,{,*.}bet}a",
                 [
-                    'alpha', 'eta.alpha', 'zeta.alpha', 'beta', 'eta.beta',
-                    'zeta.beta'
-                ]
-            ]
+                    'alpha',
+                    'eta.alpha',
+                    'zeta.alpha',
+                    'beta',
+                    'eta.beta',
+                    'zeta.beta',
+                ],
+            ],
         ];
     }
 }

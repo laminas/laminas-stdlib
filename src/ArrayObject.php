@@ -1,15 +1,12 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
 use ArrayAccess;
 use Countable;
+use Iterator;
 use IteratorAggregate;
 use Serializable;
 
@@ -42,31 +39,23 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Properties of the object have their normal functionality
      * when accessed as list (var_dump, foreach, etc.).
      */
-    const STD_PROP_LIST = 1;
+    public const STD_PROP_LIST = 1;
 
     /**
      * Entries can be accessed as properties (read and write).
      */
-    const ARRAY_AS_PROPS = 2;
+    public const ARRAY_AS_PROPS = 2;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $storage;
 
-    /**
-     * @var int
-     */
+    /** @var int */
     protected $flag;
 
-    /**
-     * @var string
-     */
+    /** @var string */
     protected $iteratorClass;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $protectedProperties;
 
     /**
@@ -92,9 +81,10 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public function __isset($key)
     {
-        if ($this->flag == self::ARRAY_AS_PROPS) {
+        if ($this->flag === self::ARRAY_AS_PROPS) {
             return $this->offsetExists($key);
         }
+
         if (in_array($key, $this->protectedProperties)) {
             throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
         }
@@ -111,12 +101,15 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public function __set($key, $value)
     {
-        if ($this->flag == self::ARRAY_AS_PROPS) {
-            return $this->offsetSet($key, $value);
+        if ($this->flag === self::ARRAY_AS_PROPS) {
+            $this->offsetSet($key, $value);
+            return;
         }
+
         if (in_array($key, $this->protectedProperties)) {
             throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
         }
+
         $this->$key = $value;
     }
 
@@ -128,12 +121,15 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public function __unset($key)
     {
-        if ($this->flag == self::ARRAY_AS_PROPS) {
-            return $this->offsetUnset($key);
+        if ($this->flag === self::ARRAY_AS_PROPS) {
+            $this->offsetUnset($key);
+            return;
         }
+
         if (in_array($key, $this->protectedProperties)) {
             throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
         }
+
         unset($this->$key);
     }
 
@@ -146,12 +142,13 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     public function &__get($key)
     {
         $ret = null;
-        if ($this->flag == self::ARRAY_AS_PROPS) {
-            $ret =& $this->offsetGet($key);
+        if ($this->flag === self::ARRAY_AS_PROPS) {
+            $ret = &$this->offsetGet($key);
 
             return $ret;
         }
-        if (in_array($key, $this->protectedProperties)) {
+
+        if (in_array($key, $this->protectedProperties, true)) {
             throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
         }
 
@@ -240,7 +237,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Create a new iterator from an ArrayObject instance
      *
-     * @return \Iterator
+     * @return Iterator
      */
     public function getIterator()
     {
@@ -312,7 +309,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         if (! $this->offsetExists($key)) {
             return $ret;
         }
-        $ret =& $this->storage[$key];
+        $ret = &$this->storage[$key];
 
         return $ret;
     }
@@ -374,7 +371,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         if (class_exists($class)) {
             $this->iteratorClass = $class;
 
-            return ;
+            return;
         }
 
         if (strpos($class, '\\') === 0) {
@@ -382,7 +379,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
             if (class_exists($class)) {
                 $this->iteratorClass = $class;
 
-                return ;
+                return;
             }
         }
 

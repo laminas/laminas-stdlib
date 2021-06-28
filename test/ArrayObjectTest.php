@@ -1,13 +1,10 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
+use ArrayIterator;
 use InvalidArgumentException;
 use Laminas\Stdlib\ArrayObject;
 use PHPUnit\Framework\TestCase;
@@ -49,7 +46,7 @@ class ArrayObjectTest extends TestCase
 
     public function testStdPropList()
     {
-        $ar = new ArrayObject();
+        $ar      = new ArrayObject();
         $ar->foo = 'bar';
         $ar->bar = 'baz';
         self::assertSame('bar', $ar->foo);
@@ -69,8 +66,8 @@ class ArrayObjectTest extends TestCase
 
     public function testStdPropListStillHandlesArrays()
     {
-        $ar = new ArrayObject();
-        $ar->foo = 'bar';
+        $ar        = new ArrayObject();
+        $ar->foo   = 'bar';
         $ar['foo'] = 'baz';
 
         self::assertSame('bar', $ar->foo);
@@ -80,10 +77,10 @@ class ArrayObjectTest extends TestCase
 
     public function testArrayAsProps()
     {
-        $ar = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
-        $ar->foo = 'bar';
+        $ar        = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+        $ar->foo   = 'bar';
         $ar['foo'] = 'baz';
-        $ar->bar = 'foo';
+        $ar->bar   = 'foo';
         $ar['baz'] = 'bar';
 
         self::assertSame('baz', $ar->foo);
@@ -105,7 +102,7 @@ class ArrayObjectTest extends TestCase
 
     public function testAsort()
     {
-        $ar = new ArrayObject(['d' => 'lemon', 'a' => 'orange', 'b' => 'banana', 'c' => 'apple']);
+        $ar     = new ArrayObject(['d' => 'lemon', 'a' => 'orange', 'b' => 'banana', 'c' => 'apple']);
         $sorted = $ar->getArrayCopy();
         asort($sorted);
         $ar->asort();
@@ -128,7 +125,7 @@ class ArrayObjectTest extends TestCase
 
     public function testExchangeArray()
     {
-        $ar = new ArrayObject(['foo' => 'bar']);
+        $ar  = new ArrayObject(['foo' => 'bar']);
         $old = $ar->exchangeArray(['bar' => 'baz']);
 
         self::assertSame(['foo' => 'bar'], $old);
@@ -137,7 +134,7 @@ class ArrayObjectTest extends TestCase
 
     public function testExchangeArrayPhpArrayObject()
     {
-        $ar = new ArrayObject(['foo' => 'bar']);
+        $ar  = new ArrayObject(['foo' => 'bar']);
         $old = $ar->exchangeArray(new \ArrayObject(['bar' => 'baz']));
 
         self::assertSame(['foo' => 'bar'], $old);
@@ -146,7 +143,7 @@ class ArrayObjectTest extends TestCase
 
     public function testExchangeArrayStdlibArrayObject()
     {
-        $ar = new ArrayObject(['foo' => 'bar']);
+        $ar  = new ArrayObject(['foo' => 'bar']);
         $old = $ar->exchangeArray(new ArrayObject(['bar' => 'baz']));
 
         self::assertSame(['foo' => 'bar'], $old);
@@ -168,7 +165,7 @@ class ArrayObjectTest extends TestCase
     public function testExchangeArrayArrayIterator()
     {
         $ar = new ArrayObject();
-        $ar->exchangeArray(new \ArrayIterator(['foo' => 'bar']));
+        $ar->exchangeArray(new ArrayIterator(['foo' => 'bar']));
 
         self::assertEquals(['foo' => 'bar'], $ar->getArrayCopy());
     }
@@ -176,8 +173,8 @@ class ArrayObjectTest extends TestCase
     public function testExchangeArrayStringArgumentFail()
     {
         $this->expectException(InvalidArgumentException::class);
-        $ar     = new ArrayObject(['foo' => 'bar']);
-        $old    = $ar->exchangeArray('Bacon');
+        $ar  = new ArrayObject(['foo' => 'bar']);
+        $old = $ar->exchangeArray('Bacon');
     }
 
     public function testGetArrayCopy()
@@ -201,9 +198,9 @@ class ArrayObjectTest extends TestCase
 
     public function testIterator()
     {
-        $ar = new ArrayObject(['1' => 'one', '2' => 'two', '3' => 'three']);
-        $iterator = $ar->getIterator();
-        $iterator2 = new \ArrayIterator($ar->getArrayCopy());
+        $ar        = new ArrayObject(['1' => 'one', '2' => 'two', '3' => 'three']);
+        $iterator  = $ar->getIterator();
+        $iterator2 = new ArrayIterator($ar->getArrayCopy());
         self::assertEquals($iterator2->getArrayCopy(), $iterator->getArrayCopy());
     }
 
@@ -227,7 +224,7 @@ class ArrayObjectTest extends TestCase
 
     public function testKsort()
     {
-        $ar = new ArrayObject(['d' => 'lemon', 'a' => 'orange', 'b' => 'banana', 'c' => 'apple']);
+        $ar     = new ArrayObject(['d' => 'lemon', 'a' => 'orange', 'b' => 'banana', 'c' => 'apple']);
         $sorted = $ar->getArrayCopy();
         ksort($sorted);
         $ar->ksort();
@@ -236,7 +233,7 @@ class ArrayObjectTest extends TestCase
 
     public function testNatcasesort()
     {
-        $ar = new ArrayObject(['IMG0.png', 'img12.png', 'img10.png', 'img2.png', 'img1.png', 'IMG3.png']);
+        $ar     = new ArrayObject(['IMG0.png', 'img12.png', 'img10.png', 'img2.png', 'img1.png', 'IMG3.png']);
         $sorted = $ar->getArrayCopy();
         natcasesort($sorted);
         $ar->natcasesort();
@@ -245,7 +242,7 @@ class ArrayObjectTest extends TestCase
 
     public function testNatsort()
     {
-        $ar = new ArrayObject(['img12.png', 'img10.png', 'img2.png', 'img1.png']);
+        $ar     = new ArrayObject(['img12.png', 'img10.png', 'img2.png', 'img1.png']);
         $sorted = $ar->getArrayCopy();
         natsort($sorted);
         $ar->natsort();
@@ -254,9 +251,9 @@ class ArrayObjectTest extends TestCase
 
     public function testOffsetExists()
     {
-        $ar = new ArrayObject();
+        $ar        = new ArrayObject();
         $ar['foo'] = 'bar';
-        $ar->bar = 'baz';
+        $ar->bar   = 'baz';
 
         self::assertTrue($ar->offsetExists('foo'));
         self::assertFalse($ar->offsetExists('bar'));
@@ -273,9 +270,9 @@ class ArrayObjectTest extends TestCase
 
     public function testOffsetGetOffsetSet()
     {
-        $ar = new ArrayObject();
+        $ar        = new ArrayObject();
         $ar['foo'] = 'bar';
-        $ar->bar = 'baz';
+        $ar->bar   = 'baz';
 
         self::assertSame('bar', $ar['foo']);
         self::assertSame('baz', $ar->bar);
@@ -293,15 +290,15 @@ class ArrayObjectTest extends TestCase
     public function testOffsetSetThrowsExceptionOnProtectedProperty()
     {
         $this->expectException(InvalidArgumentException::class);
-        $ar = new ArrayObject();
+        $ar                      = new ArrayObject();
         $ar->protectedProperties = null;
     }
 
     public function testOffsetUnset()
     {
-        $ar = new ArrayObject();
+        $ar        = new ArrayObject();
         $ar['foo'] = 'bar';
-        $ar->bar = 'foo';
+        $ar->bar   = 'foo';
         unset($ar['foo']);
         unset($ar->bar);
         self::assertFalse(isset($ar['foo']));
@@ -311,7 +308,7 @@ class ArrayObjectTest extends TestCase
 
     public function testOffsetUnsetMultidimensional()
     {
-        $ar = new ArrayObject();
+        $ar        = new ArrayObject();
         $ar['foo'] = ['bar' => ['baz' => 'boo']];
         unset($ar['foo']['bar']['baz']);
 
@@ -327,9 +324,9 @@ class ArrayObjectTest extends TestCase
 
     public function testSerializeUnserialize()
     {
-        $ar = new ArrayObject();
-        $ar->foo = 'bar';
-        $ar['bar'] = 'foo';
+        $ar         = new ArrayObject();
+        $ar->foo    = 'bar';
+        $ar['bar']  = 'foo';
         $serialized = $ar->serialize();
 
         $ar = new ArrayObject();
@@ -342,13 +339,14 @@ class ArrayObjectTest extends TestCase
     public function testUasort()
     {
         $function = function ($a, $b) {
-            if ($a == $b) {
+            if ($a === $b) {
                 return 0;
             }
 
-            return ($a < $b) ? -1 : 1;
+            return $a < $b ? -1 : 1;
         };
-        $ar = new ArrayObject(['a' => 4, 'b' => 8, 'c' => -1, 'd' => -9, 'e' => 2, 'f' => 5, 'g' => 3, 'h' => -4]);
+        // phpcs:ignore Generic.Files.LineLength.TooLong
+        $ar     = new ArrayObject(['a' => 4, 'b' => 8, 'c' => -1, 'd' => -9, 'e' => 2, 'f' => 5, 'g' => 3, 'h' => -4]);
         $sorted = $ar->getArrayCopy();
         uasort($sorted, $function);
         $ar->uasort($function);
@@ -364,7 +362,7 @@ class ArrayObjectTest extends TestCase
             return strcasecmp($a, $b);
         };
 
-        $ar = new ArrayObject(['John' => 1, 'the Earth' => 2, 'an apple' => 3, 'a banana' => 4]);
+        $ar     = new ArrayObject(['John' => 1, 'the Earth' => 2, 'an apple' => 3, 'a banana' => 4]);
         $sorted = $ar->getArrayCopy();
         uksort($sorted, $function);
         $ar->uksort($function);

@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
@@ -22,12 +18,10 @@ use function var_export;
  */
 class SplPriorityQueueTest extends TestCase
 {
-    /**
-     * @var SplPriorityQueue
-     */
+    /** @var SplPriorityQueue */
     protected $queue;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->queue = new SplPriorityQueue();
         $this->queue->insert('foo', 3);
@@ -45,13 +39,13 @@ class SplPriorityQueueTest extends TestCase
         $queue->insert('bat', 1000);
 
         $expected = ['foo', 'bar', 'baz', 'bat'];
-        $test = array_values(iterator_to_array($queue));
+        $test     = array_values(iterator_to_array($queue));
         self::assertEquals($expected, $test);
     }
 
     public function testSerializationAndDeserializationShouldMaintainState()
     {
-        $s = serialize($this->queue);
+        $s            = serialize($this->queue);
         $unserialized = unserialize($s);
 
         // assert same size
@@ -73,6 +67,6 @@ class SplPriorityQueueTest extends TestCase
             'bat',
         ];
         $test     = $this->queue->toArray();
-        self::assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, true));
     }
 }

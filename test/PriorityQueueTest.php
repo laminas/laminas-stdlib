@@ -1,15 +1,12 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\PriorityQueue;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 use function array_values;
 use function count;
@@ -23,12 +20,10 @@ use function var_export;
  */
 class PriorityQueueTest extends TestCase
 {
-    /**
-     * @var PriorityQueue
-     */
+    /** @var PriorityQueue */
     protected $queue;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->queue = new PriorityQueue();
         $this->queue->insert('foo', 3);
@@ -39,9 +34,9 @@ class PriorityQueueTest extends TestCase
 
     public function testSerializationAndDeserializationShouldMaintainState()
     {
-        $s = serialize($this->queue);
+        $s            = serialize($this->queue);
         $unserialized = unserialize($s);
-        $count = count($this->queue);
+        $count        = count($this->queue);
         self::assertSame(
             $count,
             count($unserialized),
@@ -49,11 +44,11 @@ class PriorityQueueTest extends TestCase
         );
 
         $expected = iterator_to_array($this->queue);
-        $test = iterator_to_array($unserialized);
+        $test     = iterator_to_array($unserialized);
         self::assertSame(
             $expected,
             $test,
-            'Expected: ' . var_export($expected, 1) . "\nReceived:" . var_export($test, 1)
+            'Expected: ' . var_export($expected, true) . "\nReceived:" . var_export($test, true)
         );
     }
 
@@ -66,7 +61,7 @@ class PriorityQueueTest extends TestCase
             'bat',
         ];
         $test     = $this->queue->toArray();
-        self::assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, true));
     }
 
     public function testCanCastToArrayOfPrioritiesOnly()
@@ -78,7 +73,7 @@ class PriorityQueueTest extends TestCase
             1,
         ];
         $test     = $this->queue->toArray(PriorityQueue::EXTR_PRIORITY);
-        self::assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, true));
     }
 
     public function testCanCastToArrayOfDataPriorityPairs()
@@ -90,7 +85,7 @@ class PriorityQueueTest extends TestCase
             ['data' => 'bat', 'priority' => 1],
         ];
         $test     = $this->queue->toArray(PriorityQueue::EXTR_BOTH);
-        self::assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, true));
     }
 
     public function testCanIterateMultipleTimesAndReceiveSameResults()
@@ -110,7 +105,7 @@ class PriorityQueueTest extends TestCase
     {
         $this->queue->remove('baz');
         $expected = ['bar', 'foo', 'bat'];
-        $test = array_values(iterator_to_array($this->queue));
+        $test     = array_values(iterator_to_array($this->queue));
         self::assertEquals($expected, $test);
     }
 
@@ -128,7 +123,7 @@ class PriorityQueueTest extends TestCase
 
     public function testCloningAlsoClonesQueue()
     {
-        $foo  = new \stdClass();
+        $foo       = new stdClass();
         $foo->name = 'bar';
 
         $queue = new PriorityQueue();
@@ -156,7 +151,7 @@ class PriorityQueueTest extends TestCase
 
     public function testQueueRevertsToInitialStateWhenEmpty()
     {
-        $queue = new PriorityQueue();
+        $queue     = new PriorityQueue();
         $testQueue = clone $queue; // store the default state
 
         $testQueue->insert('foo', 1);

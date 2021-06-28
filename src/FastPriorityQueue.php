@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
@@ -33,13 +29,11 @@ use function unserialize;
  */
 class FastPriorityQueue implements Iterator, Countable, Serializable
 {
-    const EXTR_DATA     = PhpSplPriorityQueue::EXTR_DATA;
-    const EXTR_PRIORITY = PhpSplPriorityQueue::EXTR_PRIORITY;
-    const EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH;
+    public const EXTR_DATA     = PhpSplPriorityQueue::EXTR_DATA;
+    public const EXTR_PRIORITY = PhpSplPriorityQueue::EXTR_PRIORITY;
+    public const EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH;
 
-    /**
-     * @var integer
-     */
+    /** @var integer */
     protected $extractFlag = self::EXTR_DATA;
 
     /**
@@ -68,7 +62,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @var integer|null
      */
-    protected $maxPriority = null;
+    protected $maxPriority;
 
     /**
      * Total number of elements in the queue
@@ -203,7 +197,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
             case self::EXTR_BOTH:
                 return [
                     'data'     => current($this->values[$this->maxPriority]),
-                    'priority' => $this->maxPriority
+                    'priority' => $this->maxPriority,
                 ];
         }
     }

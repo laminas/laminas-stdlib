@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\TestAsset;
 
@@ -15,19 +11,25 @@ use Laminas\Stdlib\AbstractOptions;
  */
 class TestOptions extends AbstractOptions
 {
+    /** @var mixed */
     protected $testField;
 
+    /** @var mixed */
     private $parentPrivate;
 
+    /** @var mixed */
     protected $parentProtected;
 
+    /** @var mixed */
     protected $parentPublic;
 
+    /** @param mixed $value */
     public function setTestField($value)
     {
         $this->testField = $value;
     }
 
+    /** @return mixed */
     public function getTestField()
     {
         return $this->testField;
@@ -35,6 +37,8 @@ class TestOptions extends AbstractOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @param mixed $parentPrivate
      */
     private function setParentPrivate($parentPrivate)
     {
@@ -43,6 +47,8 @@ class TestOptions extends AbstractOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @return mixed
      */
     private function getParentPrivate()
     {
@@ -51,15 +57,18 @@ class TestOptions extends AbstractOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @param mixed $parentProtected
      */
     protected function setParentProtected($parentProtected)
     {
         $this->parentProtected = $parentProtected;
     }
 
-
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @return mixed
      */
     protected function getParentProtected()
     {
@@ -68,15 +77,18 @@ class TestOptions extends AbstractOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @param mixed $parentPublic
      */
     public function setParentPublic($parentPublic)
     {
         $this->parentPublic = $parentPublic;
     }
 
-
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @return mixed
      */
     public function getParentPublic()
     {

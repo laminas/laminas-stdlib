@@ -1,32 +1,29 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Laminas\Stdlib\Message;
 use PHPUnit\Framework\TestCase;
+use stdClass;
 
 class MessageTest extends TestCase
 {
     public function testMessageCanSetAndGetContent()
     {
         $message = new Message();
-        $ret = $message->setContent('I can set content');
-        self::assertInstanceOf('Laminas\Stdlib\Message', $ret);
+        $ret     = $message->setContent('I can set content');
+        self::assertInstanceOf(Message::class, $ret);
         self::assertEquals('I can set content', $message->getContent());
     }
 
     public function testMessageCanSetAndGetMetadataKeyAsString()
     {
         $message = new Message();
-        $ret = $message->setMetadata('foo', 'bar');
-        self::assertInstanceOf('Laminas\Stdlib\Message', $ret);
+        $ret     = $message->setMetadata('foo', 'bar');
+        self::assertInstanceOf(Message::class, $ret);
         self::assertEquals('bar', $message->getMetadata('foo'));
         self::assertEquals(['foo' => 'bar'], $message->getMetadata());
     }
@@ -34,8 +31,8 @@ class MessageTest extends TestCase
     public function testMessageCanSetAndGetMetadataKeyAsArray()
     {
         $message = new Message();
-        $ret = $message->setMetadata(['foo' => 'bar']);
-        self::assertInstanceOf('Laminas\Stdlib\Message', $ret);
+        $ret     = $message->setMetadata(['foo' => 'bar']);
+        self::assertInstanceOf(Message::class, $ret);
         self::assertEquals('bar', $message->getMetadata('foo'));
     }
 
@@ -50,7 +47,7 @@ class MessageTest extends TestCase
         $message = new Message();
 
         $this->expectException(InvalidArgumentException::class);
-        $message->setMetadata(new \stdClass());
+        $message->setMetadata(new stdClass());
     }
 
     public function testMessageThrowsExceptionOnInvalidKeyForMetadataGet()
@@ -58,7 +55,7 @@ class MessageTest extends TestCase
         $message = new Message();
 
         $this->expectException(InvalidArgumentException::class);
-        $message->getMetadata(new \stdClass());
+        $message->getMetadata(new stdClass());
     }
 
     public function testMessageToStringWorks()

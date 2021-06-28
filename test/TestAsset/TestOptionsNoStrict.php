@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\TestAsset;
 
@@ -15,17 +11,23 @@ use Laminas\Stdlib\AbstractOptions;
  */
 class TestOptionsNoStrict extends AbstractOptions
 {
-    // @codingStandardsIgnoreStart
-    protected $__strictMode__ = false;
-    // @codingStandardsIgnoreEnd
+    // phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore,WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCapsProperty
 
+    /** @var bool */
+    protected $__strictMode__ = false;
+
+    // phpcs:enable
+
+    /** @var mixed */
     protected $testField;
 
+    /** @param mixed $value */
     public function setTestField($value)
     {
         $this->testField = $value;
     }
 
+    /** @return mixed */
     public function getTestField()
     {
         return $this->testField;
