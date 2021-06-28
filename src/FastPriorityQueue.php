@@ -90,6 +90,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @param mixed $value
      * @param integer $priority
+     * @return void
      */
     public function insert($value, $priority)
     {
@@ -215,6 +216,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Set the iterator pointer to the next element in the queue
      * removing the previous element
+     *
+     * @return void
      */
     protected function nextAndRemove()
     {
@@ -321,6 +324,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Set the extract flag
      *
      * @param integer $flag
+     * @return void
      */
     public function setExtractFlags($flag)
     {

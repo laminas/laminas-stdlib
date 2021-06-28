@@ -13,6 +13,7 @@
             <directory name=".github"/>
             <directory name="benchmark"/>
             <directory name="docs"/>
+            <directory name="test/TestAsset"/>
             <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
@@ -30,6 +31,7 @@
             </errorLevel>
         </InternalMethod>
     </issueHandlers>
+
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>
     </plugins>

@@ -96,7 +96,7 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
     /**
      * Get the defined character encoding to work with
      *
-     * @return string
+     * @return null|string
      * @throws Exception\LogicException If no encoding was defined.
      */
     public function getEncoding()
@@ -139,8 +139,8 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
         $to   = $reverse ? $encoding : $convertEncoding;
         throw new Exception\RuntimeException(sprintf(
             'Converting from "%s" to "%s" isn\'t supported by this string wrapper',
-            $from,
-            $to
+            $from ?? '',
+            $to ?? ''
         ));
     }
 
@@ -170,7 +170,7 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
             throw new Exception\InvalidArgumentException('Cannot force cut when width is zero');
         }
 
-        if (StringUtils::isSingleByteEncoding($this->getEncoding())) {
+        if (null === $this->getEncoding() || StringUtils::isSingleByteEncoding($this->getEncoding())) {
             return wordwrap($string, $width, $break, $cut);
         }
 
@@ -236,7 +236,7 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
      */
     public function strPad($input, $padLength, $padString = ' ', $padType = STR_PAD_RIGHT)
     {
-        if (StringUtils::isSingleByteEncoding($this->getEncoding())) {
+        if (null === $this->getEncoding() || StringUtils::isSingleByteEncoding($this->getEncoding())) {
             return str_pad($input, $padLength, $padString, $padType);
         }
 
@@ -253,7 +253,7 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
         $repeatCount = (int) floor($lengthOfPadding / $padStringLength);
 
         if ($padType === STR_PAD_BOTH) {
-            $repeatCountLeft = $repeatCountRight = ($repeatCount - $repeatCount % 2) / 2;
+            $repeatCountLeft = $repeatCountRight = (int) ($repeatCount - $repeatCount % 2) / 2;
 
             $lastStringLength       = $lengthOfPadding - 2 * $repeatCountLeft * $padStringLength;
             $lastStringLeftLength   = $lastStringRightLength = (int) floor($lastStringLength / 2);

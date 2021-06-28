@@ -21,7 +21,7 @@ class ErrorHandlerTest extends TestCase
         }
     }
 
-    public function testNestedLevel()
+    public function testNestedLevel(): void
     {
         self::assertSame(0, ErrorHandler::getNestedLevel());
 
@@ -38,7 +38,7 @@ class ErrorHandlerTest extends TestCase
         self::assertSame(0, ErrorHandler::getNestedLevel());
     }
 
-    public function testClean()
+    public function testClean(): void
     {
         ErrorHandler::start();
         self::assertSame(1, ErrorHandler::getNestedLevel());
@@ -50,7 +50,7 @@ class ErrorHandlerTest extends TestCase
         self::assertSame(0, ErrorHandler::getNestedLevel());
     }
 
-    public function testStarted()
+    public function testStarted(): void
     {
         self::assertFalse(ErrorHandler::started());
 
@@ -61,7 +61,7 @@ class ErrorHandlerTest extends TestCase
         self::assertFalse(ErrorHandler::started());
     }
 
-    public function testReturnCatchedError()
+    public function testReturnCatchedError(): void
     {
         ErrorHandler::start(E_USER_WARNING);
         trigger_error('consider this a warning', E_USER_WARNING);
@@ -70,7 +70,7 @@ class ErrorHandlerTest extends TestCase
         self::assertInstanceOf('ErrorException', $err);
     }
 
-    public function testThrowCatchedError()
+    public function testThrowCatchedError(): void
     {
         ErrorHandler::start(E_USER_WARNING);
         trigger_error('consider this a warning', E_USER_WARNING);
@@ -79,7 +79,7 @@ class ErrorHandlerTest extends TestCase
         ErrorHandler::stop(true);
     }
 
-    public function testAddError()
+    public function testAddError(): void
     {
         ErrorHandler::start();
         ErrorHandler::addError(1, 'test-msg1', 'test-file1', 100);

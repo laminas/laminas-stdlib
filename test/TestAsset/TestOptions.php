@@ -23,8 +23,10 @@ class TestOptions extends AbstractOptions
     /** @var mixed */
     protected $parentPublic;
 
-    /** @param mixed $value */
-    public function setTestField($value)
+    /**
+     * @param mixed $value
+     */
+    public function setTestField($value): void
     {
         $this->testField = $value;
     }
@@ -40,7 +42,7 @@ class TestOptions extends AbstractOptions
      *
      * @param mixed $parentPrivate
      */
-    private function setParentPrivate($parentPrivate)
+    private function setParentPrivate($parentPrivate): void
     {
         $this->parentPrivate = $parentPrivate;
     }
@@ -60,7 +62,7 @@ class TestOptions extends AbstractOptions
      *
      * @param mixed $parentProtected
      */
-    protected function setParentProtected($parentProtected)
+    protected function setParentProtected($parentProtected): void
     {
         $this->parentProtected = $parentProtected;
     }
@@ -80,7 +82,7 @@ class TestOptions extends AbstractOptions
      *
      * @param mixed $parentPublic
      */
-    public function setParentPublic($parentPublic)
+    public function setParentPublic($parentPublic): void
     {
         $this->parentPublic = $parentPublic;
     }

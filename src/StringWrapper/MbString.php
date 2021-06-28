@@ -121,6 +121,7 @@ class MbString extends AbstractStringWrapper
 
         $fromEncoding = $reverse ? $convertEncoding : $encoding;
         $toEncoding   = $reverse ? $encoding : $convertEncoding;
-        return mb_convert_encoding($str, $toEncoding, $fromEncoding);
+
+        return mb_convert_encoding($str, $toEncoding ?? '', $fromEncoding ?? '');
     }
 }

@@ -51,6 +51,7 @@ abstract class ErrorHandler
      * Starting the error handler
      *
      * @param int $errorLevel
+     * @return void
      */
     public static function start($errorLevel = E_WARNING)
     {

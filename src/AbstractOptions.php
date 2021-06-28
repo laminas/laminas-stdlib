@@ -81,11 +81,14 @@ abstract class AbstractOptions implements ParameterObjectInterface
      */
     public function toArray()
     {
-        $array     = [];
-        $transform = function ($letters) {
+        $array = [];
+
+        /** @param string[] $letters */
+        $transform = function (array $letters): string {
             $letter = array_shift($letters);
             return '_' . strtolower($letter);
         };
+
         foreach ($this as $key => $value) {
             if ($key === '__strictMode__') {
                 continue;
@@ -93,6 +96,7 @@ abstract class AbstractOptions implements ParameterObjectInterface
             $normalizedKey         = preg_replace_callback('/([A-Z])/', $transform, $key);
             $array[$normalizedKey] = $value;
         }
+
         return $array;
     }
 

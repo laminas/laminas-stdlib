@@ -32,7 +32,7 @@ class PriorityQueueTest extends TestCase
         $this->queue->insert('bat', 1);
     }
 
-    public function testSerializationAndDeserializationShouldMaintainState()
+    public function testSerializationAndDeserializationShouldMaintainState(): void
     {
         $s            = serialize($this->queue);
         $unserialized = unserialize($s);
@@ -52,7 +52,7 @@ class PriorityQueueTest extends TestCase
         );
     }
 
-    public function testRetrievingQueueAsArrayReturnsDataOnlyByDefault()
+    public function testRetrievingQueueAsArrayReturnsDataOnlyByDefault(): void
     {
         $expected = [
             'foo',
@@ -64,7 +64,7 @@ class PriorityQueueTest extends TestCase
         self::assertSame($expected, $test, var_export($test, true));
     }
 
-    public function testCanCastToArrayOfPrioritiesOnly()
+    public function testCanCastToArrayOfPrioritiesOnly(): void
     {
         $expected = [
             3,
@@ -76,7 +76,7 @@ class PriorityQueueTest extends TestCase
         self::assertSame($expected, $test, var_export($test, true));
     }
 
-    public function testCanCastToArrayOfDataPriorityPairs()
+    public function testCanCastToArrayOfDataPriorityPairs(): void
     {
         $expected = [
             ['data' => 'foo', 'priority' => 3],
@@ -88,7 +88,7 @@ class PriorityQueueTest extends TestCase
         self::assertSame($expected, $test, var_export($test, true));
     }
 
-    public function testCanIterateMultipleTimesAndReceiveSameResults()
+    public function testCanIterateMultipleTimesAndReceiveSameResults(): void
     {
         $expected = ['bar', 'foo', 'baz', 'bat'];
 
@@ -101,7 +101,7 @@ class PriorityQueueTest extends TestCase
         }
     }
 
-    public function testCanRemoveItemFromQueue()
+    public function testCanRemoveItemFromQueue(): void
     {
         $this->queue->remove('baz');
         $expected = ['bar', 'foo', 'bat'];
@@ -109,19 +109,19 @@ class PriorityQueueTest extends TestCase
         self::assertEquals($expected, $test);
     }
 
-    public function testCanTestForExistenceOfItemInQueue()
+    public function testCanTestForExistenceOfItemInQueue(): void
     {
         self::assertTrue($this->queue->contains('foo'));
         self::assertFalse($this->queue->contains('foobar'));
     }
 
-    public function testCanTestForExistenceOfPriorityInQueue()
+    public function testCanTestForExistenceOfPriorityInQueue(): void
     {
         self::assertTrue($this->queue->hasPriority(3));
         self::assertFalse($this->queue->hasPriority(1000));
     }
 
-    public function testCloningAlsoClonesQueue()
+    public function testCloningAlsoClonesQueue(): void
     {
         $foo       = new stdClass();
         $foo->name = 'bar';
@@ -149,7 +149,7 @@ class PriorityQueueTest extends TestCase
         self::assertTrue($queueClone->isEmpty());
     }
 
-    public function testQueueRevertsToInitialStateWhenEmpty()
+    public function testQueueRevertsToInitialStateWhenEmpty(): void
     {
         $queue     = new PriorityQueue();
         $testQueue = clone $queue; // store the default state

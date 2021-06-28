@@ -22,18 +22,17 @@ class PriorityListTest extends TestCase
         $this->list = new PriorityList();
     }
 
-    public function testInsert()
+    public function testInsert(): void
     {
         $this->list->insert('foo', new stdClass(), 0);
 
         self::assertEquals(1, count($this->list));
 
-        foreach ($this->list as $key => $value) {
-            self::assertEquals('foo', $key);
-        }
+        $values = $this->list->toArray();
+        self::assertArrayHasKey('foo', $values);
     }
 
-    public function testInsertDuplicates()
+    public function testInsertDuplicates(): void
     {
         $this->list->insert('foo', new stdClass());
         $this->list->insert('bar', new stdClass());
@@ -51,7 +50,7 @@ class PriorityListTest extends TestCase
         self::assertEquals(1, count($this->list));
     }
 
-    public function testRemove()
+    public function testRemove(): void
     {
         $this->list->insert('foo', new stdClass(), 0);
         $this->list->insert('bar', new stdClass(), 0);
@@ -63,14 +62,14 @@ class PriorityListTest extends TestCase
         self::assertEquals(1, count($this->list));
     }
 
-    public function testRemovingNonExistentRouteDoesNotYieldError()
+    public function testRemovingNonExistentRouteDoesNotYieldError(): void
     {
         $this->list->remove('foo');
 
         self::assertEmpty($this->list);
     }
 
-    public function testClear()
+    public function testClear(): void
     {
         $this->list->insert('foo', new stdClass(), 0);
         $this->list->insert('bar', new stdClass(), 0);
@@ -83,7 +82,7 @@ class PriorityListTest extends TestCase
         self::assertSame(false, $this->list->current());
     }
 
-    public function testGet()
+    public function testGet(): void
     {
         $route = new stdClass();
 
@@ -93,7 +92,7 @@ class PriorityListTest extends TestCase
         self::assertNull($this->list->get('bar'));
     }
 
-    public function testLIFOOnly()
+    public function testLIFOOnly(): void
     {
         $this->list->insert('foo', new stdClass());
         $this->list->insert('bar', new stdClass());
@@ -106,7 +105,7 @@ class PriorityListTest extends TestCase
         self::assertEquals(['barbaz', 'foobar', 'baz', 'bar', 'foo'], $orders);
     }
 
-    public function testPriorityOnly()
+    public function testPriorityOnly(): void
     {
         $this->list->insert('foo', new stdClass(), 1);
         $this->list->insert('bar', new stdClass(), 0);
@@ -117,7 +116,7 @@ class PriorityListTest extends TestCase
         self::assertEquals(['baz', 'foo', 'bar'], $orders);
     }
 
-    public function testLIFOWithPriority()
+    public function testLIFOWithPriority(): void
     {
         $this->list->insert('foo', new stdClass(), 0);
         $this->list->insert('bar', new stdClass(), 0);
@@ -128,7 +127,7 @@ class PriorityListTest extends TestCase
         self::assertEquals(['baz', 'bar', 'foo'], $orders);
     }
 
-    public function testFIFOWithPriority()
+    public function testFIFOWithPriority(): void
     {
         $this->list->isLIFO(false);
         $this->list->insert('foo', new stdClass(), 0);
@@ -140,7 +139,7 @@ class PriorityListTest extends TestCase
         self::assertEquals(['baz', 'foo', 'bar'], $orders);
     }
 
-    public function testFIFOOnly()
+    public function testFIFOOnly(): void
     {
         $this->list->isLIFO(false);
         $this->list->insert('foo', new stdClass());
@@ -154,7 +153,7 @@ class PriorityListTest extends TestCase
         self::assertEquals(['foo', 'bar', 'baz', 'foobar', 'barbaz'], $orders);
     }
 
-    public function testPriorityWithNegativesAndNull()
+    public function testPriorityWithNegativesAndNull(): void
     {
         $this->list->insert('foo', new stdClass(), null);
         $this->list->insert('bar', new stdClass(), 1);
@@ -165,7 +164,7 @@ class PriorityListTest extends TestCase
         self::assertEquals(['bar', 'foo', 'baz'], $orders);
     }
 
-    public function testCurrent()
+    public function testCurrent(): void
     {
         $this->list->insert('foo', 'foo_value', null);
         $this->list->insert('bar', 'bar_value', 1);
@@ -175,7 +174,7 @@ class PriorityListTest extends TestCase
         self::assertEquals('bar_value', $this->list->current());
     }
 
-    public function testIterator()
+    public function testIterator(): void
     {
         $this->list->insert('foo', 'foo_value');
         $iterator = $this->list->getIterator();
@@ -185,7 +184,7 @@ class PriorityListTest extends TestCase
         self::assertNotEquals($iterator, $this->list);
     }
 
-    public function testToArray()
+    public function testToArray(): void
     {
         $this->list->insert('foo', 'foo_value', null);
         $this->list->insert('bar', 'bar_value', 1);
@@ -214,7 +213,7 @@ class PriorityListTest extends TestCase
      * @group 6768
      * @group 6773
      */
-    public function testBooleanValuesAreValid()
+    public function testBooleanValuesAreValid(): void
     {
         $this->list->insert('null', null, null);
         $this->list->insert('false', false, null);

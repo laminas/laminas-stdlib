@@ -54,7 +54,7 @@ class StringUtilsTest extends TestCase
      * @dataProvider getSingleByEncodings
      * @param string $encoding
      */
-    public function testIsSingleByteEncodingReturnsTrue($encoding)
+    public function testIsSingleByteEncodingReturnsTrue($encoding): void
     {
         self::assertTrue(StringUtils::isSingleByteEncoding($encoding));
     }
@@ -74,12 +74,12 @@ class StringUtilsTest extends TestCase
      * @dataProvider getNonSingleByteEncodings
      * @param string $encoding
      */
-    public function testIsSingleByteEncodingReturnsFalse($encoding)
+    public function testIsSingleByteEncodingReturnsFalse($encoding): void
     {
         self::assertFalse(StringUtils::isSingleByteEncoding($encoding));
     }
 
-    public function testGetWrapper()
+    public function testGetWrapper(): void
     {
         $wrapper = StringUtils::getWrapper('ISO-8859-1');
         if (extension_loaded('mbstring')) {
@@ -157,12 +157,12 @@ class StringUtilsTest extends TestCase
      * @param mixed $str
      * @param bool $valid
      */
-    public function testIsValidUtf8($str, $valid)
+    public function testIsValidUtf8($str, $valid): void
     {
         self::assertSame($valid, StringUtils::isValidUtf8($str));
     }
 
-    public function testHasPcreUnicodeSupport()
+    public function testHasPcreUnicodeSupport(): void
     {
         ErrorHandler::start();
         $expected = defined('PREG_BAD_UTF8_OFFSET_ERROR') && preg_match('/\pL/u', 'a') === 1;

@@ -29,7 +29,7 @@ class MbStringTest extends CommonStringWrapperTest
     /**
      * @param null|string $encoding
      * @param null|string $convertEncoding
-     * @return StringWrapperInterface
+     * @return MbString|false
      */
     protected function getWrapper($encoding = null, $convertEncoding = null)
     {
