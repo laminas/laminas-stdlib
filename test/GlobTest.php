@@ -17,7 +17,7 @@ use const GLOB_BRACE;
 
 class GlobTest extends TestCase
 {
-    public function testFallback()
+    public function testFallback(): void
     {
         if (! defined('GLOB_BRACE')) {
             $this->markTestSkipped('GLOB_BRACE not available');
@@ -29,13 +29,13 @@ class GlobTest extends TestCase
         );
     }
 
-    public function testNonMatchingGlobReturnsArray()
+    public function testNonMatchingGlobReturnsArray(): void
     {
         $result = Glob::glob('/some/path/{,*.}{this,orthis}.php', Glob::GLOB_BRACE);
         self::assertIsArray($result);
     }
 
-    public function testThrowExceptionOnError()
+    public function testThrowExceptionOnError(): void
     {
         $this->expectException(RuntimeException::class);
 
@@ -47,7 +47,7 @@ class GlobTest extends TestCase
     /**
      * @dataProvider patternsProvider
      */
-    public function testPatterns(string $pattern, array $expectedSequence)
+    public function testPatterns(string $pattern, array $expectedSequence): void
     {
         $result = Glob::glob(__DIR__ . '/_files/' . $pattern, Glob::GLOB_BRACE);
 

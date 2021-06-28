@@ -30,7 +30,7 @@ class SplStackTest extends TestCase
         $this->stack->push('bat');
     }
 
-    public function testSerializationAndDeserializationShouldMaintainState()
+    public function testSerializationAndDeserializationShouldMaintainState(): void
     {
         $s            = serialize($this->stack);
         $unserialized = unserialize($s);
@@ -42,7 +42,7 @@ class SplStackTest extends TestCase
         self::assertSame($expected, $test);
     }
 
-    public function testCanRetrieveQueueAsArray()
+    public function testCanRetrieveQueueAsArray(): void
     {
         $expected = ['bat', 'baz', 'bar', 'foo'];
         $test     = $this->stack->toArray();

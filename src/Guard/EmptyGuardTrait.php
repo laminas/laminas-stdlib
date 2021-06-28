@@ -17,9 +17,10 @@ trait EmptyGuardTrait
     /**
      * Verify that the data is not empty
      *
-     * @param  mixed  $data           the data to verify
-     * @param  string $dataName       the data name
-     * @param  string $exceptionClass FQCN for the exception
+     * @param mixed  $data           the data to verify
+     * @param string $dataName       the data name
+     * @param string $exceptionClass FQCN for the exception
+     * @return void
      * @throws Exception
      */
     protected function guardAgainstEmpty(

@@ -23,7 +23,7 @@ class TestOptionsDerived extends TestOptions
      *
      * @param mixed $derivedPrivate
      */
-    private function setDerivedPrivate($derivedPrivate)
+    private function setDerivedPrivate($derivedPrivate): void
     {
         $this->derivedPrivate = $derivedPrivate;
     }
@@ -43,7 +43,7 @@ class TestOptionsDerived extends TestOptions
      *
      * @param mixed $derivedProtected
      */
-    protected function setDerivedProtected($derivedProtected)
+    protected function setDerivedProtected($derivedProtected): void
     {
         $this->derivedProtected = $derivedProtected;
     }
@@ -63,7 +63,7 @@ class TestOptionsDerived extends TestOptions
      *
      * @param mixed $derivedPublic
      */
-    public function setDerivedPublic($derivedPublic)
+    public function setDerivedPublic($derivedPublic): void
     {
         $this->derivedPublic = $derivedPublic;
     }

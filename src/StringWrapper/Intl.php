@@ -48,11 +48,12 @@ class Intl extends AbstractStringWrapper
      * Returns the length of the given string
      *
      * @param string $str
-     * @return int|false
+     * @return false|int
      */
     public function strlen($str)
     {
-        return grapheme_strlen($str);
+        $len = grapheme_strlen($str);
+        return $len ?? false;
     }
 
     /**

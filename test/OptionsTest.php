@@ -16,14 +16,14 @@ use PHPUnit\Framework\TestCase;
 
 class OptionsTest extends TestCase
 {
-    public function testConstructionWithArray()
+    public function testConstructionWithArray(): void
     {
         $options = new TestOptions(['test_field' => 1]);
 
         self::assertEquals(1, $options->test_field);
     }
 
-    public function testConstructionWithTraversable()
+    public function testConstructionWithTraversable(): void
     {
         $config  = new ArrayObject(['test_field' => 1]);
         $options = new TestOptions($config);
@@ -31,21 +31,21 @@ class OptionsTest extends TestCase
         self::assertEquals(1, $options->test_field);
     }
 
-    public function testConstructionWithOptions()
+    public function testConstructionWithOptions(): void
     {
         $options = new TestOptions(new TestOptions(['test_field' => 1]));
 
         self::assertEquals(1, $options->test_field);
     }
 
-    public function testInvalidFieldThrowsException()
+    public function testInvalidFieldThrowsException(): void
     {
         $this->expectException(BadMethodCallException::class);
 
         new TestOptions(['foo' => 'bar']);
     }
 
-    public function testNonStrictOptionsDoesNotThrowException()
+    public function testNonStrictOptionsDoesNotThrowException(): void
     {
         self::assertInstanceOf(
             TestOptionsNoStrict::class,
@@ -53,12 +53,12 @@ class OptionsTest extends TestCase
         );
     }
 
-    public function testConstructionWithNull()
+    public function testConstructionWithNull(): void
     {
         self::assertInstanceOf(TestOptions::class, new TestOptions(null));
     }
 
-    public function testUnsetting()
+    public function testUnsetting(): void
     {
         $options = new TestOptions(['test_field' => 1]);
 
@@ -67,7 +67,7 @@ class OptionsTest extends TestCase
         self::assertEquals(false, isset($options->test_field));
     }
 
-    public function testUnsetThrowsInvalidArgumentException()
+    public function testUnsetThrowsInvalidArgumentException(): void
     {
         $options = new TestOptions();
 
@@ -76,7 +76,7 @@ class OptionsTest extends TestCase
         unset($options->foobarField);
     }
 
-    public function testGetThrowsBadMethodCallException()
+    public function testGetThrowsBadMethodCallException(): void
     {
         $options = new TestOptions();
 
@@ -85,7 +85,7 @@ class OptionsTest extends TestCase
         $options->fieldFoobar;
     }
 
-    public function testSetFromArrayAcceptsArray()
+    public function testSetFromArrayAcceptsArray(): void
     {
         $array   = ['test_field' => 3];
         $options = new TestOptions();
@@ -94,28 +94,28 @@ class OptionsTest extends TestCase
         self::assertEquals(3, $options->test_field);
     }
 
-    public function testSetFromArrayThrowsInvalidArgumentException()
+    public function testSetFromArrayThrowsInvalidArgumentException(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $options = new TestOptions();
         $options->setFromArray('asd');
     }
 
-    public function testParentPublicProperty()
+    public function testParentPublicProperty(): void
     {
         $options = new TestOptionsDerived(['parent_public' => 1]);
 
         self::assertEquals(1, $options->parent_public);
     }
 
-    public function testParentProtectedProperty()
+    public function testParentProtectedProperty(): void
     {
         $options = new TestOptionsDerived(['parent_protected' => 1]);
 
         self::assertEquals(1, $options->parent_protected);
     }
 
-    public function testParentPrivateProperty()
+    public function testParentPrivateProperty(): void
     {
         $this->expectException(Exception\BadMethodCallException::class);
         $this->expectExceptionMessage(
@@ -126,21 +126,21 @@ class OptionsTest extends TestCase
         new TestOptionsDerived(['parent_private' => 1]);
     }
 
-    public function testDerivedPublicProperty()
+    public function testDerivedPublicProperty(): void
     {
         $options = new TestOptionsDerived(['derived_public' => 1]);
 
         self::assertEquals(1, $options->derived_public);
     }
 
-    public function testDerivedProtectedProperty()
+    public function testDerivedProtectedProperty(): void
     {
         $options = new TestOptionsDerived(['derived_protected' => 1]);
 
         self::assertEquals(1, $options->derived_protected);
     }
 
-    public function testDerivedPrivateProperty()
+    public function testDerivedPrivateProperty(): void
     {
         $this->expectException(Exception\BadMethodCallException::class);
         $this->expectExceptionMessage(
@@ -151,7 +151,7 @@ class OptionsTest extends TestCase
         new TestOptionsDerived(['derived_private' => 1]);
     }
 
-    public function testExceptionMessageContainsActualUsedSetter()
+    public function testExceptionMessageContainsActualUsedSetter(): void
     {
         $this->expectException(BadMethodCallException::class);
         $this->expectExceptionMessage(
@@ -167,7 +167,7 @@ class OptionsTest extends TestCase
     /**
      * @group 7287
      */
-    public function testIssetReturnsFalseWhenMatchingGetterDoesNotExist()
+    public function testIssetReturnsFalseWhenMatchingGetterDoesNotExist(): void
     {
         $options = new TestOptionsWithoutGetter([
             'foo' => 'bar',
@@ -178,7 +178,7 @@ class OptionsTest extends TestCase
     /**
      * @group 7287
      */
-    public function testIssetDoesNotThrowExceptionWhenMatchingGetterDoesNotExist()
+    public function testIssetDoesNotThrowExceptionWhenMatchingGetterDoesNotExist(): void
     {
         $options = new TestOptionsWithoutGetter();
 
@@ -190,7 +190,7 @@ class OptionsTest extends TestCase
     /**
      * @group 7287
      */
-    public function testIssetReturnsTrueWithValidDataWhenMatchingGetterDoesNotExist()
+    public function testIssetReturnsTrueWithValidDataWhenMatchingGetterDoesNotExist(): void
     {
         $options = new TestOptions([
             'test_field' => 1,

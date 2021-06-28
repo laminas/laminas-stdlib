@@ -14,8 +14,10 @@ class TestOptionsWithoutGetter extends AbstractOptions
     /** @var mixed */
     protected $foo;
 
-    /** @param mixed $value */
-    public function setFoo($value)
+    /**
+     * @param mixed $value
+     */
+    public function setFoo($value): void
     {
         $this->foo = $value;
     }

@@ -61,9 +61,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Constructor
      *
-     * @param array  $input
-     * @param int    $flags
-     * @param string $iteratorClass
+     * @param array|object $input Object values must act like ArrayAccess
+     * @param int          $flags
+     * @param string       $iteratorClass
      */
     public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = 'ArrayIterator')
     {
@@ -141,7 +141,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public function &__get($key)
     {
-        $ret = null;
         if ($this->flag === self::ARRAY_AS_PROPS) {
             $ret = &$this->offsetGet($key);
 
@@ -189,7 +188,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Exchange the array for another one.
      *
-     * @param  array|ArrayObject $data
+     * @param  array|ArrayObject|ArrayIterator|object $data
      * @return array
      */
     public function exchangeArray($data)

@@ -13,7 +13,7 @@ class NativeTest extends CommonStringWrapperTest
     /**
      * @param null|string $encoding
      * @param null|string $convertEncoding
-     * @return StringWrapperInterface
+     * @return Native|false
      */
     protected function getWrapper($encoding = null, $convertEncoding = null)
     {

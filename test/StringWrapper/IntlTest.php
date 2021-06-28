@@ -29,7 +29,7 @@ class IntlTest extends CommonStringWrapperTest
     /**
      * @param null|string $encoding
      * @param null|string $convertEncoding
-     * @return StringWrapperInterface
+     * @return Intl|false
      */
     protected function getWrapper($encoding = null, $convertEncoding = null)
     {

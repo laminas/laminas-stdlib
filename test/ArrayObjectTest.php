@@ -25,7 +25,7 @@ use const PHP_MAJOR_VERSION;
 
 class ArrayObjectTest extends TestCase
 {
-    public function testConstructorDefaults()
+    public function testConstructorDefaults(): void
     {
         $ar = new ArrayObject();
         self::assertEquals(ArrayObject::STD_PROP_LIST, $ar->getFlags());
@@ -35,7 +35,7 @@ class ArrayObjectTest extends TestCase
         self::assertEquals(0, $ar->count());
     }
 
-    public function testConstructorParameters()
+    public function testConstructorParameters(): void
     {
         $ar = new ArrayObject(['foo' => 'bar'], ArrayObject::ARRAY_AS_PROPS, 'RecursiveArrayIterator');
         self::assertEquals(ArrayObject::ARRAY_AS_PROPS, $ar->getFlags());
@@ -47,7 +47,7 @@ class ArrayObjectTest extends TestCase
         self::assertSame('bar', $ar['foo']);
     }
 
-    public function testStdPropList()
+    public function testStdPropList(): void
     {
         $ar      = new ArrayObject();
         $ar->foo = 'bar';
@@ -60,14 +60,14 @@ class ArrayObjectTest extends TestCase
         self::assertSame([], $ar->getArrayCopy());
     }
 
-    public function testStdPropListCannotAccessObjectVars()
+    public function testStdPropListCannotAccessObjectVars(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $ar = new ArrayObject();
         $ar->flag;
     }
 
-    public function testStdPropListStillHandlesArrays()
+    public function testStdPropListStillHandlesArrays(): void
     {
         $ar        = new ArrayObject();
         $ar->foo   = 'bar';
@@ -78,7 +78,7 @@ class ArrayObjectTest extends TestCase
         self::assertEquals(1, $ar->count());
     }
 
-    public function testArrayAsProps()
+    public function testArrayAsProps(): void
     {
         $ar        = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
         $ar->foo   = 'bar';
@@ -92,7 +92,7 @@ class ArrayObjectTest extends TestCase
         self::assertEquals(3, $ar->count());
     }
 
-    public function testAppend()
+    public function testAppend(): void
     {
         $ar = new ArrayObject(['one', 'two']);
         self::assertEquals(2, $ar->count());
@@ -103,7 +103,7 @@ class ArrayObjectTest extends TestCase
         self::assertEquals(3, $ar->count());
     }
 
-    public function testAsort()
+    public function testAsort(): void
     {
         $ar     = new ArrayObject(['d' => 'lemon', 'a' => 'orange', 'b' => 'banana', 'c' => 'apple']);
         $sorted = $ar->getArrayCopy();
@@ -138,13 +138,13 @@ class ArrayObjectTest extends TestCase
         self::assertCount(1, $ar);
     }
 
-    public function testCountable()
+    public function testCountable(): void
     {
         $ar = new ArrayObject(new TestAsset\ArrayObjectObjectCount());
         self::assertCount(42, $ar);
     }
 
-    public function testExchangeArray()
+    public function testExchangeArray(): void
     {
         $ar  = new ArrayObject(['foo' => 'bar']);
         $old = $ar->exchangeArray(['bar' => 'baz']);
@@ -153,7 +153,7 @@ class ArrayObjectTest extends TestCase
         self::assertSame(['bar' => 'baz'], $ar->getArrayCopy());
     }
 
-    public function testExchangeArrayPhpArrayObject()
+    public function testExchangeArrayPhpArrayObject(): void
     {
         $ar  = new ArrayObject(['foo' => 'bar']);
         $old = $ar->exchangeArray(new \ArrayObject(['bar' => 'baz']));
@@ -162,7 +162,7 @@ class ArrayObjectTest extends TestCase
         self::assertSame(['bar' => 'baz'], $ar->getArrayCopy());
     }
 
-    public function testExchangeArrayStdlibArrayObject()
+    public function testExchangeArrayStdlibArrayObject(): void
     {
         $ar  = new ArrayObject(['foo' => 'bar']);
         $old = $ar->exchangeArray(new ArrayObject(['bar' => 'baz']));
@@ -171,7 +171,7 @@ class ArrayObjectTest extends TestCase
         self::assertSame(['bar' => 'baz'], $ar->getArrayCopy());
     }
 
-    public function testExchangeArrayTestAssetIterator()
+    public function testExchangeArrayTestAssetIterator(): void
     {
         $ar = new ArrayObject();
         $ar->exchangeArray(new TestAsset\ArrayObjectIterator(['foo' => 'bar']));
@@ -183,7 +183,7 @@ class ArrayObjectTest extends TestCase
         self::assertEquals($ar2->getArrayCopy(), $ar->getArrayCopy());
     }
 
-    public function testExchangeArrayArrayIterator()
+    public function testExchangeArrayArrayIterator(): void
     {
         $ar = new ArrayObject();
         $ar->exchangeArray(new ArrayIterator(['foo' => 'bar']));
@@ -191,20 +191,20 @@ class ArrayObjectTest extends TestCase
         self::assertEquals(['foo' => 'bar'], $ar->getArrayCopy());
     }
 
-    public function testExchangeArrayStringArgumentFail()
+    public function testExchangeArrayStringArgumentFail(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $ar  = new ArrayObject(['foo' => 'bar']);
-        $old = $ar->exchangeArray('Bacon');
+        $ar = new ArrayObject(['foo' => 'bar']);
+        $ar->exchangeArray('Bacon');
     }
 
-    public function testGetArrayCopy()
+    public function testGetArrayCopy(): void
     {
         $ar = new ArrayObject(['foo' => 'bar']);
         self::assertSame(['foo' => 'bar'], $ar->getArrayCopy());
     }
 
-    public function testFlags()
+    public function testFlags(): void
     {
         $ar = new ArrayObject();
         self::assertEquals(ArrayObject::STD_PROP_LIST, $ar->getFlags());
@@ -217,7 +217,7 @@ class ArrayObjectTest extends TestCase
         self::assertEquals(ArrayObject::ARRAY_AS_PROPS, $ar->getFlags());
     }
 
-    public function testIterator()
+    public function testIterator(): void
     {
         $ar        = new ArrayObject(['1' => 'one', '2' => 'two', '3' => 'three']);
         $iterator  = $ar->getIterator();
@@ -225,7 +225,7 @@ class ArrayObjectTest extends TestCase
         self::assertEquals($iterator2->getArrayCopy(), $iterator->getArrayCopy());
     }
 
-    public function testIteratorClass()
+    public function testIteratorClass(): void
     {
         $ar = new ArrayObject([], ArrayObject::STD_PROP_LIST, 'RecursiveArrayIterator');
         self::assertEquals('RecursiveArrayIterator', $ar->getIteratorClass());
@@ -237,13 +237,13 @@ class ArrayObjectTest extends TestCase
         self::assertEquals('ArrayIterator', $ar->getIteratorClass());
     }
 
-    public function testInvalidIteratorClassThrowsInvalidArgumentException()
+    public function testInvalidIteratorClassThrowsInvalidArgumentException(): void
     {
         $this->expectException(InvalidArgumentException::class);
-        $ar = new ArrayObject([], ArrayObject::STD_PROP_LIST, 'InvalidArrayIterator');
+        new ArrayObject([], ArrayObject::STD_PROP_LIST, 'InvalidArrayIterator');
     }
 
-    public function testKsort()
+    public function testKsort(): void
     {
         $ar     = new ArrayObject(['d' => 'lemon', 'a' => 'orange', 'b' => 'banana', 'c' => 'apple']);
         $sorted = $ar->getArrayCopy();
@@ -252,7 +252,7 @@ class ArrayObjectTest extends TestCase
         self::assertSame($sorted, $ar->getArrayCopy());
     }
 
-    public function testNatcasesort()
+    public function testNatcasesort(): void
     {
         $ar     = new ArrayObject(['IMG0.png', 'img12.png', 'img10.png', 'img2.png', 'img1.png', 'IMG3.png']);
         $sorted = $ar->getArrayCopy();
@@ -261,7 +261,7 @@ class ArrayObjectTest extends TestCase
         self::assertSame($sorted, $ar->getArrayCopy());
     }
 
-    public function testNatsort()
+    public function testNatsort(): void
     {
         $ar     = new ArrayObject(['img12.png', 'img10.png', 'img2.png', 'img1.png']);
         $sorted = $ar->getArrayCopy();
@@ -270,7 +270,7 @@ class ArrayObjectTest extends TestCase
         self::assertSame($sorted, $ar->getArrayCopy());
     }
 
-    public function testOffsetExists()
+    public function testOffsetExists(): void
     {
         $ar        = new ArrayObject();
         $ar['foo'] = 'bar';
@@ -282,14 +282,14 @@ class ArrayObjectTest extends TestCase
         self::assertFalse(isset($ar->foo));
     }
 
-    public function testOffsetExistsThrowsExceptionOnProtectedProperty()
+    public function testOffsetExistsThrowsExceptionOnProtectedProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $ar = new ArrayObject();
         isset($ar->protectedProperties);
     }
 
-    public function testOffsetGetOffsetSet()
+    public function testOffsetGetOffsetSet(): void
     {
         $ar        = new ArrayObject();
         $ar['foo'] = 'bar';
@@ -301,21 +301,21 @@ class ArrayObjectTest extends TestCase
         self::assertFalse(isset($ar['unknown']));
     }
 
-    public function testOffsetGetThrowsExceptionOnProtectedProperty()
+    public function testOffsetGetThrowsExceptionOnProtectedProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $ar = new ArrayObject();
         $ar->protectedProperties;
     }
 
-    public function testOffsetSetThrowsExceptionOnProtectedProperty()
+    public function testOffsetSetThrowsExceptionOnProtectedProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $ar                      = new ArrayObject();
         $ar->protectedProperties = null;
     }
 
-    public function testOffsetUnset()
+    public function testOffsetUnset(): void
     {
         $ar        = new ArrayObject();
         $ar['foo'] = 'bar';
@@ -327,7 +327,7 @@ class ArrayObjectTest extends TestCase
         self::assertSame([], $ar->getArrayCopy());
     }
 
-    public function testOffsetUnsetMultidimensional()
+    public function testOffsetUnsetMultidimensional(): void
     {
         $ar        = new ArrayObject();
         $ar['foo'] = ['bar' => ['baz' => 'boo']];
@@ -336,14 +336,14 @@ class ArrayObjectTest extends TestCase
         self::assertArrayNotHasKey('baz', $ar['foo']['bar']);
     }
 
-    public function testOffsetUnsetThrowsExceptionOnProtectedProperty()
+    public function testOffsetUnsetThrowsExceptionOnProtectedProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
         $ar = new ArrayObject();
         unset($ar->protectedProperties);
     }
 
-    public function testSerializeUnserialize()
+    public function testSerializeUnserialize(): void
     {
         $ar         = new ArrayObject();
         $ar->foo    = 'bar';
@@ -357,9 +357,9 @@ class ArrayObjectTest extends TestCase
         self::assertSame('foo', $ar['bar']);
     }
 
-    public function testUasort()
+    public function testUasort(): void
     {
-        $function = function ($a, $b) {
+        $function = function ($a, $b): int {
             if ($a === $b) {
                 return 0;
             }
@@ -374,9 +374,9 @@ class ArrayObjectTest extends TestCase
         self::assertSame($sorted, $ar->getArrayCopy());
     }
 
-    public function testUksort()
+    public function testUksort(): void
     {
-        $function = function ($a, $b) {
+        $function = function ($a, $b): int {
             $a = preg_replace('@^(a|an|the) @', '', $a);
             $b = preg_replace('@^(a|an|the) @', '', $b);
 
@@ -393,7 +393,7 @@ class ArrayObjectTest extends TestCase
     /**
      * @group 6089
      */
-    public function testSerializationRestoresProperties()
+    public function testSerializationRestoresProperties(): void
     {
         $ar        = new ArrayObject();
         $ar->foo   = 'bar';

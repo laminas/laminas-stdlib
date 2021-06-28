@@ -30,7 +30,7 @@ abstract class StringUtils
     /**
      * Ordered list of registered string wrapper instances
      *
-     * @var StringWrapperInterface[]
+     * @var list<class-string<StringWrapperInterface>>
      */
     protected static $wrapperRegistry;
 
@@ -74,6 +74,7 @@ abstract class StringUtils
      * Get registered wrapper classes
      *
      * @return string[]
+     * @psalm-return list<class-string<StringWrapperInterface>>
      */
     public static function getRegisteredWrappers()
     {
@@ -101,7 +102,7 @@ abstract class StringUtils
     /**
      * Register a string wrapper class
      *
-     * @param string $wrapper
+     * @param class-string<StringWrapperInterface> $wrapper
      * @return void
      */
     public static function registerWrapper($wrapper)
@@ -115,7 +116,7 @@ abstract class StringUtils
     /**
      * Unregister a string wrapper class
      *
-     * @param string $wrapper
+     * @param class-string<StringWrapperInterface> $wrapper
      * @return void
      */
     public static function unregisterWrapper($wrapper)

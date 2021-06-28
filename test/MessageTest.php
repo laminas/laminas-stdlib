@@ -11,54 +11,53 @@ use stdClass;
 
 class MessageTest extends TestCase
 {
-    public function testMessageCanSetAndGetContent()
+    public function testMessageCanSetAndGetContent(): void
     {
         $message = new Message();
-        $ret     = $message->setContent('I can set content');
-        self::assertInstanceOf(Message::class, $ret);
+        $message->setContent('I can set content');
         self::assertEquals('I can set content', $message->getContent());
     }
 
-    public function testMessageCanSetAndGetMetadataKeyAsString()
+    public function testMessageCanSetAndGetMetadataKeyAsString(): void
     {
         $message = new Message();
-        $ret     = $message->setMetadata('foo', 'bar');
-        self::assertInstanceOf(Message::class, $ret);
+        $message->setMetadata('foo', 'bar');
         self::assertEquals('bar', $message->getMetadata('foo'));
         self::assertEquals(['foo' => 'bar'], $message->getMetadata());
     }
 
-    public function testMessageCanSetAndGetMetadataKeyAsArray()
+    public function testMessageCanSetAndGetMetadataKeyAsArray(): void
     {
         $message = new Message();
-        $ret     = $message->setMetadata(['foo' => 'bar']);
-        self::assertInstanceOf(Message::class, $ret);
+        $message->setMetadata(['foo' => 'bar']);
         self::assertEquals('bar', $message->getMetadata('foo'));
     }
 
-    public function testMessageGetMetadataWillUseDefaultValueIfNoneExist()
+    public function testMessageGetMetadataWillUseDefaultValueIfNoneExist(): void
     {
         $message = new Message();
         self::assertEquals('bar', $message->getMetadata('foo', 'bar'));
     }
 
-    public function testMessageThrowsExceptionOnInvalidKeyForMetadataSet()
+    public function testMessageThrowsExceptionOnInvalidKeyForMetadataSet(): void
     {
         $message = new Message();
 
         $this->expectException(InvalidArgumentException::class);
+        /** @psalm-suppress InvalidArgument */
         $message->setMetadata(new stdClass());
     }
 
-    public function testMessageThrowsExceptionOnInvalidKeyForMetadataGet()
+    public function testMessageThrowsExceptionOnInvalidKeyForMetadataGet(): void
     {
         $message = new Message();
 
         $this->expectException(InvalidArgumentException::class);
+        /** @psalm-suppress InvalidArgument */
         $message->getMetadata(new stdClass());
     }
 
-    public function testMessageToStringWorks()
+    public function testMessageToStringWorks(): void
     {
         $message = new Message();
         $message->setMetadata(['Foo' => 'bar', 'One' => 'Two']);
