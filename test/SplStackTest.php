@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
@@ -22,12 +18,10 @@ use function var_export;
  */
 class SplStackTest extends TestCase
 {
-    /**
-     * @var SplStack
-     */
+    /** @var SplStack */
     protected $stack;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->stack = new SplStack();
         $this->stack->push('foo');
@@ -38,13 +32,13 @@ class SplStackTest extends TestCase
 
     public function testSerializationAndDeserializationShouldMaintainState()
     {
-        $s = serialize($this->stack);
+        $s            = serialize($this->stack);
         $unserialized = unserialize($s);
-        $count = count($this->stack);
+        $count        = count($this->stack);
         self::assertSame($count, count($unserialized));
 
         $expected = iterator_to_array($this->stack);
-        $test = iterator_to_array($unserialized);
+        $test     = iterator_to_array($unserialized);
         self::assertSame($expected, $test);
     }
 
@@ -52,6 +46,6 @@ class SplStackTest extends TestCase
     {
         $expected = ['bat', 'baz', 'bar', 'foo'];
         $test     = $this->stack->toArray();
-        self::assertSame($expected, $test, var_export($test, 1));
+        self::assertSame($expected, $test, var_export($test, true));
     }
 }

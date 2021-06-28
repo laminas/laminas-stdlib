@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\TestAsset;
 
@@ -13,14 +9,19 @@ namespace LaminasTest\Stdlib\TestAsset;
  */
 class TestOptionsDerived extends TestOptions
 {
+    /** @var mixed */
     private $derivedPrivate;
 
+    /** @var mixed */
     protected $derivedProtected;
 
+    /** @var mixed */
     protected $derivedPublic;
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @param mixed $derivedPrivate
      */
     private function setDerivedPrivate($derivedPrivate)
     {
@@ -29,6 +30,8 @@ class TestOptionsDerived extends TestOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @return mixed
      */
     private function getDerivedPrivate()
     {
@@ -37,15 +40,18 @@ class TestOptionsDerived extends TestOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @param mixed $derivedProtected
      */
     protected function setDerivedProtected($derivedProtected)
     {
         $this->derivedProtected = $derivedProtected;
     }
 
-
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @return mixed
      */
     protected function getDerivedProtected()
     {
@@ -54,15 +60,18 @@ class TestOptionsDerived extends TestOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @param mixed $derivedPublic
      */
     public function setDerivedPublic($derivedPublic)
     {
         $this->derivedPublic = $derivedPublic;
     }
 
-
     /**
      * Needed to test accessibility of getters / setters within deriving classes
+     *
+     * @return mixed
      */
     public function getDerivedPublic()
     {

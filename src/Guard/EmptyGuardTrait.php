@@ -1,12 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Stdlib\Guard;
+
+use Exception;
+use Laminas\Stdlib\Exception\InvalidArgumentException;
 
 use function sprintf;
 
@@ -21,12 +20,12 @@ trait EmptyGuardTrait
      * @param  mixed  $data           the data to verify
      * @param  string $dataName       the data name
      * @param  string $exceptionClass FQCN for the exception
-     * @throws \Exception
+     * @throws Exception
      */
     protected function guardAgainstEmpty(
         $data,
         $dataName = 'Argument',
-        $exceptionClass = 'Laminas\Stdlib\Exception\InvalidArgumentException'
+        $exceptionClass = InvalidArgumentException::class
     ) {
         if (empty($data)) {
             $message = sprintf('%s cannot be empty', $dataName);

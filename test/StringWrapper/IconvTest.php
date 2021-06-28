@@ -1,22 +1,19 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\StringWrapper;
 
 use Laminas\Stdlib\Exception;
 use Laminas\Stdlib\StringWrapper\Iconv;
+use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_shift;
 use function extension_loaded;
 
 class IconvTest extends CommonStringWrapperTest
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         if (! extension_loaded('iconv')) {
             try {
@@ -30,11 +27,16 @@ class IconvTest extends CommonStringWrapperTest
         parent::setUp();
     }
 
+    /**
+     * @param null|string $encoding
+     * @param null|string $convertEncoding
+     * @return false|StringWrapperInterface
+     */
     protected function getWrapper($encoding = null, $convertEncoding = null)
     {
         if ($encoding === null) {
             $supportedEncodings = Iconv::getSupportedEncodings();
-            $encoding = array_shift($supportedEncodings);
+            $encoding           = array_shift($supportedEncodings);
         }
 
         if (! Iconv::isSupported($encoding, $convertEncoding)) {

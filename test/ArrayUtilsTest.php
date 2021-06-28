@@ -1,16 +1,14 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
 use ArrayObject;
 use Laminas\Stdlib\ArrayUtils;
 use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
+use Laminas\Stdlib\ArrayUtils\MergeReplaceKey;
+use Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Laminas\Stdlib\Parameters;
 use PHPUnit\Framework\TestCase;
@@ -18,32 +16,44 @@ use stdClass;
 
 class ArrayUtilsTest extends TestCase
 {
-    public static function validHashTables()
+    /** @psalm-return array<array-key, array{0: array}> */
+    public static function validHashTables(): array
     {
         return [
-            [[
-                'foo' => 'bar'
-            ]],
-            [[
-                '15',
-                'foo' => 'bar',
-                'baz' => ['baz']
-            ]],
-            [[
-                0 => false,
-                2 => null
-            ]],
-            [[
-                -100 => 'foo',
-                100  => 'bar'
-            ]],
-            [[
-                1 => 0
-            ]],
+            [
+                [
+                    'foo' => 'bar',
+                ],
+            ],
+            [
+                [
+                    '15',
+                    'foo' => 'bar',
+                    'baz' => ['baz'],
+                ],
+            ],
+            [
+                [
+                    0 => false,
+                    2 => null,
+                ],
+            ],
+            [
+                [
+                    -100 => 'foo',
+                    100  => 'bar',
+                ],
+            ],
+            [
+                [
+                    1 => 0,
+                ],
+            ],
         ];
     }
 
-    public static function validLists()
+    /** @psalm-return array<array-key, array{0: array}> */
+    public static function validLists(): array
     {
         return [
             [[null]],
@@ -52,86 +62,116 @@ class ArrayUtilsTest extends TestCase
             [[0]],
             [[-0.9999]],
             [['string']],
-            [[new stdClass]],
-            [[
-                0 => 'foo',
-                1 => 'bar',
-                2 => false,
-                3 => null,
-                4 => [],
-                5 => new stdClass()
-            ]]
+            [[new stdClass()]],
+            [
+                [
+                    0 => 'foo',
+                    1 => 'bar',
+                    2 => false,
+                    3 => null,
+                    4 => [],
+                    5 => new stdClass(),
+                ],
+            ],
         ];
     }
 
-    public static function validArraysWithStringKeys()
+    /** @psalm-return array<array-key, array{0: array}> */
+    public static function validArraysWithStringKeys(): array
     {
         return [
-            [[
-                'foo' => 'bar',
-            ]],
-            [[
-                'bar',
-                'foo' => 'bar',
-                'baz',
-            ]],
+            [
+                [
+                    'foo' => 'bar',
+                ],
+            ],
+            [
+                [
+                    'bar',
+                    'foo' => 'bar',
+                    'baz',
+                ],
+            ],
         ];
     }
 
-    public static function validArraysWithNumericKeys()
+    /** @psalm-return array<array-key, array{0: array}> */
+    public static function validArraysWithNumericKeys(): array
     {
         return [
-            [[
-                'foo',
-                'bar'
-            ]],
-            [[
-                '0' => 'foo',
-                '1' => 'bar',
-            ]],
-            [[
-                'bar',
-                '1' => 'bar',
-                 3  => 'baz'
-            ]],
-            [[
-                -10000   => null,
-                '-10000' => null,
-            ]],
-            [[
-                '-00000.00009' => 'foo'
-            ]],
-            [[
-                1 => 0
-            ]],
+            [
+                [
+                    'foo',
+                    'bar',
+                ],
+            ],
+            [
+                [
+                    '0' => 'foo',
+                    '1' => 'bar',
+                ],
+            ],
+            [
+                [
+                    'bar',
+                    '1' => 'bar',
+                    3   => 'baz',
+                ],
+            ],
+            [
+                [
+                    -10000   => null,
+                    '-10000' => null,
+                ],
+            ],
+            [
+                [
+                    '-00000.00009' => 'foo',
+                ],
+            ],
+            [
+                [
+                    1 => 0,
+                ],
+            ],
         ];
     }
 
-    public static function validArraysWithIntegerKeys()
+    /** @psalm-return array<array-key, array{0: array}> */
+    public static function validArraysWithIntegerKeys(): array
     {
         return [
-            [[
-                'foo',
-                'bar,'
-            ]],
-            [[
-                100 => 'foo',
-                200 => 'bar'
-            ]],
-            [[
-                -100 => 'foo',
-                0    => 'bar',
-                100  => 'baz'
-            ]],
-            [[
-                'foo',
-                'bar',
-                1000 => 'baz'
-            ]],
+            [
+                [
+                    'foo',
+                    'bar,',
+                ],
+            ],
+            [
+                [
+                    100 => 'foo',
+                    200 => 'bar',
+                ],
+            ],
+            [
+                [
+                    -100 => 'foo',
+                    0    => 'bar',
+                    100  => 'baz',
+                ],
+            ],
+            [
+                [
+                    'foo',
+                    'bar',
+                    1000 => 'baz',
+                ],
+            ],
         ];
     }
 
-    public static function invalidArrays()
+    /** @psalm-return array<array-key, array{0: object|int|string}> */
+    public static function invalidArrays(): array
     {
         return [
             [new stdClass()],
@@ -141,10 +181,18 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    public static function mergeArrays()
+    /**
+     * @psalm-return array<string, array{
+     *     0: array,
+     *     1: array,
+     *     2: bool,
+     *     3: array
+     * }>
+     */
+    public static function mergeArrays(): array
     {
         return [
-            'merge-integer-and-string-keys' => [
+            'merge-integer-and-string-keys'                  => [
                 [
                     'foo',
                     3     => 'bar',
@@ -175,7 +223,7 @@ class ArrayUtilsTest extends TestCase
                     6     => [
                         'd' => 'd',
                     ],
-                ]
+                ],
             ],
             'merge-integer-and-string-keys-preserve-numeric' => [
                 [
@@ -199,67 +247,67 @@ class ArrayUtilsTest extends TestCase
                     0     => 'baz',
                     3     => 'bar',
                     'baz' => 'baz',
-                    4 => [
+                    4     => [
                         'a',
                         1 => 'b',
                         'c',
                         'd' => 'd',
                     ],
-                ]
+                ],
             ],
-            'merge-arrays-recursively' => [
+            'merge-arrays-recursively'                       => [
                 [
                     'foo' => [
-                        'baz'
-                    ]
+                        'baz',
+                    ],
                 ],
                 [
                     'foo' => [
-                        'baz'
-                    ]
+                        'baz',
+                    ],
                 ],
                 false,
                 [
                     'foo' => [
                         0 => 'baz',
-                        1 => 'baz'
-                    ]
-                ]
+                        1 => 'baz',
+                    ],
+                ],
             ],
-            'replace-string-keys' => [
+            'replace-string-keys'                            => [
                 [
                     'foo' => 'bar',
-                    'bar' => []
+                    'bar' => [],
                 ],
                 [
                     'foo' => 'baz',
-                    'bar' => 'bat'
+                    'bar' => 'bat',
                 ],
                 false,
                 [
                     'foo' => 'baz',
-                    'bar' => 'bat'
-                ]
+                    'bar' => 'bat',
+                ],
             ],
-            'merge-with-null' => [
+            'merge-with-null'                                => [
                 [
                     'foo' => null,
                     null  => 'rod',
                     'cat' => 'bar',
-                    'god' => 'rad'
+                    'god' => 'rad',
                 ],
                 [
                     'foo' => 'baz',
                     null  => 'zad',
-                    'god' => null
+                    'god' => null,
                 ],
                 false,
                 [
                     'foo' => 'baz',
                     null  => 'zad',
                     'cat' => 'bar',
-                    'god' => null
-                ]
+                    'god' => null,
+                ],
             ],
         ];
     }
@@ -277,21 +325,21 @@ class ArrayUtilsTest extends TestCase
                 'foo' => 'get',
             ],
         ];
-        $a = [
+        $a        = [
             'car' => [
                 'boo' => 'foo',
                 'doo' => 'moo',
             ],
         ];
-        $b = [
-            'car' => new \Laminas\Stdlib\ArrayUtils\MergeReplaceKey([
+        $b        = [
+            'car' => new MergeReplaceKey([
                 'met' => 'bet',
             ]),
-            'new' => new \Laminas\Stdlib\ArrayUtils\MergeReplaceKey([
+            'new' => new MergeReplaceKey([
                 'foo' => 'get',
             ]),
         ];
-        self::assertInstanceOf('Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface', $b['car']);
+        self::assertInstanceOf(MergeReplaceKeyInterface::class, $b['car']);
         self::assertEquals($expected, ArrayUtils::merge($a, $b));
     }
 
@@ -300,23 +348,24 @@ class ArrayUtilsTest extends TestCase
      */
     public function testAllowsRemovingKeys()
     {
-        $a = [
+        $a        = [
             'foo' => 'bar',
-            'bar' => 'bat'
+            'bar' => 'bat',
         ];
-        $b = [
+        $b        = [
             'foo' => new MergeRemoveKey(),
             'baz' => new MergeRemoveKey(),
         ];
         $expected = [
-            'bar' => 'bat'
+            'bar' => 'bat',
         ];
         self::assertEquals($expected, ArrayUtils::merge($a, $b));
     }
 
-    public static function validIterators()
+    /** @psalm-return array<string, array{0: iterable, 1: array}> */
+    public static function validIterators(): array
     {
-        $array = [
+        $array       = [
             'foo' => [
                 'bar' => [
                     'baz' => [
@@ -326,17 +375,18 @@ class ArrayUtilsTest extends TestCase
             ],
         ];
         $arrayAccess = new ArrayObject($array);
-        $toArray = new Parameters($array);
+        $toArray     = new Parameters($array);
 
         return [
             // Description => [input, expected array]
-            'array' => [$array, $array],
-            'Traversable' => [$arrayAccess, $array],
+            'array'                   => [$array, $array],
+            'Traversable'             => [$arrayAccess, $array],
             'Traversable and toArray' => [$toArray, $array],
         ];
     }
 
-    public static function invalidIterators()
+    /** @psalm-return array<array-key, array{0: mixed}> */
+    public static function invalidIterators(): array
     {
         return [
             [null],
@@ -347,14 +397,14 @@ class ArrayUtilsTest extends TestCase
             [0.0],
             [1.0],
             ['string'],
-            [new stdClass],
+            [new stdClass()],
         ];
     }
 
     /**
      * @dataProvider validArraysWithStringKeys
      */
-    public function testValidArraysWithStringKeys($test)
+    public function testValidArraysWithStringKeys(array $test)
     {
         self::assertTrue(ArrayUtils::hasStringKeys($test));
     }
@@ -362,7 +412,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validArraysWithIntegerKeys
      */
-    public function testValidArraysWithIntegerKeys($test)
+    public function testValidArraysWithIntegerKeys(array $test)
     {
         self::assertTrue(ArrayUtils::hasIntegerKeys($test));
     }
@@ -370,13 +420,14 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validArraysWithNumericKeys
      */
-    public function testValidArraysWithNumericKeys($test)
+    public function testValidArraysWithNumericKeys(array $test)
     {
         self::assertTrue(ArrayUtils::hasNumericKeys($test));
     }
 
     /**
      * @dataProvider invalidArrays
+     * @param mixed $test
      */
     public function testInvalidArraysAlwaysReturnFalse($test)
     {
@@ -396,7 +447,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validLists
      */
-    public function testLists($test)
+    public function testLists(array $test)
     {
         self::assertTrue(ArrayUtils::isList($test));
         self::assertTrue(ArrayUtils::hasIntegerKeys($test));
@@ -408,7 +459,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validHashTables
      */
-    public function testHashTables($test)
+    public function testHashTables(array $test)
     {
         self::assertTrue(ArrayUtils::isHashTable($test));
         self::assertFalse(ArrayUtils::isList($test));
@@ -437,7 +488,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider mergeArrays
      */
-    public function testMerge($a, $b, $preserveNumericKeys, $expected)
+    public function testMerge(array $a, array $b, bool $preserveNumericKeys, array $expected)
     {
         self::assertEquals($expected, ArrayUtils::merge($a, $b, $preserveNumericKeys));
     }
@@ -445,7 +496,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider validIterators
      */
-    public function testValidIteratorsReturnArrayRepresentation($test, $expected)
+    public function testValidIteratorsReturnArrayRepresentation(iterable $test, array $expected)
     {
         $result = ArrayUtils::iteratorToArray($test);
         self::assertEquals($expected, $result);
@@ -453,6 +504,7 @@ class ArrayUtilsTest extends TestCase
 
     /**
      * @dataProvider invalidIterators
+     * @param mixed $test
      */
     public function testInvalidIteratorsRaiseInvalidArgumentException($test)
     {
@@ -460,46 +512,54 @@ class ArrayUtilsTest extends TestCase
         self::assertFalse(ArrayUtils::iteratorToArray($test));
     }
 
-    public function filterArrays()
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: array<string, string>,
+     *     1: callable(string):bool,
+     *     2: null|ArrayUtils::ARRAY_FILTER_USE_*,
+     *     3: array<string, string>
+     * }>
+     */
+    public function filterArrays(): array
     {
         return [
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
                 function ($value) {
-                    if ($value == 'bar') {
+                    if ($value === 'bar') {
                         return false;
                     }
                     return true;
                 },
                 null,
-                ['fiz' => 'buz']
+                ['fiz' => 'buz'],
             ],
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
                 function ($value, $key) {
-                    if ($value == 'buz') {
+                    if ($value === 'buz') {
                         return false;
                     }
 
-                    if ($key == 'foo') {
+                    if ($key === 'foo') {
                         return false;
                     }
 
                     return true;
                 },
                 ArrayUtils::ARRAY_FILTER_USE_BOTH,
-                []
+                [],
             ],
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
                 function ($key) {
-                    if ($key == 'foo') {
+                    if ($key === 'foo') {
                         return false;
                     }
                     return true;
                 },
                 ArrayUtils::ARRAY_FILTER_USE_KEY,
-                ['fiz' => 'buz']
+                ['fiz' => 'buz'],
             ],
         ];
     }
@@ -507,7 +567,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @dataProvider filterArrays
      */
-    public function testFiltersArray($data, $callback, $flag, $result)
+    public function testFiltersArray(array $data, callable $callback, ?int $flag, array $result)
     {
         self::assertEquals($result, ArrayUtils::filter($data, $callback, $flag));
     }

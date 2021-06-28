@@ -1,14 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\Parameters;
+use Laminas\Stdlib\ParametersInterface;
 use PHPUnit\Framework\TestCase;
 
 class ParametersTest extends TestCase
@@ -16,7 +13,7 @@ class ParametersTest extends TestCase
     public function testParametersConstructionAndClassStructure()
     {
         $parameters = new Parameters();
-        self::assertInstanceOf('Laminas\Stdlib\ParametersInterface', $parameters);
+        self::assertInstanceOf(ParametersInterface::class, $parameters);
         self::assertInstanceOf('ArrayObject', $parameters);
         self::assertInstanceOf('ArrayAccess', $parameters);
         self::assertInstanceOf('Countable', $parameters);
@@ -49,7 +46,7 @@ class ParametersTest extends TestCase
 
     public function testParametersOffsetgetReturnsNullIfNonexistentKeyIsProvided()
     {
-        $parameters = new Parameters;
+        $parameters = new Parameters();
         self::assertNull($parameters->foo);
     }
 

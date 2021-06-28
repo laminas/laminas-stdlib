@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
@@ -29,7 +25,7 @@ class OptionsTest extends TestCase
 
     public function testConstructionWithTraversable()
     {
-        $config = new ArrayObject(['test_field' => 1]);
+        $config  = new ArrayObject(['test_field' => 1]);
         $options = new TestOptions($config);
 
         self::assertEquals(1, $options->test_field);
@@ -52,14 +48,14 @@ class OptionsTest extends TestCase
     public function testNonStrictOptionsDoesNotThrowException()
     {
         self::assertInstanceOf(
-            'LaminasTest\Stdlib\TestAsset\TestOptionsNoStrict',
+            TestOptionsNoStrict::class,
             new TestOptionsNoStrict(['foo' => 'bar'])
         );
     }
 
     public function testConstructionWithNull()
     {
-        self::assertInstanceOf('LaminasTest\Stdlib\TestAsset\TestOptions', new TestOptions(null));
+        self::assertInstanceOf(TestOptions::class, new TestOptions(null));
     }
 
     public function testUnsetting()
@@ -73,7 +69,7 @@ class OptionsTest extends TestCase
 
     public function testUnsetThrowsInvalidArgumentException()
     {
-        $options = new TestOptions;
+        $options = new TestOptions();
 
         $this->expectException(InvalidArgumentException::class);
 
@@ -91,7 +87,7 @@ class OptionsTest extends TestCase
 
     public function testSetFromArrayAcceptsArray()
     {
-        $array = ['test_field' => 3];
+        $array   = ['test_field' => 3];
         $options = new TestOptions();
 
         self::assertSame($options, $options->setFromArray($array));
@@ -101,7 +97,7 @@ class OptionsTest extends TestCase
     public function testSetFromArrayThrowsInvalidArgumentException()
     {
         $this->expectException(InvalidArgumentException::class);
-        $options = new TestOptions;
+        $options = new TestOptions();
         $options->setFromArray('asd');
     }
 
@@ -149,7 +145,7 @@ class OptionsTest extends TestCase
         $this->expectException(Exception\BadMethodCallException::class);
         $this->expectExceptionMessage(
             'The option "derived_private" does not have a callable "setDerivedPrivate" ("setderivedprivate")'
-            .' setter method which must be defined'
+            . ' setter method which must be defined'
         );
 
         new TestOptionsDerived(['derived_private' => 1]);
@@ -184,7 +180,7 @@ class OptionsTest extends TestCase
      */
     public function testIssetDoesNotThrowExceptionWhenMatchingGetterDoesNotExist()
     {
-        $options   = new TestOptionsWithoutGetter();
+        $options = new TestOptionsWithoutGetter();
 
         isset($options->foo);
 

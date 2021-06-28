@@ -1,27 +1,26 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\TestAsset;
+
+use Laminas\Stdlib\ArraySerializableInterface;
 
 /**
  * @group      Laminas_Stdlib
  */
-class ArraySerializable implements \Laminas\Stdlib\ArraySerializableInterface
+class ArraySerializable implements ArraySerializableInterface
 {
+    /** @var array */
     protected $data = [];
 
     public function __construct()
     {
         $this->data = [
-            "foo" => "bar",
-            "bar" => "foo",
+            "foo"   => "bar",
+            "bar"   => "foo",
             "blubb" => "baz",
-            "quo" => "blubb"
+            "quo"   => "blubb",
         ];
     }
 

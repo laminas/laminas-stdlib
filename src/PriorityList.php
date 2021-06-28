@@ -1,14 +1,11 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
 use Countable;
+use Exception;
 use Iterator;
 
 use function array_map;
@@ -20,9 +17,10 @@ use function uasort;
 
 class PriorityList implements Iterator, Countable
 {
-    const EXTR_DATA     = 0x00000001;
-    const EXTR_PRIORITY = 0x00000002;
-    const EXTR_BOTH     = 0x00000003;
+    public const EXTR_DATA     = 0x00000001;
+    public const EXTR_PRIORITY = 0x00000002;
+    public const EXTR_BOTH     = 0x00000003;
+
     /**
      * Internal list of all items.
      *
@@ -37,11 +35,16 @@ class PriorityList implements Iterator, Countable
      */
     protected $serial = 0;
 
+    // phpcs:disable WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCapsProperty
+
     /**
      * Serial order mode
+     *
      * @var integer
      */
     protected $isLIFO = 1;
+
+    // phpcs:enable
 
     /**
      * Internal counter to avoid usage of count().
@@ -63,7 +66,6 @@ class PriorityList implements Iterator, Countable
      * @param  string  $name
      * @param  mixed   $value
      * @param  int     $priority
-     *
      * @return void
      */
     public function insert($name, $value, $priority = 0)
@@ -84,15 +86,13 @@ class PriorityList implements Iterator, Countable
     /**
      * @param string $name
      * @param int    $priority
-     *
      * @return $this
-     *
-     * @throws \Exception
+     * @throws Exception
      */
     public function setPriority($name, $priority)
     {
         if (! isset($this->items[$name])) {
-            throw new \Exception("item $name not found");
+            throw new Exception("item $name not found");
         }
 
         $this->items[$name]['priority'] = (int) $priority;
@@ -166,7 +166,7 @@ class PriorityList implements Iterator, Countable
      */
     protected function compare(array $item1, array $item2)
     {
-        return ($item1['priority'] === $item2['priority'])
+        return $item1['priority'] === $item2['priority']
             ? ($item1['serial'] > $item2['serial'] ? -1 : 1) * $this->isLIFO
             : ($item1['priority'] > $item2['priority'] ? -1 : 1);
     }
@@ -175,7 +175,6 @@ class PriorityList implements Iterator, Countable
      * Get/Set serial order mode
      *
      * @param bool|null $flag
-     *
      * @return bool
      */
     public function isLIFO($flag = null)
@@ -259,20 +258,19 @@ class PriorityList implements Iterator, Countable
      * Return list as array
      *
      * @param int $flag
-     *
      * @return array
      */
     public function toArray($flag = self::EXTR_DATA)
     {
         $this->sort();
 
-        if ($flag == self::EXTR_BOTH) {
+        if ($flag === self::EXTR_BOTH) {
             return $this->items;
         }
 
         return array_map(
             function ($item) use ($flag) {
-                return ($flag == PriorityList::EXTR_PRIORITY) ? $item['priority'] : $item['data'];
+                return $flag === PriorityList::EXTR_PRIORITY ? $item['priority'] : $item['data'];
             },
             $this->items
         );

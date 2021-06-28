@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
@@ -20,14 +16,10 @@ use function sprintf;
 
 class Message implements MessageInterface
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $metadata = [];
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     protected $content = '';
 
     /**
@@ -50,7 +42,7 @@ class Message implements MessageInterface
         if (! is_array($spec) && ! $spec instanceof Traversable) {
             throw new Exception\InvalidArgumentException(sprintf(
                 'Expected a string, array, or Traversable argument in first position; received "%s"',
-                (is_object($spec) ? get_class($spec) : gettype($spec))
+                is_object($spec) ? get_class($spec) : gettype($spec)
             ));
         }
         foreach ($spec as $key => $value) {

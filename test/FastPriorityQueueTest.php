@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
@@ -26,17 +22,13 @@ use function var_export;
  */
 class FastPriorityQueueTest extends TestCase
 {
-    /**
-     * @var FastPriorityQueue
-     */
+    /** @var FastPriorityQueue */
     protected $queue;
 
-    /**
-     * @var string[]
-     */
+    /** @var string[] */
     protected $expected;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->queue = new FastPriorityQueue();
         $this->insertDataQueue($this->queue);
@@ -46,11 +38,12 @@ class FastPriorityQueueTest extends TestCase
             'test3',
             'test4',
             'test5',
-            'test6'
+            'test6',
         ];
     }
 
-    protected function getDataPriorityQueue()
+    /** @psalm-return array<string, int> */
+    protected function getDataPriorityQueue(): array
     {
         return [
             'test3' => -1,
@@ -58,7 +51,7 @@ class FastPriorityQueueTest extends TestCase
             'test1' => 5,
             'test2' => 2,
             'test4' => -1,
-            'test6' => -10
+            'test6' => -10,
         ];
     }
 
@@ -113,9 +106,9 @@ class FastPriorityQueueTest extends TestCase
 
     public function testSerializationAndDeserializationShouldMaintainState()
     {
-        $s = serialize($this->queue);
+        $s            = serialize($this->queue);
         $unserialized = unserialize($s);
-        $count = count($this->queue);
+        $count        = count($this->queue);
         self::assertSame(
             $count,
             count($unserialized),
@@ -133,14 +126,14 @@ class FastPriorityQueueTest extends TestCase
         self::assertSame(
             $expected,
             $test,
-            'Expected: ' . var_export($expected, 1) . "\nReceived:" . var_export($test, 1)
+            'Expected: ' . var_export($expected, true) . "\nReceived:" . var_export($test, true)
         );
     }
 
     public function testCanRetrieveQueueAsArray()
     {
         $test = $this->queue->toArray();
-        self::assertSame($this->expected, $test, var_export($test, 1));
+        self::assertSame($this->expected, $test, var_export($test, true));
     }
 
     public function testIteratorFunctions()
@@ -167,7 +160,7 @@ class FastPriorityQueueTest extends TestCase
         $this->queue->setExtractFlags(FastPriorityQueue::EXTR_BOTH);
         $expected = [
             'data'     => $this->expected[2],
-            'priority' => $priorities[$this->expected[2]]
+            'priority' => $priorities[$this->expected[2]],
         ];
         self::assertEquals($expected, $this->queue->extract());
     }
@@ -212,7 +205,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertEquals($this->queue->count(), $tot);
         self::assertEquals(count($this->queue), $tot);
         $expected = ['test1', 'test2', 'test3', 'test4', 'test6'];
-        $test = [];
+        $test     = [];
         foreach ($this->queue as $item) {
             $test[] = $item;
         }
@@ -228,7 +221,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertEquals(count($this->queue), $tot);
 
         $expected = ['test1', 'test2', 'test2', 'test3', 'test4', 'test5', 'test6'];
-        $test = [];
+        $test     = [];
         foreach ($this->queue as $item) {
             $test[] = $item;
         }
@@ -308,7 +301,7 @@ class FastPriorityQueueTest extends TestCase
         $queue->insert('b', 2);
         $queue->remove('a1');
         $expected = ['b', 'a2'];
-        $test = [];
+        $test     = [];
         while ($value = $queue->extract()) {
             $test[] = $value;
         }
@@ -321,7 +314,7 @@ class FastPriorityQueueTest extends TestCase
         $queue->insert('a3', 1);
         $queue->remove('a2');
         $expected = ['a1', 'a3'];
-        $test = [];
+        $test     = [];
         while ($value = $queue->extract()) {
             $test[] = $value;
         }
@@ -333,7 +326,7 @@ class FastPriorityQueueTest extends TestCase
         $queue->insert('b', 2);
         $queue->remove('b');
         $expected = ['a'];
-        $test = [];
+        $test     = [];
         while ($value = $queue->extract()) {
             $test[] = $value;
         }
@@ -347,7 +340,7 @@ class FastPriorityQueueTest extends TestCase
         $queue->insert('a', 0);
         $queue->insert('b', 1);
         $expected = ['b', 'a'];
-        $test = [];
+        $test     = [];
         foreach ($queue as $value) {
             $test[] = $value;
         }

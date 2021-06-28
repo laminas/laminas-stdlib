@@ -1,10 +1,7 @@
-<?php
+<?php // phpcs:disable WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+
+declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
@@ -38,12 +35,12 @@ abstract class ArrayUtils
     /**
      * Compatibility Flag for ArrayUtils::filter
      */
-    const ARRAY_FILTER_USE_BOTH = 1;
+    public const ARRAY_FILTER_USE_BOTH = 1;
 
     /**
      * Compatibility Flag for ArrayUtils::filter
      */
-    const ARRAY_FILTER_USE_KEY  = 2;
+    public const ARRAY_FILTER_USE_KEY = 2;
 
     /**
      * Test whether an array contains one or more string keys
@@ -142,7 +139,7 @@ abstract class ArrayUtils
             return $allowEmpty;
         }
 
-        return (array_values($value) === $value);
+        return array_values($value) === $value;
     }
 
     /**
@@ -184,7 +181,7 @@ abstract class ArrayUtils
             return $allowEmpty;
         }
 
-        return (array_values($value) !== $value);
+        return array_values($value) !== $value;
     }
 
     /**
@@ -225,7 +222,7 @@ abstract class ArrayUtils
      *
      * @param  array|Traversable  $iterator     The array or Traversable object to convert
      * @param  bool               $recursive    Recursively check all nested structures
-     * @throws Exception\InvalidArgumentException if $iterator is not an array or a Traversable object
+     * @throws Exception\InvalidArgumentException If $iterator is not an array or a Traversable object.
      * @return array
      */
     public static function iteratorToArray($iterator, $recursive = true)
@@ -324,6 +321,6 @@ abstract class ArrayUtils
             ));
         }
 
-        return array_filter($data, $callback, $flag);
+        return array_filter($data, $callback, $flag ?? 0);
     }
 }

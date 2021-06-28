@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
@@ -14,6 +10,8 @@ use function is_array;
 use function serialize;
 use function unserialize;
 
+use const PHP_INT_MAX;
+
 /**
  * Serializable version of SplPriorityQueue
  *
@@ -22,9 +20,7 @@ use function unserialize;
  */
 class SplPriorityQueue extends \SplPriorityQueue implements Serializable
 {
-    /**
-     * @var int Seed used to ensure queue order for items of the same priority
-     */
+    /** @var int Seed used to ensure queue order for items of the same priority */
     protected $serial = PHP_INT_MAX;
 
     /**

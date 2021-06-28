@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\StringWrapper;
 
@@ -16,14 +12,24 @@ use const STR_PAD_BOTH;
 use const STR_PAD_LEFT;
 use const STR_PAD_RIGHT;
 
+// phpcs:ignore WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
 abstract class CommonStringWrapperTest extends TestCase
 {
     /**
+     * @param null|string $encoding
+     * @param null|string $convertEncoding
      * @return StringWrapperInterface
      */
     abstract protected function getWrapper($encoding = null, $convertEncoding = null);
 
-    public function strlenProvider()
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: string,
+     *     1: string,
+     *     2: int
+     * }>
+     */
+    public function strlenProvider(): array
     {
         return [
             ['ascii', 'abcdefghijklmnopqrstuvwxyz', 26],
@@ -34,12 +40,8 @@ abstract class CommonStringWrapperTest extends TestCase
 
     /**
      * @dataProvider strlenProvider
-     *
-     * @param string $encoding
-     * @param string $str
-     * @param mixed  $expected
      */
-    public function testStrlen($encoding, $str, $expected)
+    public function testStrlen(string $encoding, string $str, int $expected)
     {
         $wrapper = $this->getWrapper($encoding);
         if (! $wrapper) {
@@ -50,7 +52,16 @@ abstract class CommonStringWrapperTest extends TestCase
         self::assertSame($expected, $result);
     }
 
-    public function substrProvider()
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: string,
+     *     1: string,
+     *     2: int,
+     *     3: int,
+     *     4: string
+     * }>
+     */
+    public function substrProvider(): array
     {
         return [
             ['ascii', 'abcdefghijkl', 1, 5, 'bcdef'],
@@ -61,14 +72,8 @@ abstract class CommonStringWrapperTest extends TestCase
 
     /**
      * @dataProvider substrProvider
-     *
-     * @param string   $encoding
-     * @param string   $str
-     * @param int      $offset
-     * @param int|null $length
-     * @param mixed    $expected
      */
-    public function testSubstr($encoding, $str, $offset, $length, $expected)
+    public function testSubstr(string $encoding, string $str, int $offset, int $length, string $expected)
     {
         $wrapper = $this->getWrapper($encoding);
         if (! $wrapper) {
@@ -79,7 +84,16 @@ abstract class CommonStringWrapperTest extends TestCase
         self::assertSame($expected, $result);
     }
 
-    public function strposProvider()
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: string,
+     *     1: string,
+     *     2: string,
+     *     3: int,
+     *     4: int
+     * }>
+     */
+    public function strposProvider(): array
     {
         return [
             ['ascii', 'abcdefghijkl', 'g', 3, 6],
@@ -90,14 +104,8 @@ abstract class CommonStringWrapperTest extends TestCase
 
     /**
      * @dataProvider strposProvider
-     *
-     * @param string $encoding
-     * @param string $haystack
-     * @param string $needle
-     * @param int    $offset
-     * @param mixed  $expected
      */
-    public function testStrpos($encoding, $haystack, $needle, $offset, $expected)
+    public function testStrpos(string $encoding, string $haystack, string $needle, int $offset, int $expected)
     {
         $wrapper = $this->getWrapper($encoding);
         if (! $wrapper) {
@@ -108,20 +116,27 @@ abstract class CommonStringWrapperTest extends TestCase
         self::assertSame($expected, $result);
     }
 
-    public function convertProvider()
+    /**
+     * @psalm-return array<array-key, array{
+     *     0: string,
+     *     1: string,
+     *     2: string,
+     *     3: string
+     * }>
+     */
+    public function convertProvider(): array
     {
         return [
             ['ascii', 'ascii', 'abc', 'abc'],
             ['ascii', 'utf-8', 'abc', 'abc'],
             ['utf-8', 'ascii', 'abc', 'abc'],
-            ['utf-8', 'iso-8859-15', '€',   "\xA4"],
-            ['utf-8', 'iso-8859-16', '€',   "\xA4"], // ISO-8859-16 is wrong @ mbstring
+            ['utf-8', 'iso-8859-15', '€', "\xA4"],
+            ['utf-8', 'iso-8859-16', '€', "\xA4"], // ISO-8859-16 is wrong @ mbstring
         ];
     }
 
     /**
      * @dataProvider convertProvider
-     *
      * @param string $str
      * @param string $encoding
      * @param string $convertEncoding
@@ -142,7 +157,17 @@ abstract class CommonStringWrapperTest extends TestCase
         self::assertSame($str, $result);
     }
 
-    public function wordWrapProvider()
+    /**
+     * @psalm-return array<string, array{
+     *     0: string,
+     *     1: string,
+     *     2: int,
+     *     3: string,
+     *     4: bool,
+     *     5: string
+     * }>
+     */
+    public function wordWrapProvider(): array
     {
         // @codingStandardsIgnoreStart
         return [
@@ -190,7 +215,6 @@ abstract class CommonStringWrapperTest extends TestCase
 
     /**
      * @dataProvider wordWrapProvider
-     *
      * @param string $encoding
      * @param string $string
      * @param int    $width
@@ -222,36 +246,44 @@ abstract class CommonStringWrapperTest extends TestCase
         $wrapper->wordWrap('a', 0, "\n", true);
     }
 
-    public function strPadProvider()
+    /**
+     * @psalm-return array<string, array{
+     *     0: string,
+     *     1: string,
+     *     2: int,
+     *     3: string,
+     *     4: STR_PAD_*,
+     *     5: string
+     * }>
+     */
+    public function strPadProvider(): array
     {
         return [
             // single-byte
-            'left-padding_single-byte' => ['ascii', 'aaa', 5, 'o', STR_PAD_LEFT, 'ooaaa'],
+            'left-padding_single-byte'   => ['ascii', 'aaa', 5, 'o', STR_PAD_LEFT, 'ooaaa'],
             'center-padding_single-byte' => ['ascii', 'aaa', 6, 'o', STR_PAD_BOTH, 'oaaaoo'],
-            'right-padding_single-byte' => ['ascii', 'aaa', 5, 'o', STR_PAD_RIGHT, 'aaaoo'],
+            'right-padding_single-byte'  => ['ascii', 'aaa', 5, 'o', STR_PAD_RIGHT, 'aaaoo'],
 
             // multi-byte
-            'left-padding_multi-byte' => ['utf-8', 'äää', 5, 'ö', STR_PAD_LEFT, 'ööäää'],
+            'left-padding_multi-byte'   => ['utf-8', 'äää', 5, 'ö', STR_PAD_LEFT, 'ööäää'],
             'center-padding_multi-byte' => ['utf-8', 'äää', 6, 'ö', STR_PAD_BOTH, 'öäääöö'],
-            'right-padding_multi-byte' => ['utf-8', 'äää', 5, 'ö', STR_PAD_RIGHT, 'äääöö'],
+            'right-padding_multi-byte'  => ['utf-8', 'äää', 5, 'ö', STR_PAD_RIGHT, 'äääöö'],
 
             // Laminas-12186
             'input-longer-than-pad-length' => ['utf-8', 'äääöö', 2, 'ö', STR_PAD_RIGHT, 'äääöö'],
-            'input-same-as-pad-length' => ['utf-8', 'äääöö', 5, 'ö', STR_PAD_RIGHT, 'äääöö'],
-            'negative-pad-length' => ['utf-8', 'äääöö', -2, 'ö', STR_PAD_RIGHT, 'äääöö'],
+            'input-same-as-pad-length'     => ['utf-8', 'äääöö', 5, 'ö', STR_PAD_RIGHT, 'äääöö'],
+            'negative-pad-length'          => ['utf-8', 'äääöö', -2, 'ö', STR_PAD_RIGHT, 'äääöö'],
         ];
     }
 
     /**
      * @dataProvider strPadProvider
-     *
      * @param string $encoding
      * @param string $input
      * @param int    $padLength
      * @param string $padString
      * @param int    $padType
      * @param mixed  $expected
-     *
      * @group Laminas-12186
      */
     public function testStrPad($encoding, $input, $padLength, $padString, $padType, $expected)

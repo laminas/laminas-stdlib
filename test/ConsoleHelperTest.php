@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
@@ -19,40 +15,42 @@ use function rewind;
 
 class ConsoleHelperTest extends TestCase
 {
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->helper = new ConsoleHelper();
     }
 
-    public function disableColorSupport()
+    public function disableColorSupport(): void
     {
         $r = new ReflectionProperty($this->helper, 'supportsColor');
         $r->setAccessible(true);
         $r->setValue($this->helper, false);
     }
 
-    public function enableColorSupport()
+    public function enableColorSupport(): void
     {
         $r = new ReflectionProperty($this->helper, 'supportsColor');
         $r->setAccessible(true);
         $r->setValue($this->helper, true);
     }
 
-    public function overrideEolSequence($newSequence)
+    public function overrideEolSequence(string $newSequence): void
     {
         $r = new ReflectionProperty($this->helper, 'eol');
         $r->setAccessible(true);
         $r->setValue($this->helper, $newSequence);
     }
 
-    public function overrideStderrResource($stderr)
+    /** @param mixed $stderr */
+    public function overrideStderrResource($stderr): void
     {
         $r = new ReflectionProperty($this->helper, 'stderr');
         $r->setAccessible(true);
         $r->setValue($this->helper, $stderr);
     }
 
-    public function retrieveStreamContents($stream)
+    /** @param resource $stream */
+    public function retrieveStreamContents($stream): string
     {
         rewind($stream);
         $contents = '';
@@ -83,7 +81,7 @@ class ConsoleHelperTest extends TestCase
     public function testCanColorizeMixedStrings()
     {
         $this->enableColorSupport();
-        $string = "<error>NOT OK</error>\n\n<info>Usage:</info> foo";
+        $string    = "<error>NOT OK</error>\n\n<info>Usage:</info> foo";
         $colorized = $this->helper->colorize($string);
 
         self::assertStringContainsString("\033[31mNOT OK\033[0m", $colorized, 'Colorized error string not found');
@@ -93,7 +91,7 @@ class ConsoleHelperTest extends TestCase
     public function testColorizationWillReplaceTagsWithEmptyStringsWhenColorSupportIsNotDetected()
     {
         $this->disableColorSupport();
-        $string = "<error>NOT OK</error>\n\n<info>Usage:</info> foo";
+        $string    = "<error>NOT OK</error>\n\n<info>Usage:</info> foo";
         $colorized = $this->helper->colorize($string);
 
         self::assertStringNotContainsString("\033[31m", $colorized, 'Colorized error string discovered');

@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
@@ -16,17 +12,12 @@ use function iterator_to_array;
 use function serialize;
 use function unserialize;
 
-/**
- * @group      Laminas_Stdlib
- */
 class SplQueueTest extends TestCase
 {
-    /**
-     * @var SplQueue
-     */
+    /** @var SplQueue */
     protected $queue;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $this->queue = new SplQueue();
         $this->queue->push('foo');
@@ -36,13 +27,13 @@ class SplQueueTest extends TestCase
 
     public function testSerializationAndDeserializationShouldMaintainState()
     {
-        $s = serialize($this->queue);
+        $s            = serialize($this->queue);
         $unserialized = unserialize($s);
-        $count = count($this->queue);
+        $count        = count($this->queue);
         self::assertSame($count, count($unserialized));
 
         $expected = iterator_to_array($this->queue);
-        $test = iterator_to_array($unserialized);
+        $test     = iterator_to_array($unserialized);
         self::assertSame($expected, $test);
     }
 

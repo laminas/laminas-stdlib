@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\StringWrapper;
 
@@ -14,11 +10,16 @@ use function array_shift;
 
 class NativeTest extends CommonStringWrapperTest
 {
+    /**
+     * @param null|string $encoding
+     * @param null|string $convertEncoding
+     * @return StringWrapperInterface
+     */
     protected function getWrapper($encoding = null, $convertEncoding = null)
     {
         if ($encoding === null) {
             $supportedEncodings = Native::getSupportedEncodings();
-            $encoding = array_shift($supportedEncodings);
+            $encoding           = array_shift($supportedEncodings);
         }
 
         if (! Native::isSupported($encoding, $convertEncoding)) {

@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\Guard;
 
@@ -19,7 +15,7 @@ class NullGuardTraitTest extends TestCase
 {
     public function testGuardAgainstNullThrowsException()
     {
-        $object = new GuardedObject;
+        $object = new GuardedObject();
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('Argument cannot be null');
 
@@ -28,7 +24,7 @@ class NullGuardTraitTest extends TestCase
 
     public function testGuardAgainstNullAllowsNonNull()
     {
-        $object = new GuardedObject;
+        $object = new GuardedObject();
         self::assertNull($object->setNotNull('foo'));
     }
 }
