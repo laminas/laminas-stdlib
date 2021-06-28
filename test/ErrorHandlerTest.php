@@ -8,6 +8,10 @@ use ErrorException;
 use Laminas\Stdlib\ErrorHandler;
 use PHPUnit\Framework\TestCase;
 
+use function trigger_error;
+
+use const E_USER_WARNING;
+
 class ErrorHandlerTest extends TestCase
 {
     protected function tearDown(): void
@@ -59,8 +63,8 @@ class ErrorHandlerTest extends TestCase
 
     public function testReturnCatchedError()
     {
-        ErrorHandler::start();
-        1 / 0; // Division by zero
+        ErrorHandler::start(E_USER_WARNING);
+        trigger_error('consider this a warning', E_USER_WARNING);
         $err = ErrorHandler::stop();
 
         self::assertInstanceOf('ErrorException', $err);
@@ -68,8 +72,8 @@ class ErrorHandlerTest extends TestCase
 
     public function testThrowCatchedError()
     {
-        ErrorHandler::start();
-        1 / 0; // Division by zero
+        ErrorHandler::start(E_USER_WARNING);
+        trigger_error('consider this a warning', E_USER_WARNING);
 
         $this->expectException(ErrorException::class);
         ErrorHandler::stop(true);

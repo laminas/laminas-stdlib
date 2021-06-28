@@ -8,6 +8,7 @@ use ArrayIterator;
 use InvalidArgumentException;
 use Laminas\Stdlib\ArrayObject;
 use PHPUnit\Framework\TestCase;
+use TypeError;
 
 use function asort;
 use function ksort;
@@ -19,6 +20,8 @@ use function strcasecmp;
 use function uasort;
 use function uksort;
 use function unserialize;
+
+use const PHP_MAJOR_VERSION;
 
 class ArrayObjectTest extends TestCase
 {
@@ -109,11 +112,29 @@ class ArrayObjectTest extends TestCase
         self::assertSame($sorted, $ar->getArrayCopy());
     }
 
-    public function testCount()
+    public function testCountRaisesWarningUnderPhpSeven(): void
     {
+        if (PHP_MAJOR_VERSION > 7) {
+            $this->markTestSkipped('This test only makes sense under PHP 7');
+        }
+
+        $ar = new ArrayObject(new TestAsset\ArrayObjectObjectVars());
+
         $this->expectWarning();
         $this->expectExceptionMessage('Parameter must be an array or an object that implements Countable');
+        self::assertCount(1, $ar);
+    }
+
+    public function testCountRaisesTypeErrorUnderPhpEight(): void
+    {
+        if (PHP_MAJOR_VERSION < 8) {
+            $this->markTestSkipped('This test only makes sense under PHP 8 and above');
+        }
+
         $ar = new ArrayObject(new TestAsset\ArrayObjectObjectVars());
+
+        $this->expectException(TypeError::class);
+        $this->expectExceptionMessage('Countable|array');
         self::assertCount(1, $ar);
     }
 
