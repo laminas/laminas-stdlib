@@ -47,11 +47,15 @@ class Intl extends AbstractStringWrapper
     /**
      * Returns the length of the given string
      *
-     * @param string $str
+     * @param string|null $str
      * @return false|int
      */
     public function strlen($str)
     {
+        if ($str === null) {
+            return false;
+        }
+
         $len = grapheme_strlen($str);
         return $len ?? false;
     }
