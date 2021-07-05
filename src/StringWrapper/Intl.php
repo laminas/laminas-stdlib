@@ -53,7 +53,7 @@ class Intl extends AbstractStringWrapper
     public function strlen($str)
     {
         if ($str === null) {
-            return false;
+            return 0;
         }
 
         $len = grapheme_strlen($str);
