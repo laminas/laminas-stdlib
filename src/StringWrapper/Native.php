@@ -27,11 +27,9 @@ class Native extends AbstractStringWrapper
      * Check if the given character encoding is supported by this wrapper
      * and the character encoding to convert to is also supported.
      *
-     * @param  string      $encoding
-     * @param  string|null $convertEncoding
      * @return bool
      */
-    public static function isSupported($encoding, $convertEncoding = null)
+    public static function isSupported(string $encoding, ?string $convertEncoding = null)
     {
         $encodingUpper      = strtoupper($encoding);
         $supportedEncodings = static::getSupportedEncodings();
@@ -61,11 +59,9 @@ class Native extends AbstractStringWrapper
     /**
      * Set character encoding working with and convert to
      *
-     * @param string      $encoding         The character encoding to work with
-     * @param string|null $convertEncoding  The character encoding to convert to
      * @return StringWrapperInterface
      */
-    public function setEncoding($encoding, $convertEncoding = null)
+    public function setEncoding(string $encoding, ?string $convertEncoding = null)
     {
         $supportedEncodings = static::getSupportedEncodings();
 
@@ -99,10 +95,9 @@ class Native extends AbstractStringWrapper
     /**
      * Returns the length of the given string
      *
-     * @param string $str
      * @return int|false
      */
-    public function strlen($str)
+    public function strlen(string $str)
     {
         return strlen($str);
     }
@@ -110,12 +105,9 @@ class Native extends AbstractStringWrapper
     /**
      * Returns the portion of string specified by the start and length parameters
      *
-     * @param string   $str
-     * @param int      $offset
-     * @param int|null $length
      * @return string|false
      */
-    public function substr($str, $offset = 0, $length = null)
+    public function substr(string $str, int $offset = 0, ?int $length = null)
     {
         return substr($str, $offset, $length);
     }
@@ -123,12 +115,9 @@ class Native extends AbstractStringWrapper
     /**
      * Find the position of the first occurrence of a substring in a string
      *
-     * @param string $haystack
-     * @param string $needle
-     * @param int    $offset
      * @return int|false
      */
-    public function strpos($haystack, $needle, $offset = 0)
+    public function strpos(string $haystack, string $needle, int $offset = 0)
     {
         return strpos($haystack, $needle, $offset);
     }

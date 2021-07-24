@@ -63,10 +63,9 @@ class MbString extends AbstractStringWrapper
     /**
      * Returns the length of the given string
      *
-     * @param string $str
      * @return int|false
      */
-    public function strlen($str)
+    public function strlen(string $str)
     {
         return mb_strlen($str, $this->getEncoding());
     }
@@ -74,12 +73,9 @@ class MbString extends AbstractStringWrapper
     /**
      * Returns the portion of string specified by the start and length parameters
      *
-     * @param string   $str
-     * @param int      $offset
-     * @param int|null $length
      * @return string|false
      */
-    public function substr($str, $offset = 0, $length = null)
+    public function substr(string $str, int $offset = 0, ?int $length = null)
     {
         return mb_substr($str, $offset, $length, $this->getEncoding());
     }
@@ -87,12 +83,9 @@ class MbString extends AbstractStringWrapper
     /**
      * Find the position of the first occurrence of a substring in a string
      *
-     * @param string $haystack
-     * @param string $needle
-     * @param int    $offset
      * @return int|false
      */
-    public function strpos($haystack, $needle, $offset = 0)
+    public function strpos(string $haystack, string $needle, int $offset = 0)
     {
         return mb_strpos($haystack, $needle, $offset, $this->getEncoding());
     }
@@ -100,11 +93,9 @@ class MbString extends AbstractStringWrapper
     /**
      * Convert a string from defined encoding to the defined convert encoding
      *
-     * @param string  $str
-     * @param bool $reverse
      * @return string|false
      */
-    public function convert($str, $reverse = false)
+    public function convert(string $str, bool $reverse = false)
     {
         $encoding        = $this->getEncoding();
         $convertEncoding = $this->getConvertEncoding();
