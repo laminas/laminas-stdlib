@@ -240,7 +240,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @param array $data Data array.
      * @return void
-     */	
+     */
     public function __unserialize($data)
     {
         foreach ($data as $item) {

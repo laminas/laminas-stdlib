@@ -66,7 +66,7 @@ class SplStack extends \SplStack implements Serializable
      *
      * @param array $data Data array.
      * @return void
-     */	
+     */
     public function __unserialize($data)
     {
         foreach ($data as $item) {

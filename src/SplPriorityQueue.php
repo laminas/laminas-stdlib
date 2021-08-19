@@ -91,7 +91,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
         }
         return $data;
     }
-	
+
     /**
      * Deserialize
      *
@@ -112,7 +112,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      *
      * @param array $data Data array.
      * @return void
-     */	
+     */
     public function __unserialize($data)
     {
         $this->serial = PHP_INT_MAX;

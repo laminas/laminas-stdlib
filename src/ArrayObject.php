@@ -455,12 +455,12 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
     }
 
-   /**
+    /**
      * Magic method used to rebuild an instance.
      *
      * @param array $data Data array.
      * @return void
-     */	
+     */
     public function __unserialize($data)
     {
         $this->protectedProperties = array_keys(get_object_vars($this));

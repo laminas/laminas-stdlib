@@ -66,7 +66,7 @@ class SplQueue extends \SplQueue implements Serializable
      *
      * @param array $data Data array.
      * @return void
-     */	
+     */
     public function __unserialize($data)
     {
         foreach ($data as $item) {
