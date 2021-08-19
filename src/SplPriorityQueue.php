@@ -107,7 +107,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
         }
     }
 
-   /**
+    /**
      * Magic method used to rebuild an instance.
      *
      * @param array $data Data array.
