@@ -76,6 +76,23 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
     }
 
     /**
+     * Magic method used for serializing of an instance.
+     *
+     * @return array
+     */
+    public function __serialize()
+    {
+        $clone = clone $this;
+        $clone->setExtractFlags(self::EXTR_BOTH);
+
+        $data = [];
+        foreach ($clone as $item) {
+            $data[] = $item;
+        }
+		return $data;
+    }
+	
+    /**
      * Deserialize
      *
      * @param  string $data
@@ -85,6 +102,21 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
     {
         $this->serial = PHP_INT_MAX;
         foreach (unserialize($data) as $item) {
+            $this->serial--;
+            $this->insert($item['data'], $item['priority']);
+        }
+    }
+
+   /**
+     * Magic method used to rebuild an instance.
+     *
+     * @param array $data Data array.
+     * @return void
+     */	
+    public function __unserialize($data)
+    {
+        $this->serial = PHP_INT_MAX;
+        foreach ($data as $item) {
             $this->serial--;
             $this->insert($item['data'], $item['priority']);
         }

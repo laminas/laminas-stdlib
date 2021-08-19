@@ -349,6 +349,16 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     }
 
     /**
+     * Magic method used for serializing of an instance.
+     *
+     * @return array
+     */
+    public function __serialize()
+    {
+        return get_object_vars($this);
+    }
+
+    /**
      * Sets the behavior flags
      *
      * @param  int  $flags
@@ -444,4 +454,37 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
             }
         }
     }
+
+   /**
+     * Magic method used to rebuild an instance.
+     *
+     * @param array $data Data array.
+     * @return void
+     */	
+    public function __unserialize($data)
+    {
+        $this->protectedProperties = array_keys(get_object_vars($this));
+
+        $this->setFlags($data['flag']);
+        $this->exchangeArray($data['storage']);
+        $this->setIteratorClass($data['iteratorClass']);
+
+        foreach ($data as $k => $v) {
+            switch ($k) {
+                case 'flag':
+                    $this->setFlags($v);
+                    break;
+                case 'storage':
+                    $this->exchangeArray($v);
+                    break;
+                case 'iteratorClass':
+                    $this->setIteratorClass($v);
+                    break;
+                case 'protectedProperties':
+                    break;
+                default:
+                    $this->__set($k, $v);
+            }
+        }
+    }	
 }

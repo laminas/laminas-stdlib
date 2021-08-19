@@ -39,6 +39,16 @@ class SplQueue extends \SplQueue implements Serializable
     }
 
     /**
+     * Magic method used for serializing of an instance.
+     *
+     * @return array
+     */
+    public function __serialize()
+    {
+        return $this->toArray();
+    }
+
+    /**
      * Unserialize
      *
      * @param  string $data
@@ -47,6 +57,19 @@ class SplQueue extends \SplQueue implements Serializable
     public function unserialize($data)
     {
         foreach (unserialize($data) as $item) {
+            $this->push($item);
+        }
+    }
+
+   /**
+     * Magic method used to rebuild an instance.
+     *
+     * @param array $data Data array.
+     * @return void
+     */	
+    public function __unserialize($data)
+    {
+        foreach ($data as $item) {
             $this->push($item);
         }
     }

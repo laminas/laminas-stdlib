@@ -211,6 +211,16 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     }
 
     /**
+     * Magic method used for serializing of an instance.
+     *
+     * @return array
+     */
+    public function __serialize()
+    {
+        return $this->items;
+    }
+
+    /**
      * Unserialize a string into a PriorityQueue object
      *
      * Serialization format is compatible with {@link Laminas\Stdlib\SplPriorityQueue}
@@ -221,6 +231,19 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     public function unserialize($data)
     {
         foreach (unserialize($data) as $item) {
+            $this->insert($item['data'], $item['priority']);
+        }
+    }
+
+   /**
+     * Magic method used to rebuild an instance.
+     *
+     * @param array $data Data array.
+     * @return void
+     */	
+    public function __unserialize($data)
+    {
+        foreach ($data as $item) {
             $this->insert($item['data'], $item['priority']);
         }
     }
