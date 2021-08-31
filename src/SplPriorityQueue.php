@@ -5,9 +5,15 @@ declare(strict_types=1);
 namespace Laminas\Stdlib;
 
 use Serializable;
+use UnexpectedValueException;
 
+use function array_key_exists;
+use function get_class;
+use function gettype;
 use function is_array;
+use function is_object;
 use function serialize;
+use function sprintf;
 use function unserialize;
 
 use const PHP_INT_MAX;
@@ -64,15 +70,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      */
     public function serialize()
     {
-        $clone = clone $this;
-        $clone->setExtractFlags(self::EXTR_BOTH);
-
-        $data = [];
-        foreach ($clone as $item) {
-            $data[] = $item;
-        }
-
-        return serialize($data);
+        return serialize($this->__serialize());
     }
 
     /**
@@ -87,8 +85,16 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
 
         $data = [];
         foreach ($clone as $item) {
+            if (! is_array($item) || ! array_key_exists('data', $item)) {
+                throw new UnexpectedValueException(sprintf(
+                    'Unable to serialize %s instance; internal data is corrupt',
+                    self::class
+                ));
+            }
+
             $data[] = $item;
         }
+
         return $data;
     }
 
@@ -100,11 +106,16 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      */
     public function unserialize($data)
     {
-        $this->serial = PHP_INT_MAX;
-        foreach (unserialize($data) as $item) {
-            $this->serial--;
-            $this->insert($item['data'], $item['priority']);
+        $toUnserialize = unserialize($data);
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(sprintf(
+                'Unable to deserialize data to %s instance; unserialize returned %s instead of array',
+                self::class,
+                is_object($toUnserialize) ? get_class($toUnserialize) : gettype($toUnserialize)
+            ));
         }
+
+        $this->__unserialize($toUnserialize);
     }
 
     /**
@@ -116,9 +127,22 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
     public function __unserialize($data)
     {
         $this->serial = PHP_INT_MAX;
+
         foreach ($data as $item) {
-            $this->serial--;
-            $this->insert($item['data'], $item['priority']);
+            if (! is_array($item) || ! array_key_exists('data', $item)) {
+                throw new UnexpectedValueException(sprintf(
+                    'Unable to deserialize data to %s instance;'
+                    . ' at least one item is either not an array or missing a "data" element',
+                    self::class
+                ));
+            }
+
+            $priority = 1;
+            if (array_key_exists('priority', $item)) {
+                $priority = (int) $item['priority'];
+            }
+
+            $this->insert($item['data'], $priority);
         }
     }
 }

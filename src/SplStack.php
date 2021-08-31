@@ -62,13 +62,14 @@ class SplStack extends \SplStack implements Serializable
     }
 
    /**
-     * Magic method used to rebuild an instance.
-     *
-     * @param array $data Data array.
-     * @return void
-     */
+    * Magic method used to rebuild an instance.
+    *
+    * @param array $data Data array.
+    * @return void
+    */
     public function __unserialize($data)
     {
+        /** @psalm-suppress MixedAssignment */
         foreach ($data as $item) {
             $this->unshift($item);
         }

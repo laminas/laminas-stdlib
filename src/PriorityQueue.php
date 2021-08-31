@@ -11,6 +11,7 @@ use Serializable;
 use function array_map;
 use function count;
 use function get_class;
+use function is_array;
 use function serialize;
 use function sprintf;
 use function unserialize;
@@ -236,15 +237,15 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     }
 
    /**
-     * Magic method used to rebuild an instance.
-     *
-     * @param array $data Data array.
-     * @return void
-     */
+    * Magic method used to rebuild an instance.
+    *
+    * @param array $data Data array.
+    * @return void
+    */
     public function __unserialize($data)
     {
         foreach ($data as $item) {
-            $this->insert($item['data'], $item['priority']);
+            $this->insert($item['data'], (int) $item['priority']);
         }
     }
 
@@ -299,6 +300,10 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     public function contains($datum)
     {
         foreach ($this->items as $item) {
+            if (! is_array($item) || ! isset($item['data'])) {
+                continue;
+            }
+
             if ($item['data'] === $datum) {
                 return true;
             }
@@ -315,6 +320,10 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     public function hasPriority($priority)
     {
         foreach ($this->items as $item) {
+            if (! is_array($item) || ! isset($item['priority'])) {
+                continue;
+            }
+
             if ($item['priority'] === $priority) {
                 return true;
             }
