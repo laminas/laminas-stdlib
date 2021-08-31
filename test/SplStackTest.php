@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
-use Laminas\Stdlib\SplStack;
+use laminas\stdlib\splstack;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -18,12 +18,12 @@ use function var_export;
  */
 class SplStackTest extends TestCase
 {
-    /** @var SplStack */
+    /** @var splstack */
     protected $stack;
 
     protected function setUp(): void
     {
-        $this->stack = new SplStack();
+        $this->stack = new splstack();
         $this->stack->push('foo');
         $this->stack->push('bar');
         $this->stack->push('baz');

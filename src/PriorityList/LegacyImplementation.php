@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Laminas\Stdlib;
+namespace Laminas\Stdlib\PriorityList;
 
 use Countable;
 use Exception;
@@ -15,7 +15,7 @@ use function next;
 use function reset;
 use function uasort;
 
-class PriorityList implements Iterator, Countable
+class LegacyImplementation implements Iterator, Countable
 {
     public const EXTR_DATA     = 0x00000001;
     public const EXTR_PRIORITY = 0x00000002;
@@ -270,7 +270,7 @@ class PriorityList implements Iterator, Countable
 
         return array_map(
             function ($item) use ($flag) {
-                return $flag === PriorityList::EXTR_PRIORITY ? $item['priority'] : $item['data'];
+                return $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data'];
             },
             $this->items
         );

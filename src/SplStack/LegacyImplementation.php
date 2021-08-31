@@ -2,9 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Laminas\Stdlib;
+namespace Laminas\Stdlib\SplStack;
 
 use Serializable;
+use SplStack;
 
 use function serialize;
 use function unserialize;
@@ -12,7 +13,7 @@ use function unserialize;
 /**
  * Serializable version of SplStack
  */
-class SplStack extends \SplStack implements Serializable
+class LegacyImplementation extends SplStack implements Serializable
 {
     /**
      * Serialize to an array representing the stack

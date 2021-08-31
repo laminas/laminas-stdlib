@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Laminas\Stdlib;
+namespace Laminas\Stdlib\ArrayObject;
 
 use ArrayAccess;
 use Countable;
-use Iterator;
 use IteratorAggregate;
+use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Serializable;
+use Traversable;
 use UnexpectedValueException;
 
 use function array_keys;
@@ -38,7 +39,7 @@ use function unserialize;
  *
  * Extends version-specific "abstract" implementation.
  */
-class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Countable
+class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializable, Countable
 {
     /**
      * Properties of the object have their normal functionality
@@ -91,7 +92,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (in_array($key, $this->protectedProperties)) {
-            throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
+            throw new InvalidArgumentException('$key is a protected property, use a different key');
         }
 
         return isset($this->$key);
@@ -112,7 +113,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (in_array($key, $this->protectedProperties)) {
-            throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
+            throw new InvalidArgumentException('$key is a protected property, use a different key');
         }
 
         $this->$key = $value;
@@ -132,7 +133,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (in_array($key, $this->protectedProperties)) {
-            throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
+            throw new InvalidArgumentException('$key is a protected property, use a different key');
         }
 
         unset($this->$key);
@@ -153,7 +154,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (in_array($key, $this->protectedProperties, true)) {
-            throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
+            throw new InvalidArgumentException('$key is a protected property, use a different key');
         }
 
         return $this->$key;
@@ -182,10 +183,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * Get the number of public properties in the ArrayObject
-     *
-     * @return int
      */
-    public function count()
+    public function count(): int
     {
         return count($this->storage);
     }
@@ -199,7 +198,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     public function exchangeArray($data)
     {
         if (! is_array($data) && ! is_object($data)) {
-            throw new Exception\InvalidArgumentException(
+            throw new InvalidArgumentException(
                 'Passed variable is not an array or object, using empty array instead'
             );
         }
@@ -240,10 +239,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * Create a new iterator from an ArrayObject instance
-     *
-     * @return Iterator
      */
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         $class = $this->iteratorClass;
 
@@ -292,54 +289,41 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * Returns whether the requested key exists
-     *
-     * @param  mixed $key
-     * @return bool
      */
-    public function offsetExists($key)
+    public function offsetExists(mixed $offset): bool
     {
-        return isset($this->storage[$key]);
+        return isset($this->storage[$offset]);
     }
 
     /**
      * Returns the value at the specified key
-     *
-     * @param  mixed $key
-     * @return mixed
      */
-    public function &offsetGet($key)
+    public function &offsetGet(mixed $offset): mixed
     {
         $ret = null;
-        if (! $this->offsetExists($key)) {
+        if (! $this->offsetExists($offset)) {
             return $ret;
         }
-        $ret = &$this->storage[$key];
+        $ret = &$this->storage[$offset];
 
         return $ret;
     }
 
     /**
      * Sets the value at the specified key to value
-     *
-     * @param  mixed $key
-     * @param  mixed $value
-     * @return void
      */
-    public function offsetSet($key, $value)
+    public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->storage[$key] = $value;
+        $this->storage[$offset] = $value;
     }
 
     /**
      * Unsets the value at the specified key
-     *
-     * @param  mixed $key
-     * @return void
      */
-    public function offsetUnset($key)
+    public function offsetUnset(mixed $offset): void
     {
-        if ($this->offsetExists($key)) {
-            unset($this->storage[$key]);
+        if ($this->offsetExists($offset)) {
+            unset($this->storage[$offset]);
         }
     }
 
@@ -397,7 +381,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
             }
         }
 
-        throw new Exception\InvalidArgumentException('The iterator class does not exist');
+        throw new InvalidArgumentException('The iterator class does not exist');
     }
 
     /**

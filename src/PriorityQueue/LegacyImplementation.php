@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Laminas\Stdlib;
+namespace Laminas\Stdlib\PriorityQueue;
 
 use Countable;
 use IteratorAggregate;
+use Laminas\Stdlib\Exception;
+use Laminas\Stdlib\SplPriorityQueue;
 use Serializable;
 
 use function array_map;
@@ -28,7 +30,7 @@ use function unserialize;
  * "inner" iterator in the form of an SplPriorityQueue object for performing
  * the actual iteration.
  */
-class PriorityQueue implements Countable, IteratorAggregate, Serializable
+class LegacyImplementation implements Countable, IteratorAggregate, Serializable
 {
     public const EXTR_DATA     = 0x00000001;
     public const EXTR_PRIORITY = 0x00000002;

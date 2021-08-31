@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
-use Laminas\Stdlib\SplQueue;
+use laminas\stdlib\splqueue;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -14,12 +14,12 @@ use function unserialize;
 
 class SplQueueTest extends TestCase
 {
-    /** @var SplQueue */
+    /** @var splqueue */
     protected $queue;
 
     protected function setUp(): void
     {
-        $this->queue = new SplQueue();
+        $this->queue = new splqueue();
         $this->queue->push('foo');
         $this->queue->push('bar');
         $this->queue->push('baz');

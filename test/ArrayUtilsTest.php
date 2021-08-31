@@ -10,7 +10,7 @@ use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
 use Laminas\Stdlib\ArrayUtils\MergeReplaceKey;
 use Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
-use Laminas\Stdlib\Parameters;
+use laminas\stdlib\parameters;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Traversable;
@@ -376,7 +376,7 @@ class ArrayUtilsTest extends TestCase
             ],
         ];
         $arrayAccess = new ArrayObject($array);
-        $toArray     = new Parameters($array);
+        $toArray     = new parameters($array);
 
         return [
             // Description => [input, expected array]

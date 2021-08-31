@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Laminas\Stdlib;
+namespace Laminas\Stdlib\Parameters;
 
-use ArrayObject as PhpArrayObject;
+use ArrayObject;
+use Laminas\Stdlib\ParametersInterface;
 
 use function http_build_query;
 use function parse_str;
 
-class Parameters extends PhpArrayObject implements ParametersInterface
+class LegacyImplementation extends ArrayObject implements ParametersInterface
 {
     /**
      * Constructor

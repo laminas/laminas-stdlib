@@ -31,11 +31,17 @@
         "vimeo/psalm": "^4.7"
     },
     "autoload": {
+        "files": [
+            "src/autoload.php"
+        ],
         "psr-4": {
             "Laminas\\Stdlib\\": "src/"
         }
     },
     "autoload-dev": {
+        "files": [
+            "test/autoload.php"
+        ],
         "psr-4": {
             "LaminasTest\\Stdlib\\": "test/",
             "LaminasBench\\Stdlib\\": "benchmark/"

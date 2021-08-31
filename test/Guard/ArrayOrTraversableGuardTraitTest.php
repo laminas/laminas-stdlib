@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\Guard;
 
-use Laminas\Stdlib\ArrayObject;
+use laminas\stdlib\arrayobject;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
 use LaminasTest\Stdlib\TestAsset\GuardedObject;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +31,7 @@ class ArrayOrTraversableGuardTraitTest extends TestCase
     public function testGuardForArrayOrTraversableAllowsTraversable(): void
     {
         $object      = new GuardedObject();
-        $traversable = new ArrayObject();
+        $traversable = new arrayobject();
         self::assertNull($object->setArrayOrTraversable($traversable));
     }
 }

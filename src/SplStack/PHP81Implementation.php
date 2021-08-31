@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Laminas\Stdlib;
+namespace Laminas\Stdlib\SplStack;
 
-use Serializable;
+use SplStack;
 
 use function serialize;
 use function unserialize;
 
 /**
- * Serializable version of SplQueue
+ * Serializable version of SplStack
  */
-class SplQueue extends \SplQueue implements Serializable
+class PHP81Implementation extends SplStack
 {
     /**
-     * Return an array representing the queue
+     * Serialize to an array representing the stack
      *
      * @return array
      */
@@ -30,48 +30,38 @@ class SplQueue extends \SplQueue implements Serializable
 
     /**
      * Serialize
-     *
-     * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize($this->toArray());
     }
 
     /**
      * Magic method used for serializing of an instance.
-     *
-     * @return array
      */
-    public function __serialize()
+    public function __serialize(): array
     {
         return $this->toArray();
     }
 
     /**
      * Unserialize
-     *
-     * @param  string $data
-     * @return void
      */
-    public function unserialize($data)
+    public function unserialize(string $data): void
     {
         foreach (unserialize($data) as $item) {
-            $this->push($item);
+            $this->unshift($item);
         }
     }
 
    /**
     * Magic method used to rebuild an instance.
-    *
-    * @param array $data Data array.
-    * @return void
     */
-    public function __unserialize($data)
+    public function __unserialize(array $data): void
     {
         /** @psalm-suppress MixedAssignment */
         foreach ($data as $item) {
-            $this->push($item);
+            $this->unshift($item);
         }
     }
 }

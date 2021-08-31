@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace LaminasTest\Stdlib\TestAsset;
+namespace LaminasTest\Stdlib\TestAsset\ArrayObjectObjectCount;
 
 use Countable;
 
-class ArrayObjectObjectCount implements Countable
+class LegacyImplementation implements Countable
 {
     /** @return int */
     public function count()

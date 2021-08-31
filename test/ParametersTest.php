@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
-use Laminas\Stdlib\Parameters;
+use laminas\stdlib\parameters;
 use Laminas\Stdlib\ParametersInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -12,7 +12,7 @@ class ParametersTest extends TestCase
 {
     public function testParametersConstructionAndClassStructure(): void
     {
-        $parameters = new Parameters();
+        $parameters = new parameters();
         self::assertInstanceOf(ParametersInterface::class, $parameters);
         self::assertInstanceOf('ArrayObject', $parameters);
         self::assertInstanceOf('ArrayAccess', $parameters);
@@ -23,7 +23,7 @@ class ParametersTest extends TestCase
 
     public function testParametersPersistNameAndValues(): void
     {
-        $parameters = new Parameters(['foo' => 'bar']);
+        $parameters = new parameters(['foo' => 'bar']);
         self::assertEquals('bar', $parameters['foo']);
         self::assertEquals('bar', $parameters->foo);
         $parameters->offsetSet('baz', 5);
@@ -46,13 +46,13 @@ class ParametersTest extends TestCase
 
     public function testParametersOffsetgetReturnsNullIfNonexistentKeyIsProvided(): void
     {
-        $parameters = new Parameters();
+        $parameters = new parameters();
         self::assertNull($parameters->foo);
     }
 
     public function testParametersGetReturnsDefaultValueIfNonExistent(): void
     {
-        $parameters = new Parameters();
+        $parameters = new parameters();
 
         self::assertEquals(5, $parameters->get('nonExistentProp', 5));
     }
