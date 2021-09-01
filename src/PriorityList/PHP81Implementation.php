@@ -91,7 +91,7 @@ class PHP81Implementation implements Iterator, Countable
     /**
      * @param string $name
      * @param int    $priority
-     * @return $this
+     * @return static
      * @throws Exception
      */
     public function setPriority($name, $priority)

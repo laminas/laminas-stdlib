@@ -74,7 +74,7 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
      *
      * @param  mixed $data
      * @param  int $priority
-     * @return $this
+     * @return static
      */
     public function insert($data, $priority = 1)
     {
@@ -318,7 +318,7 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
      * internal queue class. The class provided should extend SplPriorityQueue.
      *
      * @param  string $class
-     * @return $this
+     * @return static
      */
     public function setInternalQueueClass($class)
     {
