@@ -7,10 +7,10 @@ namespace Laminas\Stdlib\ArrayObject;
 use ArrayAccess;
 use ArrayObject;
 use Countable;
+use Iterator;
 use IteratorAggregate;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Serializable;
-use Traversable;
 use UnexpectedValueException;
 
 use function array_keys;
@@ -243,14 +243,14 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Create a new iterator from an ArrayObject instance
      *
-     * @return Traversable
+     * @return Iterator
      */
     public function getIterator()
     {
         $class    = $this->iteratorClass;
         $iterator = new $class($this->storage);
 
-        if (! $iterator instanceof Traversable) {
+        if (! $iterator instanceof Iterator) {
             throw new UnexpectedValueException(sprintf(
                 'Iterator of type %s is not Traversable',
                 $class

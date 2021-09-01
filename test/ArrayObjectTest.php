@@ -219,8 +219,9 @@ class ArrayObjectTest extends TestCase
 
     public function testIterator(): void
     {
-        $ar        = new ArrayObject(['1' => 'one', '2' => 'two', '3' => 'three']);
-        $iterator  = $ar->getIterator();
+        $ar       = new ArrayObject(['1' => 'one', '2' => 'two', '3' => 'three']);
+        $iterator = $ar->getIterator();
+        self::assertInstanceOf(ArrayIterator::class, $iterator);
         $iterator2 = new ArrayIterator($ar->getArrayCopy());
         self::assertEquals($iterator2->getArrayCopy(), $iterator->getArrayCopy());
     }
