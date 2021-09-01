@@ -18,4 +18,9 @@
 
     <!-- Include all rules from Laminas Coding Standard -->
     <rule ref="LaminasCodingStandard"/>
+
+    <!-- Exclude the following until PHP 8 is our minimum version -->
+    <exclude-pattern>*/src/ArrayObject/PHP81Implementation.php</exclude-pattern>
+    <exclude-pattern>*/src/SplQueue/PHP81Implementation.php</exclude-pattern>
+    <exclude-pattern>*/src/SplStack/PHP81Implementation.php</exclude-pattern>
 </ruleset>
