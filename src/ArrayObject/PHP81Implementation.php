@@ -6,10 +6,10 @@ namespace Laminas\Stdlib\ArrayObject;
 
 use ArrayAccess;
 use Countable;
+use Iterator;
 use IteratorAggregate;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Serializable;
-use Traversable;
 use UnexpectedValueException;
 
 use function array_keys;
@@ -240,12 +240,13 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
     /**
      * Create a new iterator from an ArrayObject instance
      */
-    public function getIterator(): Traversable
+    #[ReturnTypeWillChange]
+    public function getIterator(): Iterator
     {
         $class    = $this->iteratorClass;
         $iterator = new $class($this->storage);
 
-        if (! $iterator instanceof Traversable) {
+        if (! $iterator instanceof Iterator) {
             throw new UnexpectedValueException(sprintf(
                 'Iterator of type %s is not Traversable',
                 $class
