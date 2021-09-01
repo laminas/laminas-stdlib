@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Stdlib\SplQueue;
 
 use SplQueue;
+use UnexpectedValueException;
 
 use function serialize;
 use function unserialize;
@@ -49,9 +50,15 @@ class PHP81Implementation extends SplQueue
      */
     public function unserialize(string $data): void
     {
-        foreach (unserialize($data) as $item) {
-            $this->push($item);
+        $toUnserialize = unserialize($data);
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(sprintf(
+                'Unable to deserialize to Laminas\Stdlib\SplQueue; expected array, received %s',
+                is_object($toUnserialize) ? get_class($toUnserialize) : gettype($toUnserialize)
+            ));
         }
+
+        $this->__unserialize($toUnserialize);
     }
 
    /**

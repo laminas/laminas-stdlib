@@ -7,10 +7,10 @@ namespace Laminas\Stdlib\ArrayObject;
 use ArrayAccess;
 use ArrayObject;
 use Countable;
-use Iterator;
 use IteratorAggregate;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Serializable;
+use Traversable;
 use UnexpectedValueException;
 
 use function array_keys;
@@ -53,7 +53,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
      */
     public const ARRAY_AS_PROPS = 2;
 
-    /** @var array */
+    /** @var array<array-key, mixed> */
     protected $storage;
 
     /** @var int */
@@ -62,7 +62,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /** @var string */
     protected $iteratorClass;
 
-    /** @var array */
+    /** @var string[] */
     protected $protectedProperties;
 
     /**
@@ -83,7 +83,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Returns whether the requested key exists
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @return bool
      */
     public function __isset($key)
@@ -102,7 +102,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Sets the value at the specified key to value
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @param  mixed $value
      * @return void
      */
@@ -123,7 +123,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Unsets the value at the specified key
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @return void
      */
     public function __unset($key)
@@ -143,7 +143,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Returns the value at the specified key by reference
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @return mixed
      */
     public function &__get($key)
@@ -243,13 +243,21 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Create a new iterator from an ArrayObject instance
      *
-     * @return Iterator
+     * @return Traversable
      */
     public function getIterator()
     {
-        $class = $this->iteratorClass;
+        $class    = $this->iteratorClass;
+        $iterator = new $class($this->storage);
 
-        return new $class($this->storage);
+        if (! $iterator instanceof Traversable) {
+            throw new UnexpectedValueException(sprintf(
+                'Iterator of type %s is not Traversable',
+                $class
+            ));
+        }
+
+        return $iterator;
     }
 
     /**
@@ -295,7 +303,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Returns whether the requested key exists
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @return bool
      */
     public function offsetExists($key)
@@ -306,7 +314,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Returns the value at the specified key
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @return mixed
      */
     public function &offsetGet($key)
@@ -323,7 +331,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Sets the value at the specified key to value
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @param  mixed $value
      * @return void
      */
@@ -335,7 +343,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Unsets the value at the specified key
      *
-     * @param  mixed $key
+     * @param array-key $key
      * @return void
      */
     public function offsetUnset($key)
@@ -352,7 +360,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
      */
     public function serialize()
     {
-        return serialize(get_object_vars($this));
+        return serialize($this->__serialize());
     }
 
     /**
@@ -405,7 +413,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Sort the entries with a user-defined comparison function and maintain key association
      *
-     * @param  callable $function
+     * @param  callable(mixed, mixed):int $function
      * @return void
      */
     public function uasort($function)
@@ -418,7 +426,7 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
     /**
      * Sort the entries by keys using a user-defined comparison function
      *
-     * @param  callable $function
+     * @param  callable(mixed, mixed):int $function
      * @return void
      */
     public function uksort($function)
@@ -436,30 +444,14 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
      */
     public function unserialize($data)
     {
-        $ar                        = unserialize($data);
-        $this->protectedProperties = array_keys(get_object_vars($this));
-
-        $this->setFlags($ar['flag']);
-        $this->exchangeArray($ar['storage']);
-        $this->setIteratorClass($ar['iteratorClass']);
-
-        foreach ($ar as $k => $v) {
-            switch ($k) {
-                case 'flag':
-                    $this->setFlags($v);
-                    break;
-                case 'storage':
-                    $this->exchangeArray($v);
-                    break;
-                case 'iteratorClass':
-                    $this->setIteratorClass($v);
-                    break;
-                case 'protectedProperties':
-                    break;
-                default:
-                    $this->__set($k, $v);
-            }
+        $toUnserialize = unserialize($data);
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(
+                'Cannot deserialize to Laminas\Stdlib\ArrayObject; corrupt serialization value'
+            );
         }
+
+        $this->__unserialize($toUnserialize);
     }
 
     /**
@@ -481,8 +473,8 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
                 case 'storage':
                     if (! is_array($v) && ! is_object($v)) {
                         throw new UnexpectedValueException(sprintf(
-                            'Cannot unserialize to %s; expected "storage" value of array or object, received %s',
-                            self::class,
+                            'Cannot unserialize to Laminas\Stdlib\ArrayObject;'
+                            . ' expected "storage" value of array or object, received %s',
                             gettype($v)
                         ));
                     }
@@ -492,8 +484,8 @@ class LegacyImplementation implements IteratorAggregate, ArrayAccess, Serializab
                 case 'iteratorClass':
                     if (! is_string($v)) {
                         throw new UnexpectedValueException(sprintf(
-                            'Cannot unserialize to %s; expected "iteratorClass" value as string, received %s',
-                            self::class,
+                            'Cannot unserialize to Laminas\Stdlib\ArrayObject;'
+                            . ' expected "iteratorClass" value as string, received %s',
                             is_object($v) ? get_class($v) : gettype($v)
                         ));
                     }

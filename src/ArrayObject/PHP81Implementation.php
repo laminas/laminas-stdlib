@@ -52,7 +52,7 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
      */
     public const ARRAY_AS_PROPS = 2;
 
-    /** @var array */
+    /** @var array<array-key, mixed> */
     protected $storage;
 
     /** @var int */
@@ -61,7 +61,7 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
     /** @var string */
     protected $iteratorClass;
 
-    /** @var array */
+    /** @var string[] */
     protected $protectedProperties;
 
     /**
@@ -82,7 +82,7 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
     /**
      * Returns whether the requested key exists
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @return bool
      */
     public function __isset($key)
@@ -101,7 +101,7 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
     /**
      * Sets the value at the specified key to value
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @param  mixed $value
      * @return void
      */
@@ -122,7 +122,7 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
     /**
      * Unsets the value at the specified key
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @return void
      */
     public function __unset($key)
@@ -142,7 +142,7 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
     /**
      * Returns the value at the specified key by reference
      *
-     * @param  mixed $key
+     * @param  array-key $key
      * @return mixed
      */
     public function &__get($key)
@@ -242,9 +242,17 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
      */
     public function getIterator(): Traversable
     {
-        $class = $this->iteratorClass;
+        $class    = $this->iteratorClass;
+        $iterator = new $class($this->storage);
 
-        return new $class($this->storage);
+        if (! $iterator instanceof Traversable) {
+            throw new UnexpectedValueException(sprintf(
+                'Iterator of type %s is not Traversable',
+                $class
+            ));
+        }
+
+        return $iterator;
     }
 
     /**
@@ -289,6 +297,8 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
 
     /**
      * Returns whether the requested key exists
+     *
+     * @param array-key $offset
      */
     public function offsetExists(mixed $offset): bool
     {
@@ -297,6 +307,8 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
 
     /**
      * Returns the value at the specified key
+     *
+     * @param array-key $offset
      */
     public function &offsetGet(mixed $offset): mixed
     {
@@ -311,6 +323,8 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
 
     /**
      * Sets the value at the specified key to value
+     *
+     * @param array-key $offset
      */
     public function offsetSet(mixed $offset, mixed $value): void
     {
@@ -319,6 +333,8 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
 
     /**
      * Unsets the value at the specified key
+     *
+     * @param array-key $offset
      */
     public function offsetUnset(mixed $offset): void
     {
@@ -334,7 +350,7 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
      */
     public function serialize()
     {
-        return serialize(get_object_vars($this));
+        return serialize($this->__serialize());
     }
 
     /**
@@ -387,7 +403,7 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
     /**
      * Sort the entries with a user-defined comparison function and maintain key association
      *
-     * @param  callable $function
+     * @param  callable(mixed, mixed):int $function
      * @return void
      */
     public function uasort($function)
@@ -400,7 +416,7 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
     /**
      * Sort the entries by keys using a user-defined comparison function
      *
-     * @param  callable $function
+     * @param  callable(mixed, mixed):int $function
      * @return void
      */
     public function uksort($function)
@@ -418,30 +434,14 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
      */
     public function unserialize($data)
     {
-        $ar                        = unserialize($data);
-        $this->protectedProperties = array_keys(get_object_vars($this));
-
-        $this->setFlags($ar['flag']);
-        $this->exchangeArray($ar['storage']);
-        $this->setIteratorClass($ar['iteratorClass']);
-
-        foreach ($ar as $k => $v) {
-            switch ($k) {
-                case 'flag':
-                    $this->setFlags($v);
-                    break;
-                case 'storage':
-                    $this->exchangeArray($v);
-                    break;
-                case 'iteratorClass':
-                    $this->setIteratorClass($v);
-                    break;
-                case 'protectedProperties':
-                    break;
-                default:
-                    $this->__set($k, $v);
-            }
+        $toUnserialize = unserialize($data);
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(
+                'Cannot deserialize to Laminas\Stdlib\ArrayObject; corrupt serialization value'
+            );
         }
+
+        $this->__unserialize($toUnserialize);
     }
 
     /**
@@ -463,8 +463,8 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
                 case 'storage':
                     if (! is_array($v) && ! is_object($v)) {
                         throw new UnexpectedValueException(sprintf(
-                            'Cannot unserialize to %s; expected "storage" value of array or object, received %s',
-                            self::class,
+                            'Cannot unserialize to Laminas\Stdlib\ArrayObject;'
+                            . ' expected "storage" value of array or object, received %s',
                             gettype($v)
                         ));
                     }
@@ -474,8 +474,8 @@ class PHP81Implementation implements IteratorAggregate, ArrayAccess, Serializabl
                 case 'iteratorClass':
                     if (! is_string($v)) {
                         throw new UnexpectedValueException(sprintf(
-                            'Cannot unserialize to %s; expected "iteratorClass" value as string, received %s',
-                            self::class,
+                            'Cannot unserialize to Laminas\Stdlib\ArrayObject;'
+                            . ' expected "iteratorClass" value as string, received %s',
                             is_object($v) ? get_class($v) : gettype($v)
                         ));
                     }

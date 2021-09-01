@@ -10,11 +10,15 @@ use Laminas\Stdlib\Exception;
 use Laminas\Stdlib\SplPriorityQueue;
 use Serializable;
 use Traversable;
+use UnexpectedValueException;
 
+use function array_key_exists;
 use function array_map;
 use function count;
 use function get_class;
+use function gettype;
 use function is_array;
+use function is_object;
 use function serialize;
 use function sprintf;
 use function unserialize;
@@ -49,13 +53,17 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
      * with keys "data" and "priority".
      *
      * @var array
+     * @psalm-var array<array-key, array{
+     *     data: mixed,
+     *     priority: int
+     * }>
      */
     protected $items = [];
 
     /**
      * Inner queue object
      *
-     * @var SplPriorityQueue
+     * @var null|SplPriorityQueue
      */
     protected $queue;
 
@@ -66,7 +74,7 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
      *
      * @param  mixed $data
      * @param  int $priority
-     * @return PriorityQueue
+     * @return $this
      */
     public function insert($data, $priority = 1)
     {
@@ -97,15 +105,16 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
      */
     public function remove($datum)
     {
-        $found = false;
+        $keyToRemove = null;
         foreach ($this->items as $key => $item) {
             if ($item['data'] === $datum) {
-                $found = true;
+                $keyToRemove = $key;
                 break;
             }
         }
-        if ($found) {
-            unset($this->items[$key]);
+
+        if ($keyToRemove !== null) {
+            unset($this->items[$keyToRemove]);
             $this->queue = null;
 
             if (! $this->isEmpty()) {
@@ -114,8 +123,10 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
                     $queue->insert($item['data'], $item['priority']);
                 }
             }
+
             return true;
         }
+
         return false;
     }
 
@@ -232,9 +243,15 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
      */
     public function unserialize($data)
     {
-        foreach (unserialize($data) as $item) {
-            $this->insert($item['data'], $item['priority']);
+        $toUnserialize = unserialize($data);
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(sprintf(
+                'Unable to deserialize to Laminas\Stdlib\PriorityQueue; expected array, received %s',
+                is_object($toUnserialize) ? get_class($toUnserialize) : gettype($toUnserialize)
+            ));
         }
+
+        $this->__unserialize($toUnserialize);
     }
 
    /**
@@ -246,7 +263,18 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
     public function __unserialize($data)
     {
         foreach ($data as $item) {
-            $this->insert($item['data'], (int) $item['priority']);
+            if (! is_array($item) || ! array_key_exists('data', $item)) {
+                throw new UnexpectedValueException(
+                    'Unable to deserialize to Laminas\Stdlib\PriorityQueue; corrupt item'
+                );
+            }
+
+            $priority = 1;
+            if (array_key_exists('priority', $item)) {
+                $priority = (int) $item['priority'];
+            }
+
+            $this->insert($item['data'], $priority);
         }
     }
 
@@ -265,14 +293,20 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
         switch ($flag) {
             case self::EXTR_BOTH:
                 return $this->items;
+
             case self::EXTR_PRIORITY:
-                return array_map(function ($item) {
-                    return $item['priority'];
+                return array_map(function (array $item): int {
+                    $priority = 1;
+                    if (array_key_exists('priority', $item)) {
+                        $priority = (int) $item['priority'];
+                    }
+                    return $priority;
                 }, $this->items);
+
             case self::EXTR_DATA:
             default:
-                return array_map(function ($item) {
-                    return $item['data'];
+                return array_map(function (array $item) {
+                    return $item['data'] ?? null;
                 }, $this->items);
         }
     }
@@ -284,7 +318,7 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
      * internal queue class. The class provided should extend SplPriorityQueue.
      *
      * @param  string $class
-     * @return PriorityQueue
+     * @return $this
      */
     public function setInternalQueueClass($class)
     {
@@ -341,14 +375,17 @@ class PHP81Implementation implements Countable, IteratorAggregate, Serializable
     protected function getQueue()
     {
         if (null === $this->queue) {
-            $this->queue = new $this->queueClass();
-            if (! $this->queue instanceof \SplPriorityQueue) {
+            $queue = new $this->queueClass();
+            if (! $queue instanceof SplPriorityQueue) {
                 throw new Exception\DomainException(sprintf(
                     'PriorityQueue expects an internal queue of type SplPriorityQueue; received "%s"',
-                    get_class($this->queue)
+                    get_class($queue)
                 ));
             }
+
+            $this->queue = $queue;
         }
+
         return $this->queue;
     }
 

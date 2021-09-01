@@ -25,6 +25,11 @@ class LegacyImplementation implements Iterator, Countable
      * Internal list of all items.
      *
      * @var array[]
+     * @psalm-var array<array-key, array{
+     *     data: mixed,
+     *     priority: int,
+     *     serial: int
+     * }>
      */
     protected $items = [];
 
@@ -225,9 +230,7 @@ class LegacyImplementation implements Iterator, Countable
      */
     public function next()
     {
-        $node = next($this->items);
-
-        return $node ? $node['data'] : false;
+        next($this->items);
     }
 
     /**
@@ -269,7 +272,8 @@ class LegacyImplementation implements Iterator, Countable
         }
 
         return array_map(
-            function ($item) use ($flag) {
+            /** @return mixed */
+            function (array $item) use ($flag) {
                 return $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data'];
             },
             $this->items

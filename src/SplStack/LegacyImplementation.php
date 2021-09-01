@@ -6,8 +6,14 @@ namespace Laminas\Stdlib\SplStack;
 
 use Serializable;
 use SplStack;
+use UnexpectedValueException;
 
+use function get_class;
+use function gettype;
+use function is_array;
+use function is_object;
 use function serialize;
+use function sprintf;
 use function unserialize;
 
 /**
@@ -57,9 +63,14 @@ class LegacyImplementation extends SplStack implements Serializable
      */
     public function unserialize($data)
     {
-        foreach (unserialize($data) as $item) {
-            $this->unshift($item);
+        $toUnserialize = unserialize($data);
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(sprintf(
+                'Unable to deserialize to Laminas\Stdlib\SplStack; expected array, received %s',
+                is_object($toUnserialize) ? get_class($toUnserialize) : gettype($toUnserialize)
+            ));
         }
+        $this->__unserialize($toUnserialize);
     }
 
    /**

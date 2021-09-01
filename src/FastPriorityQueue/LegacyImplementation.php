@@ -9,15 +9,22 @@ use Iterator;
 use Laminas\Stdlib\Exception;
 use Serializable;
 use SplPriorityQueue as PhpSplPriorityQueue;
+use UnexpectedValueException;
 
+use function array_key_exists;
 use function current;
+use function get_class;
+use function gettype;
 use function in_array;
+use function is_array;
 use function is_int;
+use function is_object;
 use function key;
 use function max;
 use function next;
 use function reset;
 use function serialize;
+use function sprintf;
 use function unserialize;
 
 /**
@@ -34,13 +41,14 @@ class LegacyImplementation implements Iterator, Countable, Serializable
     public const EXTR_PRIORITY = PhpSplPriorityQueue::EXTR_PRIORITY;
     public const EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH;
 
-    /** @var integer */
+    /** @var int */
     protected $extractFlag = self::EXTR_DATA;
 
     /**
      * Elements of the queue, divided by priorities
      *
      * @var array
+     * @psalm-var array<int, mixed[]>
      */
     protected $values = [];
 
@@ -48,49 +56,87 @@ class LegacyImplementation implements Iterator, Countable, Serializable
      * Array of priorities
      *
      * @var array
+     * @psalm-var array<int, int>
      */
     protected $priorities = [];
 
     /**
      * Array of priorities used for the iteration
      *
-     * @var array
+     * @var int[]
      */
     protected $subPriorities = [];
 
     /**
      * Max priority
      *
-     * @var integer|null
+     * @var int|null
      */
     protected $maxPriority;
 
     /**
      * Total number of elements in the queue
      *
-     * @var integer
+     * @var int
      */
     protected $count = 0;
 
     /**
      * Index of the current element in the queue
      *
-     * @var integer
+     * @var int
      */
     protected $index = 0;
 
     /**
      * Sub index of the current element in the same priority level
      *
-     * @var integer
+     * @var int
      */
     protected $subIndex = 0;
+
+    /** @return array */
+    public function __serialize()
+    {
+        $clone = clone $this;
+        $clone->setExtractFlags(self::EXTR_BOTH);
+
+        $data = [];
+        foreach ($clone as $item) {
+            /** @psalm-suppress MixedAssignment */
+            $data[] = $item;
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function __unserialize($data)
+    {
+        foreach ($data as $item) {
+            if (! is_array($item) || ! array_key_exists('data', $item)) {
+                throw new UnexpectedValueException(
+                    'Cannot deserialize Laminas\Stdlib\FastPriorityQueue instance; one or more values are corrupt',
+                );
+            }
+
+            $priority = 1;
+            if (array_key_exists('priority', $item)) {
+                $priority = (int) $priority;
+            }
+
+            $this->insert($item['data'], $priority);
+        }
+    }
 
     /**
      * Insert an element in the queue with a specified priority
      *
      * @param mixed $value
-     * @param integer $priority
+     * @param int $priority
      * @return void
      */
     public function insert($value, $priority)
@@ -142,7 +188,7 @@ class LegacyImplementation implements Iterator, Countable, Serializable
         $currentPriority = $this->maxPriority;
 
         $this->rewind();
-        while ($this->valid()) {
+        while ($this->maxPriority !== null && $this->valid()) {
             if (current($this->values[$this->maxPriority]) === $datum) {
                 $index = key($this->values[$this->maxPriority]);
                 unset($this->values[$this->maxPriority][$index]);
@@ -177,7 +223,7 @@ class LegacyImplementation implements Iterator, Countable, Serializable
     /**
      * Get the total number of elements in the queue
      *
-     * @return integer
+     * @return int
      */
     public function count()
     {
@@ -193,12 +239,19 @@ class LegacyImplementation implements Iterator, Countable, Serializable
     {
         switch ($this->extractFlag) {
             case self::EXTR_DATA:
+                if (null === $this->maxPriority) {
+                    return null;
+                }
+
                 return current($this->values[$this->maxPriority]);
+
             case self::EXTR_PRIORITY:
                 return $this->maxPriority;
+
             case self::EXTR_BOTH:
+            default:
                 return [
-                    'data'     => current($this->values[$this->maxPriority]),
+                    'data'     => null === $this->maxPriority ? null : current($this->values[$this->maxPriority]),
                     'priority' => $this->maxPriority,
                 ];
         }
@@ -207,7 +260,7 @@ class LegacyImplementation implements Iterator, Countable, Serializable
     /**
      * Get the index of the current element in the queue
      *
-     * @return integer
+     * @return int
      */
     public function key()
     {
@@ -222,6 +275,10 @@ class LegacyImplementation implements Iterator, Countable, Serializable
      */
     protected function nextAndRemove()
     {
+        if (null === $this->maxPriority) {
+            return;
+        }
+
         $key = key($this->values[$this->maxPriority]);
 
         if (false === next($this->values[$this->maxPriority])) {
@@ -243,6 +300,10 @@ class LegacyImplementation implements Iterator, Countable, Serializable
      */
     public function next()
     {
+        if (null === $this->maxPriority) {
+            return;
+        }
+
         if (false === next($this->values[$this->maxPriority])) {
             unset($this->subPriorities[$this->maxPriority]);
             reset($this->values[$this->maxPriority]);
@@ -260,7 +321,7 @@ class LegacyImplementation implements Iterator, Countable, Serializable
      */
     public function valid()
     {
-        return isset($this->values[$this->maxPriority]);
+        return null !== $this->maxPriority && isset($this->values[$this->maxPriority]);
     }
 
     /**
@@ -297,15 +358,7 @@ class LegacyImplementation implements Iterator, Countable, Serializable
      */
     public function serialize()
     {
-        $clone = clone $this;
-        $clone->setExtractFlags(self::EXTR_BOTH);
-
-        $data = [];
-        foreach ($clone as $item) {
-            $data[] = $item;
-        }
-
-        return serialize($data);
+        return serialize($this->__serialize());
     }
 
     /**
@@ -316,15 +369,22 @@ class LegacyImplementation implements Iterator, Countable, Serializable
      */
     public function unserialize($data)
     {
-        foreach (unserialize($data) as $item) {
-            $this->insert($item['data'], $item['priority']);
+        $toUnserialize = unserialize($data);
+
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(sprintf(
+                'Cannot deserialize to Laminas\Stdlib\FastPriorityQueue; expected array, received %s',
+                is_object($toUnserialize) ? get_class($toUnserialize) : gettype($toUnserialize)
+            ));
         }
+
+        $this->__unserialize($toUnserialize);
     }
 
     /**
      * Set the extract flag
      *
-     * @param integer $flag
+     * @param int $flag
      * @return void
      */
     public function setExtractFlags($flag)

@@ -25,6 +25,11 @@ class PHP81Implementation implements Iterator, Countable
      * Internal list of all items.
      *
      * @var array[]
+     * @psalm-var array<array-key, array{
+     *     data: mixed,
+     *     priority: int,
+     *     serial: int
+     * }>
      */
     protected $items = [];
 
@@ -267,7 +272,7 @@ class PHP81Implementation implements Iterator, Countable
         }
 
         return array_map(
-            function ($item) use ($flag) {
+            function (array $item) use ($flag): mixed {
                 return $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data'];
             },
             $this->items

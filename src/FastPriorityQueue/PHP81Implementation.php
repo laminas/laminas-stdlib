@@ -7,16 +7,18 @@ namespace Laminas\Stdlib\FastPriorityQueue;
 use Countable;
 use Iterator;
 use Laminas\Stdlib\Exception;
-use laminas\stdlib\fastpriorityqueue;
 use Serializable;
 use SplPriorityQueue as PhpSplPriorityQueue;
 use UnexpectedValueException;
 
 use function array_key_exists;
 use function current;
+use function get_class;
+use function gettype;
 use function in_array;
 use function is_array;
 use function is_int;
+use function is_object;
 use function key;
 use function max;
 use function next;
@@ -39,13 +41,14 @@ class PHP81Implementation implements Iterator, Countable, Serializable
     public const EXTR_PRIORITY = PhpSplPriorityQueue::EXTR_PRIORITY;
     public const EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH;
 
-    /** @var integer */
+    /** @var int */
     protected $extractFlag = self::EXTR_DATA;
 
     /**
      * Elements of the queue, divided by priorities
      *
      * @var array
+     * @psalm-var array<int, mixed[]>
      */
     protected $values = [];
 
@@ -53,41 +56,42 @@ class PHP81Implementation implements Iterator, Countable, Serializable
      * Array of priorities
      *
      * @var array
+     * @psalm-var array<int, int>
      */
     protected $priorities = [];
 
     /**
      * Array of priorities used for the iteration
      *
-     * @var array
+     * @var int[]
      */
     protected $subPriorities = [];
 
     /**
      * Max priority
      *
-     * @var integer|null
+     * @var int|null
      */
     protected $maxPriority;
 
     /**
      * Total number of elements in the queue
      *
-     * @var integer
+     * @var int
      */
     protected $count = 0;
 
     /**
      * Index of the current element in the queue
      *
-     * @var integer
+     * @var int
      */
     protected $index = 0;
 
     /**
      * Sub index of the current element in the same priority level
      *
-     * @var integer
+     * @var int
      */
     protected $subIndex = 0;
 
@@ -114,10 +118,9 @@ class PHP81Implementation implements Iterator, Countable, Serializable
     {
         foreach ($data as $item) {
             if (! is_array($item) || ! array_key_exists('data', $item)) {
-                throw new UnexpectedValueException(sprintf(
-                    'Cannot deserialize %s instance; one or more values are corrupt',
-                    fastpriorityqueue::class
-                ));
+                throw new UnexpectedValueException(
+                    'Cannot deserialize Laminas\Stdlib\FastPriorityQueue instance; one or more values are corrupt',
+                );
             }
 
             $priority = 1;
@@ -133,7 +136,7 @@ class PHP81Implementation implements Iterator, Countable, Serializable
      * Insert an element in the queue with a specified priority
      *
      * @param mixed $value
-     * @param integer $priority
+     * @param int $priority
      * @return void
      */
     public function insert($value, $priority)
@@ -185,7 +188,7 @@ class PHP81Implementation implements Iterator, Countable, Serializable
         $currentPriority = $this->maxPriority;
 
         $this->rewind();
-        while ($this->valid()) {
+        while ($this->maxPriority !== null && $this->valid()) {
             if (current($this->values[$this->maxPriority]) === $datum) {
                 $index = key($this->values[$this->maxPriority]);
                 unset($this->values[$this->maxPriority][$index]);
@@ -232,12 +235,19 @@ class PHP81Implementation implements Iterator, Countable, Serializable
     {
         switch ($this->extractFlag) {
             case self::EXTR_DATA:
+                if (null === $this->maxPriority) {
+                    return null;
+                }
+
                 return current($this->values[$this->maxPriority]);
+
             case self::EXTR_PRIORITY:
                 return $this->maxPriority;
+
             case self::EXTR_BOTH:
+            default:
                 return [
-                    'data'     => current($this->values[$this->maxPriority]),
+                    'data'     => null === $this->maxPriority ? null : current($this->values[$this->maxPriority]),
                     'priority' => $this->maxPriority,
                 ];
         }
@@ -259,6 +269,10 @@ class PHP81Implementation implements Iterator, Countable, Serializable
      */
     protected function nextAndRemove()
     {
+        if (null === $this->maxPriority) {
+            return;
+        }
+
         $key = key($this->values[$this->maxPriority]);
 
         if (false === next($this->values[$this->maxPriority])) {
@@ -280,6 +294,10 @@ class PHP81Implementation implements Iterator, Countable, Serializable
      */
     public function next(): void
     {
+        if (null === $this->maxPriority) {
+            return;
+        }
+
         if (false === next($this->values[$this->maxPriority])) {
             unset($this->subPriorities[$this->maxPriority]);
             reset($this->values[$this->maxPriority]);
@@ -295,7 +313,7 @@ class PHP81Implementation implements Iterator, Countable, Serializable
      */
     public function valid(): bool
     {
-        return isset($this->values[$this->maxPriority]);
+        return null !== $this->maxPriority && isset($this->values[$this->maxPriority]);
     }
 
     /**
@@ -343,13 +361,22 @@ class PHP81Implementation implements Iterator, Countable, Serializable
      */
     public function unserialize($data)
     {
-        $this->__unserialize(unserialize($data));
+        $toUnserialize = unserialize($data);
+
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(sprintf(
+                'Cannot deserialize to Laminas\Stdlib\FastPriorityQueue; expected array, received %s',
+                is_object($toUnserialize) ? get_class($toUnserialize) : gettype($toUnserialize)
+            ));
+        }
+
+        $this->__unserialize($toUnserialize);
     }
 
     /**
      * Set the extract flag
      *
-     * @param integer $flag
+     * @param int $flag
      * @return void
      */
     public function setExtractFlags($flag)

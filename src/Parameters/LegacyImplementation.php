@@ -105,7 +105,7 @@ class LegacyImplementation extends ArrayObject implements ParametersInterface
     /**
      * @param string $name
      * @param mixed $value
-     * @return Parameters
+     * @return $this
      */
     public function set($name, $value)
     {
