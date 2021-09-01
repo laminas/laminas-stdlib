@@ -8,58 +8,50 @@ use function class_alias;
 
 use const PHP_VERSION_ID;
 
-// Laminas\Stdlib\ArrayObject
-class_alias(
-    PHP_VERSION_ID >= 80100
-    ? ArrayObject\PHP81Implementation::class
-    : ArrayObject\LegacyImplementation::class,
-    ArrayObject::class
-);
+// PHP < 8.1
+if (PHP_VERSION_ID < 80100) {
+    // Laminas\Stdlib\ArrayObject
+    class_alias(ArrayObject\LegacyImplementation::class, ArrayObject::class);
 
-// Laminas\Stdlib\FastPriorityQueue
-class_alias(
-    PHP_VERSION_ID >= 80100
-    ? FastPriorityQueue\PHP81Implementation::class
-    : FastPriorityQueue\LegacyImplementation::class,
-    FastPriorityQueue::class
-);
+    // Laminas\Stdlib\FastPriorityQueue
+    class_alias(FastPriorityQueue\LegacyImplementation::class, FastPriorityQueue::class);
 
-// Laminas\Stdlib\Parameters
-class_alias(
-    PHP_VERSION_ID >= 80100
-    ? Parameters\PHP81Implementation::class
-    : Parameters\LegacyImplementation::class,
-    Parameters::class
-);
+    // Laminas\Stdlib\Parameters
+    class_alias(Parameters\LegacyImplementation::class, Parameters::class);
 
-// Laminas\Stdlib\PriorityList
-class_alias(
-    PHP_VERSION_ID >= 80100
-    ? PriorityList\PHP81Implementation::class
-    : PriorityList\LegacyImplementation::class,
-    PriorityList::class
-);
+    // Laminas\Stdlib\PriorityList
+    class_alias(PriorityList\LegacyImplementation::class, PriorityList::class);
 
-// Laminas\Stdlib\PriorityQueue
-class_alias(
-    PHP_VERSION_ID >= 80100
-    ? PriorityQueue\PHP81Implementation::class
-    : PriorityQueue\LegacyImplementation::class,
-    PriorityQueue::class
-);
+    // Laminas\Stdlib\PriorityQueue
+    class_alias(PriorityQueue\LegacyImplementation::class, PriorityQueue::class);
 
-// Laminas\Stdlib\SplQueue
-class_alias(
-    PHP_VERSION_ID >= 80100
-    ? SplQueue\PHP81Implementation::class
-    : SplQueue\LegacyImplementation::class,
-    SplQueue::class
-);
+    // Laminas\Stdlib\SplQueue
+    class_alias(SplQueue\LegacyImplementation::class, SplQueue::class);
 
-// Laminas\Stdlib\SplStack
-class_alias(
-    PHP_VERSION_ID >= 80100
-    ? SplStack\PHP81Implementation::class
-    : SplStack\LegacyImplementation::class,
-    SplStack::class
-);
+    // Laminas\Stdlib\SplStack
+    class_alias(SplStack\LegacyImplementation::class, SplStack::class);
+}
+
+// PHP 8.1+
+if (PHP_VERSION_ID >= 80100) {
+    // Laminas\Stdlib\ArrayObject
+    class_alias(ArrayObject\PHP81Implementation::class, ArrayObject::class);
+
+    // Laminas\Stdlib\FastPriorityQueue
+    class_alias(FastPriorityQueue\PHP81Implementation::class, FastPriorityQueue::class);
+
+    // Laminas\Stdlib\Parameters
+    class_alias(Parameters\PHP81Implementation::class, Parameters::class);
+
+    // Laminas\Stdlib\PriorityList
+    class_alias(PriorityList\PHP81Implementation::class, PriorityList::class);
+
+    // Laminas\Stdlib\PriorityQueue
+    class_alias(PriorityQueue\PHP81Implementation::class, PriorityQueue::class);
+
+    // Laminas\Stdlib\SplQueue
+    class_alias(SplQueue\PHP81Implementation::class, SplQueue::class);
+
+    // Laminas\Stdlib\SplStack
+    class_alias(SplStack\PHP81Implementation::class, SplStack::class);
+}
