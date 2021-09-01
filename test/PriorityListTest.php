@@ -1,10 +1,10 @@
-<?php
+<?php // phpcs:disable WebimpressCodingStandard.PHP.CorrectClassNameCase.Invalid,SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceBeforeDeclare
 
 declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
-use laminas\stdlib\prioritylist;
+use Laminas\Stdlib\PriorityList;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -14,12 +14,12 @@ use function iterator_to_array;
 
 class PriorityListTest extends TestCase
 {
-    /** @var prioritylist */
+    /** @var PriorityList */
     protected $list;
 
     protected function setUp(): void
     {
-        $this->list = new prioritylist();
+        $this->list = new PriorityList();
     }
 
     public function testInsert(): void
@@ -205,7 +205,7 @@ class PriorityListTest extends TestCase
                 'foo' => ['data' => 'foo_value', 'priority' => 0, 'serial' => 0],
                 'baz' => ['data' => 'baz_value', 'priority' => -1, 'serial' => 2],
             ],
-            $this->list->toArray(prioritylist::EXTR_BOTH)
+            $this->list->toArray(PriorityList::EXTR_BOTH)
         );
     }
 

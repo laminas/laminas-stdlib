@@ -1,10 +1,10 @@
-<?php
+<?php // phpcs:disable WebimpressCodingStandard.PHP.CorrectClassNameCase.Invalid,SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceBeforeDeclare
 
 declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
-use laminas\stdlib\priorityqueue;
+use Laminas\Stdlib\PriorityQueue;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -20,12 +20,12 @@ use function var_export;
  */
 class PriorityQueueTest extends TestCase
 {
-    /** @var priorityqueue */
+    /** @var PriorityQueue */
     protected $queue;
 
     protected function setUp(): void
     {
-        $this->queue = new priorityqueue();
+        $this->queue = new PriorityQueue();
         $this->queue->insert('foo', 3);
         $this->queue->insert('bar', 4);
         $this->queue->insert('baz', 2);
@@ -72,7 +72,7 @@ class PriorityQueueTest extends TestCase
             2,
             1,
         ];
-        $test     = $this->queue->toArray(priorityqueue::EXTR_PRIORITY);
+        $test     = $this->queue->toArray(PriorityQueue::EXTR_PRIORITY);
         self::assertSame($expected, $test, var_export($test, true));
     }
 
@@ -84,7 +84,7 @@ class PriorityQueueTest extends TestCase
             ['data' => 'baz', 'priority' => 2],
             ['data' => 'bat', 'priority' => 1],
         ];
-        $test     = $this->queue->toArray(priorityqueue::EXTR_BOTH);
+        $test     = $this->queue->toArray(PriorityQueue::EXTR_BOTH);
         self::assertSame($expected, $test, var_export($test, true));
     }
 
@@ -126,7 +126,7 @@ class PriorityQueueTest extends TestCase
         $foo       = new stdClass();
         $foo->name = 'bar';
 
-        $queue = new priorityqueue();
+        $queue = new PriorityQueue();
         $queue->insert($foo, 1);
         $queue->insert($foo, 2);
 
@@ -151,7 +151,7 @@ class PriorityQueueTest extends TestCase
 
     public function testQueueRevertsToInitialStateWhenEmpty(): void
     {
-        $queue     = new priorityqueue();
+        $queue     = new PriorityQueue();
         $testQueue = clone $queue; // store the default state
 
         $testQueue->insert('foo', 1);
@@ -168,7 +168,7 @@ class PriorityQueueTest extends TestCase
      */
     public function testUpdatesCountAfterExtractingTopElement(): void
     {
-        $queue = new priorityqueue();
+        $queue = new PriorityQueue();
         $queue->insert('first');
         $queue->insert('second');
 
@@ -182,7 +182,7 @@ class PriorityQueueTest extends TestCase
      */
     public function testTopValueNotFoundAfterExtractingTopElement(): void
     {
-        $queue = new priorityqueue();
+        $queue = new PriorityQueue();
         $queue->insert('first');
         $queue->insert('second');
 
@@ -196,7 +196,7 @@ class PriorityQueueTest extends TestCase
      */
     public function testValueStillFoundAfterExtractingTopElementWhenItIsADuplicate(): void
     {
-        $queue = new priorityqueue();
+        $queue = new PriorityQueue();
         $queue->insert('first');
         $queue->insert('second');
         $queue->insert('first');

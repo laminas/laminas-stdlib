@@ -1,10 +1,10 @@
-<?php
+<?php // phpcs:disable WebimpressCodingStandard.PHP.CorrectClassNameCase.Invalid,SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceBeforeDeclare
 
 declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
-use laminas\stdlib\splqueue;
+use Laminas\Stdlib\SplQueue;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -14,12 +14,12 @@ use function unserialize;
 
 class SplQueueTest extends TestCase
 {
-    /** @var splqueue */
+    /** @var SplQueue */
     protected $queue;
 
     protected function setUp(): void
     {
-        $this->queue = new splqueue();
+        $this->queue = new SplQueue();
         $this->queue->push('foo');
         $this->queue->push('bar');
         $this->queue->push('baz');

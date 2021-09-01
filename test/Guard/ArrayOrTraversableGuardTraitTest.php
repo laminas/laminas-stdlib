@@ -1,10 +1,10 @@
-<?php
+<?php // phpcs:disable WebimpressCodingStandard.PHP.CorrectClassNameCase.Invalid,SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceBeforeDeclare
 
 declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\Guard;
 
-use laminas\stdlib\arrayobject;
+use Laminas\Stdlib\ArrayObject;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
 use LaminasTest\Stdlib\TestAsset\GuardedObject;
 use PHPUnit\Framework\TestCase;
@@ -31,7 +31,7 @@ class ArrayOrTraversableGuardTraitTest extends TestCase
     public function testGuardForArrayOrTraversableAllowsTraversable(): void
     {
         $object      = new GuardedObject();
-        $traversable = new arrayobject();
+        $traversable = new ArrayObject();
         self::assertNull($object->setArrayOrTraversable($traversable));
     }
 }

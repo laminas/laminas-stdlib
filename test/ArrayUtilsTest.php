@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:disable WebimpressCodingStandard.PHP.CorrectClassNameCase.Invalid,SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceBeforeDeclare
 
 declare(strict_types=1);
 
@@ -10,7 +10,7 @@ use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
 use Laminas\Stdlib\ArrayUtils\MergeReplaceKey;
 use Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
-use laminas\stdlib\parameters;
+use Laminas\Stdlib\Parameters;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Traversable;
@@ -363,7 +363,7 @@ class ArrayUtilsTest extends TestCase
         self::assertEquals($expected, ArrayUtils::merge($a, $b));
     }
 
-    /** @psalm-return array<string, array{0: iterable, 1: array}> */
+    /** @psalm-return array<string, array{0: Traversable|array, 1: array}> */
     public static function validIterators(): array
     {
         $array       = [
@@ -376,7 +376,7 @@ class ArrayUtilsTest extends TestCase
             ],
         ];
         $arrayAccess = new ArrayObject($array);
-        $toArray     = new parameters($array);
+        $toArray     = new Parameters($array);
 
         return [
             // Description => [input, expected array]

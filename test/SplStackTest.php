@@ -1,10 +1,10 @@
-<?php
+<?php // phpcs:disable WebimpressCodingStandard.PHP.CorrectClassNameCase.Invalid,SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceBeforeDeclare
 
 declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
-use laminas\stdlib\splstack;
+use Laminas\Stdlib\SplStack;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -18,12 +18,12 @@ use function var_export;
  */
 class SplStackTest extends TestCase
 {
-    /** @var splstack */
+    /** @var SplStack */
     protected $stack;
 
     protected function setUp(): void
     {
-        $this->stack = new splstack();
+        $this->stack = new SplStack();
         $this->stack->push('foo');
         $this->stack->push('bar');
         $this->stack->push('baz');

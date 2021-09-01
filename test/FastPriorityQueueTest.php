@@ -1,11 +1,11 @@
-<?php
+<?php // phpcs:disable WebimpressCodingStandard.PHP.CorrectClassNameCase.Invalid,SlevomatCodingStandard.TypeHints.DeclareStrictTypes.IncorrectWhitespaceBeforeDeclare
 
 declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\Exception\InvalidArgumentException;
-use laminas\stdlib\fastpriorityqueue;
+use Laminas\Stdlib\FastPriorityQueue;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
@@ -22,7 +22,7 @@ use function var_export;
  */
 class FastPriorityQueueTest extends TestCase
 {
-    /** @var fastpriorityqueue */
+    /** @var FastPriorityQueue */
     protected $queue;
 
     /** @var string[] */
@@ -30,7 +30,7 @@ class FastPriorityQueueTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->queue = new fastpriorityqueue();
+        $this->queue = new FastPriorityQueue();
         $this->insertDataQueue($this->queue);
         $this->expected = [
             'test1',
@@ -55,7 +55,7 @@ class FastPriorityQueueTest extends TestCase
         ];
     }
 
-    protected function insertDataQueue(fastpriorityqueue $queue): void
+    protected function insertDataQueue(FastPriorityQueue $queue): void
     {
         foreach ($this->getDataPriorityQueue() as $value => $priority) {
             $queue->insert($value, $priority);
@@ -90,7 +90,7 @@ class FastPriorityQueueTest extends TestCase
 
     public function testMaintainsInsertOrderForDataOfEqualPriority(): void
     {
-        $queue = new fastpriorityqueue();
+        $queue = new FastPriorityQueue();
         $queue->insert('foo', 1000);
         $queue->insert('bar', 1000);
         $queue->insert('baz', 1000);
@@ -153,11 +153,11 @@ class FastPriorityQueueTest extends TestCase
     public function testSetExtractFlag(): void
     {
         $priorities = $this->getDataPriorityQueue();
-        $this->queue->setExtractFlags(fastpriorityqueue::EXTR_DATA);
+        $this->queue->setExtractFlags(FastPriorityQueue::EXTR_DATA);
         self::assertEquals($this->expected[0], $this->queue->extract());
-        $this->queue->setExtractFlags(fastpriorityqueue::EXTR_PRIORITY);
+        $this->queue->setExtractFlags(FastPriorityQueue::EXTR_PRIORITY);
         self::assertEquals($priorities[$this->expected[1]], $this->queue->extract());
-        $this->queue->setExtractFlags(fastpriorityqueue::EXTR_BOTH);
+        $this->queue->setExtractFlags(FastPriorityQueue::EXTR_BOTH);
         $expected = [
             'data'     => $this->expected[2],
             'priority' => $priorities[$this->expected[2]],
@@ -174,7 +174,7 @@ class FastPriorityQueueTest extends TestCase
 
     public function testIsEmpty(): void
     {
-        $queue = new fastpriorityqueue();
+        $queue = new FastPriorityQueue();
         self::assertTrue($queue->isEmpty());
         $queue->insert('foo', 1);
         self::assertFalse($queue->isEmpty());
@@ -239,7 +239,7 @@ class FastPriorityQueueTest extends TestCase
 
     public function testRewindShouldNotRaiseErrorWhenQueueIsEmpty(): void
     {
-        $queue = new fastpriorityqueue();
+        $queue = new FastPriorityQueue();
         self::assertTrue($queue->isEmpty());
 
         $queue->rewind();
@@ -250,7 +250,7 @@ class FastPriorityQueueTest extends TestCase
         $prototype = function ($e): void {
         };
 
-        $queue = new fastpriorityqueue();
+        $queue = new FastPriorityQueue();
         self::assertTrue($queue->isEmpty());
 
         $listeners = [];
@@ -272,7 +272,7 @@ class FastPriorityQueueTest extends TestCase
         $prototype = function ($e): void {
         };
 
-        $queue = new fastpriorityqueue();
+        $queue = new FastPriorityQueue();
         self::assertTrue($queue->isEmpty());
 
         $listeners = [];
@@ -295,7 +295,7 @@ class FastPriorityQueueTest extends TestCase
     public function testRemoveShouldNotAffectExtract(): void
     {
         // Removing an element with low priority
-        $queue = new fastpriorityqueue();
+        $queue = new FastPriorityQueue();
         $queue->insert('a1', 1);
         $queue->insert('a2', 1);
         $queue->insert('b', 2);
@@ -336,7 +336,7 @@ class FastPriorityQueueTest extends TestCase
 
     public function testZeroPriority(): void
     {
-        $queue = new fastpriorityqueue();
+        $queue = new FastPriorityQueue();
         $queue->insert('a', 0);
         $queue->insert('b', 1);
         $expected = ['b', 'a'];
