@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Stdlib\TestAsset;
 
 use Iterator;
+use ReturnTypeWillChange;
 
 use function current;
 use function is_array;
@@ -26,30 +27,35 @@ class ArrayObjectIterator implements Iterator
     }
 
     /** @return void */
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         reset($this->var);
     }
 
     /** @return mixed */
+    #[ReturnTypeWillChange]
     public function current()
     {
         return current($this->var);
     }
 
     /** @return int|string */
+    #[ReturnTypeWillChange]
     public function key()
     {
         return key($this->var);
     }
 
     /** @return mixed */
+    #[ReturnTypeWillChange]
     public function next()
     {
         return next($this->var);
     }
 
     /** @return bool */
+    #[ReturnTypeWillChange]
     public function valid()
     {
         $key = key($this->var);

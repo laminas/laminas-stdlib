@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.8.1@f73f2299dbc59a3e6c4d66cff4605176e728ee69">
+<files psalm-version="4.9.3@4c262932602b9bbab5020863d1eb22d49de0dbf4">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($options) &amp;&amp; ! $options instanceof Traversable</code>
@@ -31,35 +31,19 @@
     <LessSpecificReturnStatement occurrences="1">
       <code>new $class($this-&gt;storage)</code>
     </LessSpecificReturnStatement>
-    <MixedArgument occurrences="6">
-      <code>$ar['flag']</code>
-      <code>$ar['iteratorClass']</code>
-      <code>$ar['storage']</code>
-      <code>$v</code>
-      <code>$v</code>
-      <code>$v</code>
-    </MixedArgument>
     <MixedArgumentTypeCoercion occurrences="2">
       <code>$function</code>
       <code>$function</code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayAccess occurrences="3">
-      <code>$ar['flag']</code>
-      <code>$ar['iteratorClass']</code>
-      <code>$ar['storage']</code>
-    </MixedArrayAccess>
     <MixedArrayOffset occurrences="4">
       <code>$this-&gt;storage[$key]</code>
       <code>$this-&gt;storage[$key]</code>
       <code>$this-&gt;storage[$key]</code>
       <code>$this-&gt;storage[$key]</code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="5">
-      <code>$ar</code>
-      <code>$k</code>
+    <MixedAssignment occurrences="2">
       <code>$ret</code>
       <code>$ret</code>
-      <code>$v</code>
     </MixedAssignment>
     <MoreSpecificReturnType occurrences="1">
       <code>Iterator</code>
@@ -316,11 +300,7 @@
     <MethodSignatureMismatch occurrences="1">
       <code>public function insert($datum, $priority)</code>
     </MethodSignatureMismatch>
-    <MixedArrayAccess occurrences="2">
-      <code>$item['data']</code>
-      <code>$item['priority']</code>
-    </MixedArrayAccess>
-    <MixedAssignment occurrences="5">
+    <MixedAssignment occurrences="4">
       <code>$array[]</code>
       <code>$data[]</code>
       <code>$item</code>

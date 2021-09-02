@@ -6,17 +6,21 @@ namespace Laminas\Stdlib;
 
 use Countable;
 use Iterator;
+use ReturnTypeWillChange;
 use Serializable;
 use SplPriorityQueue as PhpSplPriorityQueue;
+use UnexpectedValueException;
 
 use function current;
 use function in_array;
+use function is_array;
 use function is_int;
 use function key;
 use function max;
 use function next;
 use function reset;
 use function serialize;
+use function sprintf;
 use function unserialize;
 
 /**
@@ -84,6 +88,26 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * @var integer
      */
     protected $subIndex = 0;
+
+    public function __serialize(): array
+    {
+        $clone = clone $this;
+        $clone->setExtractFlags(self::EXTR_BOTH);
+
+        $data = [];
+        foreach ($clone as $item) {
+            $data[] = $item;
+        }
+
+        return $data;
+    }
+
+    public function __unserialize(array $data): void
+    {
+        foreach ($data as $item) {
+            $this->insert($item['data'], $item['priority']);
+        }
+    }
 
     /**
      * Insert an element in the queue with a specified priority
@@ -176,8 +200,9 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Get the total number of elements in the queue
      *
-     * @return integer
+     * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return $this->count;
@@ -188,6 +213,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         switch ($this->extractFlag) {
@@ -206,8 +232,9 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Get the index of the current element in the queue
      *
-     * @return integer
+     * @return int
      */
+    #[ReturnTypeWillChange]
     public function key()
     {
         return $this->index;
@@ -240,6 +267,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Set the iterator pointer to the next element in the queue
      * without removing the previous element
      */
+    #[ReturnTypeWillChange]
     public function next()
     {
         if (false === next($this->values[$this->maxPriority])) {
@@ -255,8 +283,9 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Check if the current iterator is valid
      *
-     * @return boolean
+     * @return bool
      */
+    #[ReturnTypeWillChange]
     public function valid()
     {
         return isset($this->values[$this->maxPriority]);
@@ -265,6 +294,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Rewind the current iterator
      */
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         $this->subPriorities = $this->priorities;
@@ -296,15 +326,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      */
     public function serialize()
     {
-        $clone = clone $this;
-        $clone->setExtractFlags(self::EXTR_BOTH);
-
-        $data = [];
-        foreach ($clone as $item) {
-            $data[] = $item;
-        }
-
-        return serialize($data);
+        return serialize($this->__serialize());
     }
 
     /**
@@ -315,9 +337,15 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      */
     public function unserialize($data)
     {
-        foreach (unserialize($data) as $item) {
-            $this->insert($item['data'], $item['priority']);
+        $toUnserialize = unserialize($data);
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(sprintf(
+                'Cannot deserialize %s instance; corrupt serialization data',
+                self::class
+            ));
         }
+
+        $this->__unserialize($toUnserialize);
     }
 
     /**
