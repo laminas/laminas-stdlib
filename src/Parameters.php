@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Stdlib;
 
 use ArrayObject as PhpArrayObject;
+use ReturnTypeWillChange;
 
 use function http_build_query;
 use function parse_str;
@@ -79,6 +80,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * @param  string $name
      * @return mixed
      */
+    #[ReturnTypeWillChange]
     public function offsetGet($name)
     {
         if ($this->offsetExists($name)) {

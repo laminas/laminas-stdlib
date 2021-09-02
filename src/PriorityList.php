@@ -7,6 +7,7 @@ namespace Laminas\Stdlib;
 use Countable;
 use Exception;
 use Iterator;
+use ReturnTypeWillChange;
 
 use function array_map;
 use function current;
@@ -194,6 +195,7 @@ class PriorityList implements Iterator, Countable
     /**
      * {@inheritDoc}
      */
+    #[ReturnTypeWillChange]
     public function rewind()
     {
         $this->sort();
@@ -203,6 +205,7 @@ class PriorityList implements Iterator, Countable
     /**
      * {@inheritDoc}
      */
+    #[ReturnTypeWillChange]
     public function current()
     {
         $this->sorted || $this->sort();
@@ -214,6 +217,7 @@ class PriorityList implements Iterator, Countable
     /**
      * {@inheritDoc}
      */
+    #[ReturnTypeWillChange]
     public function key()
     {
         $this->sorted || $this->sort();
@@ -223,6 +227,7 @@ class PriorityList implements Iterator, Countable
     /**
      * {@inheritDoc}
      */
+    #[ReturnTypeWillChange]
     public function next()
     {
         $node = next($this->items);
@@ -233,6 +238,7 @@ class PriorityList implements Iterator, Countable
     /**
      * {@inheritDoc}
      */
+    #[ReturnTypeWillChange]
     public function valid()
     {
         return current($this->items) !== false;
@@ -249,6 +255,7 @@ class PriorityList implements Iterator, Countable
     /**
      * {@inheritDoc}
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return $this->count;

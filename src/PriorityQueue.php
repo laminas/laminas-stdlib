@@ -6,6 +6,7 @@ namespace Laminas\Stdlib;
 
 use Countable;
 use IteratorAggregate;
+use ReturnTypeWillChange;
 use Serializable;
 use UnexpectedValueException;
 
@@ -132,6 +133,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @return int
      */
+    #[ReturnTypeWillChange]
     public function count()
     {
         return count($this->items);
@@ -196,6 +198,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @return SplPriorityQueue
      */
+    #[ReturnTypeWillChange]
     public function getIterator()
     {
         $queue = $this->getQueue();
