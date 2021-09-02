@@ -9,20 +9,25 @@ use Countable;
 use Iterator;
 use IteratorAggregate;
 use Serializable;
+use UnexpectedValueException;
 
 use function array_keys;
 use function asort;
 use function class_exists;
 use function count;
+use function get_class;
 use function get_object_vars;
+use function gettype;
 use function in_array;
 use function is_array;
 use function is_callable;
 use function is_object;
+use function is_string;
 use function ksort;
 use function natcasesort;
 use function natsort;
 use function serialize;
+use function sprintf;
 use function strpos;
 use function uasort;
 use function uksort;
@@ -345,7 +350,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public function serialize()
     {
-        return serialize(get_object_vars($this));
+        return serialize($this->__serialize());
     }
 
     /**
@@ -429,30 +434,15 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public function unserialize($data)
     {
-        $ar                        = unserialize($data);
-        $this->protectedProperties = array_keys(get_object_vars($this));
-
-        $this->setFlags($ar['flag']);
-        $this->exchangeArray($ar['storage']);
-        $this->setIteratorClass($ar['iteratorClass']);
-
-        foreach ($ar as $k => $v) {
-            switch ($k) {
-                case 'flag':
-                    $this->setFlags($v);
-                    break;
-                case 'storage':
-                    $this->exchangeArray($v);
-                    break;
-                case 'iteratorClass':
-                    $this->setIteratorClass($v);
-                    break;
-                case 'protectedProperties':
-                    break;
-                default:
-                    $this->__set($k, $v);
-            }
+        $toUnserialize = unserialize($data);
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(sprintf(
+                'Cannot deserialize %s instance; corrupt serialization data',
+                self::class
+            ));
         }
+
+        $this->__unserialize($toUnserialize);
     }
 
     /**
@@ -465,26 +455,43 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     {
         $this->protectedProperties = array_keys(get_object_vars($this));
 
-        $this->setFlags($data['flag']);
-        $this->exchangeArray($data['storage']);
-        $this->setIteratorClass($data['iteratorClass']);
-
         foreach ($data as $k => $v) {
             switch ($k) {
                 case 'flag':
-                    $this->setFlags($v);
+                    $this->setFlags((int) $v);
                     break;
+
                 case 'storage':
+                    if (! is_array($v) && ! is_object($v)) {
+                        throw new UnexpectedValueException(sprintf(
+                            'Cannot deserialize %s instance: corrupt storage data;'
+                            . ' expected array or object, received %s',
+                            self::class,
+                            gettype($v)
+                        ));
+                    }
+
                     $this->exchangeArray($v);
                     break;
+
                 case 'iteratorClass':
+                    if (! is_string($v)) {
+                        throw new UnexpectedValueException(sprintf(
+                            'Cannot deserialize %s instance: invalid iteratorClass; expected string, received %s',
+                            self::class,
+                            is_object($v) ? get_class($v) : gettype($v)
+                        ));
+                    }
+
                     $this->setIteratorClass($v);
                     break;
+
                 case 'protectedProperties':
                     break;
+
                 default:
                     $this->__set($k, $v);
             }
         }
-    }	
+    }
 }

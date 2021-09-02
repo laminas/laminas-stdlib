@@ -7,10 +7,12 @@ namespace Laminas\Stdlib;
 use Countable;
 use IteratorAggregate;
 use Serializable;
+use UnexpectedValueException;
 
 use function array_map;
 use function count;
 use function get_class;
+use function is_array;
 use function serialize;
 use function sprintf;
 use function unserialize;
@@ -207,7 +209,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      */
     public function serialize()
     {
-        return serialize($this->items);
+        return serialize($this->__serialize());
     }
 
     /**
@@ -230,17 +232,23 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      */
     public function unserialize($data)
     {
-        foreach (unserialize($data) as $item) {
-            $this->insert($item['data'], $item['priority']);
+        $toUnserialize = unserialize($data);
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(sprintf(
+                'Cannot deserialize %s instance; corrupt serialization data',
+                self::class
+            ));
         }
+
+        $this->__unserialize($toUnserialize);
     }
 
    /**
-     * Magic method used to rebuild an instance.
-     *
-     * @param array $data Data array.
-     * @return void
-     */
+    * Magic method used to rebuild an instance.
+    *
+    * @param array $data Data array.
+    * @return void
+    */
     public function __unserialize($data)
     {
         foreach ($data as $item) {

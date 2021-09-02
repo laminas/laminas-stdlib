@@ -5,8 +5,11 @@ declare(strict_types=1);
 namespace Laminas\Stdlib;
 
 use Serializable;
+use UnexpectedValueException;
 
+use function is_array;
 use function serialize;
+use function sprintf;
 use function unserialize;
 
 /**
@@ -35,7 +38,7 @@ class SplStack extends \SplStack implements Serializable
      */
     public function serialize()
     {
-        return serialize($this->toArray());
+        return serialize($this->__serialize());
     }
 
     /**
@@ -56,17 +59,23 @@ class SplStack extends \SplStack implements Serializable
      */
     public function unserialize($data)
     {
-        foreach (unserialize($data) as $item) {
-            $this->unshift($item);
+        $toUnserialize = unserialize($data);
+        if (! is_array($toUnserialize)) {
+            throw new UnexpectedValueException(sprintf(
+                'Cannot deserialize %s instance; corrupt serialization data',
+                self::class
+            ));
         }
+
+        $this->__unserialize($toUnserialize);
     }
 
    /**
-     * Magic method used to rebuild an instance.
-     *
-     * @param array $data Data array.
-     * @return void
-     */
+    * Magic method used to rebuild an instance.
+    *
+    * @param array $data Data array.
+    * @return void
+    */
     public function __unserialize($data)
     {
         foreach ($data as $item) {

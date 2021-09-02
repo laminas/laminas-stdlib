@@ -8,15 +8,18 @@ use Countable;
 use Iterator;
 use Serializable;
 use SplPriorityQueue as PhpSplPriorityQueue;
+use UnexpectedValueException;
 
 use function current;
 use function in_array;
+use function is_array;
 use function is_int;
 use function key;
 use function max;
 use function next;
 use function reset;
 use function serialize;
+use function sprintf;
 use function unserialize;
 
 /**
