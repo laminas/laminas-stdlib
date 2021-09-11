@@ -64,10 +64,9 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Priority defaults to 1 (low priority) if none provided.
      *
      * @param  mixed $data
-     * @param  int $priority
      * @return PriorityQueue
      */
-    public function insert($data, $priority = 1)
+    public function insert($data, int $priority = 1)
     {
         $priority      = (int) $priority;
         $this->items[] = [
@@ -266,10 +265,9 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * sorted). You may provide one of the EXTR_* flags as an argument, allowing
      * the ability to return priorities or both data and priority.
      *
-     * @param  int $flag
      * @return array
      */
-    public function toArray($flag = self::EXTR_DATA)
+    public function toArray(int $flag = self::EXTR_DATA)
     {
         switch ($flag) {
             case self::EXTR_BOTH:
@@ -292,12 +290,11 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Please see {@link getIterator()} for details on the necessity of an
      * internal queue class. The class provided should extend SplPriorityQueue.
      *
-     * @param  string $class
      * @return PriorityQueue
      */
-    public function setInternalQueueClass($class)
+    public function setInternalQueueClass(string $class)
     {
-        $this->queueClass = (string) $class;
+        $this->queueClass = $class;
         return $this;
     }
 
@@ -320,10 +317,9 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     /**
      * Does the queue have an item with the given priority?
      *
-     * @param  int $priority
      * @return bool
      */
-    public function hasPriority($priority)
+    public function hasPriority(int $priority)
     {
         foreach ($this->items as $item) {
             if ($item['priority'] === $priority) {
