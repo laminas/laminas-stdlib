@@ -6,6 +6,7 @@ namespace Laminas\Stdlib\StringWrapper;
 
 use Laminas\Stdlib\Exception;
 
+use function assert;
 use function extension_loaded;
 use function iconv;
 use function iconv_strlen;
@@ -244,6 +245,9 @@ class Iconv extends AbstractStringWrapper
      */
     public function substr($str, $offset = 0, $length = null)
     {
+        $length = $length ?? $this->strlen($str);
+        assert($length !== false);
+
         return iconv_substr($str, $offset, $length, $this->getEncoding());
     }
 
@@ -257,7 +261,10 @@ class Iconv extends AbstractStringWrapper
      */
     public function strpos($haystack, $needle, $offset = 0)
     {
-        return iconv_strpos($haystack, $needle, $offset, $this->getEncoding());
+        $encoding = $this->getEncoding();
+        assert($encoding !== null);
+
+        return iconv_strpos($haystack, $needle, $offset, $encoding);
     }
 
     /**

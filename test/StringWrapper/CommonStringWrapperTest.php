@@ -57,7 +57,7 @@ abstract class CommonStringWrapperTest extends TestCase
      *     0: string,
      *     1: string,
      *     2: int,
-     *     3: int,
+     *     3: ?int,
      *     4: string
      * }>
      */
@@ -65,6 +65,7 @@ abstract class CommonStringWrapperTest extends TestCase
     {
         return [
             ['ascii', 'abcdefghijkl', 1, 5, 'bcdef'],
+            ['utf-8', 'abcdefghijkl', 1, null, 'bcdefghijkl'],
             ['utf-8', 'abcdefghijkl', 1, 5, 'bcdef'],
             ['utf-8', 'äöüß',         1, 2, 'öü'],
         ];
@@ -73,7 +74,7 @@ abstract class CommonStringWrapperTest extends TestCase
     /**
      * @dataProvider substrProvider
      */
-    public function testSubstr(string $encoding, string $str, int $offset, int $length, string $expected): void
+    public function testSubstr(string $encoding, string $str, int $offset, ?int $length, string $expected): void
     {
         $wrapper = $this->getWrapper($encoding);
         if (! $wrapper) {
