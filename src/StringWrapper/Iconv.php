@@ -244,7 +244,12 @@ class Iconv extends AbstractStringWrapper
      */
     public function substr($str, $offset = 0, $length = null)
     {
-        return iconv_substr($str, $offset, $length, $this->getEncoding());
+        return iconv_substr(
+            $str,
+            $offset,
+            $length === null ? iconv_strlen($str, $this->getEncoding()) : $length,
+            $this->getEncoding()
+        );
     }
 
     /**
