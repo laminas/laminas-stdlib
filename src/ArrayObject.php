@@ -16,6 +16,7 @@ use function array_keys;
 use function asort;
 use function class_exists;
 use function count;
+use function get_class;
 use function get_object_vars;
 use function gettype;
 use function in_array;
