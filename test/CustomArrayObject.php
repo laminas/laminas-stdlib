@@ -8,6 +8,7 @@ use Laminas\Stdlib\ArrayObject;
 
 final class CustomArrayObject extends ArrayObject
 {
+    /** @var bool */
     protected $isImmutable = true;
 
     public function isImmutable(): bool
