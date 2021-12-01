@@ -12,6 +12,7 @@ use ReturnTypeWillChange;
 use Serializable;
 use UnexpectedValueException;
 
+use function array_key_exists;
 use function array_keys;
 use function asort;
 use function class_exists;
@@ -480,7 +481,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
             unset($data['storage']);
         }
 
-        if (array_key_exists('iteratorClass', $data) {
+        if (array_key_exists('iteratorClass', $data)) {
             if (! is_string($data['iteratorClass'])) {
                 throw new UnexpectedValueException(sprintf(
                     'Cannot deserialize %s instance: invalid iteratorClass; expected string, received %s',
