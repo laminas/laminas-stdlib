@@ -462,35 +462,39 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     {
         $this->protectedProperties = array_keys(get_object_vars($this));
 
-        $flag = $data['flag'];
-        unset($data['flag']);
-        $this->setFlags((int) $flag);
-
-        $storage = $data['storage'];
-        unset($data['storage']);
-        if (! is_array($storage) && ! is_object($storage)) {
-            throw new UnexpectedValueException(sprintf(
-                'Cannot deserialize %s instance: corrupt storage data;'
-                . ' expected array or object, received %s',
-                self::class,
-                gettype($storage)
-            ));
+        // Unserialize protected internal properties first
+        if (array_key_exists('flag', $data)) {
+            $this->setFlags((int) $data['flag']);
+            unset($data['flag']);
         }
-        $this->exchangeArray($storage);
 
-        $iteratorClass = $data['iteratorClass'];
-        unset($data['iteratorClass']);
-        if (! is_string($iteratorClass)) {
-            throw new UnexpectedValueException(sprintf(
-                'Cannot deserialize %s instance: invalid iteratorClass; expected string, received %s',
-                self::class,
-                is_object($iteratorClass) ? get_class($iteratorClass) : gettype($iteratorClass)
-            ));
+        if (array_key_exists('storage', $data)) {
+            if (! is_array($data['storage']) && ! is_object($data['storage'])) {
+                throw new UnexpectedValueException(sprintf(
+                    'Cannot deserialize %s instance: corrupt storage data; expected array or object, received %s',
+                    self::class,
+                    gettype($data['storage'])
+                ));
+            }
+            $this->exchangeArray($data['storage']);
+            unset($data['storage']);
         }
-        $this->setIteratorClass($iteratorClass);
+
+        if (array_key_exists('iteratorClass', $data) {
+            if (! is_string($data['iteratorClass'])) {
+                throw new UnexpectedValueException(sprintf(
+                    'Cannot deserialize %s instance: invalid iteratorClass; expected string, received %s',
+                    self::class,
+                    is_object($data['iteratorClass']) ? get_class($data['iteratorClass']) : gettype($data['iteratorClass'])
+                ));
+            }
+            $this->setIteratorClass($data['iteratorClass']);
+            unset($data['iteratorClass']);
+        }
 
         unset($data['protectedProperties']);
 
+        // Unserialize array keys after resolving protected properties to ensure configuration is used.
         foreach ($data as $k => $v) {
             $this->__set($k, $v);
         }
