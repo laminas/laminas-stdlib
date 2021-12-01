@@ -486,7 +486,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
                 throw new UnexpectedValueException(sprintf(
                     'Cannot deserialize %s instance: invalid iteratorClass; expected string, received %s',
                     self::class,
-                    is_object($data['iteratorClass']) ? get_class($data['iteratorClass']) : gettype($data['iteratorClass'])
+                    is_object($data['iteratorClass'])
+                        ? get_class($data['iteratorClass'])
+                        : gettype($data['iteratorClass'])
                 ));
             }
             $this->setIteratorClass($data['iteratorClass']);
