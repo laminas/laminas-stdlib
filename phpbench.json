@@ -1,5 +1,6 @@
 {
-  "bootstrap":       "vendor/autoload.php",
-  "path":            "benchmark",
-  "retry_threshold": 5
+  "runner.bootstrap":       "vendor/autoload.php",
+  "runner.file_pattern":    "*Bench.php",
+  "runner.path":            "benchmark",
+  "runner.retry_threshold": 5
 }
