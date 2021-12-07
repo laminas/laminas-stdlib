@@ -12,6 +12,7 @@ use ReturnTypeWillChange;
 use Serializable;
 use UnexpectedValueException;
 
+use function array_key_exists;
 use function array_keys;
 use function asort;
 use function class_exists;
@@ -92,7 +93,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (in_array($key, $this->protectedProperties)) {
-            throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
+            throw new Exception\InvalidArgumentException("$key is a protected property, use a different key");
         }
 
         return isset($this->$key);
@@ -113,7 +114,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (in_array($key, $this->protectedProperties)) {
-            throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
+            throw new Exception\InvalidArgumentException("$key is a protected property, use a different key");
         }
 
         $this->$key = $value;
@@ -133,7 +134,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (in_array($key, $this->protectedProperties)) {
-            throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
+            throw new Exception\InvalidArgumentException("$key is a protected property, use a different key");
         }
 
         unset($this->$key);
@@ -154,7 +155,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
         }
 
         if (in_array($key, $this->protectedProperties, true)) {
-            throw new Exception\InvalidArgumentException('$key is a protected property, use a different key');
+            throw new Exception\InvalidArgumentException("$key is a protected property, use a different key");
         }
 
         return $this->$key;
@@ -462,43 +463,43 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     {
         $this->protectedProperties = array_keys(get_object_vars($this));
 
-        foreach ($data as $k => $v) {
-            switch ($k) {
-                case 'flag':
-                    $this->setFlags((int) $v);
-                    break;
+        // Unserialize protected internal properties first
+        if (array_key_exists('flag', $data)) {
+            $this->setFlags((int) $data['flag']);
+            unset($data['flag']);
+        }
 
-                case 'storage':
-                    if (! is_array($v) && ! is_object($v)) {
-                        throw new UnexpectedValueException(sprintf(
-                            'Cannot deserialize %s instance: corrupt storage data;'
-                            . ' expected array or object, received %s',
-                            self::class,
-                            gettype($v)
-                        ));
-                    }
-
-                    $this->exchangeArray($v);
-                    break;
-
-                case 'iteratorClass':
-                    if (! is_string($v)) {
-                        throw new UnexpectedValueException(sprintf(
-                            'Cannot deserialize %s instance: invalid iteratorClass; expected string, received %s',
-                            self::class,
-                            is_object($v) ? get_class($v) : gettype($v)
-                        ));
-                    }
-
-                    $this->setIteratorClass($v);
-                    break;
-
-                case 'protectedProperties':
-                    break;
-
-                default:
-                    $this->__set($k, $v);
+        if (array_key_exists('storage', $data)) {
+            if (! is_array($data['storage']) && ! is_object($data['storage'])) {
+                throw new UnexpectedValueException(sprintf(
+                    'Cannot deserialize %s instance: corrupt storage data; expected array or object, received %s',
+                    self::class,
+                    gettype($data['storage'])
+                ));
             }
+            $this->exchangeArray($data['storage']);
+            unset($data['storage']);
+        }
+
+        if (array_key_exists('iteratorClass', $data)) {
+            if (! is_string($data['iteratorClass'])) {
+                throw new UnexpectedValueException(sprintf(
+                    'Cannot deserialize %s instance: invalid iteratorClass; expected string, received %s',
+                    self::class,
+                    is_object($data['iteratorClass'])
+                        ? get_class($data['iteratorClass'])
+                        : gettype($data['iteratorClass'])
+                ));
+            }
+            $this->setIteratorClass($data['iteratorClass']);
+            unset($data['iteratorClass']);
+        }
+
+        unset($data['protectedProperties']);
+
+        // Unserialize array keys after resolving protected properties to ensure configuration is used.
+        foreach ($data as $k => $v) {
+            $this->__set($k, $v);
         }
     }
 }
