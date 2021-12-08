@@ -401,4 +401,15 @@ class ArrayObjectTest extends TestCase
 
         self::assertEquals($ar, unserialize(serialize($ar)));
     }
+
+    public function testSerializationRestoresProtectedProperties(): void
+    {
+        $ar = new CustomArrayObject([], ArrayObject::ARRAY_AS_PROPS);
+        self::assertTrue($ar->isImmutable());
+
+        $serialized   = serialize($ar);
+        $unserialized = unserialize($serialized);
+
+        self::assertTrue($unserialized->isImmutable());
+    }
 }

@@ -41,9 +41,11 @@
       <code>$this-&gt;storage[$key]</code>
       <code>$this-&gt;storage[$key]</code>
     </MixedArrayOffset>
-    <MixedAssignment occurrences="2">
+    <MixedAssignment occurrences="4">
+      <code>$flag</code>
       <code>$ret</code>
       <code>$ret</code>
+      <code>$v</code>
     </MixedAssignment>
     <MoreSpecificReturnType occurrences="1">
       <code>Iterator</code>
@@ -58,6 +60,14 @@
       <code>is_callable($function)</code>
       <code>is_callable($function)</code>
     </RedundantConditionGivenDocblockType>
+    <UndefinedAttributeClass occurrences="6">
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+    </UndefinedAttributeClass>
   </file>
   <file src="src/ArrayUtils.php">
     <DocblockTypeContradiction occurrences="1">
@@ -158,6 +168,14 @@
       <code>$this-&gt;values</code>
       <code>$this-&gt;values</code>
     </PossiblyNullArrayOffset>
+    <UndefinedAttributeClass occurrences="6">
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+    </UndefinedAttributeClass>
   </file>
   <file src="src/Glob.php">
     <InvalidOperand occurrences="2">
@@ -205,6 +223,9 @@
     <MixedAssignment occurrences="1">
       <code>$this[$name]</code>
     </MixedAssignment>
+    <UndefinedAttributeClass occurrences="1">
+      <code>ReturnTypeWillChange</code>
+    </UndefinedAttributeClass>
   </file>
   <file src="src/PriorityList.php">
     <InvalidReturnStatement occurrences="1">
@@ -223,6 +244,14 @@
       <code>(int) $priority</code>
       <code>(int) $priority</code>
     </RedundantCastGivenDocblockType>
+    <UndefinedAttributeClass occurrences="6">
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+    </UndefinedAttributeClass>
   </file>
   <file src="src/PriorityQueue.php">
     <DocblockTypeContradiction occurrences="1">
@@ -292,6 +321,10 @@
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>null !== $this-&gt;queue</code>
     </RedundantConditionGivenDocblockType>
+    <UndefinedAttributeClass occurrences="2">
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+    </UndefinedAttributeClass>
   </file>
   <file src="src/SplPriorityQueue.php">
     <ImplementedReturnTypeMismatch occurrences="1">
@@ -305,7 +338,6 @@
       <code>$data[]</code>
       <code>$item</code>
       <code>$item</code>
-      <code>$item</code>
     </MixedAssignment>
   </file>
   <file src="src/SplQueue.php">
@@ -314,6 +346,12 @@
       <code>$item</code>
       <code>$item</code>
     </MixedAssignment>
+    <UndefinedAttributeClass occurrences="4">
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+    </UndefinedAttributeClass>
   </file>
   <file src="src/SplStack.php">
     <MixedAssignment occurrences="3">
@@ -321,6 +359,12 @@
       <code>$item</code>
       <code>$item</code>
     </MixedAssignment>
+    <UndefinedAttributeClass occurrences="4">
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+      <code>ReturnTypeWillChange</code>
+    </UndefinedAttributeClass>
   </file>
   <file src="src/StringUtils.php">
     <DocblockTypeContradiction occurrences="2">
@@ -377,9 +421,7 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/StringWrapper/Iconv.php">
-    <PossiblyNullArgument occurrences="4">
-      <code>$length</code>
-      <code>$this-&gt;getEncoding()</code>
+    <PossiblyNullArgument occurrences="2">
       <code>$this-&gt;getEncoding()</code>
       <code>$this-&gt;getEncoding()</code>
     </PossiblyNullArgument>
@@ -424,6 +466,12 @@
       <code>$ar['foo']['bar']</code>
       <code>$ar['foo']['bar']</code>
     </MixedArrayAccess>
+    <MixedAssignment occurrences="1">
+      <code>$unserialized</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="1">
+      <code>isImmutable</code>
+    </MixedMethodCall>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>assertSame</code>
     </RedundantConditionGivenDocblockType>
@@ -499,6 +547,20 @@
       <code>$this-&gt;helper</code>
       <code>$this-&gt;helper</code>
     </UndefinedThisPropertyFetch>
+  </file>
+  <file src="test/CustomArrayObject.php">
+    <MissingPropertyType occurrences="1">
+      <code>$isImmutable</code>
+    </MissingPropertyType>
+    <MixedInferredReturnType occurrences="1">
+      <code>bool</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;isImmutable</code>
+    </MixedReturnStatement>
+    <PropertyNotSetInConstructor occurrences="1">
+      <code>CustomArrayObject</code>
+    </PropertyNotSetInConstructor>
   </file>
   <file src="test/ErrorHandlerTest.php">
     <ArgumentTypeCoercion occurrences="3">
