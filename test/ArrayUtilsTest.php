@@ -584,7 +584,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @link https://github.com/laminas/laminas-stdlib/issues/18
      */
-    public function testIteratorToArrayWithIteratorHavingMethodToArrayAndRecursiveIsFalse()
+    public function testIteratorToArrayWithIteratorHavingMethodToArrayAndRecursiveIsFalse(): void
     {
         $arrayB    = [
             'foo' => 'bar',
