@@ -5,6 +5,7 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
+use Iterator;
 use Laminas\Stdlib\ArrayUtils\MergeRemoveKey;
 use Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface;
 use Traversable;
@@ -240,7 +241,11 @@ abstract class ArrayUtils
             return iterator_to_array($iterator);
         }
 
-        if (is_object($iterator) && method_exists($iterator, 'toArray')) {
+        if (
+            is_object($iterator)
+            && ! $iterator instanceof Iterator
+            && method_exists($iterator, 'toArray')
+        ) {
             return $iterator->toArray();
         }
 
