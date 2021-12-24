@@ -8,20 +8,18 @@ use Iterator;
 use ReturnTypeWillChange;
 
 use function current;
-use function is_array;
 use function key;
 use function next;
 use function reset;
 
 class IteratorWithToArrayMethod implements Iterator
 {
-    private array $elements = [];
+    /** @var array */
+    private $elements = [];
 
     public function __construct(array $elements)
     {
-        if (is_array($elements)) {
-            $this->elements = $elements;
-        }
+        $this->elements = $elements;
     }
 
     /** @return void */
