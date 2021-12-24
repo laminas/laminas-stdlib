@@ -139,6 +139,10 @@ class GlobTest extends TestCase
         int $otherFlags,
         bool $expected
     ): void {
+        /**
+         * @psalm-suppress InternalMethod this test is specifically testing the behavior of this method,
+         *                                to prevent regressions
+         */
         $actual = Glob::flagsIsEqualTo($flags, $otherFlags);
 
         $this->assertEquals($expected, $actual);
