@@ -11,6 +11,7 @@ use Laminas\Stdlib\ArrayUtils\MergeReplaceKey;
 use Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Laminas\Stdlib\Parameters;
+use LaminasTest\Stdlib\TestAsset\IteratorWithToArrayMethod;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Traversable;
@@ -578,5 +579,31 @@ class ArrayUtilsTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         ArrayUtils::filter([], "INVALID");
+    }
+
+    /**
+     * @link https://github.com/laminas/laminas-stdlib/issues/18
+     */
+    public function testIteratorToArrayWithIteratorHavingMethodToArrayAndRecursiveIsFalse(): void
+    {
+        $arrayB    = [
+            'foo' => 'bar',
+        ];
+        $iteratorB = new IteratorWithToArrayMethod($arrayB);
+
+        $arrayA   = [
+            'iteratorB' => $iteratorB,
+        ];
+        $iterator = new IteratorWithToArrayMethod($arrayA);
+
+        $result = ArrayUtils::iteratorToArray($iterator, true);
+
+        $expectedResult = [
+            'iteratorB' => [
+                'foo' => 'bar',
+            ],
+        ];
+
+        $this->assertEquals($expectedResult, $result);
     }
 }

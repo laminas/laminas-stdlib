@@ -109,7 +109,7 @@ abstract class Glob
      */
     protected static function fallbackGlob($pattern, $flags)
     {
-        if (! $flags & self::GLOB_BRACE) {
+        if (self::flagsIsEqualTo($flags, self::GLOB_BRACE)) {
             return static::systemGlob($pattern, $flags);
         }
 
@@ -195,14 +195,19 @@ abstract class Glob
         $current = $begin;
 
         while ($current < $length) {
-            if (! $flags & self::GLOB_NOESCAPE && $pattern[$current] === '\\') {
+            $flagsEqualsNoEscape = self::flagsIsEqualTo($flags, self::GLOB_NOESCAPE);
+
+            if ($flagsEqualsNoEscape && $pattern[$current] === '\\') {
                 if (++$current === $length) {
                     break;
                 }
 
                 $current++;
             } else {
-                if (($pattern[$current] === '}' && $depth-- === 0) || ($pattern[$current] === ',' && $depth === 0)) {
+                if (
+                    ($pattern[$current] === '}' && $depth-- === 0)
+                    || ($pattern[$current] === ',' && $depth === 0)
+                ) {
                     break;
                 } elseif ($pattern[$current++] === '{') {
                     $depth++;
@@ -211,5 +216,11 @@ abstract class Glob
         }
 
         return $current < $length ? $current : null;
+    }
+
+    /** @internal */
+    public static function flagsIsEqualTo(int $flags, int $otherFlags): bool
+    {
+        return (bool) ($flags & $otherFlags);
     }
 }
