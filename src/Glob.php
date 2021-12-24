@@ -218,6 +218,7 @@ abstract class Glob
         return $current < $length ? $current : null;
     }
 
+    /** @internal */
     public static function flagsIsEqualTo(int $flags, int $otherFlags): bool
     {
         return (bool) ($flags & $otherFlags);
