@@ -109,7 +109,7 @@ abstract class Glob
      */
     protected static function fallbackGlob($pattern, $flags)
     {
-        if (self::flagsIsEqualTo($flags, self::GLOB_BRACE)) {
+        if (! self::flagsIsEqualTo($flags, self::GLOB_BRACE)) {
             return static::systemGlob($pattern, $flags);
         }
 
