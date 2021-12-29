@@ -19,7 +19,7 @@ jobs:
         id: matrix
         uses: laminas/laminas-ci-matrix-action@v1
 
-  qa:
+  qa-ubuntu:
     name: QA Checks
     needs: [matrix]
     runs-on: ${{ matrix.operatingSystem }}
@@ -31,3 +31,31 @@ jobs:
         uses: laminas/laminas-continuous-integration-action@v1
         with:
           job: ${{ matrix.job }}
+
+  qa-alpine:
+    name: QA Checks (PHPUnit on PHP 8.1 with Alpine Linux)
+    runs-on: ubuntu-latest
+    container:
+      image: php:8.1-alpine
+    steps:
+      - name: Show Alpine and PHP versions
+        run: |
+          cat /etc/os-release
+          php -v
+      - name: Install packages and PHP extensions
+        run: |
+          apk add git oniguruma-dev libxml2-dev
+          docker-php-ext-install mbstring
+          docker-php-ext-install xml
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install composer
+        run: |
+          php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+          php -r "if (hash_file('sha384', 'composer-setup.php') === '906a84df04cea2aa72f40b5f787e49f22d4c2f19492ac310e8cba5b96ac8b64115ac402c8cd292b8a03482574915d1a8') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+          php composer-setup.php
+          php -r "unlink('composer-setup.php');"
+      - name: Install latest dependencies
+        run: php composer.phar update --ignore-platform-req=php
+      - name: PHPUnit
+        run: ./vendor/bin/phpunit
