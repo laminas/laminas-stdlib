@@ -10,6 +10,10 @@ use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_shift;
 use function extension_loaded;
+use function file_exists;
+use function file_get_contents;
+use function is_readable;
+use function stripos;
 
 class IconvTest extends CommonStringWrapperTest
 {
@@ -21,6 +25,19 @@ class IconvTest extends CommonStringWrapperTest
                 $this->fail('Missing expected Laminas\Stdlib\Exception\ExtensionNotLoadedException');
             } catch (Exception\ExtensionNotLoadedException $e) {
                 $this->markTestSkipped('Missing ext/iconv');
+            }
+        }
+
+        /**
+         * ext-iconv is not properly supported on Alpine Linux, hence, we skip the tests for now
+         *
+         * @see https://github.com/nunomaduro/phpinsights/issues/43
+         * @see https://github.com/docker-library/php/issues/240#issuecomment-353678474
+         */
+        if (file_exists('/etc/os-release') && is_readable('/etc/os-release')) {
+            $osRelease = file_get_contents('/etc/os-release');
+            if (stripos($osRelease, 'Alpine Linux') !== false) {
+                $this->markTestSkipped('iconv not properly supported on Alpine Linux');
             }
         }
 
