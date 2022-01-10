@@ -25,7 +25,7 @@ class SplQueue extends \SplQueue implements Serializable
     /**
      * Return an array representing the queue
      *
-     * @return array<array-key, TValue>
+     * @return list<TValue>
      */
     public function toArray()
     {
@@ -50,7 +50,7 @@ class SplQueue extends \SplQueue implements Serializable
     /**
      * Magic method used for serializing of an instance.
      *
-     * @return array<array-key, TValue>
+     * @return list<TValue>
      */
     #[ReturnTypeWillChange]
     public function __serialize()
