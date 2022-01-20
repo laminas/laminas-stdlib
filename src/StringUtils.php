@@ -21,7 +21,7 @@ abstract class StringUtils
     /**
      * Ordered list of registered string wrapper instances
      *
-     * @var StringWrapperInterface[]
+     * @var list<class-string<StringWrapperInterface>>
      */
     protected static $wrapperRegistry = null;
 
