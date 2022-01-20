@@ -171,6 +171,7 @@ class StringUtilsTest extends TestCase
         // then verify that native is contained in the wrapper list
         $this->assertContains(Native::class, StringUtils::getRegisteredWrappers());
 
+        StringUtils::resetRegisteredWrappers();
         StringUtils::unregisterWrapper(Native::class);
 
         $this->assertNotContains(Native::class, StringUtils::getRegisteredWrappers());
