@@ -83,7 +83,8 @@ abstract class StringUtils
     public static function registerWrapper($wrapper)
     {
         $wrapper = (string) $wrapper;
-        if (!in_array($wrapper, static::$wrapperRegistry, true)) {
+        // using getRegisteredWrappers() here to ensure that the list is initialized
+        if (!in_array($wrapper, static::getRegisteredWrappers(), true)) {
             static::$wrapperRegistry[] = $wrapper;
         }
     }
@@ -96,7 +97,8 @@ abstract class StringUtils
      */
     public static function unregisterWrapper($wrapper)
     {
-        $index = array_search((string) $wrapper, static::$wrapperRegistry, true);
+        // using getRegisteredWrappers() here to ensure that the list is initialized
+        $index = array_search((string) $wrapper, static::getRegisteredWrappers(), true);
         if ($index !== false) {
             unset(static::$wrapperRegistry[$index]);
         }
