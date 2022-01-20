@@ -21,7 +21,7 @@ abstract class StringUtils
     /**
      * Ordered list of registered string wrapper instances
      *
-     * @var StringWrapperInterface[]
+     * @var list<class-string<StringWrapperInterface>>|null
      */
     protected static $wrapperRegistry = null;
 
@@ -49,7 +49,7 @@ abstract class StringUtils
     /**
      * Get registered wrapper classes
      *
-     * @return string[]
+     * @return list<class-string<StringWrapperInterface>>
      */
     public static function getRegisteredWrappers()
     {
@@ -77,13 +77,14 @@ abstract class StringUtils
     /**
      * Register a string wrapper class
      *
-     * @param string $wrapper
+     * @param class-string<StringWrapperInterface> $wrapper
      * @return void
      */
     public static function registerWrapper($wrapper)
     {
         $wrapper = (string) $wrapper;
-        if (!in_array($wrapper, static::$wrapperRegistry, true)) {
+        // using getRegisteredWrappers() here to ensure that the list is initialized
+        if (!in_array($wrapper, static::getRegisteredWrappers(), true)) {
             static::$wrapperRegistry[] = $wrapper;
         }
     }
@@ -91,12 +92,13 @@ abstract class StringUtils
     /**
      * Unregister a string wrapper class
      *
-     * @param string $wrapper
+     * @param class-string<StringWrapperInterface> $wrapper
      * @return void
      */
     public static function unregisterWrapper($wrapper)
     {
-        $index = array_search((string) $wrapper, static::$wrapperRegistry, true);
+        // using getRegisteredWrappers() here to ensure that the list is initialized
+        $index = array_search((string) $wrapper, static::getRegisteredWrappers(), true);
         if ($index !== false) {
             unset(static::$wrapperRegistry[$index]);
         }
