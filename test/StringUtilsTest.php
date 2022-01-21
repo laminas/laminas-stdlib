@@ -170,4 +170,24 @@ class StringUtilsTest extends TestCase
 
         self::assertSame($expected, StringUtils::hasPcreUnicodeSupport());
     }
+
+    public function testRegisterSpecificWrapper()
+    {
+        StringUtils::resetRegisteredWrappers();
+        StringUtils::registerWrapper('MyAwesomeWrapper');
+
+        $this->assertContains('MyAwesomeWrapper', StringUtils::getRegisteredWrappers());
+    }
+
+    public function testUnregisterSpecificWrapper()
+    {
+        // initialize the list with defaults
+        // then verify that native is contained in the wrapper list
+        $this->assertContains(Native::class, StringUtils::getRegisteredWrappers());
+
+        StringUtils::resetRegisteredWrappers();
+        StringUtils::unregisterWrapper(Native::class);
+
+        $this->assertNotContains(Native::class, StringUtils::getRegisteredWrappers());
+    }
 }
