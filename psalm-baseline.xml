@@ -304,18 +304,13 @@
       <code>$item</code>
     </MixedAssignment>
   </file>
-  <file src="src/SplStack.php">
-    <MixedAssignment occurrences="3">
-      <code>$array[]</code>
-      <code>$item</code>
-      <code>$item</code>
-    </MixedAssignment>
-  </file>
   <file src="src/StringUtils.php">
-    <DocblockTypeContradiction occurrences="2">
+    <DocblockTypeContradiction occurrences="1">
       <code>static::$hasPcreUnicodeSupport === null</code>
-      <code>static::$wrapperRegistry === null</code>
     </DocblockTypeContradiction>
+    <PossiblyNullArrayAccess occurrences="1">
+      <code>static::$wrapperRegistry[$index]</code>
+    </PossiblyNullArrayAccess>
     <RedundantCastGivenDocblockType occurrences="2">
       <code>(string) $wrapper</code>
       <code>(string) $wrapper</code>
