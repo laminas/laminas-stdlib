@@ -11,10 +11,12 @@ use Laminas\Stdlib\StringWrapper\Iconv;
 use Laminas\Stdlib\StringWrapper\Intl;
 use Laminas\Stdlib\StringWrapper\MbString;
 use Laminas\Stdlib\StringWrapper\Native;
+use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 use PHPUnit\Framework\TestCase;
 
 use function defined;
 use function extension_loaded;
+use function get_class;
 use function preg_match;
 
 class StringUtilsTest extends TestCase
@@ -171,15 +173,17 @@ class StringUtilsTest extends TestCase
         self::assertSame($expected, StringUtils::hasPcreUnicodeSupport());
     }
 
-    public function testRegisterSpecificWrapper()
+    public function testRegisterSpecificWrapper(): void
     {
-        StringUtils::resetRegisteredWrappers();
-        StringUtils::registerWrapper('MyAwesomeWrapper');
+        $wrapper = $this->createMock(StringWrapperInterface::class);
 
-        $this->assertContains('MyAwesomeWrapper', StringUtils::getRegisteredWrappers());
+        StringUtils::resetRegisteredWrappers();
+        StringUtils::registerWrapper(get_class($wrapper));
+
+        $this->assertContains(get_class($wrapper), StringUtils::getRegisteredWrappers());
     }
 
-    public function testUnregisterSpecificWrapper()
+    public function testUnregisterSpecificWrapper(): void
     {
         // initialize the list with defaults
         // then verify that native is contained in the wrapper list
