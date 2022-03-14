@@ -43,13 +43,10 @@ abstract class Glob
      *
      * @see    http://docs.php.net/glob
      *
-     * @param  string  $pattern
-     * @param  int $flags
-     * @param  bool $forceFallback
      * @return array
      * @throws Exception\RuntimeException
      */
-    public static function glob($pattern, $flags = 0, $forceFallback = false)
+    public static function glob(string $pattern, int $flags = 0, bool $forceFallback = false)
     {
         if (! defined('GLOB_BRACE') || $forceFallback) {
             return static::fallbackGlob($pattern, $flags);
@@ -61,12 +58,10 @@ abstract class Glob
     /**
      * Use the glob function provided by the system.
      *
-     * @param  string  $pattern
-     * @param  int     $flags
      * @return array
      * @throws Exception\RuntimeException
      */
-    protected static function systemGlob($pattern, $flags)
+    protected static function systemGlob(string $pattern, int $flags)
     {
         if ($flags) {
             $flagMap = [
@@ -102,12 +97,10 @@ abstract class Glob
     /**
      * Expand braces manually, then use the system glob.
      *
-     * @param  string  $pattern
-     * @param  int     $flags
      * @return array
      * @throws Exception\RuntimeException
      */
-    protected static function fallbackGlob($pattern, $flags)
+    protected static function fallbackGlob(string $pattern, int $flags)
     {
         if (! self::flagsIsEqualTo($flags, self::GLOB_BRACE)) {
             return static::systemGlob($pattern, $flags);
@@ -183,12 +176,9 @@ abstract class Glob
     /**
      * Find the end of the sub-pattern in a brace expression.
      *
-     * @param  string  $pattern
-     * @param  int $begin
-     * @param  int $flags
      * @return int|null
      */
-    protected static function nextBraceSub($pattern, $begin, $flags)
+    protected static function nextBraceSub(string $pattern, int $begin, int $flags)
     {
         $length  = strlen($pattern);
         $depth   = 0;

@@ -50,7 +50,7 @@ abstract class ArrayUtils
      * @param  bool  $allowEmpty    Should an empty array() return true
      * @return bool
      */
-    public static function hasStringKeys($value, $allowEmpty = false)
+    public static function hasStringKeys($value, bool $allowEmpty = false)
     {
         if (! is_array($value)) {
             return false;
@@ -70,7 +70,7 @@ abstract class ArrayUtils
      * @param  bool  $allowEmpty    Should an empty array() return true
      * @return bool
      */
-    public static function hasIntegerKeys($value, $allowEmpty = false)
+    public static function hasIntegerKeys($value, bool $allowEmpty = false)
     {
         if (! is_array($value)) {
             return false;
@@ -97,7 +97,7 @@ abstract class ArrayUtils
      * @param  bool  $allowEmpty    Should an empty array() return true
      * @return bool
      */
-    public static function hasNumericKeys($value, $allowEmpty = false)
+    public static function hasNumericKeys($value, bool $allowEmpty = false)
     {
         if (! is_array($value)) {
             return false;
@@ -130,7 +130,7 @@ abstract class ArrayUtils
      * @param  bool  $allowEmpty    Is an empty list a valid list?
      * @return bool
      */
-    public static function isList($value, $allowEmpty = false)
+    public static function isList($value, bool $allowEmpty = false)
     {
         if (! is_array($value)) {
             return false;
@@ -172,7 +172,7 @@ abstract class ArrayUtils
      * @param  bool  $allowEmpty    Is an empty array() a valid hash table?
      * @return bool
      */
-    public static function isHashTable($value, $allowEmpty = false)
+    public static function isHashTable($value, bool $allowEmpty = false)
     {
         if (! is_array($value)) {
             return false;
@@ -227,7 +227,7 @@ abstract class ArrayUtils
      * @throws Exception\InvalidArgumentException If $iterator is not an array or a Traversable object.
      * @return array
      */
-    public static function iteratorToArray($iterator, $recursive = true)
+    public static function iteratorToArray($iterator, bool $recursive = true)
     {
         if (! is_array($iterator) && ! $iterator instanceof Traversable) {
             throw new Exception\InvalidArgumentException(__METHOD__ . ' expects an array or Traversable object');
@@ -281,10 +281,9 @@ abstract class ArrayUtils
      *
      * @param  array $a
      * @param  array $b
-     * @param  bool  $preserveNumericKeys
      * @return array
      */
-    public static function merge(array $a, array $b, $preserveNumericKeys = false)
+    public static function merge(array $a, array $b, bool $preserveNumericKeys = false)
     {
         foreach ($b as $key => $value) {
             if ($value instanceof MergeReplaceKeyInterface) {
@@ -314,11 +313,10 @@ abstract class ArrayUtils
      *
      * @param array $data
      * @param callable $callback
-     * @param null|int $flag
      * @return array
      * @throws Exception\InvalidArgumentException
      */
-    public static function filter(array $data, $callback, $flag = null)
+    public static function filter(array $data, $callback, ?int $flag = null)
     {
         if (! is_callable($callback)) {
             throw new Exception\InvalidArgumentException(sprintf(

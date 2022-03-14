@@ -69,10 +69,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Constructor
      *
      * @param array|object $input Object values must act like ArrayAccess
-     * @param int          $flags
-     * @param string       $iteratorClass
      */
-    public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = 'ArrayIterator')
+    public function __construct($input = [], int $flags = self::STD_PROP_LIST, string $iteratorClass = 'ArrayIterator')
     {
         $this->setFlags($flags);
         $this->storage = $input;
@@ -374,10 +372,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sets the behavior flags
      *
-     * @param  int  $flags
      * @return void
      */
-    public function setFlags($flags)
+    public function setFlags(int $flags)
     {
         $this->flag = $flags;
     }
@@ -385,10 +382,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sets the iterator classname for the ArrayObject
      *
-     * @param  string $class
      * @return void
      */
-    public function setIteratorClass($class)
+    public function setIteratorClass(string $class)
     {
         if (class_exists($class)) {
             $this->iteratorClass = $class;

@@ -77,10 +77,9 @@ class ConsoleHelper
      * $highlightMap; if color support is disabled, simply removes the formatting
      * tags.
      *
-     * @param string $string
      * @return string
      */
-    public function colorize($string)
+    public function colorize(string $string)
     {
         $reset = $this->supportsColor ? self::COLOR_RESET : '';
         foreach ($this->highlightMap as $key => $color) {
@@ -92,12 +91,10 @@ class ConsoleHelper
     }
 
     /**
-     * @param string $string
-     * @param bool $colorize Whether or not to colorize the string
      * @param resource $resource Defaults to STDOUT
      * @return void
      */
-    public function write($string, $colorize = true, $resource = STDOUT)
+    public function write(string $string, bool $colorize = true, $resource = STDOUT)
     {
         if ($colorize) {
             $string = $this->colorize($string);
@@ -109,12 +106,10 @@ class ConsoleHelper
     }
 
     /**
-     * @param string $string
-     * @param bool $colorize Whether or not to colorize the line
      * @param resource $resource Defaults to STDOUT
      * @return void
      */
-    public function writeLine($string, $colorize = true, $resource = STDOUT)
+    public function writeLine(string $string, bool $colorize = true, $resource = STDOUT)
     {
         $this->write($string . $this->eol, $colorize, $resource);
     }
@@ -126,10 +121,9 @@ class ConsoleHelper
      * using STDERR as the resource; emits an additional empty line when done,
      * also to STDERR.
      *
-     * @param string $message
      * @return void
      */
-    public function writeErrorMessage($message)
+    public function writeErrorMessage(string $message)
     {
         $this->writeLine(sprintf('<error>%s</error>', $message), true, $this->stderr);
         $this->writeLine('', false, $this->stderr);
@@ -154,10 +148,9 @@ class ConsoleHelper
     /**
      * Ensure newlines are appropriate for the current terminal.
      *
-     * @param string $string
      * @return string
      */
-    private function formatNewlines($string)
+    private function formatNewlines(string $string)
     {
         $string = str_replace($this->eol, "\0PHP_EOL\0", $string);
         $string = preg_replace("/(\r\n|\n|\r)/", $this->eol, $string);

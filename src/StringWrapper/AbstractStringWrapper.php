@@ -39,11 +39,9 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
      * Check if the given character encoding is supported by this wrapper
      * and the character encoding to convert to is also supported.
      *
-     * @param  string      $encoding
-     * @param  string|null $convertEncoding
      * @return bool
      */
-    public static function isSupported($encoding, $convertEncoding = null)
+    public static function isSupported(string $encoding, ?string $convertEncoding = null)
     {
         $supportedEncodings = static::getSupportedEncodings();
 
@@ -61,11 +59,9 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
     /**
      * Set character encoding working with and convert to
      *
-     * @param string      $encoding         The character encoding to work with
-     * @param string|null $convertEncoding  The character encoding to convert to
      * @return StringWrapperInterface
      */
-    public function setEncoding($encoding, $convertEncoding = null)
+    public function setEncoding(string $encoding, ?string $convertEncoding = null)
     {
         $supportedEncodings = static::getSupportedEncodings();
 
@@ -117,11 +113,9 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
     /**
      * Convert a string from defined character encoding to the defined convert encoding
      *
-     * @param string  $str
-     * @param bool $reverse
      * @return string|false
      */
-    public function convert($str, $reverse = false)
+    public function convert(string $str, bool $reverse = false)
     {
         $encoding        = $this->getEncoding();
         $convertEncoding = $this->getConvertEncoding();
@@ -147,25 +141,18 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
     /**
      * Wraps a string to a given number of characters
      *
-     * @param  string  $string
-     * @param  int $width
-     * @param  string  $break
-     * @param  bool $cut
      * @return string|false
      */
-    public function wordWrap($string, $width = 75, $break = "\n", $cut = false)
+    public function wordWrap(string $string, int $width = 75, string $break = "\n", bool $cut = false)
     {
-        $string = (string) $string;
         if ($string === '') {
             return '';
         }
 
-        $break = (string) $break;
         if ($break === '') {
             throw new Exception\InvalidArgumentException('Break string cannot be empty');
         }
 
-        $width = (int) $width;
         if ($width === 0 && $cut) {
             throw new Exception\InvalidArgumentException('Cannot force cut when width is zero');
         }
@@ -228,13 +215,9 @@ abstract class AbstractStringWrapper implements StringWrapperInterface
     /**
      * Pad a string to a certain length with another string
      *
-     * @param  string  $input
-     * @param  int $padLength
-     * @param  string  $padString
-     * @param  int $padType
      * @return string
      */
-    public function strPad($input, $padLength, $padString = ' ', $padType = STR_PAD_RIGHT)
+    public function strPad(string $input, int $padLength, string $padString = ' ', int $padType = STR_PAD_RIGHT)
     {
         if (null === $this->getEncoding() || StringUtils::isSingleByteEncoding($this->getEncoding())) {
             return str_pad($input, $padLength, $padString, $padType);
