@@ -297,12 +297,6 @@
     <MethodSignatureMismatch occurrences="1">
       <code>public function insert($datum, $priority)</code>
     </MethodSignatureMismatch>
-    <MixedAssignment occurrences="4">
-      <code>$array[]</code>
-      <code>$data[]</code>
-      <code>$item</code>
-      <code>$item</code>
-    </MixedAssignment>
   </file>
   <file src="src/StringUtils.php">
     <DocblockTypeContradiction occurrences="1">
