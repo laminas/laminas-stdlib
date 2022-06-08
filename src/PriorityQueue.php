@@ -73,6 +73,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      */
     public function insert($data, $priority = 1)
     {
+        /** @psalm-var TPriority $priority */
+        $priority      = (int) $priority;
         $this->items[] = [
             'data'     => $data,
             'priority' => $priority,
