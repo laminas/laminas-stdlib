@@ -277,7 +277,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @param  int $flag
      * @return array<array-key, mixed>
-     * @psalm-return ($flag is self::EXTR_DATA
+     * @psalm-return ($flag is self::EXTR_BOTH
      *                      ? list<array{data: T, priority: TPriority}>
      *                      : $flag is self::EXTR_PRIORITY
      *                          ? list<TPriority>
