@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.9.3@4c262932602b9bbab5020863d1eb22d49de0dbf4">
+<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($options) &amp;&amp; ! $options instanceof Traversable</code>
@@ -61,35 +61,17 @@
     </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/ArrayUtils.php">
-    <DocblockTypeContradiction occurrences="1">
-      <code>! is_array($iterator) &amp;&amp; ! $iterator instanceof Traversable</code>
-    </DocblockTypeContradiction>
     <MixedArgumentTypeCoercion occurrences="1">
       <code>$callback</code>
     </MixedArgumentTypeCoercion>
-    <MixedArrayOffset occurrences="4">
-      <code>$array[$key]</code>
-      <code>$array[$key]</code>
-      <code>$array[$key]</code>
-      <code>$array[$key]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="9">
+    <MixedAssignment occurrences="6">
       <code>$a[$key]</code>
       <code>$a[$key]</code>
       <code>$a[$key]</code>
       <code>$a[]</code>
-      <code>$array[$key]</code>
       <code>$h</code>
-      <code>$key</code>
-      <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>array</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$iterator-&gt;toArray()</code>
-    </MixedReturnStatement>
   </file>
   <file src="src/ErrorHandler.php">
     <InvalidArgument occurrences="1">
@@ -174,7 +156,7 @@
   </file>
   <file src="src/Message.php">
     <DocblockTypeContradiction occurrences="2">
-      <code>! is_array($spec) &amp;&amp; ! $spec instanceof Traversable</code>
+      <code>gettype($spec)</code>
       <code>is_scalar($key)</code>
     </DocblockTypeContradiction>
     <MixedArrayOffset occurrences="1">
@@ -192,6 +174,9 @@
     <ParamNameMismatch occurrences="1">
       <code>$value</code>
     </ParamNameMismatch>
+    <RedundantConditionGivenDocblockType occurrences="1">
+      <code>is_object($spec)</code>
+    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/MessageInterface.php">
     <MissingReturnType occurrences="1">
@@ -568,6 +553,9 @@
     </MixedAssignment>
   </file>
   <file src="test/SplStackTest.php">
+    <InvalidDocblock occurrences="1">
+      <code>assertSame</code>
+    </InvalidDocblock>
     <MixedArgument occurrences="2">
       <code>$unserialized</code>
       <code>$unserialized</code>

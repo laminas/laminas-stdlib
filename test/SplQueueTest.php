@@ -14,12 +14,14 @@ use function unserialize;
 
 class SplQueueTest extends TestCase
 {
-    /** @var SplQueue */
+    /** @var SplQueue<int, non-empty-string> */
     protected $queue;
 
     protected function setUp(): void
     {
-        $this->queue = new SplQueue();
+        /** @var SplQueue<int, non-empty-string> $splQueue */
+        $splQueue    = new SplQueue();
+        $this->queue = $splQueue;
         $this->queue->push('foo');
         $this->queue->push('bar');
         $this->queue->push('baz');
