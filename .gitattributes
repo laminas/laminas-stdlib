@@ -7,5 +7,9 @@
 /mkdocs.yml export-ignore
 /phpbench.json export-ignore
 /phpcs.xml export-ignore
+/phpcs.xml.dist export-ignore
 /phpunit.xml.dist export-ignore
+/psalm.xml.dist export-ignore
+/psalm-baseline.xml export-ignore
+/renovate.json export-ignore
 /test/ export-ignore
