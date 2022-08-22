@@ -192,8 +192,8 @@
     <InvalidReturnStatement occurrences="1">
       <code>$node ? $node['data'] : false</code>
     </InvalidReturnStatement>
-    <MissingClosureReturnType occurrences="1">
-      <code>function ($item) use ($flag) {</code>
+    <MissingClosureReturnType occurrences="2">
+      <code>static fn($item)</code>
     </MissingClosureReturnType>
     <MixedInferredReturnType occurrences="1">
       <code>next</code>
