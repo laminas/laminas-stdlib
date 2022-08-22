@@ -15,8 +15,7 @@ use function reset;
 
 class ArrayObjectIterator implements Iterator
 {
-    /** @var array */
-    private $var = [];
+    private array $var = [];
 
     /** @param array $array */
     public function __construct($array)

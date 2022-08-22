@@ -359,13 +359,7 @@ class ArrayObjectTest extends TestCase
 
     public function testUasort(): void
     {
-        $function = function ($a, $b): int {
-            if ($a === $b) {
-                return 0;
-            }
-
-            return $a < $b ? -1 : 1;
-        };
+        $function = static fn($a, $b): int => $a <=> $b;
         // phpcs:ignore Generic.Files.LineLength.TooLong
         $ar     = new ArrayObject(['a' => 4, 'b' => 8, 'c' => -1, 'd' => -9, 'e' => 2, 'f' => 5, 'g' => 3, 'h' => -4]);
         $sorted = $ar->getArrayCopy();
@@ -376,10 +370,9 @@ class ArrayObjectTest extends TestCase
 
     public function testUksort(): void
     {
-        $function = function ($a, $b): int {
+        $function = static function ($a, $b): int {
             $a = preg_replace('@^(a|an|the) @', '', $a);
             $b = preg_replace('@^(a|an|the) @', '', $b);
-
             return strcasecmp($a, $b);
         };
 

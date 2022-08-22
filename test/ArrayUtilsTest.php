@@ -528,7 +528,7 @@ class ArrayUtilsTest extends TestCase
         return [
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
-                function ($value) {
+                static function ($value): bool {
                     if ($value === 'bar') {
                         return false;
                     }
@@ -539,15 +539,13 @@ class ArrayUtilsTest extends TestCase
             ],
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
-                function ($value, $key) {
+                static function ($value, $key): bool {
                     if ($value === 'buz') {
                         return false;
                     }
-
                     if ($key === 'foo') {
                         return false;
                     }
-
                     return true;
                 },
                 ArrayUtils::ARRAY_FILTER_USE_BOTH,
@@ -555,7 +553,7 @@ class ArrayUtilsTest extends TestCase
             ],
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
-                function ($key) {
+                static function ($key): bool {
                     if ($key === 'foo') {
                         return false;
                     }
