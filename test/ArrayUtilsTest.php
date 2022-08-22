@@ -528,7 +528,7 @@ class ArrayUtilsTest extends TestCase
         return [
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
-                static function ($value) : bool {
+                static function ($value): bool {
                     if ($value === 'bar') {
                         return false;
                     }
@@ -539,7 +539,7 @@ class ArrayUtilsTest extends TestCase
             ],
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
-                static function ($value, $key) : bool {
+                static function ($value, $key): bool {
                     if ($value === 'buz') {
                         return false;
                     }
@@ -553,7 +553,7 @@ class ArrayUtilsTest extends TestCase
             ],
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
-                static function ($key) : bool {
+                static function ($key): bool {
                     if ($key === 'foo') {
                         return false;
                     }
