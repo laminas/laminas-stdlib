@@ -12,6 +12,5 @@ class ArrayObjectObjectVars
     /** @var string */
     protected $protected = 'prop:protected';
 
-    /** @var string */
-    private $private = 'prop:private';
+    private string $private = 'prop:private';
 }

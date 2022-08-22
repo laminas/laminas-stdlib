@@ -247,7 +247,7 @@ class FastPriorityQueueTest extends TestCase
 
     public function testRemoveShouldFindItemEvenIfMultipleItemsAreInQueue(): void
     {
-        $prototype = function ($e): void {
+        $prototype = static function ($e) : void {
         };
 
         $queue = new FastPriorityQueue();
@@ -269,7 +269,7 @@ class FastPriorityQueueTest extends TestCase
 
     public function testIterativelyRemovingItemsShouldRemoveAllItems(): void
     {
-        $prototype = function ($e): void {
+        $prototype = static function ($e) : void {
         };
 
         $queue = new FastPriorityQueue();
