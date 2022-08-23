@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
+<files psalm-version="4.26.0@6998fabb2bf528b65777bf9941920888d23c03ac">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($options) &amp;&amp; ! $options instanceof Traversable</code>
@@ -192,9 +192,7 @@
     <InvalidReturnStatement occurrences="1">
       <code>$node ? $node['data'] : false</code>
     </InvalidReturnStatement>
-    <MissingClosureReturnType occurrences="2">
-      <code>static fn($item)</code>
-    </MissingClosureReturnType>
+    <MissingClosureReturnType occurrences="1"/>
     <MixedInferredReturnType occurrences="1">
       <code>next</code>
     </MixedInferredReturnType>
