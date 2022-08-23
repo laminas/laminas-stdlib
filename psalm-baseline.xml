@@ -192,7 +192,9 @@
     <InvalidReturnStatement occurrences="1">
       <code>$node ? $node['data'] : false</code>
     </InvalidReturnStatement>
-    <MissingClosureReturnType occurrences="1"/>
+    <MissingClosureReturnType occurrences="1">
+      <code>static fn($item) =&gt; $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data']</code>
+    </MissingClosureReturnType>
     <MixedInferredReturnType occurrences="1">
       <code>next</code>
     </MixedInferredReturnType>
@@ -205,12 +207,22 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/SplPriorityQueue.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>is_array($priority)</code>
+    </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>void</code>
     </ImplementedReturnTypeMismatch>
+    <InvalidArgument occurrences="2">
+      <code>$priority</code>
+      <code>$priority</code>
+    </InvalidArgument>
     <MethodSignatureMismatch occurrences="1">
       <code>public function insert($datum, $priority)</code>
     </MethodSignatureMismatch>
+    <MixedArgument occurrences="1">
+      <code>$item['data']</code>
+    </MixedArgument>
   </file>
   <file src="src/StringUtils.php">
     <DocblockTypeContradiction occurrences="1">
