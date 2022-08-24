@@ -30,8 +30,8 @@ use function unserialize;
  * "inner" iterator in the form of an SplPriorityQueue object for performing
  * the actual iteration.
  *
- * @template TPriority of int
  * @template TValue
+ * @template TPriority of int
  * @implements IteratorAggregate<array-key, TValue>
  */
 class PriorityQueue implements Countable, IteratorAggregate, Serializable

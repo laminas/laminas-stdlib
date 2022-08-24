@@ -24,8 +24,8 @@ use const PHP_INT_MAX;
  * Also, provides predictable heap order for datums added with the same priority
  * (i.e., they will be emitted in the same order they are enqueued).
  *
- * @template TPriority of int
  * @template TValue
+ * @template TPriority of int
  * @extends \SplPriorityQueue<TPriority, TValue>
  */
 class SplPriorityQueue extends \SplPriorityQueue implements Serializable
