@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.24.0@06dd975cb55d36af80f242561738f16c5f58264f">
+<files psalm-version="4.26.0@6998fabb2bf528b65777bf9941920888d23c03ac">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($options) &amp;&amp; ! $options instanceof Traversable</code>
@@ -192,8 +192,8 @@
     <InvalidReturnStatement occurrences="1">
       <code>$node ? $node['data'] : false</code>
     </InvalidReturnStatement>
-    <MissingClosureReturnType occurrences="2">
-      <code>static fn($item)</code>
+    <MissingClosureReturnType occurrences="1">
+      <code>static fn($item) =&gt; $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data']</code>
     </MissingClosureReturnType>
     <MixedInferredReturnType occurrences="1">
       <code>next</code>
@@ -207,12 +207,22 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/SplPriorityQueue.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>is_array($priority)</code>
+    </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>void</code>
     </ImplementedReturnTypeMismatch>
+    <InvalidArgument occurrences="2">
+      <code>$priority</code>
+      <code>$priority</code>
+    </InvalidArgument>
     <MethodSignatureMismatch occurrences="1">
       <code>public function insert($datum, $priority)</code>
     </MethodSignatureMismatch>
+    <MixedArgument occurrences="1">
+      <code>$item['data']</code>
+    </MixedArgument>
   </file>
   <file src="src/StringUtils.php">
     <DocblockTypeContradiction occurrences="1">
