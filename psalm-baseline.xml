@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.26.0@6998fabb2bf528b65777bf9941920888d23c03ac">
+<files psalm-version="4.28.0@52e96bea381e6cb07a672aefec791a5817694a26">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($options) &amp;&amp; ! $options instanceof Traversable</code>
@@ -304,9 +304,8 @@
     </MissingReturnType>
   </file>
   <file src="test/ArrayObjectTest.php">
-    <ArgumentTypeCoercion occurrences="2">
+    <ArgumentTypeCoercion occurrences="1">
       <code>'ArrayIterator'</code>
-      <code>'RecursiveArrayIterator'</code>
     </ArgumentTypeCoercion>
     <InvalidArgument occurrences="1">
       <code>'Bacon'</code>
@@ -364,49 +363,6 @@
     <UndefinedFunction occurrences="1">
       <code>"INVALID"</code>
     </UndefinedFunction>
-  </file>
-  <file src="test/ConsoleHelperTest.php">
-    <MixedArgument occurrences="6">
-      <code>$colorized</code>
-      <code>$colorized</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="4">
-      <code>$colorized</code>
-      <code>$colorized</code>
-      <code>$colorized</code>
-      <code>$colorized</code>
-    </MixedAssignment>
-    <MixedMethodCall occurrences="8">
-      <code>colorize</code>
-      <code>colorize</code>
-      <code>colorize</code>
-      <code>colorize</code>
-      <code>write</code>
-      <code>write</code>
-      <code>writeErrorMessage</code>
-      <code>writeLine</code>
-    </MixedMethodCall>
-    <UndefinedThisPropertyAssignment occurrences="1">
-      <code>$this-&gt;helper</code>
-    </UndefinedThisPropertyAssignment>
-    <UndefinedThisPropertyFetch occurrences="12">
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-      <code>$this-&gt;helper</code>
-    </UndefinedThisPropertyFetch>
   </file>
   <file src="test/CustomArrayObject.php">
     <PropertyNotSetInConstructor occurrences="1">

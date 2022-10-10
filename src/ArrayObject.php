@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
+use AllowDynamicProperties;
 use ArrayAccess;
 use Countable;
 use Iterator;
@@ -40,6 +41,7 @@ use function unserialize;
  *
  * Extends version-specific "abstract" implementation.
  */
+#[AllowDynamicProperties]
 class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Countable
 {
     /**

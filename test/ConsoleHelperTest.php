@@ -15,6 +15,8 @@ use function rewind;
 
 class ConsoleHelperTest extends TestCase
 {
+    private ConsoleHelper $helper;
+
     protected function setUp(): void
     {
         $this->helper = new ConsoleHelper();
@@ -55,7 +57,9 @@ class ConsoleHelperTest extends TestCase
         rewind($stream);
         $contents = '';
         while (! feof($stream)) {
-            $contents .= fread($stream, 4096);
+            $chunk = fread($stream, 4096);
+            self::assertIsString($chunk);
+            $contents .= $chunk;
         }
         return $contents;
     }
@@ -106,6 +110,7 @@ class ConsoleHelperTest extends TestCase
         $this->overrideEolSequence("\r\n");
         $string = "foo bar\nbaz bat";
         $stream = fopen('php://temp', 'w+');
+        self::assertIsResource($stream);
 
         $this->helper->write($string, false, $stream);
 
@@ -118,6 +123,7 @@ class ConsoleHelperTest extends TestCase
         $this->enableColorSupport();
         $string = 'foo <info>bar</info>';
         $stream = fopen('php://temp', 'w+');
+        self::assertIsResource($stream);
 
         $this->helper->write($string, true, $stream);
 
@@ -130,6 +136,7 @@ class ConsoleHelperTest extends TestCase
         $this->overrideEolSequence("\r\n");
         $string = 'foo bar';
         $stream = fopen('php://temp', 'w+');
+        self::assertIsResource($stream);
 
         $this->helper->writeLine($string, false, $stream);
 
@@ -140,6 +147,7 @@ class ConsoleHelperTest extends TestCase
     public function testWriteErrorMessageWritesColorizedOutputToStderr(): void
     {
         $stderr = fopen('php://temp', 'w+');
+        self::assertIsResource($stderr);
         $this->overrideStderrResource($stderr);
         $this->enableColorSupport();
         $this->overrideEolSequence("\r\n");

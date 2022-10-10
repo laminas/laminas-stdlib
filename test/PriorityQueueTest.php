@@ -40,7 +40,7 @@ class PriorityQueueTest extends TestCase
         self::assertSame(
             $count,
             count($unserialized),
-            'Expected count ' . $count . '; received ' . count($unserialized)
+            'Expected count ' . (string) $count . '; received ' . (string) count($unserialized)
         );
 
         $expected = iterator_to_array($this->queue);
@@ -97,7 +97,7 @@ class PriorityQueueTest extends TestCase
             foreach ($this->queue as $item) {
                 $test[] = $item;
             }
-            self::assertEquals($expected, $test, 'Failed at iteration ' . $i);
+            self::assertEquals($expected, $test, 'Failed at iteration ' . (string) $i);
         }
     }
 

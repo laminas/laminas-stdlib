@@ -38,6 +38,8 @@ class MbStringTest extends CommonStringWrapperTest
             $encoding           = array_shift($supportedEncodings);
         }
 
+        self::assertIsString($encoding);
+
         if (! MbString::isSupported($encoding, $convertEncoding)) {
             return false;
         }
