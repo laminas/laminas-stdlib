@@ -22,8 +22,6 @@ use function uasort;
 use function uksort;
 use function unserialize;
 
-use const PHP_MAJOR_VERSION;
-
 class ArrayObjectTest extends TestCase
 {
     public function testConstructorDefaults(): void
@@ -113,25 +111,8 @@ class ArrayObjectTest extends TestCase
         self::assertSame($sorted, $ar->getArrayCopy());
     }
 
-    public function testCountRaisesWarningUnderPhpSeven(): void
-    {
-        if (PHP_MAJOR_VERSION > 7) {
-            $this->markTestSkipped('This test only makes sense under PHP 7');
-        }
-
-        $ar = new ArrayObject(new TestAsset\ArrayObjectObjectVars());
-
-        $this->expectWarning();
-        $this->expectExceptionMessage('Parameter must be an array or an object that implements Countable');
-        self::assertCount(1, $ar);
-    }
-
     public function testCountRaisesTypeErrorUnderPhpEight(): void
     {
-        if (PHP_MAJOR_VERSION < 8) {
-            $this->markTestSkipped('This test only makes sense under PHP 8 and above');
-        }
-
         $ar = new ArrayObject(new TestAsset\ArrayObjectObjectVars());
 
         $this->expectException(TypeError::class);
