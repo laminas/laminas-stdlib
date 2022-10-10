@@ -6,15 +6,11 @@ namespace Laminas\Stdlib\ArrayUtils;
 
 final class MergeReplaceKey implements MergeReplaceKeyInterface
 {
-    /** @var mixed */
-    protected $data;
-
     /**
      * @param mixed $data
      */
-    public function __construct($data)
+    public function __construct(protected $data)
     {
-        $this->data = $data;
     }
 
     /**

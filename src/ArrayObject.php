@@ -18,7 +18,7 @@ use function array_keys;
 use function asort;
 use function class_exists;
 use function count;
-use function get_class;
+use function get_debug_type;
 use function get_object_vars;
 use function gettype;
 use function in_array;
@@ -31,7 +31,7 @@ use function natcasesort;
 use function natsort;
 use function serialize;
 use function sprintf;
-use function strpos;
+use function str_starts_with;
 use function uasort;
 use function uksort;
 use function unserialize;
@@ -398,7 +398,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
             return;
         }
 
-        if (strpos($class, '\\') === 0) {
+        if (str_starts_with($class, '\\')) {
             $class = '\\' . $class;
             if (class_exists($class)) {
                 $this->iteratorClass = $class;
@@ -488,9 +488,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
                 throw new UnexpectedValueException(sprintf(
                     'Cannot deserialize %s instance: invalid iteratorClass; expected string, received %s',
                     self::class,
-                    is_object($data['iteratorClass'])
-                        ? get_class($data['iteratorClass'])
-                        : gettype($data['iteratorClass'])
+                    get_debug_type($data['iteratorClass'])
                 ));
             }
             $this->setIteratorClass($data['iteratorClass']);

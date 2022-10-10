@@ -14,11 +14,8 @@ use function reset;
 
 class IteratorWithToArrayMethod implements Iterator
 {
-    private array $elements = [];
-
-    public function __construct(array $elements)
+    public function __construct(private array $elements)
     {
-        $this->elements = $elements;
     }
 
     /** @return void */

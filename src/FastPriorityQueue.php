@@ -356,15 +356,10 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      */
     public function setExtractFlags($flag)
     {
-        switch ($flag) {
-            case self::EXTR_DATA:
-            case self::EXTR_PRIORITY:
-            case self::EXTR_BOTH:
-                $this->extractFlag = $flag;
-                break;
-            default:
-                throw new Exception\InvalidArgumentException("The extract flag specified is not valid");
-        }
+        $this->extractFlag = match ($flag) {
+            self::EXTR_DATA, self::EXTR_PRIORITY, self::EXTR_BOTH => $flag,
+            default => throw new Exception\InvalidArgumentException("The extract flag specified is not valid"),
+        };
     }
 
     /**

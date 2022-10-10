@@ -12,7 +12,6 @@ use UnexpectedValueException;
 
 use function array_map;
 use function count;
-use function get_class;
 use function is_array;
 use function serialize;
 use function sprintf;
@@ -286,15 +285,11 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      */
     public function toArray($flag = self::EXTR_DATA)
     {
-        switch ($flag) {
-            case self::EXTR_BOTH:
-                return $this->items;
-            case self::EXTR_PRIORITY:
-                return array_map(static fn($item) => $item['priority'], $this->items);
-            case self::EXTR_DATA:
-            default:
-                return array_map(static fn($item) => $item['data'], $this->items);
-        }
+        return match ($flag) {
+            self::EXTR_BOTH => $this->items,
+            self::EXTR_PRIORITY => array_map(static fn($item): int => $item['priority'], $this->items),
+            default => array_map(static fn($item): mixed => $item['data'], $this->items),
+        };
     }
 
     /**
@@ -363,7 +358,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
             if (! $this->queue instanceof \SplPriorityQueue) {
                 throw new Exception\DomainException(sprintf(
                     'PriorityQueue expects an internal queue of type SplPriorityQueue; received "%s"',
-                    get_class($this->queue)
+                    $this->queue::class
                 ));
             }
         }

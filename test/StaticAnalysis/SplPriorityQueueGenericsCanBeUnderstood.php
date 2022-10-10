@@ -11,16 +11,11 @@ use function iterator_to_array;
 
 final class SplPriorityQueueGenericsCanBeUnderstood
 {
-    /** @var SplPriorityQueue<string, int> */
-    private SplPriorityQueue $laminas;
-
     /**
      * @param SplPriorityQueue<string, int> $laminas
      */
-    public function __construct(
-        SplPriorityQueue $laminas
-    ) {
-        $this->laminas = $laminas;
+    public function __construct(private SplPriorityQueue $laminas)
+    {
     }
 
     /** @return list<string> */

@@ -23,7 +23,7 @@ class IconvTest extends CommonStringWrapperTest
             try {
                 new Iconv('utf-8');
                 $this->fail('Missing expected Laminas\Stdlib\Exception\ExtensionNotLoadedException');
-            } catch (Exception\ExtensionNotLoadedException $e) {
+            } catch (Exception\ExtensionNotLoadedException) {
                 $this->markTestSkipped('Missing ext/iconv');
             }
         }

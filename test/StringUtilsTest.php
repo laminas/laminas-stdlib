@@ -16,7 +16,6 @@ use PHPUnit\Framework\TestCase;
 
 use function defined;
 use function extension_loaded;
-use function get_class;
 use function preg_match;
 
 class StringUtilsTest extends TestCase
@@ -101,7 +100,7 @@ class StringUtilsTest extends TestCase
             } elseif (extension_loaded('iconv')) {
                 self::assertInstanceOf(Iconv::class, $wrapper);
             }
-        } catch (Exception $e) {
+        } catch (Exception) {
             if (
                 extension_loaded('intl')
                 || extension_loaded('mbstring')
@@ -118,7 +117,7 @@ class StringUtilsTest extends TestCase
             } elseif (extension_loaded('iconv')) {
                 self::assertInstanceOf(Iconv::class, $wrapper);
             }
-        } catch (Exception $e) {
+        } catch (Exception) {
             if (extension_loaded('mbstring') || extension_loaded('iconv')) {
                 $this->fail("Failed to get mbstring or iconv wrapper for UTF-8 and ISO-8859-1");
             }
@@ -178,9 +177,9 @@ class StringUtilsTest extends TestCase
         $wrapper = $this->createMock(StringWrapperInterface::class);
 
         StringUtils::resetRegisteredWrappers();
-        StringUtils::registerWrapper(get_class($wrapper));
+        StringUtils::registerWrapper($wrapper::class);
 
-        $this->assertContains(get_class($wrapper), StringUtils::getRegisteredWrappers());
+        $this->assertContains($wrapper::class, StringUtils::getRegisteredWrappers());
     }
 
     public function testUnregisterSpecificWrapper(): void
