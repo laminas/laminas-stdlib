@@ -91,7 +91,6 @@ abstract class ArrayUtils
      * - a float: 2.2120, -78.150999
      * - a string with float:  '4000.99999', '-10.10'
      *
-     * @param  mixed $value
      * @param  bool  $allowEmpty    Should an empty array() return true
      * @return bool
      */
@@ -124,7 +123,6 @@ abstract class ArrayUtils
      * );
      * </code>
      *
-     * @param  mixed $value
      * @param  bool  $allowEmpty    Is an empty list a valid list?
      * @return bool
      */
@@ -166,7 +164,6 @@ abstract class ArrayUtils
      * );
      * </code>
      *
-     * @param  mixed $value
      * @param  bool  $allowEmpty    Is an empty array() a valid hash table?
      * @return bool
      */
@@ -191,7 +188,6 @@ abstract class ArrayUtils
      * non-strict check is implemented. if $strict = -1, the default in_array
      * non-strict behaviour is used.
      *
-     * @param mixed $needle
      * @param array $haystack
      * @param int|bool $strict
      * @return bool

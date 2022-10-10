@@ -154,7 +154,6 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * the same item has been added multiple times, it will not remove other
      * instances.
      *
-     * @param  mixed $datum
      * @return bool False if the item was not found, true otherwise.
      */
     public function remove(mixed $datum)
