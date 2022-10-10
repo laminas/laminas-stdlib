@@ -8,6 +8,7 @@ use ArrayIterator;
 use InvalidArgumentException;
 use Laminas\Stdlib\ArrayObject;
 use PHPUnit\Framework\TestCase;
+use RecursiveArrayIterator;
 use TypeError;
 
 use function asort;
@@ -37,10 +38,10 @@ class ArrayObjectTest extends TestCase
 
     public function testConstructorParameters(): void
     {
-        $ar = new ArrayObject(['foo' => 'bar'], ArrayObject::ARRAY_AS_PROPS, 'RecursiveArrayIterator');
+        $ar = new ArrayObject(['foo' => 'bar'], ArrayObject::ARRAY_AS_PROPS, RecursiveArrayIterator::class);
         self::assertEquals(ArrayObject::ARRAY_AS_PROPS, $ar->getFlags());
-        self::assertEquals('RecursiveArrayIterator', $ar->getIteratorClass());
-        self::assertInstanceOf('RecursiveArrayIterator', $ar->getIterator());
+        self::assertEquals(RecursiveArrayIterator::class, $ar->getIteratorClass());
+        self::assertInstanceOf(RecursiveArrayIterator::class, $ar->getIterator());
         self::assertSame(['foo' => 'bar'], $ar->getArrayCopy());
         self::assertEquals(1, $ar->count());
         self::assertSame('bar', $ar->foo);
@@ -227,14 +228,14 @@ class ArrayObjectTest extends TestCase
 
     public function testIteratorClass(): void
     {
-        $ar = new ArrayObject([], ArrayObject::STD_PROP_LIST, 'RecursiveArrayIterator');
-        self::assertEquals('RecursiveArrayIterator', $ar->getIteratorClass());
-        $ar = new ArrayObject([], ArrayObject::STD_PROP_LIST, 'ArrayIterator');
-        self::assertEquals('ArrayIterator', $ar->getIteratorClass());
-        $ar->setIteratorClass('RecursiveArrayIterator');
-        self::assertEquals('RecursiveArrayIterator', $ar->getIteratorClass());
-        $ar->setIteratorClass('ArrayIterator');
-        self::assertEquals('ArrayIterator', $ar->getIteratorClass());
+        $ar = new ArrayObject([], ArrayObject::STD_PROP_LIST, RecursiveArrayIterator::class);
+        self::assertEquals(RecursiveArrayIterator::class, $ar->getIteratorClass());
+        $ar = new ArrayObject([], ArrayObject::STD_PROP_LIST, ArrayIterator::class);
+        self::assertEquals(ArrayIterator::class, $ar->getIteratorClass());
+        $ar->setIteratorClass(RecursiveArrayIterator::class);
+        self::assertEquals(RecursiveArrayIterator::class, $ar->getIteratorClass());
+        $ar->setIteratorClass(ArrayIterator::class);
+        self::assertEquals(ArrayIterator::class, $ar->getIteratorClass());
     }
 
     public function testInvalidIteratorClassThrowsInvalidArgumentException(): void
@@ -373,6 +374,8 @@ class ArrayObjectTest extends TestCase
         $function = static function ($a, $b): int {
             $a = preg_replace('@^(a|an|the) @', '', $a);
             $b = preg_replace('@^(a|an|the) @', '', $b);
+            self::assertNotNull($a);
+            self::assertNotNull($b);
             return strcasecmp($a, $b);
         };
 

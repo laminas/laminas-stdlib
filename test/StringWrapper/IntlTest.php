@@ -38,6 +38,8 @@ class IntlTest extends CommonStringWrapperTest
             $encoding           = array_shift($supportedEncodings);
         }
 
+        self::assertIsString($encoding);
+
         if (! Intl::isSupported($encoding, $convertEncoding)) {
             return false;
         }

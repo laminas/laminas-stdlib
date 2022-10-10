@@ -36,6 +36,7 @@ class IconvTest extends CommonStringWrapperTest
          */
         if (file_exists('/etc/os-release') && is_readable('/etc/os-release')) {
             $osRelease = file_get_contents('/etc/os-release');
+            self::assertIsString($osRelease);
             if (stripos($osRelease, 'Alpine Linux') !== false) {
                 $this->markTestSkipped('iconv not properly supported on Alpine Linux');
             }
@@ -55,6 +56,8 @@ class IconvTest extends CommonStringWrapperTest
             $supportedEncodings = Iconv::getSupportedEncodings();
             $encoding           = array_shift($supportedEncodings);
         }
+
+        self::assertIsString($encoding);
 
         if (! Iconv::isSupported($encoding, $convertEncoding)) {
             return false;
