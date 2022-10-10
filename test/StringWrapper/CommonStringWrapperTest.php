@@ -141,9 +141,8 @@ abstract class CommonStringWrapperTest extends TestCase
      * @param string $str
      * @param string $encoding
      * @param string $convertEncoding
-     * @param mixed  $expected
      */
-    public function testConvert($encoding, $convertEncoding, $str, $expected): void
+    public function testConvert($encoding, $convertEncoding, $str, mixed $expected): void
     {
         $wrapper = $this->getWrapper($encoding, $convertEncoding);
         if (! $wrapper) {
@@ -221,9 +220,8 @@ abstract class CommonStringWrapperTest extends TestCase
      * @param int    $width
      * @param string $break
      * @param bool   $cut
-     * @param mixed  $expected
      */
-    public function testWordWrap($encoding, $string, $width, $break, $cut, $expected): void
+    public function testWordWrap($encoding, $string, $width, $break, $cut, mixed $expected): void
     {
         $wrapper = $this->getWrapper($encoding);
         if (! $wrapper) {
@@ -284,10 +282,9 @@ abstract class CommonStringWrapperTest extends TestCase
      * @param int    $padLength
      * @param string $padString
      * @param int    $padType
-     * @param mixed  $expected
      * @group Laminas-12186
      */
-    public function testStrPad($encoding, $input, $padLength, $padString, $padType, $expected): void
+    public function testStrPad($encoding, $input, $padLength, $padString, $padType, mixed $expected): void
     {
         $wrapper = $this->getWrapper($encoding);
         if (! $wrapper) {

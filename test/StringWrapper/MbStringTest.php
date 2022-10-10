@@ -18,7 +18,7 @@ class MbStringTest extends CommonStringWrapperTest
             try {
                 new MbString('utf-8');
                 $this->fail('Missing expected Laminas\Stdlib\Exception\ExtensionNotLoadedException');
-            } catch (Exception\ExtensionNotLoadedException $e) {
+            } catch (Exception\ExtensionNotLoadedException) {
                 $this->markTestSkipped('Missing ext/mbstring');
             }
         }

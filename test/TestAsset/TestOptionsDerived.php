@@ -20,10 +20,8 @@ class TestOptionsDerived extends TestOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @param mixed $derivedPrivate
      */
-    private function setDerivedPrivate($derivedPrivate): void
+    private function setDerivedPrivate(mixed $derivedPrivate): void
     {
         $this->derivedPrivate = $derivedPrivate;
     }
@@ -40,10 +38,8 @@ class TestOptionsDerived extends TestOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @param mixed $derivedProtected
      */
-    protected function setDerivedProtected($derivedProtected): void
+    protected function setDerivedProtected(mixed $derivedProtected): void
     {
         $this->derivedProtected = $derivedProtected;
     }
@@ -60,10 +56,8 @@ class TestOptionsDerived extends TestOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @param mixed $derivedPublic
      */
-    public function setDerivedPublic($derivedPublic): void
+    public function setDerivedPublic(mixed $derivedPublic): void
     {
         $this->derivedPublic = $derivedPublic;
     }

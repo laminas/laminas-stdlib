@@ -21,10 +21,7 @@ class TestOptionsNoStrict extends AbstractOptions
     /** @var mixed */
     protected $testField;
 
-    /**
-     * @param mixed $value
-     */
-    public function setTestField($value): void
+    public function setTestField(mixed $value): void
     {
         $this->testField = $value;
     }

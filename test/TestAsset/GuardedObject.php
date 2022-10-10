@@ -10,26 +10,17 @@ class GuardedObject
 {
     use AllGuardsTrait;
 
-    /**
-     * @param mixed $value
-     */
-    public function setArrayOrTraversable($value): void
+    public function setArrayOrTraversable(mixed $value): void
     {
         $this->guardForArrayOrTraversable($value);
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function setNotEmpty($value): void
+    public function setNotEmpty(mixed $value): void
     {
         $this->guardAgainstEmpty($value);
     }
 
-    /**
-     * @param mixed $value
-     */
-    public function setNotNull($value): void
+    public function setNotNull(mixed $value): void
     {
         $this->guardAgainstNull($value);
     }
