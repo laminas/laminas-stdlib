@@ -43,8 +43,7 @@ class ConsoleHelperTest extends TestCase
         $r->setValue($this->helper, $newSequence);
     }
 
-    /** @param mixed $stderr */
-    public function overrideStderrResource($stderr): void
+    public function overrideStderrResource(mixed $stderr): void
     {
         $r = new ReflectionProperty($this->helper, 'stderr');
         $r->setAccessible(true);

@@ -27,7 +27,7 @@ trait ArrayOrTraversableGuardTrait
      * @throws Exception
      */
     protected function guardForArrayOrTraversable(
-        $data,
+        mixed $data,
         $dataName = 'Argument',
         $exceptionClass = InvalidArgumentException::class
     ) {

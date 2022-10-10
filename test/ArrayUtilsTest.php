@@ -429,9 +429,8 @@ class ArrayUtilsTest extends TestCase
 
     /**
      * @dataProvider invalidArrays
-     * @param mixed $test
      */
-    public function testInvalidArraysAlwaysReturnFalse($test): void
+    public function testInvalidArraysAlwaysReturnFalse(mixed $test): void
     {
         self::assertFalse(ArrayUtils::hasStringKeys($test, false));
         self::assertFalse(ArrayUtils::hasIntegerKeys($test, false));
@@ -507,9 +506,8 @@ class ArrayUtilsTest extends TestCase
 
     /**
      * @dataProvider invalidIterators
-     * @param mixed $test
      */
-    public function testInvalidIteratorsRaiseInvalidArgumentException($test): void
+    public function testInvalidIteratorsRaiseInvalidArgumentException(mixed $test): void
     {
         $this->expectException(InvalidArgumentException::class);
         self::assertFalse(ArrayUtils::iteratorToArray($test));

@@ -23,10 +23,7 @@ class TestOptions extends AbstractOptions
     /** @var mixed */
     protected $parentPublic;
 
-    /**
-     * @param mixed $value
-     */
-    public function setTestField($value): void
+    public function setTestField(mixed $value): void
     {
         $this->testField = $value;
     }
@@ -39,10 +36,8 @@ class TestOptions extends AbstractOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @param mixed $parentPrivate
      */
-    private function setParentPrivate($parentPrivate): void
+    private function setParentPrivate(mixed $parentPrivate): void
     {
         $this->parentPrivate = $parentPrivate;
     }
@@ -59,10 +54,8 @@ class TestOptions extends AbstractOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @param mixed $parentProtected
      */
-    protected function setParentProtected($parentProtected): void
+    protected function setParentProtected(mixed $parentProtected): void
     {
         $this->parentProtected = $parentProtected;
     }
@@ -79,10 +72,8 @@ class TestOptions extends AbstractOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @param mixed $parentPublic
      */
-    public function setParentPublic($parentPublic): void
+    public function setParentPublic(mixed $parentPublic): void
     {
         $this->parentPublic = $parentPublic;
     }
