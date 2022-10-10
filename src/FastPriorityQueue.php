@@ -64,28 +64,28 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Max priority
      *
-     * @var integer|null
+     * @var int|null
      */
     protected $maxPriority;
 
     /**
      * Total number of elements in the queue
      *
-     * @var integer
+     * @var int
      */
     protected $count = 0;
 
     /**
      * Index of the current element in the queue
      *
-     * @var integer
+     * @var int
      */
     protected $index = 0;
 
     /**
      * Sub index of the current element in the same priority level
      *
-     * @var integer
+     * @var int
      */
     protected $subIndex = 0;
 
@@ -113,7 +113,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Insert an element in the queue with a specified priority
      *
      * @param mixed $value
-     * @param integer $priority
+     * @param int $priority
      * @return void
      */
     public function insert($value, $priority)
@@ -351,7 +351,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Set the extract flag
      *
-     * @param integer $flag
+     * @param int $flag
      * @return void
      */
     public function setExtractFlags($flag)
@@ -370,7 +370,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Check if the queue is empty
      *
-     * @return boolean
+     * @return bool
      */
     public function isEmpty()
     {

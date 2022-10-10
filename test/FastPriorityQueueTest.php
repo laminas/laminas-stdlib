@@ -112,7 +112,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertSame(
             $count,
             count($unserialized),
-            'Expected count ' . $count . '; received ' . count($unserialized)
+            'Expected count ' . (string) $count . '; received ' . (string) count($unserialized)
         );
 
         $expected = [];
