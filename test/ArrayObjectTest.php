@@ -62,12 +62,14 @@ class ArrayObjectTest extends TestCase
     public function testStdPropListCannotAccessObjectVars(): void
     {
         $this->expectException(InvalidArgumentException::class);
+        /** @var ArrayObject<array-key, mixed> $ar */
         $ar = new ArrayObject();
         $ar->flag;
     }
 
     public function testStdPropListStillHandlesArrays(): void
     {
+        /** @var ArrayObject<string, string> $ar */
         $ar        = new ArrayObject();
         $ar->foo   = 'bar';
         $ar['foo'] = 'baz';
@@ -79,6 +81,7 @@ class ArrayObjectTest extends TestCase
 
     public function testArrayAsProps(): void
     {
+        /** @var ArrayObject<string, string> $ar */
         $ar        = new ArrayObject([], ArrayObject::ARRAY_AS_PROPS);
         $ar->foo   = 'bar';
         $ar['foo'] = 'baz';
@@ -254,6 +257,7 @@ class ArrayObjectTest extends TestCase
 
     public function testOffsetExists(): void
     {
+        /** @var ArrayObject<array-key, string> $ar */
         $ar        = new ArrayObject();
         $ar['foo'] = 'bar';
         $ar->bar   = 'baz';
@@ -267,12 +271,14 @@ class ArrayObjectTest extends TestCase
     public function testOffsetExistsThrowsExceptionOnProtectedProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
+        /** @var ArrayObject<array-key, mixed> $ar */
         $ar = new ArrayObject();
         isset($ar->protectedProperties);
     }
 
     public function testOffsetGetOffsetSet(): void
     {
+        /** @var ArrayObject<array-key, string> $ar */
         $ar        = new ArrayObject();
         $ar['foo'] = 'bar';
         $ar->bar   = 'baz';
@@ -286,6 +292,7 @@ class ArrayObjectTest extends TestCase
     public function testOffsetGetThrowsExceptionOnProtectedProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
+        /** @var ArrayObject<array-key, mixed> $ar */
         $ar = new ArrayObject();
         $ar->protectedProperties;
     }
@@ -293,12 +300,14 @@ class ArrayObjectTest extends TestCase
     public function testOffsetSetThrowsExceptionOnProtectedProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
+        /** @var ArrayObject<array-key, mixed> $ar */
         $ar                      = new ArrayObject();
         $ar->protectedProperties = null;
     }
 
     public function testOffsetUnset(): void
     {
+        /** @var ArrayObject<string, string> $ar */
         $ar        = new ArrayObject();
         $ar['foo'] = 'bar';
         $ar->bar   = 'foo';
@@ -311,6 +320,7 @@ class ArrayObjectTest extends TestCase
 
     public function testOffsetUnsetMultidimensional(): void
     {
+        /** @var ArrayObject<string, array<string, array<string, mixed>>> $ar */
         $ar        = new ArrayObject();
         $ar['foo'] = ['bar' => ['baz' => 'boo']];
         unset($ar['foo']['bar']['baz']);
@@ -321,17 +331,20 @@ class ArrayObjectTest extends TestCase
     public function testOffsetUnsetThrowsExceptionOnProtectedProperty(): void
     {
         $this->expectException(InvalidArgumentException::class);
+        /** @var ArrayObject<array-key, mixed> $ar */
         $ar = new ArrayObject();
         unset($ar->protectedProperties);
     }
 
     public function testSerializeUnserialize(): void
     {
+        /** @var ArrayObject<string, string> $ar */
         $ar         = new ArrayObject();
         $ar->foo    = 'bar';
         $ar['bar']  = 'foo';
         $serialized = $ar->serialize();
 
+        /** @var ArrayObject<string, string> $ar */
         $ar = new ArrayObject();
         $ar->unserialize($serialized);
 
@@ -372,6 +385,7 @@ class ArrayObjectTest extends TestCase
      */
     public function testSerializationRestoresProperties(): void
     {
+        /** @var ArrayObject<string, string> $ar */
         $ar        = new ArrayObject();
         $ar->foo   = 'bar';
         $ar['bar'] = 'foo';

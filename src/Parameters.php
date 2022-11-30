@@ -10,6 +10,12 @@ use ReturnTypeWillChange;
 use function http_build_query;
 use function parse_str;
 
+/**
+ * @template TKey
+ * @template TValue
+ * @template-extends PhpArrayObject<TKey, TValue>
+ * @template-implements ParametersInterface<TKey, TValue>
+ */
 class Parameters extends PhpArrayObject implements ParametersInterface
 {
     /**
@@ -18,7 +24,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * Enforces that we have an array, and enforces parameter access to array
      * elements.
      *
-     * @param  array $values
+     * @param array<TKey, TValue>|null $values
      */
     public function __construct(?array $values = null)
     {
@@ -31,7 +37,10 @@ class Parameters extends PhpArrayObject implements ParametersInterface
     /**
      * Populate from native PHP array
      *
-     * @param  array $values
+     * @template TInputKey of array-key
+     * @template TInputValue
+     * @param array<TInputKey, TInputValue> $values
+     * @psalm-self-out Parameters<TInputKey, TInputValue>
      * @return void
      */
     public function fromArray(array $values)
@@ -43,6 +52,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * Populate from query string
      *
      * @param  string $string
+     * @psalm-self-out Parameters<array-key, mixed>
      * @return void
      */
     public function fromString($string)
@@ -55,7 +65,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
     /**
      * Serialize to native PHP array
      *
-     * @return array
+     * @return array<TKey, TValue>
      */
     public function toArray()
     {
@@ -77,8 +87,8 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      *
      * Returns null if the key does not exist.
      *
-     * @param  string $name
-     * @return mixed
+     * @param  TKey $name
+     * @return TValue|null
      */
     #[ReturnTypeWillChange]
     public function offsetGet($name)
@@ -91,9 +101,10 @@ class Parameters extends PhpArrayObject implements ParametersInterface
     }
 
     /**
-     * @param string $name
-     * @param mixed $default optional default value
-     * @return mixed
+     * @template TDefault
+     * @param TKey $name
+     * @param TDefault $default optional default value
+     * @return TValue|TDefault|null
      */
     public function get($name, $default = null)
     {
@@ -104,9 +115,12 @@ class Parameters extends PhpArrayObject implements ParametersInterface
     }
 
     /**
-     * @param string $name
-     * @param mixed $value
-     * @return Parameters
+     * @template       TInputKey of array-key
+     * @template       TInputValue
+     * @param TInputKey   $name
+     * @param TInputValue $value
+     * @psalm-self-out Parameters<TKey|TInputKey, TValue|TInputValue>
+     * @return $this
      */
     public function set($name, $value)
     {

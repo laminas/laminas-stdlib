@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="4.28.0@52e96bea381e6cb07a672aefec791a5817694a26">
+<files psalm-version="5.0.0@4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($options) &amp;&amp; ! $options instanceof Traversable</code>
@@ -22,43 +22,52 @@
     </RawObjectIteration>
   </file>
   <file src="src/ArrayObject.php">
+    <ArgumentTypeCoercion occurrences="2">
+      <code>$data['iteratorClass']</code>
+      <code>(int) $data['flag']</code>
+    </ArgumentTypeCoercion>
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($data) &amp;&amp; ! is_object($data)</code>
     </DocblockTypeContradiction>
-    <InvalidStringClass occurrences="1">
-      <code>new $class($this-&gt;storage)</code>
-    </InvalidStringClass>
-    <LessSpecificReturnStatement occurrences="1">
-      <code>new $class($this-&gt;storage)</code>
-    </LessSpecificReturnStatement>
-    <MixedArgumentTypeCoercion occurrences="2">
-      <code>$function</code>
-      <code>$function</code>
-    </MixedArgumentTypeCoercion>
-    <MixedArrayOffset occurrences="4">
-      <code>$this-&gt;storage[$key]</code>
-      <code>$this-&gt;storage[$key]</code>
-      <code>$this-&gt;storage[$key]</code>
-      <code>$this-&gt;storage[$key]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="3">
-      <code>$ret</code>
-      <code>$ret</code>
+    <InvalidArgument occurrences="2">
+      <code>$key</code>
+      <code>$value</code>
+    </InvalidArgument>
+    <InvalidPropertyAssignmentValue occurrences="2">
+      <code>$data</code>
+      <code>$this-&gt;storage</code>
+    </InvalidPropertyAssignmentValue>
+    <MixedAssignment occurrences="1">
       <code>$v</code>
     </MixedAssignment>
-    <MoreSpecificReturnType occurrences="1">
-      <code>Iterator</code>
-    </MoreSpecificReturnType>
-    <PossiblyInvalidPropertyAssignmentValue occurrences="1">
+    <MixedInferredReturnType occurrences="1">
+      <code>TValue|null</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;$key</code>
+    </MixedReturnStatement>
+    <MixedReturnTypeCoercion occurrences="2">
+      <code>Iterator&lt;TKey, TValue&gt;</code>
+      <code>new $class($this-&gt;storage)</code>
+    </MixedReturnTypeCoercion>
+    <PossiblyInvalidPropertyAssignmentValue occurrences="2">
+      <code>$input</code>
       <code>$input</code>
     </PossiblyInvalidPropertyAssignmentValue>
     <PropertyNotSetInConstructor occurrences="1">
       <code>$iteratorClass</code>
     </PropertyNotSetInConstructor>
-    <RedundantConditionGivenDocblockType occurrences="2">
+    <PropertyTypeCoercion occurrences="1">
+      <code>$class</code>
+    </PropertyTypeCoercion>
+    <RedundantConditionGivenDocblockType occurrences="3">
+      <code>in_array($key, $this-&gt;protectedProperties, true)</code>
       <code>is_callable($function)</code>
       <code>is_callable($function)</code>
     </RedundantConditionGivenDocblockType>
+    <UnsupportedReferenceUsage occurrences="1">
+      <code>$ret = &amp;$this-&gt;offsetGet($key)</code>
+    </UnsupportedReferenceUsage>
   </file>
   <file src="src/ArrayUtils.php">
     <MixedArgumentTypeCoercion occurrences="1">
@@ -77,64 +86,47 @@
     <InvalidArgument occurrences="1">
       <code>[static::class, 'addError']</code>
     </InvalidArgument>
-    <MixedArgument occurrences="1">
+    <UnsupportedReferenceUsage occurrences="1">
+      <code>$stack = &amp;static::$stack[count(static::$stack) - 1]</code>
+    </UnsupportedReferenceUsage>
+    <UnusedVariable occurrences="1">
       <code>$stack</code>
-    </MixedArgument>
-    <MixedAssignment occurrences="2">
-      <code>$errorException</code>
-      <code>$stack</code>
-    </MixedAssignment>
-    <MixedInferredReturnType occurrences="1">
-      <code>null|ErrorException</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$errorException</code>
-    </MixedReturnStatement>
+    </UnusedVariable>
   </file>
   <file src="src/FastPriorityQueue.php">
     <DocblockTypeContradiction occurrences="1">
       <code>is_int($priority)</code>
     </DocblockTypeContradiction>
-    <MixedArgument occurrences="11">
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>TValue|int|array{data: TValue|false, priority: int}|false</code>
+    </ImplementedReturnTypeMismatch>
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>$this-&gt;values</code>
+    </InvalidPropertyAssignmentValue>
+    <LessSpecificReturnStatement occurrences="3">
+      <code>$array</code>
+      <code>$value</code>
+    </LessSpecificReturnStatement>
+    <MixedArgument occurrences="1">
       <code>$item['priority']</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority]</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority]</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority]</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority]</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority]</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority]</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority]</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority]</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority]</code>
-      <code>$values</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="4">
+    <MixedArrayAccess occurrences="2">
       <code>$item['data']</code>
       <code>$item['priority']</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority][$index]</code>
-      <code>$this-&gt;values[$this-&gt;maxPriority][$key]</code>
     </MixedArrayAccess>
-    <MixedArrayAssignment occurrences="1">
-      <code>$this-&gt;values[$priority][]</code>
-    </MixedArrayAssignment>
-    <MixedAssignment occurrences="11">
-      <code>$array[]</code>
-      <code>$data[]</code>
-      <code>$item</code>
-      <code>$item</code>
+    <MixedAssignment occurrences="2">
       <code>$item</code>
       <code>$this-&gt;maxPriority</code>
-      <code>$this-&gt;maxPriority</code>
-      <code>$this-&gt;maxPriority</code>
-      <code>$this-&gt;maxPriority</code>
-      <code>$value</code>
-      <code>$values</code>
     </MixedAssignment>
-    <PossiblyNullArrayOffset occurrences="9">
+    <MoreSpecificReturnType occurrences="3">
+      <code>TValue|int|array{data: TValue, priority: int}|false</code>
+      <code>TValue|int|array{data: TValue|false, priority: int}|false</code>
+      <code>list&lt;TValue|int|array{data: TValue, priority: int}&gt;</code>
+    </MoreSpecificReturnType>
+    <PossiblyNullArrayOffset occurrences="8">
       <code>$this-&gt;priorities</code>
       <code>$this-&gt;priorities</code>
       <code>$this-&gt;subPriorities</code>
-      <code>$this-&gt;values</code>
       <code>$this-&gt;values</code>
       <code>$this-&gt;values</code>
       <code>$this-&gt;values</code>
@@ -156,7 +148,7 @@
   </file>
   <file src="src/Message.php">
     <DocblockTypeContradiction occurrences="2">
-      <code>gettype($spec)</code>
+      <code>! is_array($spec) &amp;&amp; ! $spec instanceof Traversable</code>
       <code>is_scalar($key)</code>
     </DocblockTypeContradiction>
     <MixedArrayOffset occurrences="1">
@@ -174,9 +166,6 @@
     <ParamNameMismatch occurrences="1">
       <code>$value</code>
     </ParamNameMismatch>
-    <RedundantConditionGivenDocblockType occurrences="1">
-      <code>is_object($spec)</code>
-    </RedundantConditionGivenDocblockType>
   </file>
   <file src="src/MessageInterface.php">
     <MissingReturnType occurrences="1">
@@ -184,23 +173,37 @@
     </MissingReturnType>
   </file>
   <file src="src/Parameters.php">
-    <MixedAssignment occurrences="1">
-      <code>$this[$name]</code>
-    </MixedAssignment>
+    <InvalidArgument occurrences="3">
+      <code>$name</code>
+      <code>$name</code>
+      <code>$value</code>
+    </InvalidArgument>
+    <MixedArgumentTypeCoercion occurrences="1">
+      <code>$this-&gt;toArray()</code>
+    </MixedArgumentTypeCoercion>
+    <MoreSpecificImplementedParamType occurrences="1">
+      <code>$name</code>
+    </MoreSpecificImplementedParamType>
   </file>
   <file src="src/PriorityList.php">
+    <FalsableReturnStatement occurrences="1">
+      <code>$node ? $node['data'] : false</code>
+    </FalsableReturnStatement>
+    <InvalidArrayOffset occurrences="1">
+      <code>$this-&gt;items[$name]</code>
+    </InvalidArrayOffset>
+    <InvalidFalsableReturnType occurrences="1">
+      <code>current</code>
+    </InvalidFalsableReturnType>
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>$this-&gt;items</code>
+    </InvalidPropertyAssignmentValue>
     <InvalidReturnStatement occurrences="1">
       <code>$node ? $node['data'] : false</code>
     </InvalidReturnStatement>
-    <MissingClosureReturnType occurrences="1">
-      <code>static fn($item) =&gt; $flag === self::EXTR_PRIORITY ? $item['priority'] : $item['data']</code>
-    </MissingClosureReturnType>
-    <MixedInferredReturnType occurrences="1">
+    <MixedReturnTypeCoercion occurrences="1">
       <code>next</code>
-    </MixedInferredReturnType>
-    <MixedReturnStatement occurrences="1">
-      <code>$node ? $node['data'] : false</code>
-    </MixedReturnStatement>
+    </MixedReturnTypeCoercion>
     <RedundantCastGivenDocblockType occurrences="2">
       <code>(int) $priority</code>
       <code>(int) $priority</code>
@@ -286,13 +289,6 @@
       <code>$this-&gt;getEncoding()</code>
     </PossiblyNullArgument>
   </file>
-  <file src="src/StringWrapper/MbString.php">
-    <PossiblyNullArgument occurrences="3">
-      <code>$this-&gt;getEncoding()</code>
-      <code>$this-&gt;getEncoding()</code>
-      <code>$this-&gt;getEncoding()</code>
-    </PossiblyNullArgument>
-  </file>
   <file src="src/StringWrapper/Native.php">
     <NonInvariantDocblockPropertyType occurrences="1">
       <code>$encoding</code>
@@ -304,8 +300,9 @@
     </MissingReturnType>
   </file>
   <file src="test/ArrayObjectTest.php">
-    <ArgumentTypeCoercion occurrences="1">
+    <ArgumentTypeCoercion occurrences="2">
       <code>'ArrayIterator'</code>
+      <code>'InvalidArrayIterator'</code>
     </ArgumentTypeCoercion>
     <InvalidArgument occurrences="1">
       <code>'Bacon'</code>
@@ -316,24 +313,29 @@
       <code>$b</code>
       <code>$b</code>
     </MissingClosureParamType>
-    <MixedArgument occurrences="3">
+    <MixedArgument occurrences="2">
       <code>$a</code>
-      <code>$ar['foo']['bar']</code>
       <code>$b</code>
     </MixedArgument>
-    <MixedArrayAccess occurrences="2">
-      <code>$ar['foo']['bar']</code>
-      <code>$ar['foo']['bar']</code>
-    </MixedArrayAccess>
     <MixedAssignment occurrences="1">
       <code>$unserialized</code>
     </MixedAssignment>
     <MixedMethodCall occurrences="1">
       <code>isImmutable</code>
     </MixedMethodCall>
+    <PossiblyNullArgument occurrences="1">
+      <code>$ar['foo']['bar']</code>
+    </PossiblyNullArgument>
+    <PossiblyNullArrayAccess occurrences="2">
+      <code>$ar['foo']['bar']</code>
+      <code>$ar['foo']['bar']['baz']</code>
+    </PossiblyNullArrayAccess>
     <RedundantConditionGivenDocblockType occurrences="1">
       <code>assertSame</code>
     </RedundantConditionGivenDocblockType>
+    <UndefinedClass occurrences="1">
+      <code>'InvalidArrayIterator'</code>
+    </UndefinedClass>
     <UndefinedInterfaceMethod occurrences="1">
       <code>getArrayCopy</code>
     </UndefinedInterfaceMethod>
@@ -346,9 +348,6 @@
     <DuplicateArrayKey occurrences="1">
       <code>'-10000' =&gt; null</code>
     </DuplicateArrayKey>
-    <InvalidArgument occurrences="1">
-      <code>testValidIteratorsReturnArrayRepresentation</code>
-    </InvalidArgument>
     <InvalidReturnStatement occurrences="1"/>
     <InvalidReturnType occurrences="1"/>
     <MissingClosureParamType occurrences="4">
@@ -384,9 +383,9 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/FastPriorityQueueTest.php">
-    <InvalidScalarArgument occurrences="1">
+    <InvalidArgument occurrences="1">
       <code>'foo'</code>
-    </InvalidScalarArgument>
+    </InvalidArgument>
     <MissingClosureParamType occurrences="2">
       <code>$e</code>
       <code>$e</code>
@@ -467,12 +466,7 @@
     </UndefinedPropertyFetch>
   </file>
   <file src="test/PriorityListTest.php">
-    <MixedArrayOffset occurrences="2">
-      <code>$orders1[$this-&gt;list-&gt;key()]</code>
-      <code>$orders2[$key]</code>
-    </MixedArrayOffset>
-    <MixedAssignment occurrences="4">
-      <code>$key</code>
+    <MixedAssignment occurrences="3">
       <code>$orders1[$this-&gt;list-&gt;key()]</code>
       <code>$orders2[$key]</code>
       <code>$value</code>
@@ -519,9 +513,6 @@
     </MixedAssignment>
   </file>
   <file src="test/SplStackTest.php">
-    <InvalidDocblock occurrences="1">
-      <code>assertSame</code>
-    </InvalidDocblock>
     <MixedArgument occurrences="2">
       <code>$unserialized</code>
       <code>$unserialized</code>

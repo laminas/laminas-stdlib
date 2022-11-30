@@ -23,6 +23,7 @@ class ParametersTest extends TestCase
 
     public function testParametersPersistNameAndValues(): void
     {
+        /** @var Parameters<string, mixed> $parameters */
         $parameters = new Parameters(['foo' => 'bar']);
         self::assertEquals('bar', $parameters['foo']);
         self::assertEquals('bar', $parameters->foo);
