@@ -209,7 +209,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @template       TInputKey of array-key
      * @template       TInputValue
+     * // phpcs:disable Generic.Files.LineLength.TooLong
      * @param array<TInputKey, TInputValue>|ArrayObject<TInputKey, TInputValue>|ArrayIterator<TInputKey, TInputValue>|object $data
+     * // phpcs:enable Generic.Files.LineLength.TooLong
      * @psalm-self-out ArrayObject<TInputKey, TInputValue>
      * @return array<TKey, TValue>
      */
