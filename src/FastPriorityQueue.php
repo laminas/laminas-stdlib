@@ -32,7 +32,6 @@ use function unserialize;
  * performance boost.
  *
  * @template TValue of mixed
- *
  * @template-implements Iterator<int, TValue>
  */
 class FastPriorityQueue implements Iterator, Countable, Serializable
@@ -117,12 +116,9 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Insert an element in the queue with a specified priority
      *
      * @template       TInputValue
-     *
      * @param TInputValue $value
      * @param int         $priority
-     *
      * @psalm-self-out FastPriorityQueue<TValue|TInputValue>
-     *
      * @return void
      */
     public function insert(mixed $value, $priority)

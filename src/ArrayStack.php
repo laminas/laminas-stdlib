@@ -15,7 +15,6 @@ use function array_reverse;
  *
  * @template TKey of array-key
  * @template TValue
- *
  * @template-extends PhpArrayObject<TKey, TValue>
  */
 class ArrayStack extends PhpArrayObject

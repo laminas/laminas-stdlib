@@ -19,7 +19,6 @@ use function uasort;
 /**
  * @template TKey of string
  * @template TValue of mixed
- *
  * @template-implements Iterator<string, TValue>
  */
 class PriorityList implements Iterator, Countable
@@ -72,13 +71,10 @@ class PriorityList implements Iterator, Countable
      *
      * @template       TInputKey of string
      * @template       TInputValue
-     *
      * @param TInputKey   $name
      * @param TInputValue $value
      * @param int         $priority
-     *
      * @psalm-self-out PriorityList<TInputKey|TKey, TInputValue|TValue>
-     *
      * @return void
      */
     public function insert($name, mixed $value, $priority = 0)

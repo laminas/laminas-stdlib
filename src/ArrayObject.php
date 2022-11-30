@@ -44,7 +44,6 @@ use function unserialize;
  *
  * @template TKey of array-key
  * @template TValue
- *
  * @template-implements IteratorAggregate<TKey, TValue>
  * @template-implements ArrayAccess<TKey, TValue>
  */
@@ -91,7 +90,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Returns whether the requested key exists
      *
      * @param TKey $key
-     *
      * @return bool
      */
     public function __isset(mixed $key)
@@ -112,12 +110,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @template TInputKey of array-key
      * @template TInputValue
-     *
      * @param TInputKey $key
      * @param TInputValue $value
-     *
      * @psalm-self-out ArrayObject<TKey|TInputKey, TValue|TInputValue>
-     *
      * @return void
      */
     public function __set(mixed $key, mixed $value)
@@ -138,7 +133,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Unsets the value at the specified key
      *
      * @param TKey $key
-     *
      * @return void
      */
     public function __unset(mixed $key)
@@ -157,9 +151,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * Returns the value at the specified key by reference
-     * 
-     * @param TKey $key
      *
+     * @param TKey $key
      * @return TValue|null
      */
     public function &__get(mixed $key)
@@ -181,11 +174,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Appends the value
      *
      * @template TInputValue
-     *
      * @param TInputValue $value
-     *
      * @psalm-self-out ArrayObject<TKey|int, TValue|TInputValue>
-     *
      * @return void
      */
     public function append(mixed $value)
@@ -219,11 +209,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @template       TInputKey of array-key
      * @template       TInputValue
-     *
      * @param array<TInputKey, TInputValue>|ArrayObject<TInputKey, TInputValue>|ArrayIterator<TInputKey, TInputValue>|object $data
-     *
      * @psalm-self-out ArrayObject<TInputKey, TInputValue>
-     *
      * @return array<TKey, TValue>
      */
     public function exchangeArray($data)
@@ -325,7 +312,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Returns whether the requested key exists
      *
      * @param TKey $key
-     *
      * @return bool
      */
     #[ReturnTypeWillChange]
@@ -338,7 +324,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * {@inheritDoc}
      *
      * @param TKey $key
-     *
      * @return TValue|null
      */
     #[ReturnTypeWillChange]
@@ -358,7 +343,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @param TKey $key
      * @param TValue $value
-     *
      * @return void
      */
     #[ReturnTypeWillChange]
@@ -371,7 +355,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Unsets the value at the specified key
      *
      * @param TKey $key
-     *
      * @return void
      */
     #[ReturnTypeWillChange]
@@ -406,7 +389,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * Sets the behavior flags
      *
      * @param self::STD_PROP_LIST|self::ARRAY_AS_PROPS $flags
-     *
      * @return void
      */
     public function setFlags($flags)

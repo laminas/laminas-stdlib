@@ -16,7 +16,6 @@ use Traversable;
  *
  * @template TKey
  * @template TValue
- *
  * @template-extends ArrayAccess<TKey, TValue>
  * @template-extends Traversable<TKey, TValue>
  */
