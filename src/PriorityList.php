@@ -19,7 +19,7 @@ use function uasort;
 /**
  * @template TKey of string
  * @template TValue of mixed
- * @template-implements Iterator<string, TValue>
+ * @template-implements Iterator<TKey, TValue>
  */
 class PriorityList implements Iterator, Countable
 {
