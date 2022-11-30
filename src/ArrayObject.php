@@ -6,6 +6,7 @@ namespace Laminas\Stdlib;
 
 use AllowDynamicProperties;
 use ArrayAccess;
+use ArrayIterator;
 use Countable;
 use Iterator;
 use IteratorAggregate;
@@ -40,6 +41,12 @@ use function unserialize;
  * Custom framework ArrayObject implementation
  *
  * Extends version-specific "abstract" implementation.
+ *
+ * @template TKey of array-key
+ * @template TValue
+ *
+ * @template-implements IteratorAggregate<TKey, TValue>
+ * @template-implements ArrayAccess<TKey, TValue>
  */
 #[AllowDynamicProperties]
 class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Countable
@@ -55,26 +62,24 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public const ARRAY_AS_PROPS = 2;
 
-    /** @var array */
+    /** @var array<TKey, TValue> */
     protected $storage;
 
-    /** @var int */
+    /** @var self::STD_PROP_LIST|self::ARRAY_AS_PROPS */
     protected $flag;
 
-    /** @var string */
+    /** @var class-string<Iterator> */
     protected $iteratorClass;
 
-    /** @var array */
+    /** @var list<string> */
     protected $protectedProperties;
 
     /**
-     * Constructor
-     *
-     * @param array|object $input Object values must act like ArrayAccess
-     * @param int          $flags
-     * @param string       $iteratorClass
+     * @param array<TKey, TValue>|object               $input Object values must act like ArrayAccess
+     * @param self::STD_PROP_LIST|self::ARRAY_AS_PROPS $flags
+     * @param class-string<Iterator>                   $iteratorClass
      */
-    public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = 'ArrayIterator')
+    public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = ArrayIterator::class)
     {
         $this->setFlags($flags);
         $this->storage = $input;
@@ -84,6 +89,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * Returns whether the requested key exists
+     *
+     * @param TKey $key
      *
      * @return bool
      */
@@ -102,6 +109,14 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * Sets the value at the specified key to value
+     *
+     * @template TInputKey of array-key
+     * @template TInputValue
+     *
+     * @param TInputKey $key
+     * @param TInputValue $value
+     *
+     * @psalm-self-out ArrayObject<TKey|TInputKey, TValue|TInputValue>
      *
      * @return void
      */
@@ -122,6 +137,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Unsets the value at the specified key
      *
+     * @param TKey $key
+     *
      * @return void
      */
     public function __unset(mixed $key)
@@ -140,8 +157,10 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * Returns the value at the specified key by reference
+     * 
+     * @param TKey $key
      *
-     * @return mixed
+     * @return TValue|null
      */
     public function &__get(mixed $key)
     {
@@ -160,6 +179,12 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * Appends the value
+     *
+     * @template TInputValue
+     *
+     * @param TInputValue $value
+     *
+     * @psalm-self-out ArrayObject<TKey|int, TValue|TInputValue>
      *
      * @return void
      */
@@ -181,7 +206,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Get the number of public properties in the ArrayObject
      *
-     * @return int
+     * @return positive-int|0
      */
     #[ReturnTypeWillChange]
     public function count()
@@ -192,8 +217,14 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Exchange the array for another one.
      *
-     * @param  array|ArrayObject|ArrayIterator|object $data
-     * @return array
+     * @template       TInputKey of array-key
+     * @template       TInputValue
+     *
+     * @param array<TInputKey, TInputValue>|ArrayObject<TInputKey, TInputValue>|ArrayIterator<TInputKey, TInputValue>|object $data
+     *
+     * @psalm-self-out ArrayObject<TInputKey, TInputValue>
+     *
+     * @return array<TKey, TValue>
      */
     public function exchangeArray($data)
     {
@@ -220,7 +251,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Creates a copy of the ArrayObject.
      *
-     * @return array
+     * @return array<TKey, TValue>
      */
     public function getArrayCopy()
     {
@@ -230,7 +261,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Gets the behavior flags.
      *
-     * @return int
+     * @return self::STD_PROP_LIST|self::ARRAY_AS_PROPS
      */
     public function getFlags()
     {
@@ -240,7 +271,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Create a new iterator from an ArrayObject instance
      *
-     * @return Iterator
+     * @return Iterator<TKey, TValue>
      */
     #[ReturnTypeWillChange]
     public function getIterator()
@@ -253,7 +284,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Gets the iterator classname for the ArrayObject.
      *
-     * @return string
+     * @return class-string<Iterator>
      */
     public function getIteratorClass()
     {
@@ -293,6 +324,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Returns whether the requested key exists
      *
+     * @param TKey $key
+     *
      * @return bool
      */
     #[ReturnTypeWillChange]
@@ -302,9 +335,11 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     }
 
     /**
-     * Returns the value at the specified key
+     * {@inheritDoc}
      *
-     * @return mixed
+     * @param TKey $key
+     *
+     * @return TValue|null
      */
     #[ReturnTypeWillChange]
     public function &offsetGet(mixed $key)
@@ -321,6 +356,9 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sets the value at the specified key to value
      *
+     * @param TKey $key
+     * @param TValue $value
+     *
      * @return void
      */
     #[ReturnTypeWillChange]
@@ -331,6 +369,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
 
     /**
      * Unsets the value at the specified key
+     *
+     * @param TKey $key
      *
      * @return void
      */
@@ -355,7 +395,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Magic method used for serializing of an instance.
      *
-     * @return array
+     * @return array<string, mixed>
      */
     public function __serialize()
     {
@@ -365,7 +405,8 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sets the behavior flags
      *
-     * @param  int  $flags
+     * @param self::STD_PROP_LIST|self::ARRAY_AS_PROPS $flags
+     *
      * @return void
      */
     public function setFlags($flags)
@@ -376,7 +417,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sets the iterator classname for the ArrayObject
      *
-     * @param  string $class
+     * @param  class-string<Iterator> $class
      * @return void
      */
     public function setIteratorClass($class)
@@ -402,7 +443,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sort the entries with a user-defined comparison function and maintain key association
      *
-     * @param  callable $function
+     * @param  callable(TValue, TValue): int $function
      * @return void
      */
     public function uasort($function)
@@ -415,7 +456,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     /**
      * Sort the entries by keys using a user-defined comparison function
      *
-     * @param  callable $function
+     * @param  callable(TKey, TKey): int $function
      * @return void
      */
     public function uksort($function)
