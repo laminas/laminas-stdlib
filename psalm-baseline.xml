@@ -29,14 +29,12 @@
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($data) &amp;&amp; ! is_object($data)</code>
     </DocblockTypeContradiction>
-    <InvalidArgument occurrences="2">
-      <code>$key</code>
-      <code>$value</code>
-    </InvalidArgument>
-    <InvalidPropertyAssignmentValue occurrences="2">
-      <code>$data</code>
+    <InvalidPropertyAssignmentValue occurrences="1">
       <code>$this-&gt;storage</code>
     </InvalidPropertyAssignmentValue>
+    <MixedArgument occurrences="1">
+      <code>$v</code>
+    </MixedArgument>
     <MixedAssignment occurrences="1">
       <code>$v</code>
     </MixedAssignment>
@@ -100,14 +98,12 @@
     <ImplementedReturnTypeMismatch occurrences="1">
       <code>TValue|int|array{data: TValue|false, priority: int}|false</code>
     </ImplementedReturnTypeMismatch>
-    <InvalidPropertyAssignmentValue occurrences="1">
-      <code>$this-&gt;values</code>
-    </InvalidPropertyAssignmentValue>
     <LessSpecificReturnStatement occurrences="3">
       <code>$array</code>
       <code>$value</code>
     </LessSpecificReturnStatement>
-    <MixedArgument occurrences="1">
+    <MixedArgument occurrences="2">
+      <code>$item['data']</code>
       <code>$item['priority']</code>
     </MixedArgument>
     <MixedArrayAccess occurrences="2">
@@ -172,32 +168,13 @@
       <code>setMetadata</code>
     </MissingReturnType>
   </file>
-  <file src="src/Parameters.php">
-    <InvalidArgument occurrences="3">
-      <code>$name</code>
-      <code>$name</code>
-      <code>$value</code>
-    </InvalidArgument>
-    <MixedArgumentTypeCoercion occurrences="1">
-      <code>$this-&gt;toArray()</code>
-    </MixedArgumentTypeCoercion>
-    <MoreSpecificImplementedParamType occurrences="1">
-      <code>$name</code>
-    </MoreSpecificImplementedParamType>
-  </file>
   <file src="src/PriorityList.php">
     <FalsableReturnStatement occurrences="1">
       <code>$node ? $node['data'] : false</code>
     </FalsableReturnStatement>
-    <InvalidArrayOffset occurrences="1">
-      <code>$this-&gt;items[$name]</code>
-    </InvalidArrayOffset>
     <InvalidFalsableReturnType occurrences="1">
       <code>current</code>
     </InvalidFalsableReturnType>
-    <InvalidPropertyAssignmentValue occurrences="1">
-      <code>$this-&gt;items</code>
-    </InvalidPropertyAssignmentValue>
     <InvalidReturnStatement occurrences="1">
       <code>$node ? $node['data'] : false</code>
     </InvalidReturnStatement>
@@ -466,11 +443,6 @@
     </UndefinedPropertyFetch>
   </file>
   <file src="test/PriorityListTest.php">
-    <MixedAssignment occurrences="3">
-      <code>$orders1[$this-&gt;list-&gt;key()]</code>
-      <code>$orders2[$key]</code>
-      <code>$value</code>
-    </MixedAssignment>
     <NullArgument occurrences="5">
       <code>null</code>
       <code>null</code>

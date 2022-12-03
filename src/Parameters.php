@@ -11,7 +11,7 @@ use function http_build_query;
 use function parse_str;
 
 /**
- * @template TKey
+ * @template TKey of array-key
  * @template TValue
  * @template-extends PhpArrayObject<TKey, TValue>
  * @template-implements ParametersInterface<TKey, TValue>
@@ -37,10 +37,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
     /**
      * Populate from native PHP array
      *
-     * @template TInputKey of array-key
-     * @template TInputValue
-     * @param array<TInputKey, TInputValue> $values
-     * @psalm-self-out Parameters<TInputKey, TInputValue>
+     * @param array<TKey, TValue> $values
      * @return void
      */
     public function fromArray(array $values)
@@ -52,7 +49,6 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * Populate from query string
      *
      * @param  string $string
-     * @psalm-self-out Parameters<array-key, mixed>
      * @return void
      */
     public function fromString($string)
@@ -115,11 +111,8 @@ class Parameters extends PhpArrayObject implements ParametersInterface
     }
 
     /**
-     * @template       TInputKey of array-key
-     * @template       TInputValue
-     * @param TInputKey   $name
-     * @param TInputValue $value
-     * @psalm-self-out Parameters<TKey|TInputKey, TValue|TInputValue>
+     * @param TKey   $name
+     * @param TValue $value
      * @return $this
      */
     public function set($name, $value)
