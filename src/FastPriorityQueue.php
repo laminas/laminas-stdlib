@@ -118,7 +118,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * @template       TInputValue
      * @param TInputValue $value
      * @param int         $priority
-     * @psalm-self-out FastPriorityQueue<TValue|TInputValue>
+     * @psalm-self-out static&FastPriorityQueue<TValue|TInputValue>
      * @return void
      */
     public function insert(mixed $value, $priority)

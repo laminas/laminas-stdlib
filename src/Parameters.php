@@ -40,7 +40,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * @template TInputKey of array-key
      * @template TInputValue
      * @param array<TInputKey, TInputValue> $values
-     * @psalm-self-out Parameters<TInputKey, TInputValue>
+     * @psalm-self-out static&Parameters<TInputKey, TInputValue>
      * @return void
      */
     public function fromArray(array $values)
@@ -52,7 +52,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * Populate from query string
      *
      * @param  string $string
-     * @psalm-self-out Parameters<array-key, mixed>
+     * @psalm-self-out static&Parameters<array-key, mixed>
      * @return void
      */
     public function fromString($string)
@@ -119,7 +119,7 @@ class Parameters extends PhpArrayObject implements ParametersInterface
      * @template       TInputValue
      * @param TInputKey   $name
      * @param TInputValue $value
-     * @psalm-self-out Parameters<TKey|TInputKey, TValue|TInputValue>
+     * @psalm-self-out static&Parameters<TKey|TInputKey, TValue|TInputValue>
      * @return $this
      */
     public function set($name, $value)

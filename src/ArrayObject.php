@@ -112,7 +112,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * @template TInputValue
      * @param TInputKey $key
      * @param TInputValue $value
-     * @psalm-self-out ArrayObject<TKey|TInputKey, TValue|TInputValue>
+     * @psalm-self-out static&ArrayObject<TKey|TInputKey, TValue|TInputValue>
      * @return void
      */
     public function __set(mixed $key, mixed $value)
@@ -175,7 +175,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      *
      * @template TInputValue
      * @param TInputValue $value
-     * @psalm-self-out ArrayObject<TKey|int, TValue|TInputValue>
+     * @psalm-self-out static&ArrayObject<TKey|int, TValue|TInputValue>
      * @return void
      */
     public function append(mixed $value)
@@ -212,7 +212,7 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      * // phpcs:disable Generic.Files.LineLength.TooLong
      * @param array<TInputKey, TInputValue>|ArrayObject<TInputKey, TInputValue>|ArrayIterator<TInputKey, TInputValue>|object $data
      * // phpcs:enable Generic.Files.LineLength.TooLong
-     * @psalm-self-out ArrayObject<TInputKey, TInputValue>
+     * @psalm-self-out static&ArrayObject<TInputKey, TInputValue>
      * @return array<TKey, TValue>
      */
     public function exchangeArray($data)
