@@ -48,6 +48,7 @@ class ArrayObjectTest extends TestCase
 
     public function testStdPropList(): void
     {
+        /** @var ArrayObject<string, string> $ar */
         $ar      = new ArrayObject();
         $ar->foo = 'bar';
         $ar->bar = 'baz';
@@ -96,6 +97,7 @@ class ArrayObjectTest extends TestCase
 
     public function testAppend(): void
     {
+        /** @var ArrayObject<int, string> $ar */
         $ar = new ArrayObject(['one', 'two']);
         self::assertEquals(2, $ar->count());
 
@@ -131,6 +133,7 @@ class ArrayObjectTest extends TestCase
 
     public function testExchangeArray(): void
     {
+        /** @var ArrayObject<string, string> $ar */
         $ar  = new ArrayObject(['foo' => 'bar']);
         $old = $ar->exchangeArray(['bar' => 'baz']);
 

@@ -33,7 +33,7 @@ interface ParametersInterface extends ArrayAccess, Countable, Serializable, Trav
      *
      * Allow deserialization from standard array
      *
-     * @param array $values
+     * @param array<TKey, TValue> $values
      * @return mixed
      */
     public function fromArray(array $values);
