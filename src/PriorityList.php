@@ -69,12 +69,9 @@ class PriorityList implements Iterator, Countable
     /**
      * Insert a new item.
      *
-     * @template       TInputKey of string
-     * @template       TInputValue
-     * @param TInputKey   $name
-     * @param TInputValue $value
-     * @param int         $priority
-     * @psalm-self-out PriorityList<TInputKey|TKey, TInputValue|TValue>
+     * @param TKey   $name
+     * @param TValue $value
+     * @param int    $priority
      * @return void
      */
     public function insert($name, mixed $value, $priority = 0)
