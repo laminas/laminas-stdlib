@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.0.0@4e177bf0c9f03c17d2fbfd83b7cc9c47605274d8">
+<files psalm-version="5.3.0@b6faa3e96b8eb50ec71384c53799b8a107236bb6">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction occurrences="1">
       <code>! is_array($options) &amp;&amp; ! $options instanceof Traversable</code>
@@ -84,6 +84,15 @@
     <InvalidArgument occurrences="1">
       <code>[static::class, 'addError']</code>
     </InvalidArgument>
+    <InvalidArrayOffset occurrences="1">
+      <code>static::$stack[count(static::$stack) - 1]</code>
+    </InvalidArrayOffset>
+    <MixedArgument occurrences="1">
+      <code>$stack</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$stack</code>
+    </MixedAssignment>
     <UnsupportedReferenceUsage occurrences="1">
       <code>$stack = &amp;static::$stack[count(static::$stack) - 1]</code>
     </UnsupportedReferenceUsage>
