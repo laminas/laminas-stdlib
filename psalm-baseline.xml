@@ -32,6 +32,10 @@
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[$this->storage]]></code>
     </InvalidPropertyAssignmentValue>
+    <MethodSignatureMustProvideReturnType>
+      <code>serialize</code>
+      <code>unserialize</code>
+    </MethodSignatureMustProvideReturnType>
     <MixedArgument>
       <code>$v</code>
     </MixedArgument>
@@ -63,6 +67,9 @@
       <code>is_callable($function)</code>
       <code>is_callable($function)</code>
     </RedundantConditionGivenDocblockType>
+    <UndefinedAttributeClass>
+      <code>AllowDynamicProperties</code>
+    </UndefinedAttributeClass>
     <UnsupportedReferenceUsage>
       <code><![CDATA[$ret = &$this->offsetGet($key)]]></code>
     </UnsupportedReferenceUsage>
@@ -101,11 +108,17 @@
     <DocblockTypeContradiction>
       <code>is_int($priority)</code>
     </DocblockTypeContradiction>
-    <ImplementedReturnTypeMismatch/>
+    <ImplementedReturnTypeMismatch>
+      <code>TValue|int|array{data: TValue|false, priority: int|null}|false</code>
+    </ImplementedReturnTypeMismatch>
     <LessSpecificReturnStatement>
       <code>$array</code>
       <code>$value</code>
     </LessSpecificReturnStatement>
+    <MethodSignatureMustProvideReturnType>
+      <code>serialize</code>
+      <code>unserialize</code>
+    </MethodSignatureMustProvideReturnType>
     <MixedArgument>
       <code><![CDATA[$item['data']]]></code>
       <code><![CDATA[$item['priority']]]></code>
@@ -186,6 +199,12 @@
       <code>(int) $priority</code>
     </RedundantCastGivenDocblockType>
   </file>
+  <file src="src/PriorityQueue.php">
+    <MethodSignatureMustProvideReturnType>
+      <code>serialize</code>
+      <code>unserialize</code>
+    </MethodSignatureMustProvideReturnType>
+  </file>
   <file src="src/SplPriorityQueue.php">
     <DocblockTypeContradiction>
       <code>is_array($priority)</code>
@@ -200,6 +219,11 @@
     <MethodSignatureMismatch>
       <code>public function insert($datum, $priority)</code>
     </MethodSignatureMismatch>
+    <MethodSignatureMustProvideReturnType>
+      <code>insert</code>
+      <code>serialize</code>
+      <code>unserialize</code>
+    </MethodSignatureMustProvideReturnType>
     <MixedArgument>
       <code><![CDATA[$item['data']]]></code>
     </MixedArgument>
@@ -320,7 +344,6 @@
       <code><![CDATA['-10000' => null]]></code>
     </DuplicateArrayKey>
     <MissingClosureParamType>
-      <code>$key</code>
       <code>$key</code>
     </MissingClosureParamType>
     <MixedArgument>
