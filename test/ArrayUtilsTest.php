@@ -514,7 +514,7 @@ class ArrayUtilsTest extends TestCase
     }
 
     /**
-     * @psalm-return array<array-key, array{
+     * @psalm-return list<array{
      *     0: array<string, string>,
      *     1: callable(string):bool,
      *     2: null|int,
@@ -526,7 +526,7 @@ class ArrayUtilsTest extends TestCase
         return [
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
-                static function ($value): bool {
+                static function (string $value): bool {
                     if ($value === 'bar') {
                         return false;
                     }
@@ -537,7 +537,7 @@ class ArrayUtilsTest extends TestCase
             ],
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
-                static function ($value, $key): bool {
+                static function (string $value, $key): bool {
                     if ($value === 'buz') {
                         return false;
                     }
@@ -551,7 +551,7 @@ class ArrayUtilsTest extends TestCase
             ],
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
-                static function ($key): bool {
+                static function (string $key): bool {
                     if ($key === 'foo') {
                         return false;
                     }

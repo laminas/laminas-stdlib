@@ -25,28 +25,24 @@ class ConsoleHelperTest extends TestCase
     public function disableColorSupport(): void
     {
         $r = new ReflectionProperty($this->helper, 'supportsColor');
-        $r->setAccessible(true);
         $r->setValue($this->helper, false);
     }
 
     public function enableColorSupport(): void
     {
         $r = new ReflectionProperty($this->helper, 'supportsColor');
-        $r->setAccessible(true);
         $r->setValue($this->helper, true);
     }
 
     public function overrideEolSequence(string $newSequence): void
     {
         $r = new ReflectionProperty($this->helper, 'eol');
-        $r->setAccessible(true);
         $r->setValue($this->helper, $newSequence);
     }
 
     public function overrideStderrResource(mixed $stderr): void
     {
         $r = new ReflectionProperty($this->helper, 'stderr');
-        $r->setAccessible(true);
         $r->setValue($this->helper, $stderr);
     }
 
