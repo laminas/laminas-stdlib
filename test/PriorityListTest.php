@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\PriorityList;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -209,10 +210,8 @@ class PriorityListTest extends TestCase
         );
     }
 
-    /**
-     * @group 6768
-     * @group 6773
-     */
+    #[Group('6768')]
+    #[Group('6773')]
     public function testBooleanValuesAreValid(): void
     {
         $this->list->insert('null', null, null);

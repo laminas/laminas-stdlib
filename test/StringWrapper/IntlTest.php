@@ -10,7 +10,7 @@ use Laminas\Stdlib\StringWrapper\Intl;
 use function array_shift;
 use function extension_loaded;
 
-class IntlTest extends CommonStringWrapperTest
+class IntlTest extends CommonStringWrapperTestCase
 {
     protected function setUp(): void
     {

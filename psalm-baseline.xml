@@ -472,15 +472,6 @@
       <code>$unserialized</code>
     </MixedAssignment>
   </file>
-  <file src="test/SplPriorityQueueTest.php">
-    <MixedArgument>
-      <code>$unserialized</code>
-      <code>$unserialized</code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code>$unserialized</code>
-    </MixedAssignment>
-  </file>
   <file src="test/SplQueueTest.php">
     <MixedArgument>
       <code>$unserialized</code>
@@ -502,11 +493,6 @@
   <file src="test/StringUtilsTest.php">
     <MixedArgument>
       <code>$str</code>
-    </MixedArgument>
-  </file>
-  <file src="test/StringWrapper/CommonStringWrapperTest.php">
-    <MixedArgument>
-      <code>$expected</code>
     </MixedArgument>
   </file>
   <file src="test/StringWrapper/IconvTest.php">

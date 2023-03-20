@@ -8,7 +8,7 @@ use Laminas\Stdlib\StringWrapper\Native;
 
 use function array_shift;
 
-class NativeTest extends CommonStringWrapperTest
+class NativeTest extends CommonStringWrapperTestCase
 {
     /**
      * @param null|string $encoding

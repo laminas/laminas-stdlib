@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace LaminasTest\Stdlib\Guard;
 
 use Laminas\Stdlib\Exception\InvalidArgumentException;
+use Laminas\Stdlib\Guard\NullGuardTrait;
 use LaminasTest\Stdlib\TestAsset\GuardedObject;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Laminas\Stdlib\Guard\NullGuardTrait
- */
+#[CoversClass(NullGuardTrait::class)]
 class NullGuardTraitTest extends TestCase
 {
     public function testGuardAgainstNullThrowsException(): void

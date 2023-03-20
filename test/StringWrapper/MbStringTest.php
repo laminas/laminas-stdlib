@@ -10,7 +10,7 @@ use Laminas\Stdlib\StringWrapper\MbString;
 use function array_shift;
 use function extension_loaded;
 
-class MbStringTest extends CommonStringWrapperTest
+class MbStringTest extends CommonStringWrapperTestCase
 {
     protected function setUp(): void
     {

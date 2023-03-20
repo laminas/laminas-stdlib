@@ -12,6 +12,8 @@ use Laminas\Stdlib\ArrayUtils\MergeReplaceKeyInterface;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Laminas\Stdlib\Parameters;
 use LaminasTest\Stdlib\TestAsset\IteratorWithToArrayMethod;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Traversable;
@@ -314,9 +316,7 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    /**
-     * @group 6903
-     */
+    #[Group('6903')]
     public function testMergeReplaceKey(): void
     {
         $expected = [
@@ -345,9 +345,7 @@ class ArrayUtilsTest extends TestCase
         self::assertEquals($expected, ArrayUtils::merge($a, $b));
     }
 
-    /**
-     * @group 6899
-     */
+    #[Group('6899')]
     public function testAllowsRemovingKeys(): void
     {
         $a        = [
@@ -403,33 +401,25 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider validArraysWithStringKeys
-     */
+    #[DataProvider('validArraysWithStringKeys')]
     public function testValidArraysWithStringKeys(array $test): void
     {
         self::assertTrue(ArrayUtils::hasStringKeys($test));
     }
 
-    /**
-     * @dataProvider validArraysWithIntegerKeys
-     */
+    #[DataProvider('validArraysWithIntegerKeys')]
     public function testValidArraysWithIntegerKeys(array $test): void
     {
         self::assertTrue(ArrayUtils::hasIntegerKeys($test));
     }
 
-    /**
-     * @dataProvider validArraysWithNumericKeys
-     */
+    #[DataProvider('validArraysWithNumericKeys')]
     public function testValidArraysWithNumericKeys(array $test): void
     {
         self::assertTrue(ArrayUtils::hasNumericKeys($test));
     }
 
-    /**
-     * @dataProvider invalidArrays
-     */
+    #[DataProvider('invalidArrays')]
     public function testInvalidArraysAlwaysReturnFalse(mixed $test): void
     {
         self::assertFalse(ArrayUtils::hasStringKeys($test, false));
@@ -445,9 +435,7 @@ class ArrayUtilsTest extends TestCase
         self::assertFalse(ArrayUtils::isHashTable($test, false));
     }
 
-    /**
-     * @dataProvider validLists
-     */
+    #[DataProvider('validLists')]
     public function testLists(array $test): void
     {
         self::assertTrue(ArrayUtils::isList($test));
@@ -457,9 +445,7 @@ class ArrayUtilsTest extends TestCase
         self::assertFalse(ArrayUtils::isHashTable($test));
     }
 
-    /**
-     * @dataProvider validHashTables
-     */
+    #[DataProvider('validHashTables')]
     public function testHashTables(array $test): void
     {
         self::assertTrue(ArrayUtils::isHashTable($test));
@@ -486,27 +472,23 @@ class ArrayUtilsTest extends TestCase
         self::assertFalse(ArrayUtils::isHashTable($test, false));
     }
 
-    /**
-     * @dataProvider mergeArrays
-     */
+    #[DataProvider('mergeArrays')]
     public function testMerge(array $a, array $b, bool $preserveNumericKeys, array $expected): void
     {
         self::assertEquals($expected, ArrayUtils::merge($a, $b, $preserveNumericKeys));
     }
 
     /**
-     * @dataProvider validIterators
      * @param Traversable|array $test
      */
+    #[DataProvider('validIterators')]
     public function testValidIteratorsReturnArrayRepresentation(iterable $test, array $expected): void
     {
         $result = ArrayUtils::iteratorToArray($test);
         self::assertEquals($expected, $result);
     }
 
-    /**
-     * @dataProvider invalidIterators
-     */
+    #[DataProvider('invalidIterators')]
     public function testInvalidIteratorsRaiseInvalidArgumentException(mixed $test): void
     {
         $this->expectException(InvalidArgumentException::class);
@@ -521,7 +503,7 @@ class ArrayUtilsTest extends TestCase
      *     3: array<string, string>
      * }>
      */
-    public function filterArrays(): array
+    public static function filterArrays(): array
     {
         return [
             [
@@ -563,9 +545,7 @@ class ArrayUtilsTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider filterArrays
-     */
+    #[DataProvider('filterArrays')]
     public function testFiltersArray(array $data, callable $callback, ?int $flag, array $result): void
     {
         self::assertEquals($result, ArrayUtils::filter($data, $callback, $flag));

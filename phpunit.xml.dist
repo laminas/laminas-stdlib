@@ -4,17 +4,23 @@
     xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
     bootstrap="vendor/autoload.php"
     colors="true"
-    convertDeprecationsToExceptions="true"
+    cacheDirectory=".phpunit.cache"
+    displayDetailsOnTestsThatTriggerErrors="true"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+    displayDetailsOnTestsThatTriggerNotices="true"
+    displayDetailsOnTestsThatTriggerWarnings="true"
+    displayDetailsOnIncompleteTests="true"
+    displayDetailsOnSkippedTests="true"
 >
-    <coverage processUncoveredFiles="true">
-        <include>
-            <directory suffix=".php">./src</directory>
-        </include>
-    </coverage>
+  <coverage>
+    <include>
+      <directory suffix=".php">./src</directory>
+    </include>
+  </coverage>
 
-    <testsuites>
-        <testsuite name="laminas-stdlib Test Suite">
-            <directory>./test</directory>
-        </testsuite>
-    </testsuites>
+  <testsuites>
+    <testsuite name="laminas-stdlib Test Suite">
+      <directory>./test</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

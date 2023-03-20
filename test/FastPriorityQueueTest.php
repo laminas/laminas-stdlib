@@ -6,6 +6,7 @@ namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Laminas\Stdlib\FastPriorityQueue;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function array_keys;
@@ -17,9 +18,7 @@ use function sprintf;
 use function unserialize;
 use function var_export;
 
-/**
- * @group      Laminas_Stdlib
- */
+#[Group('Laminas_Stdlib')]
 class FastPriorityQueueTest extends TestCase
 {
     /** @var FastPriorityQueue */
