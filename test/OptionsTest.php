@@ -12,6 +12,7 @@ use LaminasTest\Stdlib\TestAsset\TestOptions;
 use LaminasTest\Stdlib\TestAsset\TestOptionsDerived;
 use LaminasTest\Stdlib\TestAsset\TestOptionsNoStrict;
 use LaminasTest\Stdlib\TestAsset\TestOptionsWithoutGetter;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 class OptionsTest extends TestCase
@@ -164,9 +165,7 @@ class OptionsTest extends TestCase
         ]);
     }
 
-    /**
-     * @group 7287
-     */
+    #[Group('7287')]
     public function testIssetReturnsFalseWhenMatchingGetterDoesNotExist(): void
     {
         $options = new TestOptionsWithoutGetter([
@@ -175,9 +174,7 @@ class OptionsTest extends TestCase
         self::assertFalse(isset($options->foo));
     }
 
-    /**
-     * @group 7287
-     */
+    #[Group('7287')]
     public function testIssetDoesNotThrowExceptionWhenMatchingGetterDoesNotExist(): void
     {
         $options = new TestOptionsWithoutGetter();
@@ -187,9 +184,7 @@ class OptionsTest extends TestCase
         $this->addToAssertionCount(1);
     }
 
-    /**
-     * @group 7287
-     */
+    #[Group('7287')]
     public function testIssetReturnsTrueWithValidDataWhenMatchingGetterDoesNotExist(): void
     {
         $options = new TestOptions([

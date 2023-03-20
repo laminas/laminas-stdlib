@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\SplPriorityQueue;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
+use Traversable;
 
 use function array_values;
 use function iterator_to_array;
@@ -13,9 +15,7 @@ use function serialize;
 use function unserialize;
 use function var_export;
 
-/**
- * @group      Laminas_Stdlib
- */
+#[Group('Laminas_Stdlib')]
 class SplPriorityQueueTest extends TestCase
 {
     /** @var SplPriorityQueue */
@@ -47,6 +47,7 @@ class SplPriorityQueueTest extends TestCase
     {
         $s            = serialize($this->queue);
         $unserialized = unserialize($s);
+        self::assertInstanceOf(Traversable::class, $unserialized);
 
         // assert same size
         self::assertSameSize($this->queue, $unserialized);

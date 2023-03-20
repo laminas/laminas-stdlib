@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\PriorityQueue;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
@@ -15,9 +16,7 @@ use function serialize;
 use function unserialize;
 use function var_export;
 
-/**
- * @group      Laminas_Stdlib
- */
+#[Group('Laminas_Stdlib')]
 class PriorityQueueTest extends TestCase
 {
     /** @var PriorityQueue */

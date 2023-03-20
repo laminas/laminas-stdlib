@@ -12,6 +12,7 @@ use Laminas\Stdlib\StringWrapper\Intl;
 use Laminas\Stdlib\StringWrapper\MbString;
 use Laminas\Stdlib\StringWrapper\Native;
 use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function defined;
@@ -26,7 +27,7 @@ class StringUtilsTest extends TestCase
     }
 
     /** @psalm-return array<array-key, array{0: string}> */
-    public function getSingleByEncodings(): array
+    public static function getSingleByEncodings(): array
     {
         return [
             // case-mix to check case-insensitivity
@@ -52,16 +53,16 @@ class StringUtilsTest extends TestCase
     }
 
     /**
-     * @dataProvider getSingleByEncodings
      * @param string $encoding
      */
+    #[DataProvider('getSingleByEncodings')]
     public function testIsSingleByteEncodingReturnsTrue($encoding): void
     {
         self::assertTrue(StringUtils::isSingleByteEncoding($encoding));
     }
 
     /** @psalm-return array<array-key, array{0: string}> */
-    public function getNonSingleByteEncodings(): array
+    public static function getNonSingleByteEncodings(): array
     {
         return [
             ['UTf-8'],
@@ -72,9 +73,9 @@ class StringUtilsTest extends TestCase
     }
 
     /**
-     * @dataProvider getNonSingleByteEncodings
      * @param string $encoding
      */
+    #[DataProvider('getNonSingleByteEncodings')]
     public function testIsSingleByteEncodingReturnsFalse($encoding): void
     {
         self::assertFalse(StringUtils::isSingleByteEncoding($encoding));
@@ -130,7 +131,7 @@ class StringUtilsTest extends TestCase
      *     1: bool
      * }>
      */
-    public function getUtf8StringValidity(): array
+    public static function getUtf8StringValidity(): array
     {
         return [
             // valid
@@ -154,9 +155,9 @@ class StringUtilsTest extends TestCase
     }
 
     /**
-     * @dataProvider getUtf8StringValidity
      * @param bool $valid
      */
+    #[DataProvider('getUtf8StringValidity')]
     public function testIsValidUtf8(mixed $str, $valid): void
     {
         self::assertSame($valid, StringUtils::isValidUtf8($str));

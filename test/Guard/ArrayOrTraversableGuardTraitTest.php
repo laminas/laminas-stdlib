@@ -6,12 +6,12 @@ namespace LaminasTest\Stdlib\Guard;
 
 use Laminas\Stdlib\ArrayObject;
 use Laminas\Stdlib\Exception\InvalidArgumentException;
+use Laminas\Stdlib\Guard\ArrayOrTraversableGuardTrait;
 use LaminasTest\Stdlib\TestAsset\GuardedObject;
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @covers \Laminas\Stdlib\Guard\ArrayOrTraversableGuardTrait
- */
+#[CoversClass(ArrayOrTraversableGuardTrait::class)]
 class ArrayOrTraversableGuardTraitTest extends TestCase
 {
     public function testGuardForArrayOrTraversableThrowsException(): void

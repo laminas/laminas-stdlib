@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace LaminasTest\Stdlib\TestAsset;
 
 use Laminas\Stdlib\ArraySerializableInterface;
+use PHPUnit\Framework\Attributes\Group;
 
-/**
- * @group      Laminas_Stdlib
- */
+#[Group('Laminas_Stdlib')]
 class ArraySerializable implements ArraySerializableInterface
 {
     /** @var array */

@@ -15,7 +15,7 @@ use function file_get_contents;
 use function is_readable;
 use function stripos;
 
-class IconvTest extends CommonStringWrapperTest
+class IconvTest extends CommonStringWrapperTestCase
 {
     protected function setUp(): void
     {

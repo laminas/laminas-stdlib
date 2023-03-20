@@ -6,6 +6,7 @@ namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\Exception\RuntimeException;
 use Laminas\Stdlib\Glob;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -59,9 +60,7 @@ class GlobTest extends TestCase
         Glob::glob($path);
     }
 
-    /**
-     * @dataProvider patternsProvider
-     */
+    #[DataProvider('patternsProvider')]
     public function testPatterns(string $pattern, array $expectedSequence): void
     {
         $result = Glob::glob(__DIR__ . '/_files/' . $pattern, Glob::GLOB_BRACE);
@@ -79,7 +78,7 @@ class GlobTest extends TestCase
      *     1: string[]
      * }>
      */
-    public function patternsProvider(): array
+    public static function patternsProvider(): array
     {
         return [
             [
@@ -115,7 +114,7 @@ class GlobTest extends TestCase
      *     bool
      * }>
      */
-    public function flagsIsEqualsToMethodDataProvider(): array
+    public static function flagsIsEqualsToMethodDataProvider(): array
     {
         return [
             [
@@ -131,9 +130,7 @@ class GlobTest extends TestCase
         ];
     }
 
-    /**
-     * @dataProvider flagsIsEqualsToMethodDataProvider
-     */
+    #[DataProvider('flagsIsEqualsToMethodDataProvider')]
     public function testFlagsIsEqualsToMethod(
         int $flags,
         int $otherFlags,

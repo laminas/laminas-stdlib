@@ -7,6 +7,7 @@ namespace LaminasTest\Stdlib;
 use ArrayIterator;
 use InvalidArgumentException;
 use Laminas\Stdlib\ArrayObject;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use RecursiveArrayIterator;
 use TypeError;
@@ -383,9 +384,7 @@ class ArrayObjectTest extends TestCase
         self::assertSame($sorted, $ar->getArrayCopy());
     }
 
-    /**
-     * @group 6089
-     */
+    #[Group('6089')]
     public function testSerializationRestoresProperties(): void
     {
         /** @var ArrayObject<string, string> $ar */

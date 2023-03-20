@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Stdlib;
 
 use Laminas\Stdlib\SplStack;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
 use function count;
@@ -13,9 +14,7 @@ use function serialize;
 use function unserialize;
 use function var_export;
 
-/**
- * @group      Laminas_Stdlib
- */
+#[Group('Laminas_Stdlib')]
 class SplStackTest extends TestCase
 {
     /** @var SplStack */
