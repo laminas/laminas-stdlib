@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.8.0@9cf4f60a333f779ad3bc704a555920e81d4fdcda">
+<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
@@ -67,9 +67,9 @@
       <code>is_callable($function)</code>
       <code>is_callable($function)</code>
     </RedundantConditionGivenDocblockType>
-    <UndefinedAttributeClass>
-      <code>AllowDynamicProperties</code>
-    </UndefinedAttributeClass>
+    <UnsupportedPropertyReferenceUsage>
+      <code><![CDATA[$ret = &$this->storage[$key]]]></code>
+    </UnsupportedPropertyReferenceUsage>
     <UnsupportedReferenceUsage>
       <code><![CDATA[$ret = &$this->offsetGet($key)]]></code>
     </UnsupportedReferenceUsage>
@@ -107,6 +107,7 @@
   <file src="src/FastPriorityQueue.php">
     <DocblockTypeContradiction>
       <code>is_int($priority)</code>
+      <code><![CDATA[throw new Exception\InvalidArgumentException("The extract flag specified is not valid")]]></code>
     </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch>
       <code>TValue|int|array{data: TValue|false, priority: int|null}|false</code>
@@ -147,6 +148,9 @@
     </PossiblyNullArrayOffset>
   </file>
   <file src="src/Glob.php">
+    <ArgumentTypeCoercion>
+      <code>$globFlags</code>
+    </ArgumentTypeCoercion>
     <PossiblyNullArrayOffset>
       <code>$pattern</code>
     </PossiblyNullArrayOffset>
@@ -343,9 +347,6 @@
     <DuplicateArrayKey>
       <code><![CDATA['-10000' => null]]></code>
     </DuplicateArrayKey>
-    <MissingClosureParamType>
-      <code>$key</code>
-    </MissingClosureParamType>
     <MixedArgument>
       <code>$test</code>
     </MixedArgument>
