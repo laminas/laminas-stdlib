@@ -12,15 +12,14 @@
     displayDetailsOnIncompleteTests="true"
     displayDetailsOnSkippedTests="true"
 >
-  <coverage>
-    <include>
-      <directory suffix=".php">./src</directory>
-    </include>
-  </coverage>
-
-  <testsuites>
-    <testsuite name="laminas-stdlib Test Suite">
-      <directory>./test</directory>
-    </testsuite>
-  </testsuites>
+    <testsuites>
+        <testsuite name="laminas-stdlib Test Suite">
+            <directory>./test</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory suffix=".php">./src</directory>
+        </include>
+    </source>
 </phpunit>
