@@ -498,7 +498,7 @@ class ArrayUtilsTest extends TestCase
     /**
      * @psalm-return list<array{
      *     0: array<string, string>,
-     *     1: callable(string):bool,
+     *     1: callable(string, int|string=):bool,
      *     2: null|int,
      *     3: array<string, string>
      * }>
@@ -519,7 +519,7 @@ class ArrayUtilsTest extends TestCase
             ],
             [
                 ['foo' => 'bar', 'fiz' => 'buz'],
-                static function (string $value, $key): bool {
+                static function (string $value, int|string $key): bool {
                     if ($value === 'buz') {
                         return false;
                     }
