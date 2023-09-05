@@ -8,11 +8,12 @@ use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Dummy TestOptions used to test Stdlib\Options
+ *
+ * @extends AbstractOptions<mixed>
  */
 class TestOptionsWithoutGetter extends AbstractOptions
 {
-    /** @var mixed */
-    protected $foo;
+    protected mixed $foo;
 
     public function setFoo(mixed $value): void
     {

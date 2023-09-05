@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
+use ArrayAccess;
+use ArrayObject;
+use Countable;
 use Laminas\Stdlib\Parameters;
 use Laminas\Stdlib\ParametersInterface;
 use PHPUnit\Framework\TestCase;
+use Serializable;
+use Traversable;
 
 class ParametersTest extends TestCase
 {
@@ -14,11 +19,11 @@ class ParametersTest extends TestCase
     {
         $parameters = new Parameters();
         self::assertInstanceOf(ParametersInterface::class, $parameters);
-        self::assertInstanceOf('ArrayObject', $parameters);
-        self::assertInstanceOf('ArrayAccess', $parameters);
-        self::assertInstanceOf('Countable', $parameters);
-        self::assertInstanceOf('Serializable', $parameters);
-        self::assertInstanceOf('Traversable', $parameters);
+        self::assertInstanceOf(ArrayObject::class, $parameters);
+        self::assertInstanceOf(ArrayAccess::class, $parameters);
+        self::assertInstanceOf(Countable::class, $parameters);
+        self::assertInstanceOf(Serializable::class, $parameters);
+        self::assertInstanceOf(Traversable::class, $parameters);
     }
 
     public function testParametersPersistNameAndValues(): void
@@ -45,7 +50,7 @@ class ParametersTest extends TestCase
         self::assertEquals('barf', $parameters->foof);
     }
 
-    public function testParametersOffsetgetReturnsNullIfNonexistentKeyIsProvided(): void
+    public function testParametersOffsetGetReturnsNullIfNonexistentKeyIsProvided(): void
     {
         $parameters = new Parameters();
         self::assertNull($parameters->foo);

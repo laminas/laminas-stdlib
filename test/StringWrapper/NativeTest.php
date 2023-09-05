@@ -10,13 +10,10 @@ use function array_shift;
 
 class NativeTest extends CommonStringWrapperTestCase
 {
-    /**
-     * @param null|string $encoding
-     * @param null|string $convertEncoding
-     * @return Native|false
-     */
-    protected function getWrapper($encoding = null, $convertEncoding = null)
-    {
+    protected function getWrapper(
+        string|null $encoding = null,
+        string|null $convertEncoding = null,
+    ): Native|false {
         if ($encoding === null) {
             $supportedEncodings = Native::getSupportedEncodings();
             $encoding           = array_shift($supportedEncodings);

@@ -6,7 +6,6 @@ namespace LaminasTest\Stdlib\StringWrapper;
 
 use Laminas\Stdlib\Exception;
 use Laminas\Stdlib\StringWrapper\Iconv;
-use Laminas\Stdlib\StringWrapper\StringWrapperInterface;
 
 use function array_shift;
 use function extension_loaded;
@@ -21,7 +20,7 @@ class IconvTest extends CommonStringWrapperTestCase
     {
         if (! extension_loaded('iconv')) {
             try {
-                new Iconv('utf-8');
+                new Iconv();
                 $this->fail('Missing expected Laminas\Stdlib\Exception\ExtensionNotLoadedException');
             } catch (Exception\ExtensionNotLoadedException) {
                 $this->markTestSkipped('Missing ext/iconv');
@@ -45,13 +44,10 @@ class IconvTest extends CommonStringWrapperTestCase
         parent::setUp();
     }
 
-    /**
-     * @param null|string $encoding
-     * @param null|string $convertEncoding
-     * @return false|StringWrapperInterface
-     */
-    protected function getWrapper($encoding = null, $convertEncoding = null)
-    {
+    protected function getWrapper(
+        string|null $encoding = null,
+        string|null $convertEncoding = null,
+    ): Iconv|false {
         if ($encoding === null) {
             $supportedEncodings = Iconv::getSupportedEncodings();
             $encoding           = array_shift($supportedEncodings);

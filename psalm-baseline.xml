@@ -1,25 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.13.1@086b94371304750d1c673315321a55d15fc59015">
+<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
     </DocblockTypeContradiction>
     <MixedArgument>
-      <code>$key</code>
-      <code>$key</code>
-      <code>$letter</code>
+      <code>$value</code>
     </MixedArgument>
     <MixedAssignment>
-      <code>$array[$normalizedKey]</code>
-      <code>$key</code>
-      <code>$key</code>
-      <code>$letter</code>
-      <code>$value</code>
       <code>$value</code>
     </MixedAssignment>
-    <RawObjectIteration>
-      <code>$this</code>
-    </RawObjectIteration>
+    <MixedInferredReturnType>
+      <code>TValue</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->{$getter}()]]></code>
+    </MixedReturnStatement>
   </file>
   <file src="src/ArrayObject.php">
     <ArgumentTypeCoercion>
@@ -308,14 +304,8 @@
     </InvalidArgument>
     <MissingClosureParamType>
       <code>$a</code>
-      <code>$a</code>
-      <code>$b</code>
       <code>$b</code>
     </MissingClosureParamType>
-    <MixedArgument>
-      <code>$a</code>
-      <code>$b</code>
-    </MixedArgument>
     <MixedAssignment>
       <code>$unserialized</code>
     </MixedAssignment>
@@ -374,24 +364,8 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/FastPriorityQueueTest.php">
-    <InvalidArgument>
-      <code><![CDATA['foo']]></code>
-    </InvalidArgument>
-    <MissingClosureParamType>
-      <code>$e</code>
-      <code>$e</code>
-    </MissingClosureParamType>
-    <MixedArgument>
-      <code>$unserialized</code>
-      <code>$unserialized</code>
-    </MixedArgument>
     <MixedAssignment>
       <code>$datum</code>
-      <code>$expected[]</code>
-      <code>$item</code>
-      <code>$item</code>
-      <code>$item</code>
-      <code>$item</code>
       <code>$item</code>
       <code>$test[]</code>
       <code>$test[]</code>
@@ -399,12 +373,6 @@
       <code>$test[]</code>
       <code>$test[]</code>
       <code>$test[]</code>
-      <code>$test[]</code>
-      <code>$test[]</code>
-      <code>$test[]</code>
-      <code>$unserialized</code>
-      <code>$value</code>
-      <code>$value</code>
       <code>$value</code>
       <code>$value</code>
       <code>$value</code>
@@ -413,33 +381,13 @@
   </file>
   <file src="test/GlobTest.php">
     <MixedArgument>
-      <code>$expectedFileName</code>
       <code>$result[$i]</code>
     </MixedArgument>
-    <MixedAssignment>
-      <code>$expectedFileName</code>
-    </MixedAssignment>
     <RedundantConditionGivenDocblockType>
       <code>assertIsArray</code>
     </RedundantConditionGivenDocblockType>
   </file>
-  <file src="test/OptionsTest.php">
-    <InternalMethod>
-      <code>addToAssertionCount</code>
-    </InternalMethod>
-    <InvalidArgument>
-      <code><![CDATA['asd']]></code>
-      <code><![CDATA[new TestOptions(['test_field' => 1])]]></code>
-    </InvalidArgument>
-  </file>
   <file src="test/ParametersTest.php">
-    <ArgumentTypeCoercion>
-      <code><![CDATA['ArrayAccess']]></code>
-      <code><![CDATA['ArrayObject']]></code>
-      <code><![CDATA['Countable']]></code>
-      <code><![CDATA['Serializable']]></code>
-      <code><![CDATA['Traversable']]></code>
-    </ArgumentTypeCoercion>
     <UndefinedPropertyFetch>
       <code><![CDATA[$parameters->bar]]></code>
       <code><![CDATA[$parameters->baz]]></code>
@@ -448,67 +396,5 @@
       <code><![CDATA[$parameters->foo]]></code>
       <code><![CDATA[$parameters->foof]]></code>
     </UndefinedPropertyFetch>
-  </file>
-  <file src="test/PriorityListTest.php">
-    <NullArgument>
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
-      <code>null</code>
-    </NullArgument>
-    <TypeDoesNotContainType>
-      <code>assertEmpty</code>
-    </TypeDoesNotContainType>
-  </file>
-  <file src="test/PriorityQueueTest.php">
-    <MixedArgument>
-      <code>$unserialized</code>
-      <code>$unserialized</code>
-      <code>$unserialized</code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code>$item</code>
-      <code>$test[]</code>
-      <code>$unserialized</code>
-    </MixedAssignment>
-  </file>
-  <file src="test/SplQueueTest.php">
-    <MixedArgument>
-      <code>$unserialized</code>
-      <code>$unserialized</code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code>$unserialized</code>
-    </MixedAssignment>
-  </file>
-  <file src="test/SplStackTest.php">
-    <MixedArgument>
-      <code>$unserialized</code>
-      <code>$unserialized</code>
-    </MixedArgument>
-    <MixedAssignment>
-      <code>$unserialized</code>
-    </MixedAssignment>
-  </file>
-  <file src="test/StringUtilsTest.php">
-    <MixedArgument>
-      <code>$str</code>
-    </MixedArgument>
-  </file>
-  <file src="test/StringWrapper/IconvTest.php">
-    <TooManyArguments>
-      <code><![CDATA[new Iconv('utf-8')]]></code>
-    </TooManyArguments>
-  </file>
-  <file src="test/StringWrapper/IntlTest.php">
-    <TooManyArguments>
-      <code><![CDATA[new Intl('utf-8')]]></code>
-    </TooManyArguments>
-  </file>
-  <file src="test/StringWrapper/MbStringTest.php">
-    <TooManyArguments>
-      <code><![CDATA[new MbString('utf-8')]]></code>
-    </TooManyArguments>
   </file>
 </files>

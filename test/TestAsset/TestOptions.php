@@ -8,28 +8,25 @@ use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Dummy TestOptions used to test Stdlib\Options
+ *
+ * @extends AbstractOptions<mixed>
  */
 class TestOptions extends AbstractOptions
 {
-    /** @var mixed */
-    protected $testField;
+    protected mixed $testField;
 
-    /** @var mixed */
-    private $parentPrivate;
+    private mixed $parentPrivate;
 
-    /** @var mixed */
-    protected $parentProtected;
+    protected mixed $parentProtected;
 
-    /** @var mixed */
-    protected $parentPublic;
+    protected mixed $parentPublic;
 
     public function setTestField(mixed $value): void
     {
         $this->testField = $value;
     }
 
-    /** @return mixed */
-    public function getTestField()
+    public function getTestField(): mixed
     {
         return $this->testField;
     }
@@ -44,10 +41,8 @@ class TestOptions extends AbstractOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @return mixed
      */
-    private function getParentPrivate()
+    private function getParentPrivate(): mixed
     {
         return $this->parentPrivate;
     }
@@ -62,10 +57,8 @@ class TestOptions extends AbstractOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @return mixed
      */
-    protected function getParentProtected()
+    protected function getParentProtected(): mixed
     {
         return $this->parentProtected;
     }
@@ -80,10 +73,8 @@ class TestOptions extends AbstractOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @return mixed
      */
-    public function getParentPublic()
+    public function getParentPublic(): mixed
     {
         return $this->parentPublic;
     }

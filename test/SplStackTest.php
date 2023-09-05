@@ -33,8 +33,8 @@ class SplStackTest extends TestCase
     {
         $s            = serialize($this->stack);
         $unserialized = unserialize($s);
-        $count        = count($this->stack);
-        self::assertSame($count, count($unserialized));
+        self::assertInstanceOf(SplStack::class, $unserialized);
+        self::assertSame(count($this->stack), count($unserialized));
 
         $expected = iterator_to_array($this->stack);
         $test     = iterator_to_array($unserialized);

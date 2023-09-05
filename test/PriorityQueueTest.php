@@ -19,11 +19,12 @@ use function var_export;
 #[Group('Laminas_Stdlib')]
 class PriorityQueueTest extends TestCase
 {
-    /** @var PriorityQueue */
-    protected $queue;
+    /** @var PriorityQueue<string, int> */
+    private PriorityQueue $queue;
 
     protected function setUp(): void
     {
+        /** @psalm-var PriorityQueue<string, int> $this->queue */
         $this->queue = new PriorityQueue();
         $this->queue->insert('foo', 3);
         $this->queue->insert('bar', 4);
@@ -35,7 +36,8 @@ class PriorityQueueTest extends TestCase
     {
         $s            = serialize($this->queue);
         $unserialized = unserialize($s);
-        $count        = count($this->queue);
+        self::assertInstanceOf(PriorityQueue::class, $unserialized);
+        $count = count($this->queue);
         self::assertSame(
             $count,
             count($unserialized),

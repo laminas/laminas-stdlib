@@ -31,8 +31,8 @@ class SplQueueTest extends TestCase
     {
         $s            = serialize($this->queue);
         $unserialized = unserialize($s);
-        $count        = count($this->queue);
-        self::assertSame($count, count($unserialized));
+        self::assertInstanceOf(SplQueue::class, $unserialized);
+        self::assertSame(count($this->queue), count($unserialized));
 
         $expected = iterator_to_array($this->queue);
         $test     = iterator_to_array($unserialized);

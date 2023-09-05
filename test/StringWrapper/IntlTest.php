@@ -16,7 +16,7 @@ class IntlTest extends CommonStringWrapperTestCase
     {
         if (! extension_loaded('intl')) {
             try {
-                new Intl('utf-8');
+                new Intl();
                 $this->fail('Missing expected Laminas\Stdlib\Exception\ExtensionNotLoadedException');
             } catch (Exception\ExtensionNotLoadedException) {
                 $this->markTestSkipped('Missing ext/intl');
@@ -26,13 +26,10 @@ class IntlTest extends CommonStringWrapperTestCase
         parent::setUp();
     }
 
-    /**
-     * @param null|string $encoding
-     * @param null|string $convertEncoding
-     * @return Intl|false
-     */
-    protected function getWrapper($encoding = null, $convertEncoding = null)
-    {
+    protected function getWrapper(
+        string|null $encoding = null,
+        string|null $convertEncoding = null,
+    ): Intl|false {
         if ($encoding === null) {
             $supportedEncodings = Intl::getSupportedEncodings();
             $encoding           = array_shift($supportedEncodings);

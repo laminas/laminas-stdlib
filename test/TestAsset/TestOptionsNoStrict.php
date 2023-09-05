@@ -8,6 +8,8 @@ use Laminas\Stdlib\AbstractOptions;
 
 /**
  * Dummy TestOptions used to test Stdlib\Options
+ *
+ * @extends AbstractOptions<mixed>
  */
 class TestOptionsNoStrict extends AbstractOptions
 {
@@ -18,16 +20,14 @@ class TestOptionsNoStrict extends AbstractOptions
 
     // phpcs:enable
 
-    /** @var mixed */
-    protected $testField;
+    protected mixed $testField;
 
     public function setTestField(mixed $value): void
     {
         $this->testField = $value;
     }
 
-    /** @return mixed */
-    public function getTestField()
+    public function getTestField(): mixed
     {
         return $this->testField;
     }

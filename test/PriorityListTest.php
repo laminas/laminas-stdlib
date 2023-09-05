@@ -10,12 +10,11 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 
 use function array_keys;
-use function count;
 use function iterator_to_array;
 
 class PriorityListTest extends TestCase
 {
-    /** @var PriorityList */
+    /** @var PriorityList<string, mixed> */
     protected $list;
 
     protected function setUp(): void
@@ -27,7 +26,7 @@ class PriorityListTest extends TestCase
     {
         $this->list->insert('foo', new stdClass(), 0);
 
-        self::assertEquals(1, count($this->list));
+        self::assertCount(1, $this->list);
 
         $values = $this->list->toArray();
         self::assertArrayHasKey('foo', $values);
@@ -38,17 +37,17 @@ class PriorityListTest extends TestCase
         $this->list->insert('foo', new stdClass());
         $this->list->insert('bar', new stdClass());
 
-        self::assertEquals(2, count($this->list));
+        self::assertCount(2, $this->list);
 
         $this->list->insert('foo', new stdClass());
         $this->list->insert('foo', new stdClass());
         $this->list->insert('bar', new stdClass());
 
-        self::assertEquals(2, count($this->list));
+        self::assertCount(2, $this->list);
 
         $this->list->remove('foo');
 
-        self::assertEquals(1, count($this->list));
+        self::assertCount(1, $this->list);
     }
 
     public function testRemove(): void
@@ -56,18 +55,18 @@ class PriorityListTest extends TestCase
         $this->list->insert('foo', new stdClass(), 0);
         $this->list->insert('bar', new stdClass(), 0);
 
-        self::assertEquals(2, count($this->list));
+        self::assertCount(2, $this->list);
 
         $this->list->remove('foo');
 
-        self::assertEquals(1, count($this->list));
+        self::assertCount(1, $this->list);
     }
 
     public function testRemovingNonExistentRouteDoesNotYieldError(): void
     {
         $this->list->remove('foo');
 
-        self::assertEmpty($this->list);
+        self::assertEmpty($this->list->toArray());
     }
 
     public function testClear(): void
@@ -75,11 +74,11 @@ class PriorityListTest extends TestCase
         $this->list->insert('foo', new stdClass(), 0);
         $this->list->insert('bar', new stdClass(), 0);
 
-        self::assertEquals(2, count($this->list));
+        self::assertCount(2, $this->list);
 
         $this->list->clear();
 
-        self::assertEquals(0, count($this->list));
+        self::assertCount(0, $this->list);
         self::assertSame(false, $this->list->current());
     }
 
@@ -156,7 +155,7 @@ class PriorityListTest extends TestCase
 
     public function testPriorityWithNegativesAndNull(): void
     {
-        $this->list->insert('foo', new stdClass(), null);
+        $this->list->insert('foo', new stdClass());
         $this->list->insert('bar', new stdClass(), 1);
         $this->list->insert('baz', new stdClass(), -1);
 
@@ -167,7 +166,7 @@ class PriorityListTest extends TestCase
 
     public function testCurrent(): void
     {
-        $this->list->insert('foo', 'foo_value', null);
+        $this->list->insert('foo', 'foo_value');
         $this->list->insert('bar', 'bar_value', 1);
         $this->list->insert('baz', 'baz_value', -1);
 
@@ -187,7 +186,7 @@ class PriorityListTest extends TestCase
 
     public function testToArray(): void
     {
-        $this->list->insert('foo', 'foo_value', null);
+        $this->list->insert('foo', 'foo_value');
         $this->list->insert('bar', 'bar_value', 1);
         $this->list->insert('baz', 'baz_value', -1);
 
@@ -210,12 +209,13 @@ class PriorityListTest extends TestCase
         );
     }
 
+    /** @psalm-suppress MixedAssignment */
     #[Group('6768')]
     #[Group('6773')]
     public function testBooleanValuesAreValid(): void
     {
-        $this->list->insert('null', null, null);
-        $this->list->insert('false', false, null);
+        $this->list->insert('null', null);
+        $this->list->insert('false', false);
         $this->list->insert('string', 'test', 1);
         $this->list->insert('true', true, -1);
 
