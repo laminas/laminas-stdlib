@@ -16,7 +16,7 @@ class MbStringTest extends CommonStringWrapperTestCase
     {
         if (! extension_loaded('mbstring')) {
             try {
-                new MbString('utf-8');
+                new MbString();
                 $this->fail('Missing expected Laminas\Stdlib\Exception\ExtensionNotLoadedException');
             } catch (Exception\ExtensionNotLoadedException) {
                 $this->markTestSkipped('Missing ext/mbstring');
@@ -26,13 +26,10 @@ class MbStringTest extends CommonStringWrapperTestCase
         parent::setUp();
     }
 
-    /**
-     * @param null|string $encoding
-     * @param null|string $convertEncoding
-     * @return MbString|false
-     */
-    protected function getWrapper($encoding = null, $convertEncoding = null)
-    {
+    protected function getWrapper(
+        string|null $encoding = null,
+        string|null $convertEncoding = null,
+    ): MbString|false {
         if ($encoding === null) {
             $supportedEncodings = MbString::getSupportedEncodings();
             $encoding           = array_shift($supportedEncodings);

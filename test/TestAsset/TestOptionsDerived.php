@@ -9,14 +9,11 @@ namespace LaminasTest\Stdlib\TestAsset;
  */
 class TestOptionsDerived extends TestOptions
 {
-    /** @var mixed */
-    private $derivedPrivate;
+    private mixed $derivedPrivate;
 
-    /** @var mixed */
-    protected $derivedProtected;
+    protected mixed $derivedProtected;
 
-    /** @var mixed */
-    protected $derivedPublic;
+    protected mixed $derivedPublic;
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
@@ -28,10 +25,8 @@ class TestOptionsDerived extends TestOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @return mixed
      */
-    private function getDerivedPrivate()
+    private function getDerivedPrivate(): mixed
     {
         return $this->derivedPrivate;
     }
@@ -46,10 +41,8 @@ class TestOptionsDerived extends TestOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @return mixed
      */
-    protected function getDerivedProtected()
+    protected function getDerivedProtected(): mixed
     {
         return $this->derivedProtected;
     }
@@ -64,10 +57,8 @@ class TestOptionsDerived extends TestOptions
 
     /**
      * Needed to test accessibility of getters / setters within deriving classes
-     *
-     * @return mixed
      */
-    public function getDerivedPublic()
+    public function getDerivedPublic(): mixed
     {
         return $this->derivedPublic;
     }

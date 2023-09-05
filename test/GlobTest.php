@@ -60,6 +60,7 @@ class GlobTest extends TestCase
         Glob::glob($path);
     }
 
+    /** @param list<non-empty-string> $expectedSequence */
     #[DataProvider('patternsProvider')]
     public function testPatterns(string $pattern, array $expectedSequence): void
     {
@@ -75,7 +76,7 @@ class GlobTest extends TestCase
     /**
      * @psalm-return array<array-key, array{
      *     0: string,
-     *     1: string[]
+     *     1: list<non-empty-string>
      * }>
      */
     public static function patternsProvider(): array

@@ -17,12 +17,10 @@ use const STR_PAD_RIGHT;
 // phpcs:ignore WebimpressCodingStandard.NamingConventions.AbstractClass.Prefix
 abstract class CommonStringWrapperTestCase extends TestCase
 {
-    /**
-     * @param null|string $encoding
-     * @param null|string $convertEncoding
-     * @return false|StringWrapperInterface
-     */
-    abstract protected function getWrapper($encoding = null, $convertEncoding = null);
+    abstract protected function getWrapper(
+        string|null $encoding = null,
+        string|null $convertEncoding = null,
+    ): StringWrapperInterface|false;
 
     /**
      * @psalm-return array<array-key, array{

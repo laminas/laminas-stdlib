@@ -369,7 +369,7 @@ class ArrayObjectTest extends TestCase
 
     public function testUksort(): void
     {
-        $function = static function ($a, $b): int {
+        $function = static function (string $a, string $b): int {
             $a = preg_replace('@^(a|an|the) @', '', $a);
             $b = preg_replace('@^(a|an|the) @', '', $b);
             self::assertNotNull($a);

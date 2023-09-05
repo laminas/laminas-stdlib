@@ -21,14 +21,15 @@ use function var_export;
 #[Group('Laminas_Stdlib')]
 class FastPriorityQueueTest extends TestCase
 {
-    /** @var FastPriorityQueue */
-    protected $queue;
+    /** @var FastPriorityQueue<string> */
+    private FastPriorityQueue $queue;
 
     /** @var string[] */
-    protected $expected;
+    private array $expected;
 
     protected function setUp(): void
     {
+        /** @psalm-var FastPriorityQueue<string> $this->queue */
         $this->queue = new FastPriorityQueue();
         $this->insertDataQueue($this->queue);
         $this->expected = [
@@ -107,7 +108,8 @@ class FastPriorityQueueTest extends TestCase
     {
         $s            = serialize($this->queue);
         $unserialized = unserialize($s);
-        $count        = count($this->queue);
+        self::assertInstanceOf(FastPriorityQueue::class, $unserialized);
+        $count = count($this->queue);
         self::assertSame(
             $count,
             count($unserialized),
@@ -168,6 +170,7 @@ class FastPriorityQueueTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $this->expectExceptionMessage('The extract flag specified is not valid');
+        /** @psalm-suppress InvalidArgument */
         $this->queue->setExtractFlags('foo');
     }
 
@@ -191,7 +194,7 @@ class FastPriorityQueueTest extends TestCase
 
     public function testHasPriority(): void
     {
-        foreach ($this->getDataPriorityQueue() as $value => $priority) {
+        foreach ($this->getDataPriorityQueue() as $priority) {
             self::assertTrue($this->queue->hasPriority($priority));
         }
         self::assertFalse($this->queue->hasPriority(10000));
@@ -211,7 +214,7 @@ class FastPriorityQueueTest extends TestCase
         self::assertEquals($expected, $test);
     }
 
-    public function testRemoveOnlyTheFirstOccurenceFromQueue(): void
+    public function testRemoveOnlyTheFirstOccurrenceFromQueue(): void
     {
         $data = $this->getDataPriorityQueue();
         $this->queue->insert('test2', $data['test2']);
@@ -246,7 +249,7 @@ class FastPriorityQueueTest extends TestCase
 
     public function testRemoveShouldFindItemEvenIfMultipleItemsAreInQueue(): void
     {
-        $prototype = static function ($e): void {
+        $prototype = static function (): void {
         };
 
         $queue = new FastPriorityQueue();
@@ -268,7 +271,7 @@ class FastPriorityQueueTest extends TestCase
 
     public function testIterativelyRemovingItemsShouldRemoveAllItems(): void
     {
-        $prototype = static function ($e): void {
+        $prototype = static function (): void {
         };
 
         $queue = new FastPriorityQueue();

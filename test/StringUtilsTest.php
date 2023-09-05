@@ -154,12 +154,10 @@ class StringUtilsTest extends TestCase
         ];
     }
 
-    /**
-     * @param bool $valid
-     */
     #[DataProvider('getUtf8StringValidity')]
-    public function testIsValidUtf8(mixed $str, $valid): void
+    public function testIsValidUtf8(mixed $str, bool $valid): void
     {
+        /** @psalm-suppress MixedArgument */
         self::assertSame($valid, StringUtils::isValidUtf8($str));
     }
 

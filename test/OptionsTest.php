@@ -63,9 +63,9 @@ class OptionsTest extends TestCase
     {
         $options = new TestOptions(['test_field' => 1]);
 
-        self::assertEquals(true, isset($options->test_field));
+        self::assertTrue(isset($options->test_field));
         unset($options->testField);
-        self::assertEquals(false, isset($options->test_field));
+        self::assertFalse(isset($options->test_field));
     }
 
     public function testUnsetThrowsInvalidArgumentException(): void
@@ -99,6 +99,7 @@ class OptionsTest extends TestCase
     {
         $this->expectException(InvalidArgumentException::class);
         $options = new TestOptions();
+        /** @psalm-suppress InvalidArgument */
         $options->setFromArray('asd');
     }
 
@@ -179,9 +180,7 @@ class OptionsTest extends TestCase
     {
         $options = new TestOptionsWithoutGetter();
 
-        isset($options->foo);
-
-        $this->addToAssertionCount(1);
+        self::assertFalse(isset($options->foo));
     }
 
     #[Group('7287')]
