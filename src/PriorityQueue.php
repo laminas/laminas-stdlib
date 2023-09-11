@@ -6,8 +6,9 @@ namespace Laminas\Stdlib;
 
 use Countable;
 use IteratorAggregate;
-use ReturnTypeWillChange;
 use Serializable;
+use SplPriorityQueue as PhpSplPriorityQueue;
+use Traversable;
 use UnexpectedValueException;
 
 use function array_map;
@@ -30,7 +31,6 @@ use function unserialize;
  * the actual iteration.
  *
  * @template TValue
- * @template TPriority of int
  * @implements IteratorAggregate<array-key, TValue>
  */
 class PriorityQueue implements Countable, IteratorAggregate, Serializable
@@ -42,38 +42,35 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     /**
      * Inner queue class to use for iteration
      *
-     * @var class-string<\SplPriorityQueue>
+     * @var class-string<PhpSplPriorityQueue>
      */
-    protected $queueClass = SplPriorityQueue::class;
+    protected string $queueClass = SplPriorityQueue::class;
 
     /**
      * Actual items aggregated in the priority queue. Each item is an array
      * with keys "data" and "priority".
      *
-     * @var list<array{data: TValue, priority: TPriority}>
+     * @var list<array{data: TValue, priority: int}>
      */
-    protected $items = [];
+    protected array $items = [];
 
     /**
      * Inner queue object
      *
-     * @var \SplPriorityQueue<TPriority, TValue>|null
+     * @var PhpSplPriorityQueue<int, TValue>|null
      */
-    protected $queue;
+    protected ?PhpSplPriorityQueue $queue = null;
 
     /**
      * Insert an item into the queue
      *
      * Priority defaults to 1 (low priority) if none provided.
      *
-     * @param  TValue    $data
-     * @param  TPriority $priority
+     * @param TValue $data
      * @return $this
      */
-    public function insert($data, $priority = 1)
+    public function insert(mixed $data, int $priority = 1): self
     {
-        /** @psalm-var TPriority $priority */
-        $priority      = (int) $priority;
         $this->items[] = [
             'data'     => $data,
             'priority' => $priority,
@@ -122,23 +119,12 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
         return false;
     }
 
-    /**
-     * Is the queue empty?
-     *
-     * @return bool
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return 0 === $this->count();
     }
 
-    /**
-     * How many items are in the queue?
-     *
-     * @return int
-     */
-    #[ReturnTypeWillChange]
-    public function count()
+    public function count(): int
     {
         return count($this->items);
     }
@@ -148,7 +134,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      *
      * @return TValue
      */
-    public function top()
+    public function top(): mixed
     {
         $queue = clone $this->getQueue();
 
@@ -202,21 +188,15 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * retrieves the inner queue object, and clones it for purposes of
      * iteration.
      *
-     * @return \SplPriorityQueue<TPriority, TValue>
+     * @return PhpSplPriorityQueue<int, TValue>
      */
-    #[ReturnTypeWillChange]
-    public function getIterator()
+    public function getIterator(): Traversable
     {
         $queue = $this->getQueue();
         return clone $queue;
     }
 
-    /**
-     * Serialize the data structure
-     *
-     * @return string
-     */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize($this->__serialize());
     }
@@ -224,9 +204,9 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     /**
      * Magic method used for serializing of an instance.
      *
-     * @return list<array{data: TValue, priority: TPriority}>
+     * @return list<array{data: TValue, priority: int}>
      */
-    public function __serialize()
+    public function __serialize(): array
     {
         return $this->items;
     }
@@ -235,11 +215,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Unserialize a string into a PriorityQueue object
      *
      * Serialization format is compatible with {@link SplPriorityQueue}
-     *
-     * @param  string $data
-     * @return void
      */
-    public function unserialize($data)
+    public function unserialize(string $data): void
     {
         $toUnserialize = unserialize($data);
         if (! is_array($toUnserialize)) {
@@ -249,7 +226,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
             ));
         }
 
-        /** @psalm-var list<array{data: TValue, priority: TPriority}> $toUnserialize */
+        /** @psalm-var list<array{data: TValue, priority: int}> $toUnserialize */
 
         $this->__unserialize($toUnserialize);
     }
@@ -257,10 +234,9 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
    /**
     * Magic method used to rebuild an instance.
     *
-    * @param list<array{data: TValue, priority: TPriority}> $data Data array.
-    * @return void
+    * @param list<array{data: TValue, priority: int}> $data Data array
     */
-    public function __unserialize($data)
+    public function __unserialize(array $data): void
     {
         foreach ($data as $item) {
             $this->insert($item['data'], $item['priority']);
@@ -273,16 +249,16 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * sorted). You may provide one of the EXTR_* flags as an argument, allowing
      * the ability to return priorities or both data and priority.
      *
-     * @param  int $flag
+     * @param self::EXTR_* $flag
      * @return array<array-key, mixed>
      * @psalm-return ($flag is self::EXTR_BOTH
-     *                      ? list<array{data: TValue, priority: TPriority}>
+     *                      ? list<array{data: TValue, priority: int}>
      *                      : $flag is self::EXTR_PRIORITY
-     *                          ? list<TPriority>
+     *                          ? list<int>
      *                          : list<TValue>
      *               )
      */
-    public function toArray($flag = self::EXTR_DATA)
+    public function toArray(int $flag = self::EXTR_DATA): array
     {
         return match ($flag) {
             self::EXTR_BOTH => $this->items,
@@ -297,13 +273,12 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Please see {@link getIterator()} for details on the necessity of an
      * internal queue class. The class provided should extend SplPriorityQueue.
      *
-     * @param  class-string<\SplPriorityQueue> $class
+     * @param  class-string<PhpSplPriorityQueue> $class
      * @return $this
      */
-    public function setInternalQueueClass($class)
+    public function setInternalQueueClass(string $class): self
     {
-        /** @psalm-suppress RedundantCastGivenDocblockType */
-        $this->queueClass = (string) $class;
+        $this->queueClass = $class;
         return $this;
     }
 
@@ -311,9 +286,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Does the queue contain the given datum?
      *
      * @param  TValue $datum
-     * @return bool
      */
-    public function contains($datum)
+    public function contains(mixed $datum): bool
     {
         foreach ($this->items as $item) {
             if ($item['data'] === $datum) {
@@ -325,11 +299,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
 
     /**
      * Does the queue have an item with the given priority?
-     *
-     * @param  TPriority $priority
-     * @return bool
      */
-    public function hasPriority($priority)
+    public function hasPriority(int $priority): bool
     {
         foreach ($this->items as $item) {
             if ($item['priority'] === $priority) {
@@ -342,19 +313,19 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     /**
      * Get the inner priority queue instance
      *
-     * @throws Exception\DomainException
-     * @return \SplPriorityQueue<TPriority, TValue>
+     * @return PhpSplPriorityQueue<int, TValue>
      * @psalm-assert !null $this->queue
+     * @throws Exception\DomainException
      */
-    protected function getQueue()
+    protected function getQueue(): PhpSplPriorityQueue
     {
         if (null === $this->queue) {
             /** @psalm-suppress UnsafeInstantiation */
             $queue = new $this->queueClass();
-            /** @psalm-var \SplPriorityQueue<TPriority, TValue> $queue */
+            /** @psalm-var PhpSplPriorityQueue<int, TValue> $queue */
             $this->queue = $queue;
             /** @psalm-suppress DocblockTypeContradiction */
-            if (! $this->queue instanceof \SplPriorityQueue) {
+            if (! $this->queue instanceof PhpSplPriorityQueue) {
                 throw new Exception\DomainException(sprintf(
                     'PriorityQueue expects an internal queue of type SplPriorityQueue; received "%s"',
                     $this->queue::class
@@ -365,15 +336,8 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
         return $this->queue;
     }
 
-    /**
-     * Add support for deep cloning
-     *
-     * @return void
-     */
     public function __clone()
     {
-        if (null !== $this->queue) {
-            $this->queue = clone $this->queue;
-        }
+        $this->queue = clone $this->getQueue();
     }
 }

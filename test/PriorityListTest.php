@@ -15,7 +15,7 @@ use function iterator_to_array;
 class PriorityListTest extends TestCase
 {
     /** @var PriorityList<string, mixed> */
-    protected $list;
+    private PriorityList $list;
 
     protected function setUp(): void
     {
@@ -79,7 +79,7 @@ class PriorityListTest extends TestCase
         $this->list->clear();
 
         self::assertCount(0, $this->list);
-        self::assertSame(false, $this->list->current());
+        self::assertNull($this->list->current());
     }
 
     public function testGet(): void
@@ -223,8 +223,11 @@ class PriorityListTest extends TestCase
         $orders2 = [];
 
         foreach ($this->list as $key => $value) {
-            $orders1[$this->list->key()] = $this->list->current();
-            $orders2[$key]               = $value;
+            self::assertNotNull($key);
+            $currentKey = $this->list->key();
+            self::assertNotNull($currentKey);
+            $orders1[$currentKey] = $this->list->current();
+            $orders2[$key]        = $value;
         }
         self::assertEquals($orders1, $orders2);
         self::assertEquals(

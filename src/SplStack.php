@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
-use ReturnTypeWillChange;
 use Serializable;
 use UnexpectedValueException;
 
@@ -26,7 +25,7 @@ class SplStack extends \SplStack implements Serializable
      *
      * @return list<TValue>
      */
-    public function toArray()
+    public function toArray(): array
     {
         $array = [];
         foreach ($this as $item) {
@@ -35,13 +34,7 @@ class SplStack extends \SplStack implements Serializable
         return $array;
     }
 
-    /**
-     * Serialize
-     *
-     * @return string
-     */
-    #[ReturnTypeWillChange]
-    public function serialize()
+    public function serialize(): string
     {
         return serialize($this->__serialize());
     }
@@ -51,20 +44,12 @@ class SplStack extends \SplStack implements Serializable
      *
      * @return list<TValue>
      */
-    #[ReturnTypeWillChange]
-    public function __serialize()
+    public function __serialize(): array
     {
         return $this->toArray();
     }
 
-    /**
-     * Unserialize
-     *
-     * @param  string $data
-     * @return void
-     */
-    #[ReturnTypeWillChange]
-    public function unserialize($data)
+    public function unserialize(string $data): void
     {
         $toUnserialize = unserialize($data);
         if (! is_array($toUnserialize)) {
@@ -81,10 +66,8 @@ class SplStack extends \SplStack implements Serializable
     * Magic method used to rebuild an instance.
     *
     * @param array<array-key, TValue> $data Data array.
-    * @return void
     */
-    #[ReturnTypeWillChange]
-    public function __unserialize($data)
+    public function __unserialize(array $data): void
     {
         foreach ($data as $item) {
             $this->unshift($item);

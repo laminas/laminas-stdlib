@@ -19,12 +19,12 @@ use function var_export;
 #[Group('Laminas_Stdlib')]
 class PriorityQueueTest extends TestCase
 {
-    /** @var PriorityQueue<string, int> */
+    /** @var PriorityQueue<string> */
     private PriorityQueue $queue;
 
     protected function setUp(): void
     {
-        /** @psalm-var PriorityQueue<string, int> $this->queue */
+        /** @psalm-var PriorityQueue<string> $this->queue */
         $this->queue = new PriorityQueue();
         $this->queue->insert('foo', 3);
         $this->queue->insert('bar', 4);

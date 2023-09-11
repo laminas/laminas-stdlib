@@ -15,11 +15,13 @@ use function serialize;
 use function unserialize;
 use function var_export;
 
+use const PHP_INT_MAX;
+
 #[Group('Laminas_Stdlib')]
 class SplPriorityQueueTest extends TestCase
 {
-    /** @var SplPriorityQueue */
-    protected $queue;
+    /** @var SplPriorityQueue<string, int> */
+    private SplPriorityQueue $queue;
 
     protected function setUp(): void
     {
@@ -69,5 +71,48 @@ class SplPriorityQueueTest extends TestCase
         ];
         $test     = $this->queue->toArray();
         self::assertSame($expected, $test, var_export($test, true));
+    }
+
+    public function testThatToArrayWithExtractBothYieldsExpectedValues(): void
+    {
+        $queue = new SplPriorityQueue();
+        $queue->insert('foo', 10);
+        $queue->setExtractFlags(\SplPriorityQueue::EXTR_BOTH);
+        $values = $queue->toArray();
+
+        $expect = [
+            [
+                'data'     => 'foo',
+                'priority' => [
+                    10,
+                    PHP_INT_MAX,
+                ],
+            ],
+        ];
+
+        self::assertEquals($expect, $values);
+    }
+
+    public function testThatSerializeYieldsExpectedValues(): void
+    {
+        $queue = new SplPriorityQueue();
+        $queue->insert('foo', 10);
+        $values = $queue->__serialize();
+
+        self::assertSame('foo', $values[0]['data']);
+        self::assertSame(10, $values[0]['priority'][0]);
+    }
+
+    public function testThatSerializationPreservesInsertionOrder(): void
+    {
+        $queue = new SplPriorityQueue();
+        $queue->insert('a', 100);
+        $queue->insert('b', 200);
+
+        $serialized = serialize($queue);
+        $clone      = unserialize($serialized);
+        self::assertInstanceOf(SplPriorityQueue::class, $clone);
+
+        self::assertSame(iterator_to_array($queue), iterator_to_array($clone));
     }
 }

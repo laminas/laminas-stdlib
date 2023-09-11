@@ -8,8 +8,10 @@ use Serializable;
 use UnexpectedValueException;
 
 use function array_key_exists;
+use function count;
 use function get_debug_type;
 use function is_array;
+use function min;
 use function serialize;
 use function sprintf;
 use function unserialize;
@@ -24,12 +26,13 @@ use const PHP_INT_MAX;
  *
  * @template TValue
  * @template TPriority of int
- * @extends \SplPriorityQueue<TPriority, TValue>
+ * @psalm-type InternalPriority = array{0: mixed, 1: int}
+ * @extends \SplPriorityQueue<InternalPriority, TValue>
  */
 class SplPriorityQueue extends \SplPriorityQueue implements Serializable
 {
-    /** @var int Seed used to ensure queue order for items of the same priority */
-    protected $serial = PHP_INT_MAX;
+    /** Seed used to ensure queue order for items of the same priority */
+    private int $serial = PHP_INT_MAX;
 
     /**
      * Insert a value with a given priority
@@ -37,17 +40,19 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      * Utilizes {@var $serial} to ensure that values of equal priority are
      * emitted in the same order in which they are inserted.
      *
-     * @param  TValue    $datum
-     * @param  TPriority $priority
-     * @return void
+     * @param TValue $value
+     * @param TPriority|InternalPriority $priority
+     * @return true
      */
-    public function insert($datum, $priority)
+    public function insert(mixed $value, mixed $priority): bool
     {
         if (! is_array($priority)) {
             $priority = [$priority, $this->serial--];
         }
 
-        parent::insert($datum, $priority);
+        parent::insert($value, $priority);
+
+        return true;
     }
 
     /**
@@ -55,9 +60,9 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      *
      * Array will be priority => data pairs
      *
-     * @return list<TValue>
+     * @return list<TValue>|list<InternalPriority>|list<array{data: TValue, priority: InternalPriority}>
      */
-    public function toArray()
+    public function toArray(): array
     {
         $array = [];
         foreach (clone $this as $item) {
@@ -66,12 +71,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
         return $array;
     }
 
-    /**
-     * Serialize
-     *
-     * @return string
-     */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize($this->__serialize());
     }
@@ -79,27 +79,26 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
     /**
      * Magic method used for serializing of an instance.
      *
-     * @return array
+     * @return list<array{data: TValue, priority: InternalPriority}>
      */
-    public function __serialize()
+    public function __serialize(): array
     {
         $clone = clone $this;
         $clone->setExtractFlags(self::EXTR_BOTH);
 
         $data = [];
+        /**
+         * The type needs to be forced here because psalm does not know that setExtractFlags() alters the iterable value
+         *
+         * @psalm-var array{data: TValue, priority: InternalPriority} $item
+         */
         foreach ($clone as $item) {
             $data[] = $item;
         }
         return $data;
     }
 
-    /**
-     * Deserialize
-     *
-     * @param  string $data
-     * @return void
-     */
-    public function unserialize($data)
+    public function unserialize(string $data): void
     {
         $toUnserialize = unserialize($data);
         if (! is_array($toUnserialize)) {
@@ -115,12 +114,14 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
     /**
      * Magic method used to rebuild an instance.
      *
-     * @param array<array-key, mixed> $data Data array.
-     * @return void
+     * @param array<array-key, array{data: TValue, priority: InternalPriority}> $data Data array.
      */
-    public function __unserialize($data)
+    public function __unserialize(array $data): void
     {
-        $this->serial = PHP_INT_MAX;
+        /** @psalm-var non-empty-list<int> $serials */
+        $serials = [
+            PHP_INT_MAX,
+        ];
 
         foreach ($data as $item) {
             if (! is_array($item)) {
@@ -138,12 +139,22 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
                 ));
             }
 
-            $priority = 1;
-            if (array_key_exists('priority', $item)) {
-                $priority = (int) $item['priority'];
+            if (
+                ! array_key_exists('priority', $item)
+                || ! is_array($item['priority'])
+                || count($item['priority']) !== 2
+            ) {
+                throw new UnexpectedValueException(sprintf(
+                    'Cannot deserialize %s instance: corrupt item; missing or invalid "priority" element',
+                    self::class
+                ));
             }
 
-            $this->insert($item['data'], $priority);
+            $serials[] = $item['priority'][1];
+
+            $this->insert($item['data'], $item['priority']);
         }
+
+        $this->serial = min($serials) - 1;
     }
 }
