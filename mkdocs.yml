@@ -5,16 +5,20 @@ nav:
     - v3:
       - "Console Helper": v3/console-helper.md
       - Migration: v3/migration.md
+    - v4:
+        - "Console Helper": v4/console-helper.md
+        - Migration: v4/migration.md
 site_name: laminas-stdlib
 site_description: Laminas\Stdlib
 repo_url: 'https://github.com/laminas/laminas-stdlib'
 extra:
     project: Components
-    current_version: v3
+    current_version: v4
     versions:
       - v3
+      - v4
 plugins:
   - redirects:
       redirect_maps:
-        migration.md: v3/migration.md
-        console-helper.md: v3/console-helper.md
+        migration.md: v4/migration.md
+        console-helper.md: v4/console-helper.md
