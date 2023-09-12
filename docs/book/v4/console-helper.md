@@ -120,7 +120,6 @@ class HelloWorld
 console tooling is for output considerations.
 
 If you need to parse complex argument strings, we recommend using
-[laminas-console](https://docs.laminas.dev/laminas-console/)/[zf-console](https://github.com/zfcampus/zf-console)
-or [symfony/console](http://symfony.com/doc/current/components/console.html),
-as these packages provide those capabilities, as well as far more colorization
+[symfony/console](http://symfony.com/doc/current/components/console.html),
+as this package provides those capabilities, as well as far more colorization
 and console feature detection facilities.
