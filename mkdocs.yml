@@ -3,8 +3,7 @@ site_dir: docs/html
 nav:
     - Home: index.md
     - v3:
-      - Reference:
-        - "Console Helper": console-helper.md
+      - "Console Helper": console-helper.md
       - Migration: migration.md
 site_name: laminas-stdlib
 site_description: Laminas\Stdlib
