@@ -2,11 +2,19 @@ docs_dir: docs/book
 site_dir: docs/html
 nav:
     - Home: index.md
-    - Reference:
-      - "Console Helper": console-helper.md
-    - Migration: migration.md
+    - v3:
+      - "Console Helper": v3/console-helper.md
+      - Migration: v3/migration.md
 site_name: laminas-stdlib
 site_description: Laminas\Stdlib
 repo_url: 'https://github.com/laminas/laminas-stdlib'
 extra:
     project: Components
+    current_version: v3
+    versions:
+      - v3
+plugins:
+  - redirects:
+      redirect_maps:
+        migration.md: v3/migration.md
+        console-helper.md: v3/console-helper.md
