@@ -6,8 +6,9 @@ nav:
       - "Console Helper": v3/console-helper.md
       - Migration: v3/migration.md
     - v4:
-        - "Console Helper": v4/console-helper.md
-        - Migration: v4/migration.md
+      - "Console Helper": v4/console-helper.md
+      - Migration:
+        - "Migration from Version 3 to 4": v4/migration/v3-to-v4.md
 site_name: laminas-stdlib
 site_description: Laminas\Stdlib
 repo_url: 'https://github.com/laminas/laminas-stdlib'
