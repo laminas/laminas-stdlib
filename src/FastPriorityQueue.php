@@ -113,8 +113,9 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Insert an element in the queue with a specified priority
      *
      * @param TValue $value
+     * @return true
      */
-    public function insert(mixed $value, int $priority): void
+    public function insert(mixed $value, int $priority): bool
     {
         $this->values[$priority][] = $value;
         if (! isset($this->priorities[$priority])) {
@@ -122,6 +123,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
             $this->maxPriority           = $this->maxPriority === null ? $priority : max($priority, $this->maxPriority);
         }
         ++$this->count;
+
+        return true;
     }
 
     /**

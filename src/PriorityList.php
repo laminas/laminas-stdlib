@@ -65,8 +65,9 @@ class PriorityList implements Iterator, Countable
      *
      * @param TKey   $name
      * @param TValue $value
+     * @return true
      */
-    public function insert($name, mixed $value, int $priority = 0): void
+    public function insert($name, mixed $value, int $priority = 0): bool
     {
         if (! isset($this->items[$name])) {
             $this->count++;
@@ -79,6 +80,8 @@ class PriorityList implements Iterator, Countable
             'priority' => $priority,
             'serial'   => $this->serial++,
         ];
+
+        return true;
     }
 
     /**

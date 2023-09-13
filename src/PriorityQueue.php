@@ -67,16 +67,17 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      * Priority defaults to 1 (low priority) if none provided.
      *
      * @param TValue $data
-     * @return $this
+     * @return true
      */
-    public function insert(mixed $data, int $priority = 1): self
+    public function insert(mixed $data, int $priority = 1): bool
     {
         $this->items[] = [
             'data'     => $data,
             'priority' => $priority,
         ];
         $this->getQueue()->insert($data, $priority);
-        return $this;
+
+        return true;
     }
 
     /**
