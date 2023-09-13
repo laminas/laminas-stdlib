@@ -6,15 +6,14 @@ namespace Laminas\Stdlib;
 
 use Countable;
 use Iterator;
-use ReturnTypeWillChange;
 use Serializable;
 use SplPriorityQueue as PhpSplPriorityQueue;
 use UnexpectedValueException;
 
+use function assert;
 use function current;
 use function in_array;
 use function is_array;
-use function is_int;
 use function key;
 use function max;
 use function next;
@@ -41,63 +40,61 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     public const EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH;
 
     /** @var self::EXTR_* */
-    protected $extractFlag = self::EXTR_DATA;
+    protected int $extractFlag = self::EXTR_DATA;
 
     /**
      * Elements of the queue, divided by priorities
      *
      * @var array<int, list<TValue>>
      */
-    protected $values = [];
+    protected array $values = [];
 
     /**
      * Array of priorities
      *
      * @var array<int, int>
      */
-    protected $priorities = [];
+    protected array $priorities = [];
 
     /**
      * Array of priorities used for the iteration
      *
      * @var array
      */
-    protected $subPriorities = [];
+    protected array $subPriorities = [];
 
     /**
      * Max priority
-     *
-     * @var int|null
      */
-    protected $maxPriority;
+    protected ?int $maxPriority = null;
 
     /**
      * Total number of elements in the queue
-     *
-     * @var int
      */
-    protected $count = 0;
+    protected int $count = 0;
 
     /**
      * Index of the current element in the queue
-     *
-     * @var int
      */
-    protected $index = 0;
+    protected int $index = 0;
 
     /**
      * Sub index of the current element in the same priority level
-     *
-     * @var int
      */
-    protected $subIndex = 0;
+    protected int $subIndex = 0;
 
+    /** @return list<array{data: TValue, priority: int}> */
     public function __serialize(): array
     {
         $clone = clone $this;
         $clone->setExtractFlags(self::EXTR_BOTH);
 
         $data = [];
+        /**
+         * Forcing the type - we have explicitly set EXTR_BOTH
+         *
+         * @psalm-var array{data: TValue, priority: int} $item
+         */
         foreach ($clone as $item) {
             $data[] = $item;
         }
@@ -116,20 +113,18 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Insert an element in the queue with a specified priority
      *
      * @param TValue $value
-     * @param int    $priority
-     * @return void
+     * @return true
      */
-    public function insert(mixed $value, $priority)
+    public function insert(mixed $value, int $priority): bool
     {
-        if (! is_int($priority)) {
-            throw new Exception\InvalidArgumentException('The priority must be an integer');
-        }
         $this->values[$priority][] = $value;
         if (! isset($this->priorities[$priority])) {
             $this->priorities[$priority] = $priority;
             $this->maxPriority           = $this->maxPriority === null ? $priority : max($priority, $this->maxPriority);
         }
         ++$this->count;
+
+        return true;
     }
 
     /**
@@ -138,7 +133,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @return TValue|int|array{data: TValue, priority: int}|false
      */
-    public function extract()
+    public function extract(): mixed
     {
         if (! $this->valid()) {
             return false;
@@ -160,7 +155,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @return bool False if the item was not found, true otherwise.
      */
-    public function remove(mixed $datum)
+    public function remove(mixed $datum): bool
     {
         $currentIndex    = $this->index;
         $currentSubIndex = $this->subIndex;
@@ -201,11 +196,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
 
     /**
      * Get the total number of elements in the queue
-     *
-     * @return int
      */
-    #[ReturnTypeWillChange]
-    public function count()
+    public function count(): int
     {
         return $this->count;
     }
@@ -213,31 +205,30 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Get the current element in the queue
      *
-     * @return TValue|int|array{data: TValue|false, priority: int|null}|false
+     * @return TValue|int|array{data: TValue, priority: int}|null
      */
-    #[ReturnTypeWillChange]
-    public function current()
+    public function current(): mixed
     {
-        switch ($this->extractFlag) {
-            case self::EXTR_DATA:
-                return current($this->values[$this->maxPriority]);
-            case self::EXTR_PRIORITY:
-                return $this->maxPriority;
-            case self::EXTR_BOTH:
-                return [
-                    'data'     => current($this->values[$this->maxPriority]),
-                    'priority' => $this->maxPriority,
-                ];
+        if ($this->isEmpty()) {
+            return null;
         }
+
+        assert(isset($this->values[$this->maxPriority]));
+
+        return match ($this->extractFlag) {
+            self::EXTR_DATA => current($this->values[$this->maxPriority]),
+            self::EXTR_PRIORITY => $this->maxPriority,
+            self::EXTR_BOTH => [
+                'data'     => current($this->values[$this->maxPriority]),
+                'priority' => $this->maxPriority,
+            ],
+        };
     }
 
     /**
      * Get the index of the current element in the queue
-     *
-     * @return int
      */
-    #[ReturnTypeWillChange]
-    public function key()
+    public function key(): int
     {
         return $this->index;
     }
@@ -245,10 +236,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Set the iterator pointer to the next element in the queue
      * removing the previous element
-     *
-     * @return void
      */
-    protected function nextAndRemove()
+    protected function nextAndRemove(): void
     {
         $key = key($this->values[$this->maxPriority]);
 
@@ -269,8 +258,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Set the iterator pointer to the next element in the queue
      * without removing the previous element
      */
-    #[ReturnTypeWillChange]
-    public function next()
+    public function next(): void
     {
         if (false === next($this->values[$this->maxPriority])) {
             unset($this->subPriorities[$this->maxPriority]);
@@ -284,11 +272,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
 
     /**
      * Check if the current iterator is valid
-     *
-     * @return bool
      */
-    #[ReturnTypeWillChange]
-    public function valid()
+    public function valid(): bool
     {
         return isset($this->values[$this->maxPriority]);
     }
@@ -296,8 +281,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
     /**
      * Rewind the current iterator
      */
-    #[ReturnTypeWillChange]
-    public function rewind()
+    public function rewind(): void
     {
         $this->subPriorities = $this->priorities;
         $this->maxPriority   = empty($this->priorities) ? 0 : max($this->priorities);
@@ -312,7 +296,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      *
      * @return list<TValue|int|array{data: TValue, priority: int}>
      */
-    public function toArray()
+    public function toArray(): array
     {
         $array = [];
         foreach (clone $this as $item) {
@@ -321,23 +305,12 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
         return $array;
     }
 
-    /**
-     * Serialize
-     *
-     * @return string
-     */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize($this->__serialize());
     }
 
-    /**
-     * Deserialize
-     *
-     * @param  string $data
-     * @return void
-     */
-    public function unserialize($data)
+    public function unserialize(string $data): void
     {
         $toUnserialize = unserialize($data);
         if (! is_array($toUnserialize)) {
@@ -354,9 +327,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      * Set the extract flag
      *
      * @param self::EXTR_* $flag
-     * @return void
      */
-    public function setExtractFlags($flag)
+    public function setExtractFlags(int $flag): void
     {
         $this->extractFlag = match ($flag) {
             self::EXTR_DATA, self::EXTR_PRIORITY, self::EXTR_BOTH => $flag,
@@ -366,20 +338,16 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
 
     /**
      * Check if the queue is empty
-     *
-     * @return bool
      */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty($this->values);
     }
 
     /**
      * Does the queue contain the given datum?
-     *
-     * @return bool
      */
-    public function contains(mixed $datum)
+    public function contains(mixed $datum): bool
     {
         foreach ($this->values as $values) {
             if (in_array($datum, $values)) {
@@ -391,11 +359,8 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
 
     /**
      * Does the queue have an item with the given priority?
-     *
-     * @param  int $priority
-     * @return bool
      */
-    public function hasPriority($priority)
+    public function hasPriority(int $priority): bool
     {
         return isset($this->values[$priority]);
     }
