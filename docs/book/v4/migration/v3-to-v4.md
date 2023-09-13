@@ -16,7 +16,8 @@ In previous versions, `PriorityQueue::toArray()` returned data in insertion orde
 
 ## Removed Features
 
-None.
+- The `JsonSerializable` interface, deprecated in the 3.x series has been removed
+- `ArrayUtils::filter()`, deprecated in the 3.x series and its related constants `ArrayUtils::ARRAY_FILTER_USE_BOTH` and `ArrayUtils::ARRAY_FILTER_USE_KEY` have been removed 
 
 ## Signature Changes
 

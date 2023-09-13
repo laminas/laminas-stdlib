@@ -16,7 +16,6 @@ use function array_keys;
 use function array_values;
 use function in_array;
 use function is_array;
-use function is_callable;
 use function is_float;
 use function is_int;
 use function is_object;
@@ -24,7 +23,6 @@ use function is_scalar;
 use function is_string;
 use function iterator_to_array;
 use function method_exists;
-use function sprintf;
 
 /**
  * Utility class for testing and manipulation of PHP arrays.
@@ -33,20 +31,6 @@ use function sprintf;
  */
 abstract class ArrayUtils
 {
-    /**
-     * Compatibility Flag for ArrayUtils::filter
-     *
-     * @deprecated
-     */
-    public const ARRAY_FILTER_USE_BOTH = 1;
-
-    /**
-     * Compatibility Flag for ArrayUtils::filter
-     *
-     * @deprecated
-     */
-    public const ARRAY_FILTER_USE_KEY = 2;
-
     /**
      * Test whether an array contains one or more string keys
      *
@@ -311,25 +295,5 @@ abstract class ArrayUtils
         }
 
         return $a;
-    }
-
-    /**
-     * @deprecated Since 3.2.0; use the native array_filter methods
-     *
-     * @param callable $callback
-     * @param null|int $flag
-     * @return array
-     * @throws Exception\InvalidArgumentException
-     */
-    public static function filter(array $data, $callback, $flag = null)
-    {
-        if (! is_callable($callback)) {
-            throw new Exception\InvalidArgumentException(sprintf(
-                'Second parameter of %s must be callable',
-                __METHOD__
-            ));
-        }
-
-        return array_filter($data, $callback, $flag ?? 0);
     }
 }
