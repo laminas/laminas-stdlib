@@ -104,8 +104,19 @@
     <DocblockTypeContradiction>
       <code><![CDATA[throw new Exception\InvalidArgumentException("The extract flag specified is not valid")]]></code>
     </DocblockTypeContradiction>
-    <ImplementedReturnTypeMismatch/>
-    <LessSpecificReturnStatement/>
+    <ImplementedReturnTypeMismatch>
+      <code>TValue|int|array{data: TValue, priority: int}|null</code>
+    </ImplementedReturnTypeMismatch>
+    <LessSpecificReturnStatement>
+      <code><![CDATA[match ($this->extractFlag) {
+            self::EXTR_DATA => current($this->values[$this->maxPriority]),
+            self::EXTR_PRIORITY => $this->maxPriority,
+            self::EXTR_BOTH => [
+                'data'     => current($this->values[$this->maxPriority]),
+                'priority' => $this->maxPriority,
+            ],
+        }]]></code>
+    </LessSpecificReturnStatement>
     <MixedArgument>
       <code><![CDATA[$item['data']]]></code>
       <code><![CDATA[$item['priority']]]></code>
@@ -118,13 +129,13 @@
       <code>$item</code>
       <code><![CDATA[$this->maxPriority]]></code>
     </MixedAssignment>
-    <MoreSpecificReturnType/>
+    <MoreSpecificReturnType>
+      <code>TValue|int|array{data: TValue, priority: int}|null</code>
+    </MoreSpecificReturnType>
     <PossiblyNullArrayOffset>
       <code><![CDATA[$this->priorities]]></code>
       <code><![CDATA[$this->priorities]]></code>
       <code><![CDATA[$this->subPriorities]]></code>
-      <code><![CDATA[$this->values]]></code>
-      <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
@@ -318,7 +329,6 @@
   <file src="test/FastPriorityQueueTest.php">
     <MixedAssignment>
       <code>$item</code>
-      <code>$test[]</code>
       <code>$test[]</code>
       <code>$test[]</code>
       <code>$test[]</code>
