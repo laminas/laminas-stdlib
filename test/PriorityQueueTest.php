@@ -56,8 +56,8 @@ class PriorityQueueTest extends TestCase
     public function testRetrievingQueueAsArrayReturnsDataOnlyByDefault(): void
     {
         $expected = [
-            'foo',
             'bar',
+            'foo',
             'baz',
             'bat',
         ];
@@ -68,8 +68,8 @@ class PriorityQueueTest extends TestCase
     public function testCanCastToArrayOfPrioritiesOnly(): void
     {
         $expected = [
-            3,
             4,
+            3,
             2,
             1,
         ];
@@ -80,8 +80,8 @@ class PriorityQueueTest extends TestCase
     public function testCanCastToArrayOfDataPriorityPairs(): void
     {
         $expected = [
-            ['data' => 'foo', 'priority' => 3],
             ['data' => 'bar', 'priority' => 4],
+            ['data' => 'foo', 'priority' => 3],
             ['data' => 'baz', 'priority' => 2],
             ['data' => 'bat', 'priority' => 1],
         ];
