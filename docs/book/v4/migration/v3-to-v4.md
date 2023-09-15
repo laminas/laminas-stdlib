@@ -10,7 +10,7 @@ All classes have been updated to make use of parameter and return types. In gene
 
 The addition of property, parameter and return types will cause fatal errors for extending classes that re-define those properties or override changed methods. If you have extended from any classes in laminas-stdlib, you should check that property types and method signatures are compatible and update them if they are not aligned.
 
-### PriorityQueue::toArray() now returns data in order of priority
+### `PriorityQueue::toArray()` Now Returns Data in Order of Priority
 
 In previous versions, `PriorityQueue::toArray()` returned data in insertion order. This method now returns data in priority order making it effectively the same as `iterator_to_array($queue)`, with the exception that you can pass extraction flags to `PriorityQueue::toArray()`.
 
