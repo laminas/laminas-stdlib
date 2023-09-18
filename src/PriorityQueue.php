@@ -17,6 +17,7 @@ use function is_array;
 use function serialize;
 use function sprintf;
 use function unserialize;
+use function usort;
 
 /**
  * Re-usable, serializable priority queue implementation
@@ -245,13 +246,12 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
     }
 
     /**
-     * Serialize to an array
-     * By default, returns only the item data, and in the order registered (not
-     * sorted). You may provide one of the EXTR_* flags as an argument, allowing
+     * Serialize to an array, ordered by priority
+     * By default, returns only the item data. You may provide one of the EXTR_* flags as an argument, allowing
      * the ability to return priorities or both data and priority.
      *
      * @param self::EXTR_* $flag
-     * @return array<array-key, mixed>
+     * @return list<mixed>
      * @psalm-return ($flag is self::EXTR_BOTH
      *                      ? list<array{data: TValue, priority: int}>
      *                      : $flag is self::EXTR_PRIORITY
@@ -261,10 +261,19 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
      */
     public function toArray(int $flag = self::EXTR_DATA): array
     {
+        /**
+         * A manual sort is required because $item['priority'] as stored in the inner queue could be an array as
+         * opposed to an integer.
+         */
+        $items = $this->items;
+        usort($items, function (array $a, array $b): int {
+            return $b['priority'] <=> $a['priority'];
+        });
+
         return match ($flag) {
-            self::EXTR_BOTH => $this->items,
-            self::EXTR_PRIORITY => array_map(static fn($item): int => $item['priority'], $this->items),
-            default => array_map(static fn($item): mixed => $item['data'], $this->items),
+            self::EXTR_BOTH => $items,
+            self::EXTR_PRIORITY => array_map(static fn($item): int => $item['priority'], $items),
+            default => array_map(static fn($item): mixed => $item['data'], $items),
         };
     }
 
