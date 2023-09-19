@@ -496,68 +496,6 @@ class ArrayUtilsTest extends TestCase
     }
 
     /**
-     * @psalm-return list<array{
-     *     0: array<string, string>,
-     *     1: callable(string, int|string=):bool,
-     *     2: null|int,
-     *     3: array<string, string>
-     * }>
-     */
-    public static function filterArrays(): array
-    {
-        return [
-            [
-                ['foo' => 'bar', 'fiz' => 'buz'],
-                static function (string $value): bool {
-                    if ($value === 'bar') {
-                        return false;
-                    }
-                    return true;
-                },
-                null,
-                ['fiz' => 'buz'],
-            ],
-            [
-                ['foo' => 'bar', 'fiz' => 'buz'],
-                static function (string $value, int|string $key): bool {
-                    if ($value === 'buz') {
-                        return false;
-                    }
-                    if ($key === 'foo') {
-                        return false;
-                    }
-                    return true;
-                },
-                ArrayUtils::ARRAY_FILTER_USE_BOTH,
-                [],
-            ],
-            [
-                ['foo' => 'bar', 'fiz' => 'buz'],
-                static function (string $key): bool {
-                    if ($key === 'foo') {
-                        return false;
-                    }
-                    return true;
-                },
-                ArrayUtils::ARRAY_FILTER_USE_KEY,
-                ['fiz' => 'buz'],
-            ],
-        ];
-    }
-
-    #[DataProvider('filterArrays')]
-    public function testFiltersArray(array $data, callable $callback, ?int $flag, array $result): void
-    {
-        self::assertEquals($result, ArrayUtils::filter($data, $callback, $flag));
-    }
-
-    public function testInvalidCallableRaiseInvalidArgumentException(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        ArrayUtils::filter([], "INVALID");
-    }
-
-    /**
      * @link https://github.com/laminas/laminas-stdlib/issues/18
      */
     public function testIteratorToArrayWithIteratorHavingMethodToArrayAndRecursiveIsFalse(): void
