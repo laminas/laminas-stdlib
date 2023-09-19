@@ -293,6 +293,10 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/ArrayUtilsTest.php">
+    <DeprecatedConstant>
+      <code>ArrayUtils::ARRAY_FILTER_USE_BOTH</code>
+      <code>ArrayUtils::ARRAY_FILTER_USE_KEY</code>
+    </DeprecatedConstant>
     <DeprecatedMethod>
       <code>ArrayUtils::filter($data, $callback, $flag)</code>
       <code><![CDATA[ArrayUtils::filter([], "INVALID")]]></code>
