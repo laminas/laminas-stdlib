@@ -37,17 +37,17 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      * Utilizes {@var $serial} to ensure that values of equal priority are
      * emitted in the same order in which they are inserted.
      *
-     * @param  TValue    $datum
+     * @param  TValue    $value
      * @param  TPriority $priority
      * @return void
      */
-    public function insert($datum, $priority)
+    public function insert($value, $priority)
     {
         if (! is_array($priority)) {
             $priority = [$priority, $this->serial--];
         }
 
-        parent::insert($datum, $priority);
+        parent::insert($value, $priority);
     }
 
     /**
