@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
+<files psalm-version="5.16.0@2897ba636551a8cb61601cc26f6ccfbba6c36591">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
@@ -25,6 +25,9 @@
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($data) && ! is_object($data)]]></code>
     </DocblockTypeContradiction>
+    <InvalidCast>
+      <code>$key</code>
+    </InvalidCast>
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[$this->storage]]></code>
     </InvalidPropertyAssignmentValue>
@@ -71,9 +74,6 @@
     </UnsupportedReferenceUsage>
   </file>
   <file src="src/ArrayUtils.php">
-    <MixedArgumentTypeCoercion>
-      <code>$callback</code>
-    </MixedArgumentTypeCoercion>
     <MixedAssignment>
       <code>$a[$key]</code>
       <code>$a[$key]</code>
@@ -217,7 +217,7 @@
       <code>$priority</code>
     </InvalidArgument>
     <MethodSignatureMismatch>
-      <code>public function insert($datum, $priority)</code>
+      <code>public function insert($value, $priority)</code>
     </MethodSignatureMismatch>
     <MethodSignatureMustProvideReturnType>
       <code>insert</code>
@@ -370,8 +370,6 @@
   <file src="test/FastPriorityQueueTest.php">
     <MixedAssignment>
       <code>$datum</code>
-      <code>$item</code>
-      <code>$test[]</code>
       <code>$test[]</code>
       <code>$test[]</code>
       <code>$test[]</code>
