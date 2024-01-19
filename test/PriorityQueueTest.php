@@ -19,12 +19,12 @@ use function var_export;
 #[Group('Laminas_Stdlib')]
 class PriorityQueueTest extends TestCase
 {
-    /** @var PriorityQueue<string, int> */
+    /** @var PriorityQueue<string> */
     private PriorityQueue $queue;
 
     protected function setUp(): void
     {
-        /** @psalm-var PriorityQueue<string, int> $this->queue */
+        /** @psalm-var PriorityQueue<string> $this->queue */
         $this->queue = new PriorityQueue();
         $this->queue->insert('foo', 3);
         $this->queue->insert('bar', 4);
@@ -56,8 +56,8 @@ class PriorityQueueTest extends TestCase
     public function testRetrievingQueueAsArrayReturnsDataOnlyByDefault(): void
     {
         $expected = [
-            'foo',
             'bar',
+            'foo',
             'baz',
             'bat',
         ];
@@ -68,8 +68,8 @@ class PriorityQueueTest extends TestCase
     public function testCanCastToArrayOfPrioritiesOnly(): void
     {
         $expected = [
-            3,
             4,
+            3,
             2,
             1,
         ];
@@ -80,8 +80,8 @@ class PriorityQueueTest extends TestCase
     public function testCanCastToArrayOfDataPriorityPairs(): void
     {
         $expected = [
-            ['data' => 'foo', 'priority' => 3],
             ['data' => 'bar', 'priority' => 4],
+            ['data' => 'foo', 'priority' => 3],
             ['data' => 'baz', 'priority' => 2],
             ['data' => 'bat', 'priority' => 1],
         ];

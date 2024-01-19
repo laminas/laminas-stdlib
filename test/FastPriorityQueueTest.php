@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib;
 
-use Laminas\Stdlib\Exception\InvalidArgumentException;
 use Laminas\Stdlib\FastPriorityQueue;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
@@ -99,6 +99,7 @@ class FastPriorityQueueTest extends TestCase
         $expected = ['foo', 'bar', 'baz', 'bat'];
         $test     = [];
         foreach ($queue as $datum) {
+            self::assertIsString($datum);
             $test[] = $datum;
         }
         self::assertEquals($expected, $test);
@@ -137,6 +138,42 @@ class FastPriorityQueueTest extends TestCase
         self::assertSame($this->expected, $test, var_export($test, true));
     }
 
+    public function testToArrayWithExtractDefaultListsOnlyValues(): void
+    {
+        $queue = new FastPriorityQueue();
+        $queue->insert('bar', 100);
+        $queue->insert('foo', 200);
+
+        self::assertSame(['foo', 'bar'], $queue->toArray());
+    }
+
+    public function testToArrayWithExtractPriorityListsOnlyPriorities(): void
+    {
+        $queue = new FastPriorityQueue();
+        $queue->insert('bar', 100);
+        $queue->insert('foo', 200);
+
+        $queue->setExtractFlags(FastPriorityQueue::EXTR_PRIORITY);
+
+        self::assertSame([200, 100], $queue->toArray());
+    }
+
+    public function testToArrayWithExtractBothReturnsExpectedValues(): void
+    {
+        $queue = new FastPriorityQueue();
+        $queue->insert('bar', 100);
+        $queue->insert('foo', 200);
+
+        $queue->setExtractFlags(FastPriorityQueue::EXTR_BOTH);
+
+        $expect = [
+            ['data' => 'foo', 'priority' => 200],
+            ['data' => 'bar', 'priority' => 100],
+        ];
+
+        self::assertSame($expect, $queue->toArray());
+    }
+
     public function testIteratorFunctions(): void
     {
         self::assertEquals($this->expected, iterator_to_array($this->queue));
@@ -164,14 +201,6 @@ class FastPriorityQueueTest extends TestCase
             'priority' => $priorities[$this->expected[2]],
         ];
         self::assertEquals($expected, $this->queue->extract());
-    }
-
-    public function testSetInvalidExtractFlag(): void
-    {
-        $this->expectException(InvalidArgumentException::class);
-        $this->expectExceptionMessage('The extract flag specified is not valid');
-        /** @psalm-suppress InvalidArgument */
-        $this->queue->setExtractFlags('foo');
     }
 
     public function testIsEmpty(): void
@@ -347,5 +376,39 @@ class FastPriorityQueueTest extends TestCase
             $test[] = $value;
         }
         self::assertEquals($expected, $test);
+    }
+
+    public function testCurrentOnAnEmptyQueue(): void
+    {
+        $queue = new FastPriorityQueue();
+        self::assertNull($queue->current());
+    }
+
+    /** @return list<array{0: FastPriorityQueue::EXTR_*, 1: mixed}> */
+    public static function currentWithExtractFlags(): array
+    {
+        return [
+            [FastPriorityQueue::EXTR_PRIORITY, 100],
+            [FastPriorityQueue::EXTR_DATA, 'foo'],
+            [FastPriorityQueue::EXTR_BOTH, ['data' => 'foo', 'priority' => 100]],
+        ];
+    }
+
+    /** @param FastPriorityQueue::EXTR_* $flag */
+    #[DataProvider('currentWithExtractFlags')]
+    public function testCurrentWithExtractFlags(int $flag, mixed $expect): void
+    {
+        $queue = new FastPriorityQueue();
+        $queue->insert('foo', 100);
+        $queue->setExtractFlags($flag);
+
+        self::assertSame($expect, $queue->current());
+    }
+
+    public function testRemoveReturnsFalseWhenTheValueDoesNotExist(): void
+    {
+        $queue = new FastPriorityQueue();
+
+        self::assertFalse($queue->remove('foo'));
     }
 }

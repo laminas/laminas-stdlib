@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.20.0@3f284e96c9d9be6fe6b15c79416e1d1903dcfef4">
+<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
@@ -25,9 +25,6 @@
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($data) && ! is_object($data)]]></code>
     </DocblockTypeContradiction>
-    <InvalidCast>
-      <code>$key</code>
-    </InvalidCast>
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[$this->storage]]></code>
     </InvalidPropertyAssignmentValue>
@@ -102,20 +99,21 @@
   </file>
   <file src="src/FastPriorityQueue.php">
     <DocblockTypeContradiction>
-      <code>is_int($priority)</code>
       <code><![CDATA[throw new Exception\InvalidArgumentException("The extract flag specified is not valid")]]></code>
     </DocblockTypeContradiction>
     <ImplementedReturnTypeMismatch>
-      <code>TValue|int|array{data: TValue|false, priority: int|null}|false</code>
+      <code>TValue|int|array{data: TValue, priority: int}|null</code>
     </ImplementedReturnTypeMismatch>
     <LessSpecificReturnStatement>
-      <code>$array</code>
-      <code>$value</code>
+      <code><![CDATA[match ($this->extractFlag) {
+            self::EXTR_DATA => current($this->values[$this->maxPriority]),
+            self::EXTR_PRIORITY => $this->maxPriority,
+            self::EXTR_BOTH => [
+                'data'     => current($this->values[$this->maxPriority]),
+                'priority' => $this->maxPriority,
+            ],
+        }]]></code>
     </LessSpecificReturnStatement>
-    <MethodSignatureMustProvideReturnType>
-      <code>serialize</code>
-      <code>unserialize</code>
-    </MethodSignatureMustProvideReturnType>
     <MixedArgument>
       <code><![CDATA[$item['data']]]></code>
       <code><![CDATA[$item['priority']]]></code>
@@ -129,15 +127,12 @@
       <code><![CDATA[$this->maxPriority]]></code>
     </MixedAssignment>
     <MoreSpecificReturnType>
-      <code>TValue|int|array{data: TValue, priority: int}|false</code>
-      <code><![CDATA[list<TValue|int|array{data: TValue, priority: int}>]]></code>
+      <code>TValue|int|array{data: TValue, priority: int}|null</code>
     </MoreSpecificReturnType>
     <PossiblyNullArrayOffset>
       <code><![CDATA[$this->priorities]]></code>
       <code><![CDATA[$this->priorities]]></code>
       <code><![CDATA[$this->subPriorities]]></code>
-      <code><![CDATA[$this->values]]></code>
-      <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
@@ -181,48 +176,17 @@
       <code>setMetadata</code>
     </MissingReturnType>
   </file>
-  <file src="src/PriorityList.php">
-    <FalsableReturnStatement>
-      <code><![CDATA[$node ? $node['data'] : false]]></code>
-    </FalsableReturnStatement>
-    <InvalidFalsableReturnType>
-      <code>current</code>
-    </InvalidFalsableReturnType>
-    <InvalidReturnStatement>
-      <code><![CDATA[$node ? $node['data'] : false]]></code>
-    </InvalidReturnStatement>
-    <MixedReturnTypeCoercion>
-      <code>next</code>
-    </MixedReturnTypeCoercion>
-    <RedundantCastGivenDocblockType>
-      <code>(int) $priority</code>
-      <code>(int) $priority</code>
-    </RedundantCastGivenDocblockType>
-  </file>
-  <file src="src/PriorityQueue.php">
-    <MethodSignatureMustProvideReturnType>
-      <code>serialize</code>
-      <code>unserialize</code>
-    </MethodSignatureMustProvideReturnType>
-  </file>
   <file src="src/SplPriorityQueue.php">
     <DocblockTypeContradiction>
+      <code><![CDATA[! array_key_exists('priority', $item)
+                || ! is_array($item['priority'])]]></code>
+      <code><![CDATA[! is_array($item['priority'])]]></code>
+      <code>is_array($item)</code>
       <code>is_array($priority)</code>
     </DocblockTypeContradiction>
-    <ImplementedReturnTypeMismatch>
-      <code>void</code>
-    </ImplementedReturnTypeMismatch>
-    <InvalidArgument>
-      <code>$priority</code>
-      <code>$priority</code>
-    </InvalidArgument>
-    <MethodSignatureMustProvideReturnType>
-      <code>serialize</code>
-      <code>unserialize</code>
-    </MethodSignatureMustProvideReturnType>
-    <MixedArgument>
-      <code><![CDATA[$item['data']]]></code>
-    </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code>$toUnserialize</code>
+    </MixedArgumentTypeCoercion>
   </file>
   <file src="src/StringUtils.php">
     <DocblockTypeContradiction>
@@ -326,23 +290,12 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/ArrayUtilsTest.php">
-    <DeprecatedConstant>
-      <code>ArrayUtils::ARRAY_FILTER_USE_BOTH</code>
-      <code>ArrayUtils::ARRAY_FILTER_USE_KEY</code>
-    </DeprecatedConstant>
-    <DeprecatedMethod>
-      <code>ArrayUtils::filter($data, $callback, $flag)</code>
-      <code><![CDATA[ArrayUtils::filter([], "INVALID")]]></code>
-    </DeprecatedMethod>
     <DuplicateArrayKey>
       <code><![CDATA['-10000' => null]]></code>
     </DuplicateArrayKey>
     <MixedArgument>
       <code>$test</code>
     </MixedArgument>
-    <UndefinedFunction>
-      <code><![CDATA["INVALID"]]></code>
-    </UndefinedFunction>
   </file>
   <file src="test/CustomArrayObject.php">
     <PropertyNotSetInConstructor>
@@ -365,7 +318,7 @@
   </file>
   <file src="test/FastPriorityQueueTest.php">
     <MixedAssignment>
-      <code>$datum</code>
+      <code>$item</code>
       <code>$test[]</code>
       <code>$test[]</code>
       <code>$test[]</code>
@@ -394,5 +347,10 @@
       <code><![CDATA[$parameters->foo]]></code>
       <code><![CDATA[$parameters->foof]]></code>
     </UndefinedPropertyFetch>
+  </file>
+  <file src="test/SplPriorityQueueTest.php">
+    <MixedPropertyTypeCoercion>
+      <code>new SplPriorityQueue()</code>
+    </MixedPropertyTypeCoercion>
   </file>
 </files>
