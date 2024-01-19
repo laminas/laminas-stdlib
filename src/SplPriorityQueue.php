@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Laminas\Stdlib;
 
+use ReturnTypeWillChange;
 use Serializable;
 use UnexpectedValueException;
 
@@ -41,6 +42,7 @@ class SplPriorityQueue extends \SplPriorityQueue implements Serializable
      * @param  TPriority $priority
      * @return void
      */
+    #[ReturnTypeWillChange] // Inherited return type should be bool
     public function insert($value, $priority)
     {
         if (! is_array($priority)) {

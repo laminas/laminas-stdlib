@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.16.0@2897ba636551a8cb61601cc26f6ccfbba6c36591">
+<files psalm-version="5.20.0@3f284e96c9d9be6fe6b15c79416e1d1903dcfef4">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
@@ -216,11 +216,7 @@
       <code>$priority</code>
       <code>$priority</code>
     </InvalidArgument>
-    <MethodSignatureMismatch>
-      <code>public function insert($value, $priority)</code>
-    </MethodSignatureMismatch>
     <MethodSignatureMustProvideReturnType>
-      <code>insert</code>
       <code>serialize</code>
       <code>unserialize</code>
     </MethodSignatureMustProvideReturnType>

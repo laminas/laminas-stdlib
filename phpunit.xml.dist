@@ -11,6 +11,9 @@
     displayDetailsOnTestsThatTriggerWarnings="true"
     displayDetailsOnIncompleteTests="true"
     displayDetailsOnSkippedTests="true"
+    failOnDeprecation="true"
+    failOnNotice="true"
+    failOnWarning="true"
 >
     <testsuites>
         <testsuite name="laminas-stdlib Test Suite">
