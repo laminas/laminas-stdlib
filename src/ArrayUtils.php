@@ -198,7 +198,7 @@ abstract class ArrayUtils
      */
     public static function inArray(mixed $needle, array $haystack, $strict = false)
     {
-        if (! $strict) {
+        if ($strict === false) {
             if (is_int($needle) || is_float($needle)) {
                 $needle = (string) $needle;
             }
