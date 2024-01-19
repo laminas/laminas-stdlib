@@ -338,7 +338,7 @@ class PriorityQueue implements Countable, IteratorAggregate, Serializable
             if (! $this->queue instanceof PhpSplPriorityQueue) {
                 throw new Exception\DomainException(sprintf(
                     'PriorityQueue expects an internal queue of type SplPriorityQueue; received "%s"',
-                    $this->queue::class
+                    $queue::class
                 ));
             }
         }

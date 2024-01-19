@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="5.15.0@5c774aca4746caf3d239d9c8cadb9f882ca29352">
+<files psalm-version="5.20.0@3f284e96c9d9be6fe6b15c79416e1d1903dcfef4">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
@@ -25,6 +25,9 @@
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($data) && ! is_object($data)]]></code>
     </DocblockTypeContradiction>
+    <InvalidCast>
+      <code>$key</code>
+    </InvalidCast>
     <InvalidPropertyAssignmentValue>
       <code><![CDATA[$this->storage]]></code>
     </InvalidPropertyAssignmentValue>
@@ -188,6 +191,16 @@
       <code>$toUnserialize</code>
     </MixedArgumentTypeCoercion>
   </file>
+  <file src="src/SplQueue.php">
+    <MethodSignatureMismatch>
+      <code>$data</code>
+    </MethodSignatureMismatch>
+  </file>
+  <file src="src/SplStack.php">
+    <MethodSignatureMismatch>
+      <code>$data</code>
+    </MethodSignatureMismatch>
+  </file>
   <file src="src/StringUtils.php">
     <DocblockTypeContradiction>
       <code>static::$hasPcreUnicodeSupport === null</code>
@@ -318,8 +331,6 @@
   </file>
   <file src="test/FastPriorityQueueTest.php">
     <MixedAssignment>
-      <code>$item</code>
-      <code>$test[]</code>
       <code>$test[]</code>
       <code>$test[]</code>
       <code>$test[]</code>
