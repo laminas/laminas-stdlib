@@ -4,12 +4,12 @@ Writing one-off scripts or vendor binaries for a package is often problematic:
 
 - You need to parse arguments manually.
 - You need to send output to the console in a meaningful fashion:
-  - Using `STDOUT` for meaningful, expected output
-  - Using `STDERR` for error messages
-  - Ensuring any line breaks are converted to `PHP_EOL`
-  - Optionally, using console colors to provide context, which means:
-    - Detecting whether or not the console supports colors in the first place
-    - Providing appropriate escape sequences to produce color
+    - Using `STDOUT` for meaningful, expected output
+    - Using `STDERR` for error messages
+    - Ensuring any line breaks are converted to `PHP_EOL`
+    - Optionally, using console colors to provide context, which means:
+        - Detecting whether or not the console supports colors in the first place
+        - Providing appropriate escape sequences to produce color
 
 `Laminas\Stdlib\ConsoleHelper` helps to address the second major bullet point and
 all beneath it in a minimal fashion.
