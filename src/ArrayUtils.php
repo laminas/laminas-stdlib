@@ -194,7 +194,6 @@ abstract class ArrayUtils
      *
      * @deprecated This method will be removed in version 4.0 of this component
      *
-     * @param array $haystack
      * @param int|bool $strict
      * @return bool
      */
@@ -285,8 +284,6 @@ abstract class ArrayUtils
      * from the second array will be appended to the first array. If both values are arrays, they
      * are merged together, else the value of the second array overwrites the one of the first array.
      *
-     * @param  array $a
-     * @param  array $b
      * @param  bool  $preserveNumericKeys
      * @return array
      */
