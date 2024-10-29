@@ -26,7 +26,6 @@ class ArraySerializable implements ArraySerializableInterface
     /**
      * Exchange internal values from provided array
      *
-     * @param  array $array
      * @return void
      */
     public function exchangeArray(array $array)
