@@ -61,9 +61,6 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
      */
     public const ARRAY_AS_PROPS = 2;
 
-    /** @var array<TKey, TValue> */
-    protected $storage;
-
     /** @var self::STD_PROP_LIST|self::ARRAY_AS_PROPS */
     protected $flag;
 
@@ -74,14 +71,16 @@ class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Count
     protected $protectedProperties;
 
     /**
-     * @param array<TKey, TValue>|object               $input Object values must act like ArrayAccess
+     * @param array<TKey, TValue>|object $storage Object values must act like ArrayAccess
      * @param self::STD_PROP_LIST|self::ARRAY_AS_PROPS $flags
      * @param class-string<Iterator>                   $iteratorClass
      */
-    public function __construct($input = [], $flags = self::STD_PROP_LIST, $iteratorClass = ArrayIterator::class)
-    {
+    public function __construct(
+        protected $storage = [],
+        $flags = self::STD_PROP_LIST,
+        $iteratorClass = ArrayIterator::class
+    ) {
         $this->setFlags($flags);
-        $this->storage = $input;
         $this->setIteratorClass($iteratorClass);
         $this->protectedProperties = array_keys(get_object_vars($this));
     }

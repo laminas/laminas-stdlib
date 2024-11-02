@@ -14,7 +14,7 @@ final class SplPriorityQueueGenericsCanBeUnderstood
     /**
      * @param SplPriorityQueue<string, int> $laminas
      */
-    public function __construct(private SplPriorityQueue $laminas)
+    public function __construct(private readonly SplPriorityQueue $laminas)
     {
     }
 

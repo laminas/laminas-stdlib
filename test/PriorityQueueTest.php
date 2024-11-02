@@ -20,7 +20,7 @@ use function var_export;
 class PriorityQueueTest extends TestCase
 {
     /** @var PriorityQueue<string, int> */
-    private PriorityQueue $queue;
+    private readonly PriorityQueue $queue;
 
     protected function setUp(): void
     {

@@ -56,7 +56,7 @@ class ConsoleHelper
     /** @var resource Exists only for testing. */
     private $stderr = STDERR;
 
-    private bool $supportsColor;
+    private readonly bool $supportsColor;
 
     /**
      * @param resource $resource

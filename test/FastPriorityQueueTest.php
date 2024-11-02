@@ -22,7 +22,7 @@ use function var_export;
 class FastPriorityQueueTest extends TestCase
 {
     /** @var FastPriorityQueue<string> */
-    private FastPriorityQueue $queue;
+    private readonly FastPriorityQueue $queue;
 
     /** @var string[] */
     private array $expected;

@@ -14,7 +14,7 @@ final class PriorityQueueGenericsCanBeUnderstood
     /**
      * @param PriorityQueue<string, int> $laminas
      */
-    public function __construct(private PriorityQueue $laminas)
+    public function __construct(private readonly PriorityQueue $laminas)
     {
     }
 
