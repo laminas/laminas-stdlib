@@ -7,9 +7,11 @@ namespace Laminas\Stdlib;
 use Traversable;
 
 use function array_shift;
+use function assert;
 use function get_object_vars;
 use function is_array;
 use function is_callable;
+use function is_string;
 use function method_exists;
 use function preg_replace_callback;
 use function sprintf;
@@ -91,7 +93,7 @@ abstract class AbstractOptions implements ParameterObjectInterface
         $transform = static function (array $letters): string {
             /** @var list<string> $letters */
             $letter = array_shift($letters);
-            return '_' . strtolower($letter);
+            return '_' . strtolower((string) $letter);
         };
 
         /** @psalm-var TValue $value */
@@ -99,7 +101,8 @@ abstract class AbstractOptions implements ParameterObjectInterface
             if ($key === '__strictMode__') {
                 continue;
             }
-            $normalizedKey         = preg_replace_callback('/([A-Z])/', $transform, $key);
+            $normalizedKey = preg_replace_callback('/([A-Z])/', $transform, $key);
+            assert(is_string($normalizedKey));
             $array[$normalizedKey] = $value;
         }
 
