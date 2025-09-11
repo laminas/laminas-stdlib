@@ -11,6 +11,10 @@ use function http_build_query;
 use function parse_str;
 
 /**
+ * @deprecated since 3.21.0; Will be removed in 4.0.0.
+ *
+ * @see https://github.com/laminas/laminas-diactoros as a possible replacement.
+ *
  * @template TKey of array-key
  * @template TValue
  * @template-extends PhpArrayObject<TKey, TValue>
