@@ -77,6 +77,15 @@
       <code><![CDATA[$value]]></code>
     </MixedAssignment>
   </file>
+  <file src="src/DispatchableInterface.php">
+    <DeprecatedClass>
+      <code><![CDATA[Response|mixed]]></code>
+    </DeprecatedClass>
+    <DeprecatedInterface>
+      <code><![CDATA[?ResponseInterface]]></code>
+      <code><![CDATA[RequestInterface]]></code>
+    </DeprecatedInterface>
+  </file>
   <file src="src/ErrorHandler.php">
     <InvalidArgument>
       <code><![CDATA[[static::class, 'addError']]]></code>
@@ -152,6 +161,9 @@
     </PossiblyNullOperand>
   </file>
   <file src="src/Message.php">
+    <DeprecatedInterface>
+      <code><![CDATA[Message]]></code>
+    </DeprecatedInterface>
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($spec) && ! $spec instanceof Traversable]]></code>
       <code><![CDATA[is_scalar($key)]]></code>
@@ -177,6 +189,11 @@
       <code><![CDATA[setMetadata]]></code>
     </MissingReturnType>
   </file>
+  <file src="src/Parameters.php">
+    <DeprecatedInterface>
+      <code><![CDATA[Parameters]]></code>
+    </DeprecatedInterface>
+  </file>
   <file src="src/PriorityList.php">
     <FalsableReturnStatement>
       <code><![CDATA[$node ? $node['data'] : false]]></code>
@@ -200,6 +217,24 @@
       <code><![CDATA[serialize]]></code>
       <code><![CDATA[unserialize]]></code>
     </MethodSignatureMustProvideReturnType>
+  </file>
+  <file src="src/Request.php">
+    <DeprecatedClass>
+      <code><![CDATA[Message]]></code>
+    </DeprecatedClass>
+    <DeprecatedInterface>
+      <code><![CDATA[Request]]></code>
+      <code><![CDATA[Request]]></code>
+    </DeprecatedInterface>
+  </file>
+  <file src="src/Response.php">
+    <DeprecatedClass>
+      <code><![CDATA[Message]]></code>
+    </DeprecatedClass>
+    <DeprecatedInterface>
+      <code><![CDATA[Response]]></code>
+      <code><![CDATA[Response]]></code>
+    </DeprecatedInterface>
   </file>
   <file src="src/SplPriorityQueue.php">
     <DocblockTypeContradiction>
@@ -322,6 +357,9 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/ArrayUtilsTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[new Parameters($array)]]></code>
+    </DeprecatedClass>
     <DeprecatedConstant>
       <code><![CDATA[ArrayUtils::ARRAY_FILTER_USE_BOTH]]></code>
       <code><![CDATA[ArrayUtils::ARRAY_FILTER_USE_KEY]]></code>
@@ -381,7 +419,25 @@
       <code><![CDATA[assertIsArray]]></code>
     </RedundantConditionGivenDocblockType>
   </file>
+  <file src="test/MessageTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[new Message()]]></code>
+      <code><![CDATA[new Message()]]></code>
+      <code><![CDATA[new Message()]]></code>
+      <code><![CDATA[new Message()]]></code>
+      <code><![CDATA[new Message()]]></code>
+      <code><![CDATA[new Message()]]></code>
+      <code><![CDATA[new Message()]]></code>
+    </DeprecatedClass>
+  </file>
   <file src="test/ParametersTest.php">
+    <DeprecatedClass>
+      <code><![CDATA[$parameters]]></code>
+      <code><![CDATA[new Parameters()]]></code>
+      <code><![CDATA[new Parameters()]]></code>
+      <code><![CDATA[new Parameters()]]></code>
+      <code><![CDATA[new Parameters(['foo' => 'bar'])]]></code>
+    </DeprecatedClass>
     <UndefinedPropertyFetch>
       <code><![CDATA[$parameters->bar]]></code>
       <code><![CDATA[$parameters->baz]]></code>
