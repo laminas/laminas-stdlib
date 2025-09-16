@@ -16,8 +16,6 @@ use Traversable;
  *
  * @deprecated since 3.21.0; Will be removed in 4.0.0.
  *
- * @see https://github.com/laminas/laminas-diactoros as a possible replacement.
- *
  * @template TKey
  * @template TValue
  * @template-extends ArrayAccess<TKey, TValue>

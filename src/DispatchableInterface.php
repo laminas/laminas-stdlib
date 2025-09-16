@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Laminas\Stdlib;
 
 /**
- * @deprecated since 3.21.0; Will be removed in 4.0.0.
+ * @deprecated since 3.21.0 due to the retirement of Laminas MVC. Will be removed in 4.0.0.
  */
 interface DispatchableInterface
 {
