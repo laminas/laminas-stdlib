@@ -12,6 +12,12 @@ use function is_array;
 use function is_scalar;
 use function sprintf;
 
+/**
+ * @deprecated since 3.21.0 due to the retirement of Laminas MVC. Will be removed in 4.0.0.
+ *
+ * @see https://www.php-fig.org/psr/psr-7/
+ * @see https://github.com/laminas/laminas-diactoros as a possible implementation.
+ */
 class Message implements MessageInterface
 {
     /** @var array */

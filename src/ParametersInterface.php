@@ -14,6 +14,8 @@ use Traversable;
  *     class QueryParams extends ArrayObject implements Parameters {}
  * and have 90% of the functionality
  *
+ * @deprecated since 3.21.0; Will be removed in 4.0.0.
+ *
  * @template TKey
  * @template TValue
  * @template-extends ArrayAccess<TKey, TValue>
