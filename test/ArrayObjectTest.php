@@ -92,6 +92,7 @@ final class ArrayObjectTest extends TestCase
 
         self::assertSame('baz', $ar->foo);
         self::assertSame('baz', $ar['foo']);
+        /** @psalm-suppress RedundantConditionGivenDocblockType */
         self::assertSame($ar->foo, $ar['foo']);
         self::assertEquals(3, $ar->count());
     }
