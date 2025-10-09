@@ -46,6 +46,7 @@ use function unserialize;
  * @template TValue
  * @template-implements IteratorAggregate<TKey, TValue>
  * @template-implements ArrayAccess<TKey, TValue>
+ * @psalm-no-seal-properties
  */
 #[AllowDynamicProperties]
 class ArrayObject implements IteratorAggregate, ArrayAccess, Serializable, Countable
