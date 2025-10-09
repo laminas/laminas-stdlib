@@ -1,40 +1,34 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasBench\Stdlib;
 
 use Laminas\Stdlib\ArrayUtils;
-use PhpBench\Benchmark\Metadata\Annotations\Iterations;
-use PhpBench\Benchmark\Metadata\Annotations\Revs;
-use PhpBench\Benchmark\Metadata\Annotations\Warmup;
+use PhpBench\Attributes\Iterations;
+use PhpBench\Attributes\Revs;
+use PhpBench\Attributes\Warmup;
 
-/**
- * @Revs(1000)
- * @Iterations(10)
- * @Warmup(2)
- */
-class ArrayUtilsBench
+#[Revs(1000)]
+#[Iterations(10)]
+#[Warmup(2)]
+final class ArrayUtilsBench
 {
-    public function benchHasStringKeys()
+    public function benchHasStringKeys(): void
     {
         ArrayUtils::hasStringKeys([
             'key' => 'value',
         ]);
     }
 
-    public function benchHasIntegerKeys()
+    public function benchHasIntegerKeys(): void
     {
         ArrayUtils::hasIntegerKeys([
             1 => 'value',
         ]);
     }
 
-    public function benchHasNumericKeys()
+    public function benchHasNumericKeys(): void
     {
         ArrayUtils::hasNumericKeys([
             '1' => 'value',

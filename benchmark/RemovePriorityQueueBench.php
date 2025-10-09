@@ -1,28 +1,25 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasBench\Stdlib;
 
 use Laminas\Stdlib\FastPriorityQueue;
 use Laminas\Stdlib\PriorityQueue;
-use PhpBench\Benchmark\Metadata\Annotations\Iterations;
-use PhpBench\Benchmark\Metadata\Annotations\Revs;
-use PhpBench\Benchmark\Metadata\Annotations\Warmup;
+use PhpBench\Attributes\Iterations;
+use PhpBench\Attributes\Revs;
+use PhpBench\Attributes\Warmup;
 
 use function rand;
 
-/**
- * @Revs(1000)
- * @Iterations(10)
- * @Warmup(2)
- */
-class RemovePriorityQueueBench
+#[Revs(1000)]
+#[Iterations(10)]
+#[Warmup(2)]
+final class RemovePriorityQueueBench
 {
+    private FastPriorityQueue $fastPriorityQueue;
+    private PriorityQueue $priorityQueue;
+
     public function __construct()
     {
         $this->fastPriorityQueue = new FastPriorityQueue();
@@ -35,12 +32,12 @@ class RemovePriorityQueueBench
         }
     }
 
-    public function benchRemovePriorityQueue()
+    public function benchRemovePriorityQueue(): void
     {
         $this->priorityQueue->remove('foo');
     }
 
-    public function benchRemoveFastPriorityQueue()
+    public function benchRemoveFastPriorityQueue(): void
     {
         $this->fastPriorityQueue->remove('foo');
     }
