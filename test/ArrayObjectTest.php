@@ -23,7 +23,7 @@ use function uasort;
 use function uksort;
 use function unserialize;
 
-class ArrayObjectTest extends TestCase
+final class ArrayObjectTest extends TestCase
 {
     public function testConstructorDefaults(): void
     {

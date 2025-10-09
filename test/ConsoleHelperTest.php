@@ -13,7 +13,7 @@ use function fopen;
 use function fread;
 use function rewind;
 
-class ConsoleHelperTest extends TestCase
+final class ConsoleHelperTest extends TestCase
 {
     private ConsoleHelper $helper;
 

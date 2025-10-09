@@ -8,7 +8,7 @@ use Laminas\Stdlib\ArraySerializableInterface;
 use PHPUnit\Framework\Attributes\Group;
 
 #[Group('Laminas_Stdlib')]
-class ArraySerializable implements ArraySerializableInterface
+final class ArraySerializable implements ArraySerializableInterface
 {
     /** @var array */
     protected $data = [];

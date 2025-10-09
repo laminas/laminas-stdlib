@@ -6,7 +6,7 @@ namespace LaminasTest\Stdlib\TestAsset;
 
 use Laminas\Stdlib\Guard\AllGuardsTrait;
 
-class GuardedObject
+final class GuardedObject
 {
     use AllGuardsTrait;
 

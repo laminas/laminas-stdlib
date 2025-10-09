@@ -7,7 +7,7 @@ namespace LaminasTest\Stdlib\TestAsset;
 use Countable;
 use ReturnTypeWillChange;
 
-class ArrayObjectObjectCount implements Countable
+final class ArrayObjectObjectCount implements Countable
 {
     /**
      * @return int

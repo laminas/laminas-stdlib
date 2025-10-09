@@ -19,7 +19,7 @@ use function unserialize;
 use function var_export;
 
 #[Group('Laminas_Stdlib')]
-class FastPriorityQueueTest extends TestCase
+final class FastPriorityQueueTest extends TestCase
 {
     /** @var FastPriorityQueue<string> */
     private FastPriorityQueue $queue;

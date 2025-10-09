@@ -7,7 +7,7 @@ namespace LaminasTest\Stdlib\TestAsset;
 /**
  * Dummy derived TestOptions used to test Stdlib\Options
  */
-class TestOptionsDerived extends TestOptions
+final class TestOptionsDerived extends TestOptions
 {
     private mixed $derivedPrivate;
 

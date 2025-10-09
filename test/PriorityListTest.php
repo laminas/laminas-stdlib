@@ -12,7 +12,7 @@ use stdClass;
 use function array_keys;
 use function iterator_to_array;
 
-class PriorityListTest extends TestCase
+final class PriorityListTest extends TestCase
 {
     /** @var PriorityList<string, mixed> */
     protected $list;
