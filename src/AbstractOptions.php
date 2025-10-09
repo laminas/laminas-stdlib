@@ -22,6 +22,7 @@ use function ucwords;
 /**
  * @template TValue
  * @implements ParameterObjectInterface<string, TValue>
+ * @psalm-no-seal-properties This class has __get() magic. It exposes protected props when there is a matching method
  */
 abstract class AbstractOptions implements ParameterObjectInterface
 {
