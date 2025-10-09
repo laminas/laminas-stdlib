@@ -17,7 +17,7 @@
             <directory>./test</directory>
         </testsuite>
     </testsuites>
-    <source restrictDeprecations="true">
+    <source ignoreIndirectDeprecations="true">
         <include>
             <directory suffix=".php">./src</directory>
         </include>
