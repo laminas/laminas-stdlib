@@ -331,7 +331,6 @@
   </file>
   <file src="test/ArrayObjectTest.php">
     <ArgumentTypeCoercion>
-      <code><![CDATA['ArrayIterator']]></code>
       <code><![CDATA['InvalidArrayIterator']]></code>
     </ArgumentTypeCoercion>
     <InvalidArgument>

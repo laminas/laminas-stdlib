@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace LaminasTest\Stdlib;
 
 use ArrayIterator;
+use Closure;
 use InvalidArgumentException;
 use Laminas\Stdlib\ArrayObject;
 use PHPUnit\Framework\Attributes\Group;
@@ -17,11 +18,16 @@ use function ksort;
 use function natcasesort;
 use function natsort;
 use function preg_replace;
+use function restore_error_handler;
 use function serialize;
+use function set_error_handler;
 use function strcasecmp;
 use function uasort;
 use function uksort;
 use function unserialize;
+
+use const E_DEPRECATED;
+use const E_USER_DEPRECATED;
 
 final class ArrayObjectTest extends TestCase
 {
@@ -29,8 +35,8 @@ final class ArrayObjectTest extends TestCase
     {
         $ar = new ArrayObject();
         self::assertEquals(ArrayObject::STD_PROP_LIST, $ar->getFlags());
-        self::assertEquals('ArrayIterator', $ar->getIteratorClass());
-        self::assertInstanceOf('ArrayIterator', $ar->getIterator());
+        self::assertEquals(ArrayIterator::class, $ar->getIteratorClass());
+        self::assertInstanceOf(ArrayIterator::class, $ar->getIterator());
         self::assertSame([], $ar->getArrayCopy());
         self::assertEquals(0, $ar->count());
     }
@@ -143,10 +149,30 @@ final class ArrayObjectTest extends TestCase
         self::assertSame(['bar' => 'baz'], $ar->getArrayCopy());
     }
 
+    private function assertExchangeArrayDeprecation(Closure $closure): mixed
+    {
+        set_error_handler(static function (int $errNum, string $error): bool {
+            if ($errNum !== E_USER_DEPRECATED) {
+                return false;
+            }
+
+            self::assertStringStartsWith('Passing a non-array value', $error);
+
+            return true;
+        });
+
+        try {
+            return $closure();
+        } finally {
+            restore_error_handler();
+        }
+    }
+
     public function testExchangeArrayPhpArrayObject(): void
     {
         $ar  = new ArrayObject(['foo' => 'bar']);
-        $old = $ar->exchangeArray(new \ArrayObject(['bar' => 'baz']));
+        $old = $this->assertExchangeArrayDeprecation(static fn()
+            => $ar->exchangeArray(new \ArrayObject(['bar' => 'baz'])));
 
         self::assertSame(['foo' => 'bar'], $old);
         self::assertSame(['bar' => 'baz'], $ar->getArrayCopy());
@@ -155,28 +181,51 @@ final class ArrayObjectTest extends TestCase
     public function testExchangeArrayStdlibArrayObject(): void
     {
         $ar  = new ArrayObject(['foo' => 'bar']);
-        $old = $ar->exchangeArray(new ArrayObject(['bar' => 'baz']));
+        $old = $this->assertExchangeArrayDeprecation(static fn()
+            => $ar->exchangeArray(new ArrayObject(['bar' => 'baz'])));
 
         self::assertSame(['foo' => 'bar'], $old);
         self::assertSame(['bar' => 'baz'], $ar->getArrayCopy());
     }
 
+    private function assertPhpDeprecation(string $message, Closure $closure): void
+    {
+        try {
+            set_error_handler(static function (int $errNum, string $error) use ($message): bool {
+                self::assertSame(E_DEPRECATED, $errNum);
+                self::assertStringContainsString($message, $error);
+
+                return true;
+            });
+
+            $closure();
+        } finally {
+            restore_error_handler();
+        }
+    }
+
     public function testExchangeArrayTestAssetIterator(): void
     {
         $ar = new ArrayObject();
-        $ar->exchangeArray(new TestAsset\ArrayObjectIterator(['foo' => 'bar']));
+        $this->assertExchangeArrayDeprecation(static fn()
+            => $ar->exchangeArray(new TestAsset\ArrayObjectIterator(['foo' => 'bar'])));
 
         // make sure it does what php array object does:
         $ar2 = new \ArrayObject();
-        $ar2->exchangeArray(new TestAsset\ArrayObjectIterator(['foo' => 'bar']));
+        $this->assertPhpDeprecation(
+            'Using an object as a backing array for ArrayObject is deprecated',
+            fn () => $ar2->exchangeArray(new TestAsset\ArrayObjectIterator(['foo' => 'bar'])),
+        );
 
         self::assertEquals($ar2->getArrayCopy(), $ar->getArrayCopy());
     }
 
-    public function testExchangeArrayArrayIterator(): void
+    public function testExchangeArrayWithArrayIterator(): void
     {
         $ar = new ArrayObject();
-        $ar->exchangeArray(new ArrayIterator(['foo' => 'bar']));
+
+        $this->assertExchangeArrayDeprecation(static fn()
+            => $ar->exchangeArray(new ArrayIterator(['foo' => 'bar'])));
 
         self::assertEquals(['foo' => 'bar'], $ar->getArrayCopy());
     }
