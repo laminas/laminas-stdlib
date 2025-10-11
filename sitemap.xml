@@ -2,14 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.laminas.dev/laminas-stdlib/</loc>
-         <lastmod>2024-10-29</lastmod>
+         <lastmod>2025-10-11</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-stdlib/v3/console-helper/</loc>
-         <lastmod>2024-10-29</lastmod>
+         <lastmod>2025-10-11</lastmod>
     </url>
     <url>
          <loc>https://docs.laminas.dev/laminas-stdlib/v3/migration/</loc>
-         <lastmod>2024-10-29</lastmod>
+         <lastmod>2025-10-11</lastmod>
     </url>
 </urlset>
