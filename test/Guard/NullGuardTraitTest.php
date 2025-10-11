@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(NullGuardTrait::class)]
-class NullGuardTraitTest extends TestCase
+final class NullGuardTraitTest extends TestCase
 {
     public function testGuardAgainstNullThrowsException(): void
     {

@@ -1,29 +1,27 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasBench\Stdlib;
 
 use Laminas\Stdlib\FastPriorityQueue;
 use Laminas\Stdlib\PriorityQueue;
 use Laminas\Stdlib\SplPriorityQueue;
-use PhpBench\Benchmark\Metadata\Annotations\Iterations;
-use PhpBench\Benchmark\Metadata\Annotations\Revs;
-use PhpBench\Benchmark\Metadata\Annotations\Warmup;
+use PhpBench\Attributes\Iterations;
+use PhpBench\Attributes\Revs;
+use PhpBench\Attributes\Warmup;
 
 use function rand;
 
-/**
- * @Revs(1000)
- * @Iterations(10)
- * @Warmup(2)
- */
-class ExtractPriorityQueueBench
+#[Revs(1000)]
+#[Iterations(10)]
+#[Warmup(2)]
+final class ExtractPriorityQueueBench
 {
+    private SplPriorityQueue $splPriorityQueue;
+    private FastPriorityQueue $fastPriorityQueue;
+    private PriorityQueue $priorityQueue;
+
     public function __construct()
     {
         $this->splPriorityQueue  = new SplPriorityQueue();
@@ -38,17 +36,17 @@ class ExtractPriorityQueueBench
         }
     }
 
-    public function benchExtractSplPriorityQueue()
+    public function benchExtractSplPriorityQueue(): void
     {
         $this->splPriorityQueue->extract();
     }
 
-    public function benchExtractPriorityQueue()
+    public function benchExtractPriorityQueue(): void
     {
         $this->priorityQueue->extract();
     }
 
-    public function benchExtractFastPriorityQueue()
+    public function benchExtractFastPriorityQueue(): void
     {
         $this->fastPriorityQueue->extract();
     }

@@ -11,7 +11,7 @@ use Laminas\Stdlib\AbstractOptions;
  *
  * @extends AbstractOptions<mixed>
  */
-class TestOptionsWithoutGetter extends AbstractOptions
+final class TestOptionsWithoutGetter extends AbstractOptions
 {
     protected mixed $foo;
 

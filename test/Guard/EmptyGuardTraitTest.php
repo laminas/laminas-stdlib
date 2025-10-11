@@ -11,7 +11,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(EmptyGuardTrait::class)]
-class EmptyGuardTraitTest extends TestCase
+final class EmptyGuardTraitTest extends TestCase
 {
     public function testGuardAgainstEmptyThrowsException(): void
     {

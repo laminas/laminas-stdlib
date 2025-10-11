@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace LaminasTest\Stdlib\TestAsset;
 
-class ArrayObjectObjectVars
+final class ArrayObjectObjectVars
 {
     /** @var string */
     public $public = 'prop:public';

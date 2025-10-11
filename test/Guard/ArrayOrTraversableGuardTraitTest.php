@@ -12,7 +12,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 
 #[CoversClass(ArrayOrTraversableGuardTrait::class)]
-class ArrayOrTraversableGuardTraitTest extends TestCase
+final class ArrayOrTraversableGuardTraitTest extends TestCase
 {
     public function testGuardForArrayOrTraversableThrowsException(): void
     {

@@ -17,7 +17,7 @@ use function str_repeat;
 
 use const GLOB_BRACE;
 
-class GlobTest extends TestCase
+final class GlobTest extends TestCase
 {
     public function testFallback(): void
     {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.5.1@3f17a6b24a2dbe543e21408c2b19108cf6a355ef">
+<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
@@ -67,6 +67,11 @@
       <code><![CDATA[$ret = &$this->offsetGet($key)]]></code>
     </UnsupportedReferenceUsage>
   </file>
+  <file src="src/ArrayStack.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[ArrayStack]]></code>
+    </ClassMustBeFinal>
+  </file>
   <file src="src/ArrayUtils.php">
     <MixedAssignment>
       <code><![CDATA[$a[$key]]]></code>
@@ -76,6 +81,11 @@
       <code><![CDATA[$h]]></code>
       <code><![CDATA[$value]]></code>
     </MixedAssignment>
+  </file>
+  <file src="src/ConsoleHelper.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[ConsoleHelper]]></code>
+    </ClassMustBeFinal>
   </file>
   <file src="src/ErrorHandler.php">
     <InvalidArgument>
@@ -95,6 +105,9 @@
     </UnsupportedReferenceUsage>
   </file>
   <file src="src/FastPriorityQueue.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[FastPriorityQueue]]></code>
+    </ClassMustBeFinal>
     <DocblockTypeContradiction>
       <code><![CDATA[is_int($priority)]]></code>
       <code><![CDATA[throw new Exception\InvalidArgumentException("The extract flag specified is not valid")]]></code>
@@ -172,12 +185,15 @@
       <code><![CDATA[$value]]></code>
     </ParamNameMismatch>
   </file>
-  <file src="src/MessageInterface.php">
-    <MissingReturnType>
-      <code><![CDATA[setMetadata]]></code>
-    </MissingReturnType>
+  <file src="src/Parameters.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[Parameters]]></code>
+    </ClassMustBeFinal>
   </file>
   <file src="src/PriorityList.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[PriorityList]]></code>
+    </ClassMustBeFinal>
     <FalsableReturnStatement>
       <code><![CDATA[$node ? $node['data'] : false]]></code>
     </FalsableReturnStatement>
@@ -196,12 +212,28 @@
     </RedundantCastGivenDocblockType>
   </file>
   <file src="src/PriorityQueue.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[PriorityQueue]]></code>
+    </ClassMustBeFinal>
     <MethodSignatureMustProvideReturnType>
       <code><![CDATA[serialize]]></code>
       <code><![CDATA[unserialize]]></code>
     </MethodSignatureMustProvideReturnType>
   </file>
+  <file src="src/Request.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[Request]]></code>
+    </ClassMustBeFinal>
+  </file>
+  <file src="src/Response.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[Response]]></code>
+    </ClassMustBeFinal>
+  </file>
   <file src="src/SplPriorityQueue.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[SplPriorityQueue]]></code>
+    </ClassMustBeFinal>
     <DocblockTypeContradiction>
       <code><![CDATA[is_array($priority)]]></code>
     </DocblockTypeContradiction>
@@ -219,6 +251,16 @@
     <MixedArgument>
       <code><![CDATA[$item['data']]]></code>
     </MixedArgument>
+  </file>
+  <file src="src/SplQueue.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[SplQueue]]></code>
+    </ClassMustBeFinal>
+  </file>
+  <file src="src/SplStack.php">
+    <ClassMustBeFinal>
+      <code><![CDATA[SplStack]]></code>
+    </ClassMustBeFinal>
   </file>
   <file src="src/StringUtils.php">
     <DocblockTypeContradiction>
@@ -239,6 +281,12 @@
     <ImplementedReturnTypeMismatch>
       <code><![CDATA[string|false]]></code>
     </ImplementedReturnTypeMismatch>
+    <InvalidOperand>
+      <code><![CDATA[$lastStringLength % 2]]></code>
+      <code><![CDATA[$lastStringLength / 2]]></code>
+      <code><![CDATA[$lengthOfPadding - 2 * $repeatCountLeft * $padStringLength]]></code>
+      <code><![CDATA[2 * $repeatCountLeft]]></code>
+    </InvalidOperand>
     <ParamNameMismatch>
       <code><![CDATA[$string]]></code>
     </ParamNameMismatch>
@@ -281,14 +329,8 @@
       <code><![CDATA[$encoding]]></code>
     </NonInvariantDocblockPropertyType>
   </file>
-  <file src="src/StringWrapper/StringWrapperInterface.php">
-    <MissingReturnType>
-      <code><![CDATA[isSupported]]></code>
-    </MissingReturnType>
-  </file>
   <file src="test/ArrayObjectTest.php">
     <ArgumentTypeCoercion>
-      <code><![CDATA['ArrayIterator']]></code>
       <code><![CDATA['InvalidArrayIterator']]></code>
     </ArgumentTypeCoercion>
     <InvalidArgument>
@@ -311,9 +353,6 @@
       <code><![CDATA[$ar['foo']['bar']]]></code>
       <code><![CDATA[$ar['foo']['bar']['baz']]]></code>
     </PossiblyNullArrayAccess>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[assertSame]]></code>
-    </RedundantConditionGivenDocblockType>
     <UndefinedClass>
       <code><![CDATA['InvalidArrayIterator']]></code>
     </UndefinedClass>

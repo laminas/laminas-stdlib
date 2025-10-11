@@ -12,7 +12,7 @@ use function iterator_to_array;
 use function serialize;
 use function unserialize;
 
-class SplQueueTest extends TestCase
+final class SplQueueTest extends TestCase
 {
     /** @var SplQueue<int, non-empty-string> */
     protected $queue;

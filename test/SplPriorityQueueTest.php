@@ -16,7 +16,7 @@ use function unserialize;
 use function var_export;
 
 #[Group('Laminas_Stdlib')]
-class SplPriorityQueueTest extends TestCase
+final class SplPriorityQueueTest extends TestCase
 {
     /** @var SplPriorityQueue */
     protected $queue;

@@ -12,7 +12,7 @@ use function trigger_error;
 
 use const E_USER_WARNING;
 
-class ErrorHandlerTest extends TestCase
+final class ErrorHandlerTest extends TestCase
 {
     protected function tearDown(): void
     {
