@@ -58,8 +58,6 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
 
     /**
      * Array of priorities used for the iteration
-     *
-     * @var array
      */
     protected array $subPriorities = [];
 
