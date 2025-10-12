@@ -15,7 +15,7 @@ use function unserialize;
 use function var_export;
 
 #[Group('Laminas_Stdlib')]
-class SplStackTest extends TestCase
+final class SplStackTest extends TestCase
 {
     /** @var SplStack */
     protected $stack;

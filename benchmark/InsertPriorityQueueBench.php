@@ -1,29 +1,27 @@
 <?php
 
-/**
- * @see       https://github.com/laminas/laminas-stdlib for the canonical source repository
- * @copyright https://github.com/laminas/laminas-stdlib/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas/laminas-stdlib/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasBench\Stdlib;
 
 use Laminas\Stdlib\FastPriorityQueue;
 use Laminas\Stdlib\PriorityQueue;
 use Laminas\Stdlib\SplPriorityQueue;
-use PhpBench\Benchmark\Metadata\Annotations\Iterations;
-use PhpBench\Benchmark\Metadata\Annotations\Revs;
-use PhpBench\Benchmark\Metadata\Annotations\Warmup;
+use PhpBench\Attributes\Iterations;
+use PhpBench\Attributes\Revs;
+use PhpBench\Attributes\Warmup;
 
 use function rand;
 
-/**
- * @Revs(1000)
- * @Iterations(10)
- * @Warmup(2)
- */
-class InsertPriorityQueueBench
+#[Revs(1000)]
+#[Iterations(10)]
+#[Warmup(2)]
+final class InsertPriorityQueueBench
 {
+    private SplPriorityQueue $splPriorityQueue;
+    private FastPriorityQueue $fastPriorityQueue;
+    private PriorityQueue $priorityQueue;
+
     public function __construct()
     {
         $this->splPriorityQueue  = new SplPriorityQueue();
@@ -31,17 +29,17 @@ class InsertPriorityQueueBench
         $this->priorityQueue     = new PriorityQueue();
     }
 
-    public function benchInsertSplPriorityQueue()
+    public function benchInsertSplPriorityQueue(): void
     {
         $this->splPriorityQueue->insert('foo', rand(1, 100));
     }
 
-    public function benchInsertPriorityQueue()
+    public function benchInsertPriorityQueue(): void
     {
         $this->priorityQueue->insert('foo', rand(1, 100));
     }
 
-    public function benchInsertFastPriorityQueue()
+    public function benchInsertFastPriorityQueue(): void
     {
         $this->fastPriorityQueue->insert('foo', rand(1, 100));
     }

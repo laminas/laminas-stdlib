@@ -18,7 +18,7 @@ use function var_export;
 use const PHP_INT_MAX;
 
 #[Group('Laminas_Stdlib')]
-class SplPriorityQueueTest extends TestCase
+final class SplPriorityQueueTest extends TestCase
 {
     /** @var SplPriorityQueue<string, int> */
     private SplPriorityQueue $queue;

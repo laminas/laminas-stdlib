@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
 use stdClass;
 use Traversable;
 
-class ArrayUtilsTest extends TestCase
+final class ArrayUtilsTest extends TestCase
 {
     /** @psalm-return array<array-key, array{0: array}> */
     public static function validHashTables(): array

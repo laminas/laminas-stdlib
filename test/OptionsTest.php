@@ -15,7 +15,7 @@ use LaminasTest\Stdlib\TestAsset\TestOptionsWithoutGetter;
 use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 
-class OptionsTest extends TestCase
+final class OptionsTest extends TestCase
 {
     public function testConstructionWithArray(): void
     {

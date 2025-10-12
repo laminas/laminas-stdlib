@@ -12,7 +12,7 @@ use function key;
 use function next;
 use function reset;
 
-class IteratorWithToArrayMethod implements Iterator
+final class IteratorWithToArrayMethod implements Iterator
 {
     public function __construct(private array $elements)
     {

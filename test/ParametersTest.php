@@ -13,7 +13,7 @@ use PHPUnit\Framework\TestCase;
 use Serializable;
 use Traversable;
 
-class ParametersTest extends TestCase
+final class ParametersTest extends TestCase
 {
     public function testParametersConstructionAndClassStructure(): void
     {

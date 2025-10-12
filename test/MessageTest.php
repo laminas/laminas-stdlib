@@ -9,7 +9,7 @@ use Laminas\Stdlib\Message;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 
-class MessageTest extends TestCase
+final class MessageTest extends TestCase
 {
     public function testMessageCanSetAndGetContent(): void
     {

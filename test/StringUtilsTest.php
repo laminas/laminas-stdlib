@@ -19,7 +19,7 @@ use function defined;
 use function extension_loaded;
 use function preg_match;
 
-class StringUtilsTest extends TestCase
+final class StringUtilsTest extends TestCase
 {
     protected function tearDown(): void
     {

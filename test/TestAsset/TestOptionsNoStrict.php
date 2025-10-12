@@ -11,7 +11,7 @@ use Laminas\Stdlib\AbstractOptions;
  *
  * @extends AbstractOptions<mixed>
  */
-class TestOptionsNoStrict extends AbstractOptions
+final class TestOptionsNoStrict extends AbstractOptions
 {
     // phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore,WebimpressCodingStandard.NamingConventions.ValidVariableName.NotCamelCapsProperty
 

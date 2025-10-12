@@ -58,8 +58,6 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
 
     /**
      * Array of priorities used for the iteration
-     *
-     * @var array
      */
     protected array $subPriorities = [];
 
@@ -275,7 +273,7 @@ class FastPriorityQueue implements Iterator, Countable, Serializable
      */
     public function valid(): bool
     {
-        return isset($this->values[$this->maxPriority]);
+        return isset($this->values[$this->maxPriority ?? '']);
     }
 
     /**
