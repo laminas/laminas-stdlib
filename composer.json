@@ -33,7 +33,7 @@
         "laminas/laminas-coding-standard": "^3.1.0",
         "phpbench/phpbench": "^1.4.1",
         "phpunit/phpunit": "^11.5.42",
-        "psalm/plugin-phpunit": "^0.19.5",
+        "psalm/plugin-phpunit": "^0.20.0",
         "vimeo/psalm": "^6.13.1"
     },
     "autoload": {
