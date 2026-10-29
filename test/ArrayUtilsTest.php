@@ -296,19 +296,19 @@ final class ArrayUtilsTest extends TestCase
             'merge-with-null'                                => [
                 [
                     'foo' => null,
-                    null  => 'rod',
+                    ''    => 'rod',
                     'cat' => 'bar',
                     'god' => 'rad',
                 ],
                 [
                     'foo' => 'baz',
-                    null  => 'zad',
+                    ''    => 'zad',
                     'god' => null,
                 ],
                 false,
                 [
                     'foo' => 'baz',
-                    null  => 'zad',
+                    ''    => 'zad',
                     'cat' => 'bar',
                     'god' => null,
                 ],
