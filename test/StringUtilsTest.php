@@ -172,7 +172,7 @@ final class StringUtilsTest extends TestCase
 
     public function testRegisterSpecificWrapper(): void
     {
-        $wrapper = $this->createMock(StringWrapperInterface::class);
+        $wrapper = $this->createStub(StringWrapperInterface::class);
 
         StringUtils::resetRegisteredWrappers();
         StringUtils::registerWrapper($wrapper::class);
