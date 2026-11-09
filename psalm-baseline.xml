@@ -32,6 +32,10 @@
       <code><![CDATA[serialize]]></code>
       <code><![CDATA[unserialize]]></code>
     </MethodSignatureMustProvideReturnType>
+    <MissingClassConstType>
+      <code><![CDATA[ARRAY_AS_PROPS = 2]]></code>
+      <code><![CDATA[STD_PROP_LIST = 1]]></code>
+    </MissingClassConstType>
     <MixedArgument>
       <code><![CDATA[$v]]></code>
     </MixedArgument>
@@ -73,6 +77,10 @@
     </ClassMustBeFinal>
   </file>
   <file src="src/ArrayUtils.php">
+    <MissingClassConstType>
+      <code><![CDATA[ARRAY_FILTER_USE_BOTH = 1]]></code>
+      <code><![CDATA[ARRAY_FILTER_USE_KEY = 2]]></code>
+    </MissingClassConstType>
     <MixedAssignment>
       <code><![CDATA[$a[$key]]]></code>
       <code><![CDATA[$a[$key]]]></code>
@@ -86,6 +94,13 @@
     <ClassMustBeFinal>
       <code><![CDATA[ConsoleHelper]]></code>
     </ClassMustBeFinal>
+    <MissingClassConstType>
+      <code><![CDATA[COLOR_GREEN = "\033[32m"]]></code>
+      <code><![CDATA[COLOR_RED   = "\033[31m"]]></code>
+      <code><![CDATA[COLOR_RESET = "\033[0m"]]></code>
+      <code><![CDATA[HIGHLIGHT_ERROR = 'error']]></code>
+      <code><![CDATA[HIGHLIGHT_INFO  = 'info']]></code>
+    </MissingClassConstType>
   </file>
   <file src="src/ErrorHandler.php">
     <InvalidArgument>
@@ -123,6 +138,11 @@
       <code><![CDATA[serialize]]></code>
       <code><![CDATA[unserialize]]></code>
     </MethodSignatureMustProvideReturnType>
+    <MissingClassConstType>
+      <code><![CDATA[EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH]]></code>
+      <code><![CDATA[EXTR_DATA     = PhpSplPriorityQueue::EXTR_DATA]]></code>
+      <code><![CDATA[EXTR_PRIORITY = PhpSplPriorityQueue::EXTR_PRIORITY]]></code>
+    </MissingClassConstType>
     <MixedArgument>
       <code><![CDATA[$item['data']]]></code>
       <code><![CDATA[$item['priority']]]></code>
@@ -156,6 +176,15 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$globFlags]]></code>
     </ArgumentTypeCoercion>
+    <MissingClassConstType>
+      <code><![CDATA[GLOB_BRACE    = 0x10]]></code>
+      <code><![CDATA[GLOB_ERR      = 0x40]]></code>
+      <code><![CDATA[GLOB_MARK     = 0x01]]></code>
+      <code><![CDATA[GLOB_NOCHECK  = 0x04]]></code>
+      <code><![CDATA[GLOB_NOESCAPE = 0x08]]></code>
+      <code><![CDATA[GLOB_NOSORT   = 0x02]]></code>
+      <code><![CDATA[GLOB_ONLYDIR  = 0x20]]></code>
+    </MissingClassConstType>
     <PossiblyNullArrayOffset>
       <code><![CDATA[$pattern]]></code>
     </PossiblyNullArrayOffset>
@@ -203,6 +232,11 @@
     <InvalidReturnStatement>
       <code><![CDATA[$node ? $node['data'] : false]]></code>
     </InvalidReturnStatement>
+    <MissingClassConstType>
+      <code><![CDATA[EXTR_BOTH     = 0x00000003]]></code>
+      <code><![CDATA[EXTR_DATA     = 0x00000001]]></code>
+      <code><![CDATA[EXTR_PRIORITY = 0x00000002]]></code>
+    </MissingClassConstType>
     <MixedReturnTypeCoercion>
       <code><![CDATA[next]]></code>
     </MixedReturnTypeCoercion>
@@ -219,6 +253,11 @@
       <code><![CDATA[serialize]]></code>
       <code><![CDATA[unserialize]]></code>
     </MethodSignatureMustProvideReturnType>
+    <MissingClassConstType>
+      <code><![CDATA[EXTR_BOTH     = 0x00000003]]></code>
+      <code><![CDATA[EXTR_DATA     = 0x00000001]]></code>
+      <code><![CDATA[EXTR_PRIORITY = 0x00000002]]></code>
+    </MissingClassConstType>
   </file>
   <file src="src/Request.php">
     <ClassMustBeFinal>
