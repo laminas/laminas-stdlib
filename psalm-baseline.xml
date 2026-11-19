@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
+<files psalm-version="6.20.10@7fc81490f861c801061836a9010603d2393bf8da">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
@@ -32,6 +32,10 @@
       <code><![CDATA[serialize]]></code>
       <code><![CDATA[unserialize]]></code>
     </MethodSignatureMustProvideReturnType>
+    <MissingClassConstType>
+      <code><![CDATA[ARRAY_AS_PROPS = 2]]></code>
+      <code><![CDATA[STD_PROP_LIST = 1]]></code>
+    </MissingClassConstType>
     <MixedArgument>
       <code><![CDATA[$v]]></code>
     </MixedArgument>
@@ -86,6 +90,13 @@
     <ClassMustBeFinal>
       <code><![CDATA[ConsoleHelper]]></code>
     </ClassMustBeFinal>
+    <MissingClassConstType>
+      <code><![CDATA[COLOR_GREEN = "\033[32m"]]></code>
+      <code><![CDATA[COLOR_RED   = "\033[31m"]]></code>
+      <code><![CDATA[COLOR_RESET = "\033[0m"]]></code>
+      <code><![CDATA[HIGHLIGHT_ERROR = 'error']]></code>
+      <code><![CDATA[HIGHLIGHT_INFO  = 'info']]></code>
+    </MissingClassConstType>
   </file>
   <file src="src/ErrorHandler.php">
     <InvalidArgument>
@@ -134,6 +145,11 @@
             ],
         }]]></code>
     </LessSpecificReturnStatement>
+    <MissingClassConstType>
+      <code><![CDATA[EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH]]></code>
+      <code><![CDATA[EXTR_DATA     = PhpSplPriorityQueue::EXTR_DATA]]></code>
+      <code><![CDATA[EXTR_PRIORITY = PhpSplPriorityQueue::EXTR_PRIORITY]]></code>
+    </MissingClassConstType>
     <MixedArgument>
       <code><![CDATA[$item['data']]]></code>
       <code><![CDATA[$item['priority']]]></code>
@@ -156,6 +172,7 @@
       <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
+      <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values[$this->maxPriority]]]></code>
       <code><![CDATA[$this->values[$this->maxPriority]]]></code>
     </PossiblyNullArrayOffset>
@@ -164,6 +181,15 @@
     <ArgumentTypeCoercion>
       <code><![CDATA[$globFlags]]></code>
     </ArgumentTypeCoercion>
+    <MissingClassConstType>
+      <code><![CDATA[GLOB_BRACE    = 0x10]]></code>
+      <code><![CDATA[GLOB_ERR      = 0x40]]></code>
+      <code><![CDATA[GLOB_MARK     = 0x01]]></code>
+      <code><![CDATA[GLOB_NOCHECK  = 0x04]]></code>
+      <code><![CDATA[GLOB_NOESCAPE = 0x08]]></code>
+      <code><![CDATA[GLOB_NOSORT   = 0x02]]></code>
+      <code><![CDATA[GLOB_ONLYDIR  = 0x20]]></code>
+    </MissingClassConstType>
     <PossiblyNullArrayOffset>
       <code><![CDATA[$pattern]]></code>
     </PossiblyNullArrayOffset>
@@ -202,11 +228,21 @@
     <ClassMustBeFinal>
       <code><![CDATA[PriorityList]]></code>
     </ClassMustBeFinal>
+    <MissingClassConstType>
+      <code><![CDATA[EXTR_BOTH     = 0x00000003]]></code>
+      <code><![CDATA[EXTR_DATA     = 0x00000001]]></code>
+      <code><![CDATA[EXTR_PRIORITY = 0x00000002]]></code>
+    </MissingClassConstType>
   </file>
   <file src="src/PriorityQueue.php">
     <ClassMustBeFinal>
       <code><![CDATA[PriorityQueue]]></code>
     </ClassMustBeFinal>
+    <MissingClassConstType>
+      <code><![CDATA[EXTR_BOTH     = 0x00000003]]></code>
+      <code><![CDATA[EXTR_DATA     = 0x00000001]]></code>
+      <code><![CDATA[EXTR_PRIORITY = 0x00000002]]></code>
+    </MissingClassConstType>
   </file>
   <file src="src/Request.php">
     <ClassMustBeFinal>
@@ -397,10 +433,5 @@
       <code><![CDATA[$parameters->foo]]></code>
       <code><![CDATA[$parameters->foof]]></code>
     </UndefinedPropertyFetch>
-  </file>
-  <file src="test/SplPriorityQueueTest.php">
-    <MixedPropertyTypeCoercion>
-      <code><![CDATA[new SplPriorityQueue()]]></code>
-    </MixedPropertyTypeCoercion>
   </file>
 </files>
