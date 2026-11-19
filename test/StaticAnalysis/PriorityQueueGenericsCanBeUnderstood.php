@@ -12,7 +12,7 @@ use function iterator_to_array;
 final class PriorityQueueGenericsCanBeUnderstood
 {
     /**
-     * @param PriorityQueue<string, int> $laminas
+     * @param PriorityQueue<string> $laminas
      */
     public function __construct(private PriorityQueue $laminas)
     {

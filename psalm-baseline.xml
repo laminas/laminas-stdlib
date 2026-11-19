@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.13.1@1e3b7f0a8ab32b23197b91107adc0a7ed8a05b51">
+<files psalm-version="6.20.10@7fc81490f861c801061836a9010603d2393bf8da">
   <file src="src/AbstractOptions.php">
     <DocblockTypeContradiction>
       <code><![CDATA[! is_array($options) && ! $options instanceof Traversable]]></code>
@@ -77,10 +77,6 @@
     </ClassMustBeFinal>
   </file>
   <file src="src/ArrayUtils.php">
-    <MissingClassConstType>
-      <code><![CDATA[ARRAY_FILTER_USE_BOTH = 1]]></code>
-      <code><![CDATA[ARRAY_FILTER_USE_KEY = 2]]></code>
-    </MissingClassConstType>
     <MixedAssignment>
       <code><![CDATA[$a[$key]]]></code>
       <code><![CDATA[$a[$key]]]></code>
@@ -124,20 +120,31 @@
       <code><![CDATA[FastPriorityQueue]]></code>
     </ClassMustBeFinal>
     <DocblockTypeContradiction>
-      <code><![CDATA[is_int($priority)]]></code>
       <code><![CDATA[throw new Exception\InvalidArgumentException("The extract flag specified is not valid")]]></code>
     </DocblockTypeContradiction>
+    <FalsableReturnStatement>
+      <code><![CDATA[match ($this->extractFlag) {
+            self::EXTR_DATA => current($this->values[$this->maxPriority]),
+            self::EXTR_PRIORITY => $this->maxPriority,
+            self::EXTR_BOTH => [
+                'data'     => current($this->values[$this->maxPriority]),
+                'priority' => $this->maxPriority,
+            ],
+        }]]></code>
+    </FalsableReturnStatement>
     <ImplementedReturnTypeMismatch>
-      <code><![CDATA[TValue|int|array{data: TValue|false, priority: int|null}|false]]></code>
+      <code><![CDATA[TValue|int|array{data: TValue, priority: int}|null]]></code>
     </ImplementedReturnTypeMismatch>
     <LessSpecificReturnStatement>
-      <code><![CDATA[$array]]></code>
-      <code><![CDATA[$value]]></code>
+      <code><![CDATA[match ($this->extractFlag) {
+            self::EXTR_DATA => current($this->values[$this->maxPriority]),
+            self::EXTR_PRIORITY => $this->maxPriority,
+            self::EXTR_BOTH => [
+                'data'     => current($this->values[$this->maxPriority]),
+                'priority' => $this->maxPriority,
+            ],
+        }]]></code>
     </LessSpecificReturnStatement>
-    <MethodSignatureMustProvideReturnType>
-      <code><![CDATA[serialize]]></code>
-      <code><![CDATA[unserialize]]></code>
-    </MethodSignatureMustProvideReturnType>
     <MissingClassConstType>
       <code><![CDATA[EXTR_BOTH     = PhpSplPriorityQueue::EXTR_BOTH]]></code>
       <code><![CDATA[EXTR_DATA     = PhpSplPriorityQueue::EXTR_DATA]]></code>
@@ -156,14 +163,12 @@
       <code><![CDATA[$this->maxPriority]]></code>
     </MixedAssignment>
     <MoreSpecificReturnType>
-      <code><![CDATA[TValue|int|array{data: TValue, priority: int}|false]]></code>
-      <code><![CDATA[list<TValue|int|array{data: TValue, priority: int}>]]></code>
+      <code><![CDATA[TValue|int|array{data: TValue, priority: int}|null]]></code>
     </MoreSpecificReturnType>
     <PossiblyNullArrayOffset>
       <code><![CDATA[$this->priorities]]></code>
       <code><![CDATA[$this->priorities]]></code>
       <code><![CDATA[$this->subPriorities]]></code>
-      <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
       <code><![CDATA[$this->values]]></code>
@@ -223,36 +228,16 @@
     <ClassMustBeFinal>
       <code><![CDATA[PriorityList]]></code>
     </ClassMustBeFinal>
-    <FalsableReturnStatement>
-      <code><![CDATA[$node ? $node['data'] : false]]></code>
-    </FalsableReturnStatement>
-    <InvalidFalsableReturnType>
-      <code><![CDATA[current]]></code>
-    </InvalidFalsableReturnType>
-    <InvalidReturnStatement>
-      <code><![CDATA[$node ? $node['data'] : false]]></code>
-    </InvalidReturnStatement>
     <MissingClassConstType>
       <code><![CDATA[EXTR_BOTH     = 0x00000003]]></code>
       <code><![CDATA[EXTR_DATA     = 0x00000001]]></code>
       <code><![CDATA[EXTR_PRIORITY = 0x00000002]]></code>
     </MissingClassConstType>
-    <MixedReturnTypeCoercion>
-      <code><![CDATA[next]]></code>
-    </MixedReturnTypeCoercion>
-    <RedundantCastGivenDocblockType>
-      <code><![CDATA[(int) $priority]]></code>
-      <code><![CDATA[(int) $priority]]></code>
-    </RedundantCastGivenDocblockType>
   </file>
   <file src="src/PriorityQueue.php">
     <ClassMustBeFinal>
       <code><![CDATA[PriorityQueue]]></code>
     </ClassMustBeFinal>
-    <MethodSignatureMustProvideReturnType>
-      <code><![CDATA[serialize]]></code>
-      <code><![CDATA[unserialize]]></code>
-    </MethodSignatureMustProvideReturnType>
     <MissingClassConstType>
       <code><![CDATA[EXTR_BOTH     = 0x00000003]]></code>
       <code><![CDATA[EXTR_DATA     = 0x00000001]]></code>
@@ -274,22 +259,15 @@
       <code><![CDATA[SplPriorityQueue]]></code>
     </ClassMustBeFinal>
     <DocblockTypeContradiction>
+      <code><![CDATA[! array_key_exists('priority', $item)
+                || ! is_array($item['priority'])]]></code>
+      <code><![CDATA[! is_array($item['priority'])]]></code>
+      <code><![CDATA[is_array($item)]]></code>
       <code><![CDATA[is_array($priority)]]></code>
     </DocblockTypeContradiction>
-    <ImplementedReturnTypeMismatch>
-      <code><![CDATA[void]]></code>
-    </ImplementedReturnTypeMismatch>
-    <InvalidArgument>
-      <code><![CDATA[$priority]]></code>
-      <code><![CDATA[$priority]]></code>
-    </InvalidArgument>
-    <MethodSignatureMustProvideReturnType>
-      <code><![CDATA[serialize]]></code>
-      <code><![CDATA[unserialize]]></code>
-    </MethodSignatureMustProvideReturnType>
-    <MixedArgument>
-      <code><![CDATA[$item['data']]]></code>
-    </MixedArgument>
+    <MixedArgumentTypeCoercion>
+      <code><![CDATA[$toUnserialize]]></code>
+    </MixedArgumentTypeCoercion>
   </file>
   <file src="src/SplQueue.php">
     <ClassMustBeFinal>
@@ -400,23 +378,12 @@
     </UndefinedInterfaceMethod>
   </file>
   <file src="test/ArrayUtilsTest.php">
-    <DeprecatedConstant>
-      <code><![CDATA[ArrayUtils::ARRAY_FILTER_USE_BOTH]]></code>
-      <code><![CDATA[ArrayUtils::ARRAY_FILTER_USE_KEY]]></code>
-    </DeprecatedConstant>
-    <DeprecatedMethod>
-      <code><![CDATA[ArrayUtils::filter($data, $callback, $flag)]]></code>
-      <code><![CDATA[ArrayUtils::filter([], "INVALID")]]></code>
-    </DeprecatedMethod>
     <DuplicateArrayKey>
       <code><![CDATA['-10000' => null]]></code>
     </DuplicateArrayKey>
     <MixedArgument>
       <code><![CDATA[$test]]></code>
     </MixedArgument>
-    <UndefinedFunction>
-      <code><![CDATA["INVALID"]]></code>
-    </UndefinedFunction>
   </file>
   <file src="test/CustomArrayObject.php">
     <PropertyNotSetInConstructor>
@@ -439,8 +406,6 @@
   </file>
   <file src="test/FastPriorityQueueTest.php">
     <MixedAssignment>
-      <code><![CDATA[$datum]]></code>
-      <code><![CDATA[$test[]]]></code>
       <code><![CDATA[$test[]]]></code>
       <code><![CDATA[$test[]]]></code>
       <code><![CDATA[$test[]]]></code>
@@ -468,11 +433,5 @@
       <code><![CDATA[$parameters->foo]]></code>
       <code><![CDATA[$parameters->foof]]></code>
     </UndefinedPropertyFetch>
-  </file>
-  <file src="test/PriorityListTest.php">
-    <PossiblyNullArrayOffset>
-      <code><![CDATA[$orders1]]></code>
-      <code><![CDATA[$orders2]]></code>
-    </PossiblyNullArrayOffset>
   </file>
 </files>
